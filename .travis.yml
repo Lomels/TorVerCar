@@ -2,10 +2,11 @@ language: java
 jdk: 
  -openjdk8
 addons:
- sonarcloud:
-  organization: lomels
-  token:
-   secure: travis encrypt 15406c047854ec8b0a6981b22dd17262eb3db1ce
-script: 
- -ant build
- -sonar-scanner
+  sonarcloud:
+    organization: "lomels"
+    token:
+      secure: travis encript "a2e9a08446934c53e5327e471d389f869f087c30"
+
+script:
+  - ant build
+  - sonar-scanner
