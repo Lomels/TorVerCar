@@ -3,7 +3,7 @@ jdk:
  -openjdk8
 addons:
  sonarcloud:
-  organization: "lomels"
+  organization: lomels
   token:
    secure: travis encrypt 15406c047854ec8b0a6981b22dd17262eb3db1ce
 script: 
