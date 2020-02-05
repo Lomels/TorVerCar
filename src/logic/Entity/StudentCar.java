@@ -1,7 +1,8 @@
-package Entity;
+package entity;
 
 import java.util.List;
-import Bean.CarInfoBean;
+
+import bean.CarInfoBean;
 
 public class StudentCar extends Student {
 

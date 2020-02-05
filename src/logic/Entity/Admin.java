@@ -1,7 +1,8 @@
-package Entity;
+package entity;
 
-import Entity.User;
 import java.util.ArrayList;
+
+import entity.User;
 
 public class Admin extends User {
 	private String adminID;

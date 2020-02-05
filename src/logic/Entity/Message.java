@@ -1,4 +1,4 @@
-package Entity;
+package entity;
 
 // Il setUser e setMessage probabilmente sono inutili (?)
 
