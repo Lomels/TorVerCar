@@ -1,13 +1,13 @@
 package Entity;
 
-import java.util.ArrayList;
+import java.util.List;
 import Bean.CarInfoBean;
 
 public class StudentCar extends Student {
 
 	private int rating;
 	private CarInfo carInfo;
-	private ArrayList<Report> reports;
+	private List<Report> reports;
 
 	public boolean isAvailable(Route route) {
 		return true;
@@ -21,7 +21,7 @@ public class StudentCar extends Student {
 
 	//generated
 	public StudentCar(String userID, String password, String name, String surname, int rating, CarInfo carInfo,
-			ArrayList<Report> reports) {
+			List<Report> reports) {
 		super(userID, password, name, surname);
 		this.rating = rating;
 		this.carInfo = carInfo;
@@ -56,7 +56,7 @@ public class StudentCar extends Student {
 		this.carInfo = carInfo;
 	}
 
-	public ArrayList<Report> getReports() {
+	public List<Report> getReports() {
 		return reports;
 	}
 
