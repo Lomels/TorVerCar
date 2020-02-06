@@ -3,24 +3,25 @@ package entity;
 // Il setUser e setMessage probabilmente sono inutili (?)
 
 public class Message {
-	private String message;
+	private String myMessage;
 	private User from;
 	
 	public Message(String message, User from) {
-		this.message = message;
+		this.myMessage = message;
 		this.from = from;
 	}
 	
 	public void setMessage(String message) {
 		if(message.length() == 0) {
+			// TODO Implementare meglio
 			return;
 		}else {
-			this.message = message;
+			this.myMessage = message;
 		}
 	}
 	
 	public String getMessage() {
-		return this.message;
+		return this.myMessage;
 	}
 	
 	public User getUser() {

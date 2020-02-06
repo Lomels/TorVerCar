@@ -19,6 +19,7 @@ public class Report {
 
 	public void setMessage(String message) {
 		if(message.length()<1) {
+			// TODO Implementare meglio
 			return;
 		}
 		this.message = message;
@@ -30,6 +31,7 @@ public class Report {
 
 	public void setTarget(StudentCar target) {
 		if(target == null) {
+			// TODO Implementare meglio
 			return;
 		}
 		this.target = target;
@@ -49,6 +51,7 @@ public class Report {
 
 	public void setHandler(Admin handler) {
 		if(handler == null) {
+			// TODO Implementare meglio
 			return;
 		}
 		this.handler = handler;

@@ -12,6 +12,7 @@ public class CarInfo {
 	//AGGIUNGERE EXCEPTION
 	public void setPlate(String plate) {
 		if(plate.length() != 7) {
+			// TODO Implementare meglio
 			return;		
 	}else {
 			this.plate = plate;
@@ -24,6 +25,7 @@ public class CarInfo {
 	//AGGIUNGERE EXCEPTION
 	public void setSeats(Integer seats){
 		if(seats<1) {
+			// TODO Implementare meglio
 			return;
 		}else {
 			this.seats = seats;
@@ -34,6 +36,7 @@ public class CarInfo {
 	}
 	public void setModel(String model) {
 		if(model.length()<1) {	
+			// TODO Implementare meglio
 			return;
 		}
 		this.model = model;
@@ -42,7 +45,8 @@ public class CarInfo {
 		return colour;
 	}
 	public void setColour(String colour) {
-		if(colour.length()<3) {	//colore più corto = blu - Marco
+		if(colour.length()<3) {
+			// TODO Implementare meglio
 			return;
 		}
 		this.colour = colour;

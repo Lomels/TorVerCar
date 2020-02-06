@@ -11,6 +11,7 @@ public class Profile {
 	public void setEmail(String email) {
 		if(email.length() < 5) {
 			return;
+			// TODO Implementare meglio
 		}
 		this.email = email;
 	}
@@ -19,6 +20,7 @@ public class Profile {
 	}
 	public void setPhoneNumber(String phoneNumber) {
 		if(phoneNumber.length() != 10) {
+			// TODO Implementare meglio
 			return;
 		}
 		this.phoneNumber = phoneNumber;

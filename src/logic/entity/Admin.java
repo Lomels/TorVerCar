@@ -2,8 +2,6 @@ package entity;
 
 import java.util.*;
 
-import entity.User;
-
 public class Admin extends User {
 	private String adminID;
 	private String email;
@@ -18,8 +16,8 @@ public class Admin extends User {
 		return this.adminID;
 	}
 	
-	public void setAdminID(String ID) {
-		this.adminID = ID;
+	public void setAdminID(String id) {
+		this.adminID = id;
 	}
 	
 	public void setEmail(String email) {
