@@ -1,6 +1,6 @@
 package entity;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import entity.User;
 
