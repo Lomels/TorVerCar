@@ -1,4 +1,4 @@
-package test.controller;
+package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -6,7 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.security.InvalidParameterException;
 
 import org.junit.Test;
-import logic.controller.*;
+import logic.controller.StudentCarBuilder;
+import logic.controller.StudentBuilder;
+
 import logic.entity.*;
 
 public class StudentCarBuilderTest {
@@ -22,7 +24,7 @@ public class StudentCarBuilderTest {
 	}
 	
 	@Test
-	public void newBuilderTest_allMethod() {
+	public void newBuilderTestallMethod() {
 		Student s = StudentBuilder.newBuilder("1").build();
 		StudentCarBuilder scb = StudentCarBuilder.newCarBuilder(s).rating(0).carInfo(null).reports(null);
 		StudentCar sc_built = scb.build();
@@ -32,9 +34,9 @@ public class StudentCarBuilderTest {
 	}
 	
 	@Test 
-	public void newBuilderTest_studentNull() {
-		assertThrows(InvalidParameterException.class, () ->{
-			StudentCarBuilder.newCarBuilder(null);
-		});
+	public void newBuilderTeststudentNull() {
+		assertThrows(InvalidParameterException.class, () ->
+			StudentCarBuilder.newCarBuilder(null)
+		);
 	}
 }

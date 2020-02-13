@@ -1,4 +1,4 @@
-package test.controller;
+package test;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,7 +18,7 @@ public class StudentBuilderTest {
 	}
 	
 	@Test
-	public void newBuilderTest_withoutId() {
+	public void newBuilderTestwithoutId() {
 		assertThrows(InvalidParameterException.class, () -> {
 			StudentBuilder.newBuilder("");
 		});
