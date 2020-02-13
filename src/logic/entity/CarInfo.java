@@ -1,32 +1,32 @@
 package logic.entity;
-	
+
+import java.security.InvalidParameterException;
+
 public class CarInfo {
 	private String plate;
 	private Integer seats;
 	private String model;
 	private String colour;
-	
+
 	public String getPlate() {
 		return plate;
 	}
-	//AGGIUNGERE EXCEPTION
+
 	public void setPlate(String plate) {
-		if(plate.length() != 7) {
-			// TODO Implementare meglio
-			return;		
-	}else {
+		if (plate.length() > 0 && plate.length() < 8) {
 			this.plate = plate;
+		} else {
+			throw new InvalidParameterException("Invalid plate");
 		}
-		
 	}
+
 	public Integer getSeats() {
 		return seats;
 	}
-	//AGGIUNGERE EXCEPTION
+
 	public void setSeats(Integer seats){
-		if(seats<1) {
-			// TODO Implementare meglio
-			return;
+		if(seats <= 0) {
+			throw new InvalidParameterException("Number os seats must be greater than 0");
 		}else {
 			this.seats = seats;
 		}
@@ -35,9 +35,8 @@ public class CarInfo {
 		return model;
 	}
 	public void setModel(String model) {
-		if(model.length()<1) {	
-			// TODO Implementare meglio
-			return;
+		if(model.length() <= 0) {	
+			throw new InvalidParameterException("Invalid model name");
 		}
 		this.model = model;
 	}
@@ -45,9 +44,8 @@ public class CarInfo {
 		return colour;
 	}
 	public void setColour(String colour) {
-		if(colour.length()<3) {
-			// TODO Implementare meglio
-			return;
+		if(colour.length() <= 0) {	
+			throw new InvalidParameterException("Invalid colour name");
 		}
 		this.colour = colour;
 	}

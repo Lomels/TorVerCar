@@ -1,5 +1,7 @@
 package logic.entity;
 
+import java.security.InvalidParameterException;
+
 // Il setUser e setMessage probabilmente sono inutili (?)
 
 public class Message {
@@ -12,9 +14,8 @@ public class Message {
 	}
 	
 	public void setMessage(String message) {
-		if(message.length() == 0) {
-			// TODO Implementare meglio
-			return;
+		if(message.length() <= 0) {
+			throw new InvalidParameterException("Message lenght must be greater than 0");
 		}else {
 			this.myMessage = message;
 		}
