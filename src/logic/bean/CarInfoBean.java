@@ -1,4 +1,4 @@
-package bean;
+package logic.bean;
 
 public class CarInfoBean {
 

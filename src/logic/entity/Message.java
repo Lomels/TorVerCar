@@ -1,4 +1,4 @@
-package entity;
+package logic.entity;
 
 // Il setUser e setMessage probabilmente sono inutili (?)
 

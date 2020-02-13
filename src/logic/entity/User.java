@@ -1,4 +1,4 @@
-package entity;
+package logic.entity;
 
 //Non so se l'abstract ce sta
 public abstract class User {

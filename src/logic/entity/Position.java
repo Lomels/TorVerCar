@@ -1,4 +1,4 @@
-package entity;
+package logic.entity;
 
 public class Position {
 	// TODO Implementare
