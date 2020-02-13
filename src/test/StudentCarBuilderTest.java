@@ -17,20 +17,20 @@ public class StudentCarBuilderTest {
 	public void newBuilderTest() {
 		Student s = StudentBuilder.newBuilder("1").build();
 		StudentCarBuilder scb = StudentCarBuilder.newCarBuilder(s).rating(0);
-		StudentCar sc_built = scb.build();
-		Student s_costructor = new Student("1", null, null, null, null, null, null);
-		StudentCar sc_costructor = new StudentCar(s_costructor, 0, null, null);
-		assertEquals(sc_built.toString(), sc_costructor.toString());
+		StudentCar scbuilt = scb.build();
+		Student scostructor = new Student("1", null, null, null, null, null, null);
+		StudentCar sccostructor = new StudentCar(scostructor, 0, null, null);
+		assertEquals(scbuilt.toString(), sccostructor.toString());
 	}
 	
 	@Test
 	public void newBuilderTestallMethod() {
 		Student s = StudentBuilder.newBuilder("1").build();
 		StudentCarBuilder scb = StudentCarBuilder.newCarBuilder(s).rating(0).carInfo(null).reports(null);
-		StudentCar sc_built = scb.build();
-		Student s_costructor = new Student("1", null, null, null, null, null, null);
-		StudentCar sc_costructor = new StudentCar(s_costructor, 0, null, null);
-		assertEquals(sc_built.toString(), sc_costructor.toString());
+		StudentCar scbuilt = scb.build();
+		Student scostructor = new Student("1", null, null, null, null, null, null);
+		StudentCar sccostructor = new StudentCar(scostructor, 0, null, null);
+		assertEquals(scbuilt.toString(), sccostructor.toString());
 	}
 	
 	@Test 
