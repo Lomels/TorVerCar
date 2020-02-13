@@ -1,7 +1,6 @@
 package logic.controller;
 
-import java.util.ArrayList;
-
+import java.util.List;
 
 import logic.entity.CarInfo;
 import logic.entity.Report;
@@ -12,7 +11,7 @@ public class StudentCarBuilder extends StudentBuilder{
 
 	private int rating;
 	private CarInfo carInfo;
-	private ArrayList<Report> reports;
+	private List<Report> reports;
 	private Student student;
 
 	public StudentCarBuilder(String userID, Student student) {
@@ -46,7 +45,7 @@ public class StudentCarBuilder extends StudentBuilder{
 		return this;
 	}
 
-	public StudentCarBuilder reports(ArrayList<Report> reports) {
+	public StudentCarBuilder reports(List<Report> reports) {
 		this.reports = reports;
 		return this;
 	}

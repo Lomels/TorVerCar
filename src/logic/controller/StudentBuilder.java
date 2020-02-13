@@ -1,6 +1,5 @@
 package logic.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import logic.entity.Lift;
@@ -20,7 +19,7 @@ public class StudentBuilder{
 	//Collection of favorite routes for the week
 	protected WeeklyPreferencies weeklyPreferencies;
 	//Collection of active lifts
-	protected ArrayList<Lift> lifts;
+	protected List<Lift> lifts;
 	
 	//Costruttore del builder
 	public StudentBuilder(String userID) {
@@ -61,7 +60,7 @@ public class StudentBuilder{
 	}
 	
 	public StudentBuilder lifts(List<Lift> lifts) {
-		this.lifts = (ArrayList<Lift>) lifts;
+		this.lifts = lifts;
 		return this;
 	}
 	

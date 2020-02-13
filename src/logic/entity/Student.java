@@ -1,6 +1,6 @@
 package logic.entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Student extends User {
 
@@ -10,11 +10,11 @@ public class Student extends User {
 	//Collection of favorite routes for the week
 	protected WeeklyPreferencies weeklyPreferencies;
 	//Collection of active lifts
-	protected ArrayList<Lift> lifts;
+	protected List<Lift> lifts;
 
 	//Generated
 	public Student(String userID, String password, String name, String surname, Profile profile,
-			WeeklyPreferencies weeklyPreferencies, ArrayList<Lift> lifts) {
+			WeeklyPreferencies weeklyPreferencies, List<Lift> lifts) {
 		super(userID, password);
 		this.name = name;
 		this.surname = surname;
@@ -72,11 +72,11 @@ public class Student extends User {
 		this.weeklyPreferencies = weeklyPreferencies;
 	}
 
-	public ArrayList<Lift> getLifts() {
+	public List<Lift> getLifts() {
 		return this.lifts;
 	}
 
-	public void setLifts(ArrayList<Lift> lifts) {
+	public void setLifts(List<Lift> lifts) {
 		if(lifts == null) {
 			return;
 		}

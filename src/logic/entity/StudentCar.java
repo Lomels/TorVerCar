@@ -1,20 +1,15 @@
 package logic.entity;
 
-import java.util.ArrayList;
-
-import logic.entity.CarInfo;
-import logic.entity.Report;
-import logic.entity.Route;
-import logic.entity.Student;
+import java.util.List;
 
 public class StudentCar extends Student {
 
 	private int rating;
 	private CarInfo carInfo;
-	private ArrayList<Report> reports;
+	private List<Report> reports;
 
 	//Costruttore che usa lo student
-	public StudentCar(Student student, int rating, CarInfo carInfo, ArrayList<Report> reports) {
+	public StudentCar(Student student, int rating, CarInfo carInfo, List<Report> reports) {
 		super(student.userID, student.password, student.name, student.surname, student.profile, student.weeklyPreferencies, student.lifts);
 		this.rating = rating;
 		this.carInfo = carInfo;
@@ -52,7 +47,7 @@ public class StudentCar extends Student {
 		this.carInfo = carInfo;
 	}
 
-	public ArrayList<Report> getReports() {
+	public List<Report> getReports() {
 		return reports;
 	}
 
