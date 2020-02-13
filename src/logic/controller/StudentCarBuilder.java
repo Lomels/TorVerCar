@@ -1,5 +1,6 @@
 package logic.controller;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 import logic.entity.CarInfo;
@@ -14,27 +15,24 @@ public class StudentCarBuilder extends StudentBuilder{
 	private List<Report> reports;
 	private Student student;
 
-	public StudentCarBuilder(String userID, Student student) {
-		super(userID);
+	public StudentCarBuilder(Student student) {
+		super(student.getUserID());
 		this.student = student;
 	}
 
-	public static StudentCarBuilder newBuilder(Student student) {
-		return new StudentCarBuilder(student.getUserID(), student);
+	public static StudentCarBuilder newCarBuilder(Student student) {
+		if(student == null) {
+			throw new InvalidParameterException("Student must not be null");
+		}
+		return new StudentCarBuilder(student);
 	}
 
 	@Override
 	public StudentCar build() {
 		return new StudentCar(this.student, this.rating, this.carInfo, this.reports);
 	}
-
 	
 	//Tutti i metodi necessari per l'utilizzo del pattern 
-	public StudentCarBuilder student(Student student) {
-		this.student = student;
-		return this;
-	}
-
 	public StudentCarBuilder rating(int rating) {
 		this.rating = rating;
 		return this;
