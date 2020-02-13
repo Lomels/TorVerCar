@@ -1,0 +1,7 @@
+/*
+ * 	es. di utilizzo di StudentBuilder
+ * 		Student student = StudentBuilder.newBuilder("000").fullname("Mario", "Rossi").password("abc").build();
+ */
+
+ es. di utilizzo di StudentBuilder
+ 	StudentCar sc= StudentCarBuilder.newBuilder(student).rating(10).build();

@@ -8,11 +8,6 @@ import logic.entity.Profile;
 import logic.entity.Student;
 import logic.entity.WeeklyPreferencies;
 
-/*
- * 	es. di utilizzo
- * 		Student student = StudentBuilder.newBuilder("000").fullname("Mario", "Rossi").password("abc").build();
- */
-
 public class StudentBuilder{
 
 	//Matriculation number, used for login

@@ -3,12 +3,9 @@ package logic.entity;
 import java.util.ArrayList;
 
 import logic.entity.CarInfo;
-import logic.entity.Lift;
-import logic.entity.Profile;
 import logic.entity.Report;
 import logic.entity.Route;
 import logic.entity.Student;
-import logic.entity.WeeklyPreferencies;
 
 public class StudentCar extends Student {
 
@@ -16,23 +13,16 @@ public class StudentCar extends Student {
 	private CarInfo carInfo;
 	private ArrayList<Report> reports;
 
-	
-	public StudentCar(String userID, String password, String name, String surname, Profile profile,
-			WeeklyPreferencies weeklyPreferencies, ArrayList<Lift> lifts, int rating, CarInfo carInfo,
-			ArrayList<Report> reports) {
-		super(userID, password, name, surname, profile, weeklyPreferencies, lifts);
+	//Costruttore che usa lo student
+	public StudentCar(Student student, int rating, CarInfo carInfo, ArrayList<Report> reports) {
+		super(student.userID, student.password, student.name, student.surname, student.profile, student.weeklyPreferencies, student.lifts);
 		this.rating = rating;
 		this.carInfo = carInfo;
 		this.reports = reports;
 	}
-	
-	//Costruttore che usa lo student
-	public StudentCar(Student student, int rating, CarInfo carInfo, ArrayList<Report> reports) {
-		this(student.userID, student.password, student.name, student.surname, student.profile, student.weeklyPreferencies, student.lifts, rating, carInfo, reports);
-	}
 
 	public boolean isAvailable(Route route) {
-		return true;
+		return route == null;
 	}
 
 	public void updateRating(int vote) {
@@ -45,13 +35,12 @@ public class StudentCar extends Student {
 	public int getRating() {
 		return rating;
 	}
-	
-/* HA SENSO METTERLO? PER ME NO - Marco
- * 
+
+
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
-*/
+	
 	public CarInfo getCarInfo() {
 		return carInfo;
 	}
@@ -82,7 +71,7 @@ public class StudentCar extends Student {
 	public String toString() {
 		return super.toString()  + ", " + "StudentCar [rating=" + rating + ", carInfo=" + carInfo + ", reports=" + reports + "]";
 	}
-	
-	
-	
+
+
+
 }
