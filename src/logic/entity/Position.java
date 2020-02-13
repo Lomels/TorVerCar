@@ -1,5 +1,5 @@
 package logic.entity;
 
-public class Position {
-	// TODO Implementare
+public interface Position {
+	// TODO Implementare e rendere classe
 }

@@ -1,7 +1,5 @@
 package logic.bean;
 
-import java.security.InvalidParameterException;
-
 public class CarInfoBean{
 	
 	private String plate;
@@ -14,11 +12,7 @@ public class CarInfoBean{
 	}
 	
 	public void setPlate(String plate) {
-		if (plate.length() > 0 && plate.length() < 8) {
-			this.plate = plate;
-		} else {
-			throw new InvalidParameterException("Invalid plate");
-		}
+		this.plate = plate;
 	}
 	
 	public Integer getSeats() {

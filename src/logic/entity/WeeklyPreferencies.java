@@ -1,5 +1,5 @@
 package logic.entity;
 
-public class WeeklyPreferencies {
-
+public interface WeeklyPreferencies {
+	// TODO Implementare e rendere classe
 }
