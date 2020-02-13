@@ -1,8 +1,8 @@
 package logic.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import logic.controller.StudentBuilder;
 import logic.entity.Lift;
 import logic.entity.Profile;
 import logic.entity.Student;
@@ -60,8 +60,8 @@ public class StudentBuilder{
 		return this;
 	}
 	
-	public StudentBuilder lifts(ArrayList<Lift> lifts) {
-		this.lifts = lifts;
+	public StudentBuilder lifts(List<Lift> lifts) {
+		this.lifts = (ArrayList<Lift>) lifts;
 		return this;
 	}
 	

@@ -2,12 +2,6 @@ package logic.entity;
 
 import java.util.ArrayList;
 
-import logic.entity.Lift;
-import logic.entity.Profile;
-import logic.entity.StudentCar;
-import logic.entity.User;
-import logic.entity.WeeklyPreferencies;
-
 public class Student extends User {
 
 	protected String name;
