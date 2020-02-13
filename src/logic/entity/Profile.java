@@ -1,9 +1,9 @@
 package logic.entity;
 
 public class Profile {
-	public String email;
-	public String phoneNumber;
-	public String profilePic;
+	private String email;
+	private String phoneNumber;
+	private String profilePic;
 	
 	public String getEmail() {
 		return email;
