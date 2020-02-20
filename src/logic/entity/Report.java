@@ -1,16 +1,18 @@
 package logic.entity;
 
+import java.security.InvalidParameterException;
+
 public class Report {
 	private String message;
 	private StudentCar target;
 	private Boolean resolved;
 	private Admin handler;
-	
+
 	public Report(String message, StudentCar target, Admin handler) {
-		this.message = message;
-		this.target = target;
+		this.setMessage(message);
+		this.setTarget(target);
 		this.resolved = false;
-		this.handler = handler;
+		this.setHandler(handler);
 	}
 
 	public String getMessage() {
@@ -18,11 +20,11 @@ public class Report {
 	}
 
 	public void setMessage(String message) {
-		if(message.length()<1) {
-			// TODO Implementare meglio
-			return;
+		if(message == null || message.length() == 0) {
+			throw new InvalidParameterException("Message must not be empty or null");
+		} else {
+			this.message = message;
 		}
-		this.message = message;
 	}
 
 	public StudentCar getTarget() {
@@ -31,10 +33,10 @@ public class Report {
 
 	public void setTarget(StudentCar target) {
 		if(target == null) {
-			// TODO Implementare meglio
-			return;
+			throw new InvalidParameterException("Must pass a valid StudentCar");
+		} else {
+			this.target = target;	
 		}
-		this.target = target;
 	}
 
 	public Boolean getResolved() {
@@ -51,10 +53,10 @@ public class Report {
 
 	public void setHandler(Admin handler) {
 		if(handler == null) {
-			// TODO Implementare meglio
-			return;
+			throw new InvalidParameterException("Must pass a valid Admin");
+		} else {
+			this.handler = handler;
 		}
-		this.handler = handler;
 	}
-	
+
 }

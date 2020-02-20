@@ -1,5 +1,6 @@
 package logic.entity;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 public class Lift {
@@ -22,8 +23,7 @@ public class Lift {
 
 	public void addMessage(Message messages) {
 		if(messages == null) {
-			// TODO Implementare meglio
-			return;
+			throw new InvalidParameterException("Message must not be null");
 		}
 		(this.messages).add(messages);
 	}

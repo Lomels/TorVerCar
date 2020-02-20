@@ -1,5 +1,9 @@
 package logic.entity;
 
+import java.security.InvalidParameterException;
+
+import logic.controller.InputChecker;
+
 public class Profile {
 	private String email;
 	private String phoneNumber;
@@ -8,26 +12,32 @@ public class Profile {
 	public String getEmail() {
 		return email;
 	}
+	
 	public void setEmail(String email) {
-		if(email.length() < 5) {
-			return;
-			// TODO Implementare meglio
+		if(InputChecker.checkEmail(email)) {
+			this.email = email;
+		} else {
+			throw new InvalidParameterException("Email does not respect the regular expression");
 		}
-		this.email = email;
+		
 	}
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
+	
 	public void setPhoneNumber(String phoneNumber) {
-		if(phoneNumber.length() != 10) {
-			// TODO Implementare meglio
-			return;
+		if(InputChecker.checkPhone(phoneNumber)) {
+			this.phoneNumber = phoneNumber;;
+		} else {
+			throw new InvalidParameterException("Phone number does not respect the regular expression");
 		}
-		this.phoneNumber = phoneNumber;
+		
 	}
+	
 	public String getProfilePic() {
 		return profilePic;
 	}
+	
 	public void setProfilePic(String profilePic) {
 		this.profilePic = profilePic;
 	}
