@@ -1,6 +1,6 @@
 package logic.controller;
 
-public class InputChecker {
+public abstract class InputChecker {
 
 	private static String emailPattern = "^([a-zA-Z0-9\\.\\_\\-]+)@([a-zA-Z0-9\\.\\_\\-]+)\\.([a-zA-Z0-9\\.\\_\\-]{2,5})$";
 	private static String phonePattern = "^([\\+]*)([0-9\\ ]{10,15})$";
