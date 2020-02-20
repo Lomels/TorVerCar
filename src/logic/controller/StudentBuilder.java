@@ -1,5 +1,6 @@
 package logic.controller;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 import logic.entity.Lift;
@@ -23,7 +24,11 @@ public class StudentBuilder{
 	
 	//Costruttore del builder
 	public StudentBuilder(String userID) {
-		this.userID = userID;
+		if(InputChecker.checkUserID(userID)) {
+			this.userID = userID;
+		} else {
+			throw new InvalidParameterException("userID must not be null or empty");
+		}
 	}
 	
 	public static StudentBuilder newBuilder(String userID) {
