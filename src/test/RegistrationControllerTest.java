@@ -2,12 +2,12 @@ package test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.security.InvalidParameterException;
 import org.junit.Test;
 
 
 import logic.controller.RegistrationController;
 import logic.controller.exception.DatabaseException;
+import logic.controller.exception.InvalidInputException;
 import logic.view.dummy.DummyOurStudentDatabase;
 
 public class RegistrationControllerTest {
@@ -28,7 +28,7 @@ public class RegistrationControllerTest {
 	@Test
 	public void invalidInput() {
 		RegistrationController rc = new RegistrationController();
-		assertThrows(InvalidParameterException.class, () -> rc.createStudent("aaa", "aaa"));
+		assertThrows(InvalidInputException.class, () -> rc.createStudent("aaa", "aaa"));
 	}
 	
 	//TODO: redo without dummy

@@ -3,10 +3,10 @@ package test;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import java.security.InvalidParameterException;
 
 import org.junit.Test;
 import logic.controller.StudentBuilder;
+import logic.controller.exception.InvalidInputException;
 import logic.entity.*;
 
 public class StudentBuilderTest {
@@ -19,7 +19,7 @@ public class StudentBuilderTest {
 	
 	@Test
 	public void newBuilderTestwithoutId() {
-		assertThrows(InvalidParameterException.class, () -> 
+		assertThrows(InvalidInputException.class, () -> 
 			StudentBuilder.newBuilder("")
 		);
 	}

@@ -1,6 +1,5 @@
 package logic.controller;
 
-import java.security.InvalidParameterException;
 import java.util.List;
 
 import logic.entity.Lift;
@@ -21,20 +20,21 @@ public class StudentBuilder{
 	protected WeeklyPreferencies weeklyPreferencies;
 	//Collection of active lifts
 	protected List<Lift> lifts;
-	
+
 	//Costruttore del builder
 	public StudentBuilder(String userID) {
-		if(InputChecker.checkUserID(userID)) {
+		try {
+			InputChecker.checkUserID(userID);
 			this.userID = userID;
-		} else {
-			throw new InvalidParameterException("userID must not be null or empty");
+		} catch (Exception e) {
+			throw e;
 		}
 	}
-	
+
 	public static StudentBuilder newBuilder(String userID) {
 		return new StudentBuilder(userID);
 	}
-	
+
 	//Metodo che chiama correttamente il costruttore di Student
 	public Student build() {
 		return new Student(this.userID, this.password, this.name, this.surname, this.profile, this.weeklyPreferencies, this.lifts);
@@ -53,7 +53,7 @@ public class StudentBuilder{
 		this.surname = surname;
 		return this;
 	}
-	
+
 	public StudentBuilder profile(Profile profile) {
 		this.profile = profile;
 		return this;
@@ -63,11 +63,11 @@ public class StudentBuilder{
 		this.weeklyPreferencies = weekly;
 		return this;
 	}
-	
+
 	public StudentBuilder lifts(List<Lift> lifts) {
 		this.lifts = lifts;
 		return this;
 	}
-	
-	
+
+
 }

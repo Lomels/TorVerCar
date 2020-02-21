@@ -1,8 +1,8 @@
 package logic.controller;
 
-import java.security.InvalidParameterException;
+import logic.controller.exception.InvalidInputException;
 
-public abstract class InputChecker {
+public class InputChecker {
 
 	private static String emailPattern = "^([a-zA-Z0-9\\.\\_\\-]+)@([a-zA-Z0-9\\.\\_\\-]+)\\.([a-zA-Z0-9\\.\\_\\-]{2,5})$";
 	private static String phonePattern = "^([\\+]*)([0-9\\ ]{10,15})$";
@@ -10,40 +10,49 @@ public abstract class InputChecker {
 	private static String userIDPattern = "^([0-9]{1,10})$";
 	//password must be at least 6 char long and contain at least a symbol
 	private static String passwordPattern = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$";
-
+	
 	private InputChecker() {
 		//must remain empty
 	}
 
-	public static boolean checkEmail(String email) throws InvalidParameterException{
+	public static void checkEmail(String email) throws InvalidInputException{
 		try {
-			return email.matches(InputChecker.emailPattern);
+			if(!email.matches(InputChecker.emailPattern)) {
+				throw new InvalidInputException("Given email does not match " + InputChecker.emailPattern);
+			}
 		} catch (NullPointerException e) {
-			throw new InvalidParameterException("Input must not be null"); 
+			throw new InvalidInputException("Given email must not be null"); 
 		}
 	}
 	
-	public static boolean checkPhone(String phone) throws InvalidParameterException{
+	public static void checkPhone(String phone) throws InvalidInputException{
 		try {
-			return phone.matches(InputChecker.phonePattern);
+			if(!phone.matches(InputChecker.phonePattern)) {
+				throw new InvalidInputException("Given phone does not match " + InputChecker.phonePattern);
+			}
 		} catch (NullPointerException e) {
-			throw new InvalidParameterException("Input must not be null"); 
+			throw new InvalidInputException("Given phone must not be null"); 
 		}
 	}
 	
-	public static boolean checkUserID(String userID) throws InvalidParameterException{
+	public static void checkUserID(String userID) throws InvalidInputException{
 		try {
-			return userID.matches(InputChecker.userIDPattern);
+			if(!userID.matches(InputChecker.userIDPattern)) {
+				throw new InvalidInputException("Given userID does not match " + InputChecker.userIDPattern);
+			}
 		} catch (NullPointerException e) {
-			throw new InvalidParameterException("Input must not be null"); 
+			throw new InvalidInputException("Given userID must not be null"); 
 		}
 	}
 	
-	public static boolean checkPassword(String password) throws InvalidParameterException{
+	public static void checkPassword(String password) throws InvalidInputException{
 		try {
-			return password.matches(InputChecker.passwordPattern);
+			if(!password.matches(InputChecker.passwordPattern)) {
+				throw new InvalidInputException("Given password does not match " + InputChecker.passwordPattern);
+			}
 		} catch (NullPointerException e) {
-			throw new InvalidParameterException("Input must not be null"); 
+			throw new InvalidInputException("Given password must not be null"); 
 		}
 	}
+	
 }
