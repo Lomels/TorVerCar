@@ -28,6 +28,9 @@ public class RegistrationController {
 		if(ourDb.existByUserID(userID)) {
 			throw new DatabaseException("Already registered student");
 		} else {
+			if(ourDb.wasBannedByUserID(userID)) {
+				throw new DatabaseException("User was previously banned");
+			}
 			//get the UserInfo bean from uniDb
 			UserInfo response = uniDb.getByUserID(userID);
 			//TODO: implement password encryption

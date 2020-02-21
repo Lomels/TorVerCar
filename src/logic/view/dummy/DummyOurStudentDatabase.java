@@ -39,4 +39,9 @@ public class DummyOurStudentDatabase implements OurStudentDatabase {
 		return s;
 	}
 
+	@Override
+	public boolean wasBannedByUserID(String userID) {
+		return userID.equals("99999");
+	}
+
 }

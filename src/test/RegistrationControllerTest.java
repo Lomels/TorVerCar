@@ -40,5 +40,12 @@ public class RegistrationControllerTest {
 		RegistrationController rc = new RegistrationController();
 		assertThrows(DatabaseException.class, () -> rc.createStudent("00000", "aaA123@"));
 	}
+	
+	//TODO: redo without dummy
+	@Test
+	public void previouslyBannedUser() {
+		RegistrationController rc = new RegistrationController();
+		assertThrows(DatabaseException.class, () -> rc.createStudent("99999", "aaA123@"));
+	}
 
 }
