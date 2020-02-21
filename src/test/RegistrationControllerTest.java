@@ -24,7 +24,7 @@ public class RegistrationControllerTest {
 		} catch (Exception e) {
 			Logger.getGlobal().log(Level.FINE, e.getMessage());
 		} 
-		assertEquals(1, DummyOurStudentDatabase.counter);
+		assertEquals(1, DummyOurStudentDatabase.getCounter());
 	}
 
 	//TODO: redo without dummy
