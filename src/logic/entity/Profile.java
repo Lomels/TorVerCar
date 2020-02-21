@@ -14,12 +14,10 @@ public class Profile {
 
 	//TODO: Redundancy?
 	public void setEmail(String email) throws InvalidInputException{
-		try {
-			InputChecker.checkEmail(email);
-			this.email = email;	
-		} catch (Exception e) {
-			throw e;
-		}
+
+		InputChecker.checkEmail(email);
+		this.email = email;	
+
 
 	}
 	public String getPhoneNumber() {
@@ -28,12 +26,9 @@ public class Profile {
 
 	//TODO: Redundancy?
 	public void setPhoneNumber(String phoneNumber) throws InvalidInputException{
-		try {
-			InputChecker.checkPhone(phoneNumber);
-			this.phoneNumber = phoneNumber;		
-		} catch (Exception e) {
-			throw e;
-		}
+		InputChecker.checkPhone(phoneNumber);
+		this.phoneNumber = phoneNumber;		
+
 	}
 
 	public String getProfilePic() {

@@ -10,10 +10,14 @@ import logic.view.*;
 
 public class DummyOurStudentDatabase implements OurStudentDatabase {
 
-	public static int counter = 0;
+	private static int counter = 0;
 
 	public static void incrementCounter() {
 		DummyOurStudentDatabase.counter++;
+	}
+
+	public static int getCounter() {
+		return DummyOurStudentDatabase.counter;
 	}
 
 	@Override
@@ -31,11 +35,7 @@ public class DummyOurStudentDatabase implements OurStudentDatabase {
 		DummyDatabaseBoundary uni = new DummyDatabaseBoundary();
 		UserInfo res = uni.getByUserID("12345");
 		Student s;
-		try {
-			s = StudentBuilder.newBuilder(userID).password("aaAAA123@").fullname(res.getName(), res.getSurname()).build();
-		} catch (InvalidInputException e) {
-			throw e;
-		}
+		s = StudentBuilder.newBuilder(userID).password("aaAAA123@").fullname(res.getName(), res.getSurname()).build();	
 		return s;
 	}
 

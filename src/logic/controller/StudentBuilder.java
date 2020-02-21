@@ -24,12 +24,8 @@ public class StudentBuilder{
 
 	//Costruttore del builder
 	public StudentBuilder(String userID) throws InvalidInputException{
-		try {
-			InputChecker.checkUserID(userID);
-			this.userID = userID;
-		} catch (Exception e) {
-			throw e;
-		}
+		InputChecker.checkUserID(userID);
+		this.userID = userID;
 	}
 
 	public static StudentBuilder newBuilder(String userID) throws InvalidInputException{
