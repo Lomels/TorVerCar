@@ -7,6 +7,7 @@ import java.security.InvalidParameterException;
 
 import org.junit.Test;
 import logic.controller.StudentCarBuilder;
+import logic.controller.exception.InvalidInputException;
 import logic.controller.StudentBuilder;
 
 import logic.entity.*;
@@ -14,7 +15,7 @@ import logic.entity.*;
 public class StudentCarBuilderTest {
 
 	@Test
-	public void newBuilderTest() {
+	public void newBuilderTest() throws InvalidInputException {
 		Student s = StudentBuilder.newBuilder("1").build();
 		StudentCarBuilder scb = StudentCarBuilder.newCarBuilder(s).rating(0);
 		StudentCar scbuilt = scb.build();
@@ -24,7 +25,7 @@ public class StudentCarBuilderTest {
 	}
 	
 	@Test
-	public void newBuilderTestallMethod() {
+	public void newBuilderTestallMethod() throws InvalidInputException {
 		Student s = StudentBuilder.newBuilder("1").build();
 		StudentCarBuilder scb = StudentCarBuilder.newCarBuilder(s).rating(0).carInfo(null).reports(null);
 		StudentCar scbuilt = scb.build();

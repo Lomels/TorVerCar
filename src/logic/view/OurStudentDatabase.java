@@ -1,6 +1,7 @@
 package logic.view;
 
 import logic.controller.exception.DatabaseException;
+import logic.controller.exception.InvalidInputException;
 import logic.entity.Student;
 
 public interface OurStudentDatabase {
@@ -12,5 +13,5 @@ public interface OurStudentDatabase {
 	public void addStudent(Student student) throws DatabaseException;
 	
 	//load a student from our database
-	public Student loadStudentByUserID(String userID);
+	public Student loadStudentByUserID(String userID) throws InvalidInputException;
 }

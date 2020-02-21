@@ -1,6 +1,6 @@
 package logic.controller.exception;
 
-public class DatabaseException extends RuntimeException {
+public class DatabaseException extends Exception {
 
 	/**
 	 * 

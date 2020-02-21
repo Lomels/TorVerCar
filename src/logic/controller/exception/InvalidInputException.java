@@ -1,6 +1,6 @@
 package logic.controller.exception;
 
-public class InvalidInputException extends RuntimeException {
+public class InvalidInputException extends Exception {
 
 	/**
 	 * 

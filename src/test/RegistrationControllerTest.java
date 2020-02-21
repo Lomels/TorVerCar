@@ -2,6 +2,9 @@ package test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.junit.Test;
 
 
@@ -19,7 +22,7 @@ public class RegistrationControllerTest {
 			RegistrationController rc = new RegistrationController();
 			rc.createStudent("12345", "marioRossi11@");	
 		} catch (Exception e) {
-
+			Logger.getGlobal().log(Level.FINE, e.getMessage());
 		} 
 		assertEquals(1, DummyOurStudentDatabase.counter);
 	}

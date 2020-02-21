@@ -1,6 +1,7 @@
 package logic.entity;
 
 import logic.controller.InputChecker;
+import logic.controller.exception.InvalidInputException;
 
 public class Profile {
 	private String email;
@@ -11,7 +12,8 @@ public class Profile {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	//TODO: Redundancy?
+	public void setEmail(String email) throws InvalidInputException{
 		try {
 			InputChecker.checkEmail(email);
 			this.email = email;	
@@ -24,7 +26,8 @@ public class Profile {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
+	//TODO: Redundancy?
+	public void setPhoneNumber(String phoneNumber) throws InvalidInputException{
 		try {
 			InputChecker.checkPhone(phoneNumber);
 			this.phoneNumber = phoneNumber;		

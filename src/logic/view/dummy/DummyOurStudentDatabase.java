@@ -3,13 +3,18 @@ package logic.view.dummy;
 import logic.bean.UserInfo;
 import logic.controller.StudentBuilder;
 import logic.controller.exception.DatabaseException;
+import logic.controller.exception.InvalidInputException;
 import logic.entity.Student;
 import logic.view.*;
 
 
 public class DummyOurStudentDatabase implements OurStudentDatabase {
-	
+
 	public static int counter = 0;
+
+	public static void incrementCounter() {
+		DummyOurStudentDatabase.counter++;
+	}
 
 	@Override
 	public boolean existByUserID(String userID) {
@@ -18,14 +23,19 @@ public class DummyOurStudentDatabase implements OurStudentDatabase {
 
 	@Override
 	public void addStudent(Student student) throws DatabaseException {
-		DummyOurStudentDatabase.counter++;
+		DummyOurStudentDatabase.incrementCounter();
 	}
 
 	@Override
-	public Student loadStudentByUserID(String userID) {
+	public Student loadStudentByUserID(String userID) throws InvalidInputException {
 		DummyDatabaseBoundary uni = new DummyDatabaseBoundary();
 		UserInfo res = uni.getByUserID("12345");
-		Student s = StudentBuilder.newBuilder(userID).password("aaAAA123@").fullname(res.getName(), res.getSurname()).build();
+		Student s;
+		try {
+			s = StudentBuilder.newBuilder(userID).password("aaAAA123@").fullname(res.getName(), res.getSurname()).build();
+		} catch (InvalidInputException e) {
+			throw e;
+		}
 		return s;
 	}
 

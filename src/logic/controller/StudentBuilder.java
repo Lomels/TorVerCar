@@ -2,6 +2,7 @@ package logic.controller;
 
 import java.util.List;
 
+import logic.controller.exception.InvalidInputException;
 import logic.entity.Lift;
 import logic.entity.Profile;
 import logic.entity.Student;
@@ -22,7 +23,7 @@ public class StudentBuilder{
 	protected List<Lift> lifts;
 
 	//Costruttore del builder
-	public StudentBuilder(String userID) {
+	public StudentBuilder(String userID) throws InvalidInputException{
 		try {
 			InputChecker.checkUserID(userID);
 			this.userID = userID;
@@ -31,7 +32,7 @@ public class StudentBuilder{
 		}
 	}
 
-	public static StudentBuilder newBuilder(String userID) {
+	public static StudentBuilder newBuilder(String userID) throws InvalidInputException{
 		return new StudentBuilder(userID);
 	}
 

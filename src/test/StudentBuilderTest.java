@@ -12,7 +12,7 @@ import logic.entity.*;
 public class StudentBuilderTest {
 	
 	@Test
-	public void newBuilderTest() {
+	public void newBuilderTest() throws InvalidInputException {
 		StudentBuilder sb = StudentBuilder.newBuilder("000");
 		assertNotNull(sb);
 	}
@@ -25,7 +25,7 @@ public class StudentBuilderTest {
 	}
 	
 	@Test
-	public void buildTest() {
+	public void buildTest() throws InvalidInputException {
 		Student sbuilt = StudentBuilder.newBuilder("111").fullname("Mario", "Rossi").password("aaa").weeklyPreferencies(null).profile(null).lifts(null).build();
 		Student scostructor = new Student("111", "aaa", "Mario", "Rossi", null, null, null);
 		assertEquals(sbuilt.toString(), scostructor.toString());

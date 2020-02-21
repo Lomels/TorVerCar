@@ -3,6 +3,7 @@ package logic.controller;
 import java.security.InvalidParameterException;
 import java.util.List;
 
+import logic.controller.exception.InvalidInputException;
 import logic.entity.CarInfo;
 import logic.entity.Report;
 import logic.entity.Student;
@@ -15,12 +16,12 @@ public class StudentCarBuilder extends StudentBuilder{
 	private List<Report> reports;
 	private Student student;
 
-	public StudentCarBuilder(Student student) {
+	public StudentCarBuilder(Student student) throws InvalidInputException {
 		super(student.getUserID());
 		this.student = student;
 	}
 
-	public static StudentCarBuilder newCarBuilder(Student student) {
+	public static StudentCarBuilder newCarBuilder(Student student) throws InvalidInputException{
 		if(student == null) {
 			throw new InvalidParameterException("Student must not be null");
 		}
