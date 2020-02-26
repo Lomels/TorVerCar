@@ -2,6 +2,8 @@ package logic.entity;
 
 import java.util.List;
 
+import logic.controller.exception.InvalidInputException;
+
 public class StudentCar extends Student {
 	
 	//TODO: Exception
@@ -11,7 +13,7 @@ public class StudentCar extends Student {
 	private List<Report> reports;
 
 	//Costruttore che usa lo student
-	public StudentCar(Student student, int rating, CarInfo carInfo, List<Report> reports) {
+	public StudentCar(Student student, int rating, CarInfo carInfo, List<Report> reports) throws InvalidInputException {
 		super(student.userID, student.password, student.name, student.surname, student.profile, student.weeklyPreferencies, student.lifts);
 		this.rating = rating;
 		this.carInfo = carInfo;

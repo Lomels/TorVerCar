@@ -1,33 +1,35 @@
 package logic.entity;
 
-import java.security.InvalidParameterException;
-
-// Il setUser e setMessage probabilmente sono inutili (?)
+import logic.controller.InputChecker;
+import logic.controller.exception.InvalidInputException;
 
 public class Message {
-	//TODO: change Exception
 
-	private String myMessage;
+	private String message;
 	private User from;
-	
-	public Message(String message, User from) {
-		this.myMessage = message;
+
+	public Message(String message, User from) throws InvalidInputException {
+		this.setMessage(message);
+		this.setFrom(from);
+	}
+
+	public void setMessage(String message) throws InvalidInputException {
+		InputChecker.checkGeneric(message);
+		this.message = message;
+	}
+
+	public void setFrom(User from) throws InvalidInputException {
+		if (from == null) {
+			throw new InvalidInputException("User must not be null");
+		}
 		this.from = from;
 	}
-	
-	public void setMessage(String message) {
-		if(message.length() <= 0) {
-			throw new InvalidParameterException("Message lenght must be greater than 0");
-		}else {
-			this.myMessage = message;
-		}
-	}
-	
+
 	public String getMessage() {
-		return this.myMessage;
+		return this.message;
 	}
-	
-	public User getUser() {
+
+	public User getFrom() {
 		return this.from;
 	}
 }

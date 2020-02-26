@@ -29,7 +29,7 @@ public class StudentCarBuilder extends StudentBuilder{
 	}
 
 	@Override
-	public StudentCar build() {
+	public StudentCar build() throws InvalidInputException {
 		return new StudentCar(this.student, this.rating, this.carInfo, this.reports);
 	}
 	

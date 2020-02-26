@@ -1,11 +1,12 @@
 package logic.entity;
 
-import java.security.InvalidParameterException;
 import java.util.List;
+
+import logic.controller.exception.InvalidInputException;
 
 public class Lift {
 	
-	//TODO: change Exception
+	//TODO: implement better
 	private String liftID;
 	private StudentCar driver;
 	private String note;
@@ -23,11 +24,11 @@ public class Lift {
 		return messages;
 	}
 
-	public void addMessage(Message messages) {
+	public void addMessage(Message messages) throws InvalidInputException {
 		if(messages == null) {
-			throw new InvalidParameterException("Message must not be null");
+			throw new InvalidInputException("Message must not be null");
 		}
-		(this.messages).add(messages);
+		this.messages.add(messages);
 	}
 
 	public String getLiftID() {

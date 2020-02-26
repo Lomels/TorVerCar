@@ -10,6 +10,10 @@ public class InputChecker {
 	private static String userIDPattern = "^([0-9]{1,10})$";
 	//password must be at least 6 char long and contain at least a symbol
 	private static String passwordPattern = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$";
+	//plate like AA123BB
+	private static String platePattern = "^([a-zA-Z]{2})(\\s*)(\\d{3})(\\s*)([a-zA-Z]{2})$";
+	//generic String must not be empty
+	private static String genericPattern = "^(?!\\s*$).+$";
 	
 	private InputChecker() {
 		//must remain empty
@@ -52,6 +56,26 @@ public class InputChecker {
 			}
 		} catch (NullPointerException e) {
 			throw new InvalidInputException("Given password must not be null"); 
+		}
+	}
+	
+	public static void checkPlate(String plate) throws InvalidInputException{
+		try {
+			if(!plate.matches(InputChecker.platePattern)) {
+				throw new InvalidInputException("Given plate does not match " + InputChecker.platePattern);
+			}
+		} catch (NullPointerException e) {
+			throw new InvalidInputException("Given plate must not be null"); 
+		}
+	}
+	
+	public static void checkGeneric(String generic) throws InvalidInputException{
+		try {
+			if(!generic.matches(InputChecker.genericPattern)) {
+				throw new InvalidInputException("Given generic string is empty");
+			}
+		} catch (NullPointerException e) {
+			throw new InvalidInputException("Given generic must not be null"); 
 		}
 	}
 	

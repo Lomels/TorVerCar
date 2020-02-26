@@ -10,6 +10,8 @@ import logic.view.dummy.DummyOurStudentDatabase;
 import logic.bean.UserInfo;
 
 public class RegistrationController {
+	
+	//TODO: amplia, guarda class diagram
 
 	private DatabaseBoundary uniDb;
 	private OurStudentDatabase ourDb;

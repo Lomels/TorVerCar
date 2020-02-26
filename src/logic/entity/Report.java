@@ -1,16 +1,16 @@
 package logic.entity;
 
-import java.security.InvalidParameterException;
+import logic.controller.InputChecker;
+import logic.controller.exception.InvalidInputException;
 
 public class Report {
-	//TODO: change Exception
 
 	private String message;
 	private StudentCar target;
 	private Boolean resolved;
 	private Admin handler;
 
-	public Report(String message, StudentCar target, Admin handler) {
+	public Report(String message, StudentCar target, Admin handler) throws InvalidInputException {
 		this.setMessage(message);
 		this.setTarget(target);
 		this.resolved = false;
@@ -21,23 +21,20 @@ public class Report {
 		return message;
 	}
 
-	public void setMessage(String message) {
-		if(message == null || message.length() == 0) {
-			throw new InvalidParameterException("Message must not be empty or null");
-		} else {
-			this.message = message;
-		}
+	public void setMessage(String message) throws InvalidInputException {
+		InputChecker.checkGeneric(message);
+		this.message = message;
 	}
 
 	public StudentCar getTarget() {
 		return target;
 	}
 
-	public void setTarget(StudentCar target) {
-		if(target == null) {
-			throw new InvalidParameterException("Must pass a valid StudentCar");
+	public void setTarget(StudentCar target) throws InvalidInputException {
+		if (target == null) {
+			throw new InvalidInputException("Target must not be null");
 		} else {
-			this.target = target;	
+			this.target = target;
 		}
 	}
 
@@ -53,9 +50,9 @@ public class Report {
 		return handler;
 	}
 
-	public void setHandler(Admin handler) {
-		if(handler == null) {
-			throw new InvalidParameterException("Must pass a valid Admin");
+	public void setHandler(Admin handler) throws InvalidInputException {
+		if (handler == null) {
+			throw new InvalidInputException("Handler must not be null");
 		} else {
 			this.handler = handler;
 		}

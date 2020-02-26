@@ -113,6 +113,31 @@ public class InputCheckerTest {
 
 	}
 	
+	//Plate checks
+	@Test
+	public void correctPlate() {
+		String plate = "Ab 123 cd";
+		assertDoesNotThrow(() -> InputChecker.checkPlate(plate));
+	}
+	
+	@Test
+	public void invalidPlate() {
+		String plate = "123da";
+		assertThrows(InvalidInputException.class, () -> InputChecker.checkPlate(plate));
+	}
+	
+	@Test
+	public void emptyPlate() {
+		String plate = "";
+		assertThrows(InvalidInputException.class, () -> InputChecker.checkPlate(plate));
+	}
+	
+	@Test
+	public void nullPlate() {
+		assertThrows(InvalidInputException.class, () -> InputChecker.checkPlate(null));
+		
+	}
+	
 	
 
 }

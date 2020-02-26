@@ -18,5 +18,5 @@ public interface OurStudentDatabase {
 	//load a student from our database
 	public Student loadStudentByUserID(String userID) throws InvalidInputException;
 	
-	public String loadPasswordByUserID(String user) throws InvalidInputException, DatabaseException;
+	public String loadPasswordByUserID(String userID) throws InvalidInputException, DatabaseException;
 }
