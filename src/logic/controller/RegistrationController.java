@@ -35,6 +35,7 @@ public class RegistrationController {
 			UserInfo response = uniDb.getByUserID(userID);
 			//TODO: implement password encryption
 			//build and add student to our database
+			//TODO: factory
 			Student student = StudentBuilder.newBuilder(userID).password(password).fullname(response.getName(), response.getSurname()).build();
 			ourDb.addStudent(student);
 		}

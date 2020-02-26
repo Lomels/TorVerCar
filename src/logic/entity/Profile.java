@@ -12,19 +12,15 @@ public class Profile {
 		return email;
 	}
 
-	//TODO: Redundancy?
 	public void setEmail(String email) throws InvalidInputException{
-
 		InputChecker.checkEmail(email);
 		this.email = email;	
-
-
 	}
+	
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	//TODO: Redundancy?
 	public void setPhoneNumber(String phoneNumber) throws InvalidInputException{
 		InputChecker.checkPhone(phoneNumber);
 		this.phoneNumber = phoneNumber;		

@@ -3,6 +3,7 @@ package logic.entity;
 import java.util.List;
 
 public class Student extends User {
+	//TODO: Exception
 
 	protected String name;
 	protected String surname;

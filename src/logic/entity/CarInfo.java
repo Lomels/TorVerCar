@@ -3,6 +3,7 @@ package logic.entity;
 import java.security.InvalidParameterException;
 
 public class CarInfo {
+	//TODO: change Exception
 	private String plate;
 	private Integer seats;
 	private String model;
@@ -13,6 +14,7 @@ public class CarInfo {
 	}
 
 	public void setPlate(String plate) {
+		//TODO: inputchecker
 		if (plate.length() > 0 && plate.length() < 8) {
 			this.plate = plate;
 		} else {
@@ -25,8 +27,8 @@ public class CarInfo {
 	}
 
 	public void setSeats(Integer seats){
-		if(seats <= 0) {
-			throw new InvalidParameterException("Number os seats must be greater than 0");
+		if(seats <= 1) {
+			throw new InvalidParameterException("Number os seats must be greater than 1");
 		}else {
 			this.seats = seats;
 		}

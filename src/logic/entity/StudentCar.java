@@ -3,6 +3,8 @@ package logic.entity;
 import java.util.List;
 
 public class StudentCar extends Student {
+	
+	//TODO: Exception
 
 	private int rating;
 	private CarInfo carInfo;

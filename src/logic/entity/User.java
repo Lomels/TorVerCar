@@ -2,6 +2,8 @@ package logic.entity;
 
 //Non so se l'abstract ce sta
 public abstract class User {
+	//TODO: Exception
+	
 	//Matriculation number, used for login
 	protected String userID;
 	

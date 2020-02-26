@@ -44,4 +44,9 @@ public class DummyOurStudentDatabase implements OurStudentDatabase {
 		return userID.equals("99999");
 	}
 
+	@Override
+	public String loadPasswordByUserID(String user) throws InvalidInputException, DatabaseException {
+		return "aaaA123@";
+	}
+
 }

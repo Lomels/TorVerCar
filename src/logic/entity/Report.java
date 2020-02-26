@@ -3,6 +3,8 @@ package logic.entity;
 import java.security.InvalidParameterException;
 
 public class Report {
+	//TODO: change Exception
+
 	private String message;
 	private StudentCar target;
 	private Boolean resolved;

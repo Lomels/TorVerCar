@@ -3,6 +3,7 @@ package logic.entity;
 import java.time.*;
 
 public class RangeTime {
+	//TODO: throw exception
 	private LocalDateTime startTime;
 	private LocalDateTime stopTime;
 	

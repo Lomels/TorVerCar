@@ -4,6 +4,8 @@ import java.security.InvalidParameterException;
 import java.util.List;
 
 public class Lift {
+	
+	//TODO: change Exception
 	private String liftID;
 	private StudentCar driver;
 	private String note;
