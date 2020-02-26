@@ -10,7 +10,6 @@ public class LoginView extends Application {
 	@Override
 	public void start(Stage stage) throws Exception{
 		Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
-		
 		Scene scene = new Scene(root);
 		stage.setTitle("Benvenuto in TorVerCar.");
 		stage.setScene(scene);
