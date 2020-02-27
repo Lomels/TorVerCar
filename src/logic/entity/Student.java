@@ -56,7 +56,7 @@ public class Student extends User {
 		return this.profile;
 	}
 
-	public void setProfile(Profile profile) throws InvalidInputException {
+	public void setProfile(Profile profile) {
 		this.profile = profile;
 	}
 
@@ -64,7 +64,7 @@ public class Student extends User {
 		return weeklyPreferencies;
 	}
 
-	public void setWeeklyPreferencies(WeeklyPreferencies weeklyPreferencies) throws InvalidInputException {
+	public void setWeeklyPreferencies(WeeklyPreferencies weeklyPreferencies) {
 		this.weeklyPreferencies = weeklyPreferencies;
 	}
 
@@ -72,7 +72,7 @@ public class Student extends User {
 		return this.lifts;
 	}
 
-	public void setLifts(List<Lift> lifts) throws InvalidInputException {
+	public void setLifts(List<Lift> lifts) {
 		this.lifts = lifts;
 	}
 

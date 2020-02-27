@@ -5,17 +5,17 @@ import logic.controller.exception.InvalidInputException;
 
 public class Message {
 
-	private String message;
+	private String content;
 	private User from;
 
 	public Message(String message, User from) throws InvalidInputException {
-		this.setMessage(message);
+		this.setContent(message);
 		this.setFrom(from);
 	}
 
-	public void setMessage(String message) throws InvalidInputException {
+	public void setContent(String message) throws InvalidInputException {
 		InputChecker.checkGeneric(message);
-		this.message = message;
+		this.content = message;
 	}
 
 	public void setFrom(User from) throws InvalidInputException {
@@ -25,8 +25,8 @@ public class Message {
 		this.from = from;
 	}
 
-	public String getMessage() {
-		return this.message;
+	public String getContent() {
+		return this.content;
 	}
 
 	public User getFrom() {

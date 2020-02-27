@@ -1,41 +1,38 @@
 package logic.entity;
 
-//Non so se l'abstract ce sta
-public abstract class User {
-	//TODO: Exception
-	
-	//Matriculation number, used for login
+import logic.controller.InputChecker;
+import logic.controller.exception.InvalidInputException;
+
+public class User {
+
+	// Matriculation number, used for login
 	protected String userID;
-	
-	//Stored encrypted
+
+	// Stored encrypted
 	protected String password;
-	
-	//Only child classes can use this method(?)
-	protected User(String userID, String password) {
-		this.userID = userID;
-		this.password = password;
+
+	// Only child classes can use this method(?)
+	protected User(String userID, String password) throws InvalidInputException {
+		this.setUserID(userID);
+		this.setPassword(password);
 	}
 
 	public String getPassword() {
 		return password;
 	}
-	
-	public void setPassword(String password) {
-		if(password.length()<1) {
-			return;
-		}
+
+	public void setPassword(String password) throws InvalidInputException {
+		InputChecker.checkPassword(password);
 		this.password = password;
 	}
-	
+
 	public String getUserID() {
 		return userID;
 	}
-	
-	public void setUserID(String userID) {
-		if(userID.length()<1) {
-			return;
-		}
+
+	public void setUserID(String userID) throws InvalidInputException {
+		InputChecker.checkUserID(userID);
 		this.userID = userID;
 	}
-	
+
 }

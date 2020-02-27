@@ -2,14 +2,17 @@ package logic.entity;
 
 import java.util.*;
 
+import logic.controller.exception.InvalidInputException;
+
 public class Admin extends User {
+	//TODO: Implement class
+	
 	private String adminID;
 	private String email;
 	private ArrayList<Report> handledReports;
 	
-	protected Admin(String userID, String password) {
+	protected Admin(String userID, String password) throws InvalidInputException {
 		super(userID, password);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public String getAdminID() {
