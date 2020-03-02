@@ -5,8 +5,13 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
+import logic.bean.LoginBean;
+import logic.controller.InputChecker;
+import logic.controller.exception.*;
+import logic.controller.LoginController;
 
 public class LoginFXMLController {
+    private LoginBean userBean;
 
 	@FXML
 	private TextField matricola;
@@ -26,12 +31,24 @@ public class LoginFXMLController {
     @FXML
     private ResourceBundle resources;
 
-
+    
 	/* RICORDATI DI METTERE onAction="#nomeController" COME ATTRIBUTO NELL'ELEMENTO DA CONTROLLARE */
 	
 	@FXML
-	private void buttonController() {
-		text.setText("culo");
+	public void buttonController() throws DatabaseException, InvalidInputException{
+		InputChecker.checkUserID(matricola.getText());
+		InputChecker.checkPassword(pwd.getText());
+		userBean = createBean(matricola.getText(), pwd.getText());
+		
+		
+		//text.setText(matricola.getText()+pwd.getText());
+	}
+	
+	public LoginBean createBean(String userID, String password) {
+		LoginBean bean = new LoginBean();
+		bean.setUserID(userID);
+		bean.setPwd(password);
+		return bean;
 	}
 	
 }
