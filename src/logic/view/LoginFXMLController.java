@@ -12,6 +12,7 @@ import logic.controller.LoginController;
 
 public class LoginFXMLController {
     private LoginBean userBean;
+    private LoginController control;
 
 	@FXML
 	private TextField matricola;
@@ -39,8 +40,8 @@ public class LoginFXMLController {
 		InputChecker.checkUserID(matricola.getText());
 		InputChecker.checkPassword(pwd.getText());
 		userBean = createBean(matricola.getText(), pwd.getText());
-		
-		
+		//LoginController
+		//TODO CHIAMARE IL LOGIN CONTROLLER
 		//text.setText(matricola.getText()+pwd.getText());
 	}
 	
