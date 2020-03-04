@@ -6,11 +6,13 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.fxml.*;
 import javafx.scene.*;
+import javafx.scene.control.Button;
 
 
 
 public class RegistrationView extends Application {
-
+	@FXML private Button homeButton;
+	
 	@Override
 	public void start(Stage stage) throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("registration.fxml"));
@@ -24,6 +26,12 @@ public class RegistrationView extends Application {
 	@FXML
 	public void buttonController() {
 		System.out.println("OK");
+	}
+	
+	@FXML
+	public void homeButtonController() throws IOException {
+		HomeView home = new HomeView();
+		home.start((Stage) homeButton.getScene().getWindow());
 	}
 
 	public static void main(String[] args) {

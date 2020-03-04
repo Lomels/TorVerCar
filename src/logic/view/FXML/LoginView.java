@@ -1,8 +1,6 @@
 package logic.view.FXML;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import logic.bean.LoginBean;
@@ -18,13 +16,12 @@ import javafx.scene.text.Text;
 public class LoginView extends Application {
     private LoginBean userBean;
     private LoginController control = new LoginController();
+    @FXML private Button homeButton;
 
 	@FXML private TextField matricola;
 	@FXML private TextField pwd;
 	@FXML private Button loginButton;
 	@FXML private Text text;
-	@FXML private URL location;
-    @FXML private ResourceBundle resources;
 	
 	
 	@Override
@@ -38,6 +35,12 @@ public class LoginView extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	@FXML
+	public void homeButtonController() throws IOException {
+		HomeView home = new HomeView();
+		home.start((Stage) homeButton.getScene().getWindow());
 	}
 	
 	@FXML
