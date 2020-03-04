@@ -1,0 +1,59 @@
+package logic.view.FXML;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+import logic.bean.LoginBean;
+import logic.controller.InputChecker;
+import logic.controller.LoginController;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+
+public class LoginView extends Application {
+    private LoginBean userBean;
+    private LoginController control = new LoginController();
+
+	@FXML private TextField matricola;
+	@FXML private TextField pwd;
+	@FXML private Button loginButton;
+	@FXML private Text text;
+	@FXML private URL location;
+    @FXML private ResourceBundle resources;
+	
+	
+	@Override
+	public void start(Stage stage) throws Exception{
+		Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+		Scene scene = new Scene(root);
+		stage.setTitle("Benvenuto in TorVerCar.");
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	public static void main(String[] args) {
+		launch(args);
+	}
+	
+	@FXML
+	public void buttonController() throws Exception{
+		InputChecker.checkUserID(matricola.getText());
+		InputChecker.checkPassword(pwd.getText());
+		userBean = createBean(matricola.getText(), pwd.getText());
+		control.login(userBean);
+		//TODO chiamare controller grafico di homepage
+		text.setText("Succesfully logged in.");
+	}
+	
+	public LoginBean createBean(String userID, String password) {
+		LoginBean bean = new LoginBean();
+		bean.setUserID(userID);
+		bean.setPwd(password);
+		return bean;
+	}
+}
