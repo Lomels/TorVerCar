@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 public class HomeView extends Application {
 	@FXML private Button loginButton;
 	@FXML private Button regButton;
-	FXMLLauncher launcher = new FXMLLauncher();
 	private Stage stage;
 	
 	@Override
