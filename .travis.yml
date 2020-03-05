@@ -1,13 +1,11 @@
 language: java
-jdk: 
- -openjdk8
-
+jdk: "-openjdk8"
 addons:
   sonarcloud:
-    organization: "lomels"
+    organization: lomels
     token:
-      secure: "2fc40637e019b86b9dbeb543598f365fbe8d848e"
+      secure: "ssaZCFt008xQHZddpL8c8MWe60SaqP4+T6LVV1p6EtBLhUeUDOZ9qCX3a75Ls3VqZMJY/kCCOeSxMwvnvYyMkDjHeDe5gt1fTIqDYDVhKKT10ewIkfcJfNglzsiAz8Txa75Sb+n2wwSau2tqUmMjPZCIacw4oaHl9FTgv9u4Y8RSTIhDKQSxk/sTCKButuMdv9d7YXu8tXHKp8tfo7eSUHjONcfmeGUQWh1qH8Aqii7IERNEhdVZgdyxmEtc99L8on/z3X9PK3RzzMH+aVAGvEQvB/l+uBdi70QmLYEe40cKNXvjvGN/BaMGN84awkypV+BU+FkqqWiJ6R5OodgPJj6S4Hd/KxTHXt4yZZPjFP2PuwBpSbyWwQoTHJzjoHy4vqsqltEx3xJUUOzdxqSviQMkvPi42NdI7KxOeIkqk3Q9VK02KLp3KYHIcNsedrGl++2yDmxo3tC8bYByC3lck0bMh2Tphyp9V27YitgbI5LUXdX6FFYiKP78OF7Yt/dke0+I08/31JkNWOtbAg8160e1NcayvinzlJrXT+Lat3qhT9ocfBUt36mwmLQgzz7SagV5Pqw2TIBsS7KSrW8xVxZu0soSwVAvTCgxYVmn0YKzncI6VwdAth9f8tiKgvsqoaUE6DFnd+L5eLwIeWVPzq4uMCoDQ5vBUlxNNZ3ovT8="
 
 script:
-  - ant build
-  - sonar-scanner
+- ant build
+- sonar-scanner
