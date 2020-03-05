@@ -40,7 +40,6 @@ public class HomeView extends Application {
 
 		RegistrationView register = new RegistrationView();
 		register.start((Stage) regButton.getScene().getWindow());
-		//launcher.sceneSwitch("register.fxml");
 	}
 	
 }

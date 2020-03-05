@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml" fx:controller="logic.view.LoginFXMLController">
+   <children>
+      <TextField layoutX="225.0" layoutY="174.0" promptText="matricola" fx:id="matricola"/>
+      <TextField layoutX="225.0" layoutY="211.0" promptText="password" fx:id="pwd"/>
+      <Button layoutX="277.0" layoutY="248.0" mnemonicParsing="false" text="Login" textAlignment="CENTER" fx:id="loginButton" onAction="#buttonController"/>
+      <Text layoutX="164.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto." fx:id = "text">
+         <font>
+            <Font size="55.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
