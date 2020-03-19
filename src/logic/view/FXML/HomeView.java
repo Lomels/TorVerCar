@@ -11,10 +11,12 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class HomeView extends Application {
-	@FXML private Button loginButton;
-	@FXML private Button regButton;
+	@FXML
+	private Button loginButton;
+	@FXML
+	private Button regButton;
 	private Stage stage;
-	
+
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("homepage.fxml"));
@@ -28,18 +30,17 @@ public class HomeView extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	public void loginButtonController() throws Exception {
 		System.out.println("Login\n");
 		LoginView login = new LoginView();
 		login.start((Stage) loginButton.getScene().getWindow());
 	}
-	
+
 	public void regButtonController() throws IOException {
 		System.out.println("register\n");
-
 		RegistrationView register = new RegistrationView();
 		register.start((Stage) regButton.getScene().getWindow());
 	}
-	
+
 }

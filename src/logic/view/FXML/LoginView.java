@@ -22,6 +22,7 @@ public class LoginView extends Application {
 	@FXML private TextField pwd;
 	@FXML private Button loginButton;
 	@FXML private Text text;
+	@FXML private Text error;
 	
 	
 	@Override
@@ -45,12 +46,17 @@ public class LoginView extends Application {
 	
 	@FXML
 	public void buttonController() throws Exception{
-		InputChecker.checkUserID(matricola.getText());
-		InputChecker.checkPassword(pwd.getText());
-		userBean = createBean(matricola.getText(), pwd.getText());
-		control.login(userBean);
-		//TODO chiamare controller grafico di homepage
-		text.setText("Succesfully logged in.");
+		try {
+			InputChecker.checkUserID(matricola.getText());
+			InputChecker.checkPassword(pwd.getText());
+			userBean = createBean(matricola.getText(), pwd.getText());
+			control.login(userBean);
+			//TODO chiamare controller grafico di homepage
+			text.setText("Succesfully logged in.");
+		} catch (Exception e) {
+			// TODO: handle exception
+			error.setText(e.getMessage());
+		}
 	}
 	
 	public LoginBean createBean(String userID, String password) {
