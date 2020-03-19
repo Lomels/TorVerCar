@@ -11,7 +11,7 @@ import logic.bean.UserInfo;
 
 public class RegistrationController {
 	
-	//TODO: amplia, guarda class diagram
+	//TODO: amplia, guarda class diagram, cambiare input del createStudent con il bean
 
 	private DatabaseBoundary uniDb;
 	private OurStudentDatabase ourDb;
