@@ -7,7 +7,7 @@ import logic.entity.Student;
 public interface OurStudentDatabase {
 
 	//return if student(with or without car) already exist in our database
-	public boolean existByUserID(String userID);
+	public boolean existByUserID(String userID) throws DatabaseException, InvalidInputException;
 	
 	//return if student(with or without car) was previously banned
 	public boolean wasBannedByUserID(String userID);

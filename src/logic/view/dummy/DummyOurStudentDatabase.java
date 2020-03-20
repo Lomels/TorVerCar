@@ -21,7 +21,7 @@ public class DummyOurStudentDatabase implements OurStudentDatabase {
 	}
 
 	@Override
-	public boolean existByUserID(String userID) {
+	public boolean existByUserID(String userID) throws DatabaseException, InvalidInputException {
 		return userID.equals("00000");
 	}
 
