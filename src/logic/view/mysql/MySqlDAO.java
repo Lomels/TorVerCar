@@ -15,10 +15,10 @@ import logic.view.OurStudentDatabase;
 
 public class MySqlDAO implements OurStudentDatabase {
 
-	private static String USER = "torvercar";
-	private static String PASS = "ispw2020";
-	private static String DB_URL = "jdbc:mysql://localhost:3306/TorVerCar";
-	private static String DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
+	private static final String USER = "torvercar";
+	private static final String PASS = "ispw2020";
+	private static final String URL = "jdbc:mysql://localhost:3306/TorVerCar";
+	private static final String DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 
 	private Statement stmt;
 	private Connection conn;
@@ -102,7 +102,6 @@ public class MySqlDAO implements OurStudentDatabase {
 				throw new DatabaseException("Student not found");
 
 			rs.first();
-			// String userID = rs.getString("userID");
 			String password = rs.getString("password");
 			String name = rs.getString("name");
 			String surname = rs.getString("surname");
@@ -131,7 +130,6 @@ public class MySqlDAO implements OurStudentDatabase {
 				throw new DatabaseException("User not found");
 
 			rs.first();
-			// String userID = rs.getString("userID");
 			password = rs.getString("password");
 
 			rs.close();
@@ -146,7 +144,7 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	private void connect() {
 		try {
-			this.conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			this.conn = DriverManager.getConnection(URL, USER, PASS);
 			// TODO: informati su parametri
 			this.stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		} catch (Exception e) {

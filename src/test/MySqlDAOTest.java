@@ -15,18 +15,22 @@ import logic.view.mysql.MySqlDAO;
 
 public class MySqlDAOTest {
 
+	private static final String USERID = "12345";
+	private static final String PASSWORD = "aaaaa1@";
+	private static final String NAME = "Mario";
+	private static final String SURNAME = "Rossi";
+	private static final String NOT_EX_USERID = "1000";
+
 	@Test
 	public void existingUser() throws DatabaseException, InvalidInputException {
-		String userID = "12345";
 		MySqlDAO my = new MySqlDAO();
-		assertTrue(my.existByUserID(userID));
+		assertTrue(my.existByUserID(USERID));
 	}
 
 	@Test
 	public void notExistingUser() throws DatabaseException, InvalidInputException {
-		String userID = "1000";
 		MySqlDAO my = new MySqlDAO();
-		assertFalse(my.existByUserID(userID));
+		assertFalse(my.existByUserID(NOT_EX_USERID));
 	}
 
 	@Test
@@ -38,64 +42,58 @@ public class MySqlDAOTest {
 
 	@Test
 	public void notBanned() throws InvalidInputException, DatabaseException {
-		String userID = "12345";
 		MySqlDAO my = new MySqlDAO();
-		assertFalse(my.wasBannedByUserID(userID));
+		assertFalse(my.wasBannedByUserID(USERID));
 	}
-	
+
 	@Test
 	public void notExistingBanned() throws InvalidInputException, DatabaseException {
-		String userID = "1000";
 		MySqlDAO my = new MySqlDAO();
-		assertFalse(my.wasBannedByUserID(userID));
+		assertFalse(my.wasBannedByUserID(NOT_EX_USERID));
 	}
-	
+
 	@Test
 	public void loadExistingStudent() throws InvalidInputException, DatabaseException {
-		String userID = "12345";
 		MySqlDAO my = new MySqlDAO();
-		Student sByDao = my.loadStudentByUserID(userID);
-		Student sToCompare = StudentBuilder.newBuilder(userID).password("aaaaa1@").fullname("Mario", "Rossi").build();
-		//assertTrue(sByDao.equals(sToCompare));
-		//TODO: Change to equals
+		Student sByDao = my.loadStudentByUserID(USERID);
+		Student sToCompare = StudentBuilder.newBuilder(USERID).password(PASSWORD).fullname(NAME, SURNAME).build();
+		// TODO: Change to sByDao.equals()
 		assertEquals(sByDao.toString(), sToCompare.toString());
 	}
-	
+
 	@Test
 	public void loadNonExistingStudent() {
-		String userID = "1000";
 		MySqlDAO my = new MySqlDAO();
-		assertThrows(DatabaseException.class, () -> my.loadStudentByUserID(userID));
+		assertThrows(DatabaseException.class, () -> my.loadStudentByUserID(NOT_EX_USERID));
 	}
-	
+
 	@Test
 	public void addStudent() throws DatabaseException, InvalidInputException {
 		MySqlDAO my = new MySqlDAO();
-		Integer id = new Integer(1);
-		//id incrementale per test
+		
+		Integer id = Integer.valueOf(1);
+		// id incrementale per test
 		do {
 			id++;
-		}while(my.existByUserID(id.toString()));
+		} while (my.existByUserID(id.toString()));
 		String userID = id.toString();
+		
 		String password = "bbbbb2@";
 		String name = "Luigi";
 		String surname = "Bianchi";
-		
+
 		Student s = StudentBuilder.newBuilder(userID).password(password).fullname(name, surname).build();
 		my.addStudent(s);
 		Student sByDao = my.loadStudentByUserID(userID);
 		assertEquals(s.toString(), sByDao.toString());
 	}
-	
+
 	@Test
 	public void existingPassword() throws InvalidInputException, DatabaseException {
-		String userID = "12345";
 		MySqlDAO my = new MySqlDAO();
-		String expectedP = "aaaaa1@";
 		String actualP;
-		actualP = my.loadPasswordByUserID(userID);
-		assertEquals(expectedP, actualP);
+		actualP = my.loadPasswordByUserID(USERID);
+		assertEquals(PASSWORD, actualP);
 	}
-	
-	
+
 }

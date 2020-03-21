@@ -8,6 +8,10 @@ import logic.entity.Student;
 
 public class MyQueries {
 	
+	private MyQueries() {
+		throw new IllegalStateException("This class should not be instantiated.");
+	}
+	
 	public static ResultSet existByUserID( Statement stmt, String userID) throws SQLException {
 		String format = "SELECT userID FROM Users WHERE userID = '%s';";
 		String sql = String.format(format, userID);
