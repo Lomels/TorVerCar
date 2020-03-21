@@ -9,7 +9,7 @@ public class CarInfo {
 	private String model;
 	private String colour;
 
-	public CarInfo(String plate, Integer seats, String model, String colour) throws InvalidInputException {		
+	public CarInfo(String plate, Integer seats, String model, String colour) throws InvalidInputException {
 		this.setPlate(plate);
 		this.setSeats(seats);
 		this.setModel(model);
@@ -42,11 +42,9 @@ public class CarInfo {
 	}
 
 	public void setModel(String model) throws InvalidInputException {
-		if (model.length() <= 0) {
-			throw new InvalidInputException("Invalid model name");
-		} else {
-			this.model = model;
-		}
+		InputChecker.checkGeneric(model);
+		this.model = model;
+
 	}
 
 	public String getColour() {
@@ -54,10 +52,7 @@ public class CarInfo {
 	}
 
 	public void setColour(String colour) throws InvalidInputException {
-		if (colour.length() <= 0) {
-			throw new InvalidInputException("Invalid colour name");
-		} else {
-			this.colour = colour;
-		}
+		InputChecker.checkGeneric(colour);
+		this.colour = colour;
 	}
 }

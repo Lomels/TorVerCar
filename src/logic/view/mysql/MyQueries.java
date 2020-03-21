@@ -31,7 +31,7 @@ public class MyQueries {
 	}
 	
 	public static ResultSet loadStudentByUserID(Statement stmt, String userID) throws SQLException {
-		String format = "SELECT * FROM Students WHERE userID = '%s';";
+		String format = "SELECT * FROM Users as U, Students as S WHERE U.userID = S.userID && U.userID = '%s';";
 		String sql = String.format(format, userID);
 		return stmt.executeQuery(sql);
 	}

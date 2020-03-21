@@ -91,7 +91,7 @@ public class InputCheckerTest {
 	//Password checks
 	@Test
 	public void correctPassword() {
-		String password = "aA123@";
+		String password = "aaaaaa1@";
 		assertDoesNotThrow(() -> InputChecker.checkPassword(password));
 	}
 	

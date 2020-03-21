@@ -26,9 +26,11 @@ public class StudentBuilderTest {
 	
 	@Test
 	public void buildTest() throws InvalidInputException {
-		Student sbuilt = StudentBuilder.newBuilder("111").fullname("Mario", "Rossi").password("aaa").weeklyPreferencies(null).profile(null).lifts(null).build();
-		Student scostructor = new Student("111", "aaa", "Mario", "Rossi", null, null, null);
+		Student sbuilt = StudentBuilder.newBuilder("111").fullname("Mario", "Rossi").password("aaaaa1@").weeklyPreferencies(null).profile(null).lifts(null).build();
+		Student scostructor = new Student("111", "aaaaa1@", "Mario", "Rossi", null, null, null);
+		//TODO: Change to equals
 		assertEquals(sbuilt.toString(), scostructor.toString());
+		//assertTrue(sbuilt.equals(scostructor));
 	}
 
 }

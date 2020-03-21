@@ -26,12 +26,12 @@ public class DummyOurStudentDatabase implements OurStudentDatabase {
 	}
 
 	@Override
-	public void addStudent(Student student) throws DatabaseException {
+	public void addStudent(Student student) throws DatabaseException, InvalidInputException {
 		DummyOurStudentDatabase.incrementCounter();
 	}
 
 	@Override
-	public Student loadStudentByUserID(String userID) throws InvalidInputException {
+	public Student loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException {
 		DummyDatabaseBoundary uni = new DummyDatabaseBoundary();
 		UserInfo res = uni.getByUserID("12345");
 		Student s;
@@ -40,7 +40,7 @@ public class DummyOurStudentDatabase implements OurStudentDatabase {
 	}
 
 	@Override
-	public boolean wasBannedByUserID(String userID) {
+	public boolean wasBannedByUserID(String userID) throws DatabaseException, InvalidInputException {
 		return userID.equals("99999");
 	}
 
