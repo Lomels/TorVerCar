@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 public class LoginView extends Application {
     private LoginBean userBean;
     private LoginController control = new LoginController();
+    
     @FXML private Button homeButton;
 
 	@FXML private TextField matricola;

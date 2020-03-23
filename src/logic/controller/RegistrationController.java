@@ -6,11 +6,10 @@ import logic.entity.Student;
 import logic.view.DatabaseBoundary;
 import logic.view.OurStudentDatabase;
 import logic.view.dummy.DummyDatabaseBoundary;
-import logic.view.dummy.DummyOurStudentDatabase;
 import logic.bean.UserInfo;
+import logic.view.mysql.*;
 
 public class RegistrationController {
-	
 	//TODO: amplia, guarda class diagram, cambiare input del createStudent con il bean
 
 	private DatabaseBoundary uniDb;
@@ -19,7 +18,9 @@ public class RegistrationController {
 	public RegistrationController() {
 		//TODO: implement uniDb and ourDb
 		this.uniDb = new DummyDatabaseBoundary();
-		this.ourDb = new DummyOurStudentDatabase();
+		//this.ourDb = new DummyOurStudentDatabase();
+		this.ourDb = new MySqlDAO();
+		
 	}
 
 	public void createStudent(String userID, String password) throws DatabaseException, InvalidInputException{

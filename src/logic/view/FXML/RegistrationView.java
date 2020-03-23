@@ -7,11 +7,18 @@ import javafx.stage.Stage;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.Button;
-
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+import logic.controller.RegistrationController;
 
 
 public class RegistrationView extends Application {
 	@FXML private Button homeButton;
+	@FXML private TextField userID;
+	@FXML private TextField password;
+	@FXML private Text error;
+	
+	private RegistrationController control = new RegistrationController();
 	
 	@Override
 	public void start(Stage stage) throws IOException {
@@ -24,9 +31,14 @@ public class RegistrationView extends Application {
 	}
 	
 	@FXML
-	public void buttonController() {
-		System.out.println("OK");
+	public void nextButtonController() throws Exception {
+		try {
+			control.createStudent(userID.getText(), password.getText());
+		}catch(Exception e){
+			error.setText(e.getMessage());			
+		}
 	}
+		
 	
 	@FXML
 	public void homeButtonController() throws IOException {
