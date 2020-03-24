@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `students`;
 CREATE TABLE `students` (
   `userID` varchar(10) NOT NULL,
   `name` varchar(10) NOT NULL,
-  `surname` varchar(10) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `surname` varchar(20) NOT NULL,
+  `email` varchar(200) NOT NULL,
   PRIMARY KEY (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-24 12:02:25
+-- Dump completed on 2020-03-24 12:08:36
