@@ -1,4 +1,4 @@
-		package logic.view.mysql;
+package logic.view.mysql;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,6 +43,13 @@ public class MyQueries {
 	public static ResultSet loadPasswordByUserID(Statement stmt, String userID) throws SQLException {
 		String format = "SELECT password FROM Users WHERE userID = '%s';";
 		String sql = String.format(format, userID);
+		return stmt.executeQuery(sql);
+	}
+	
+	public static ResultSet getInfoByUserID(Statement stmt, String userID) throws SQLException{
+		String format = "SELECT name, surname, email FROM students WHERE userID = '%s';";
+		String sql = String.format(format, userID);
+		
 		return stmt.executeQuery(sql);
 	}
 

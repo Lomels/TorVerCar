@@ -5,7 +5,6 @@ import logic.controller.exception.InvalidInputException;
 import logic.entity.Student;
 import logic.view.DatabaseBoundary;
 import logic.view.OurStudentDatabase;
-import logic.view.dummy.DummyDatabaseBoundary;
 import logic.bean.UserInfo;
 import logic.view.mysql.*;
 
@@ -17,13 +16,13 @@ public class RegistrationController {
 
 	public RegistrationController() {
 		//TODO: implement uniDb and ourDb
-		this.uniDb = new DummyDatabaseBoundary();
+		this.uniDb = new UniDAO();
 		//this.ourDb = new DummyOurStudentDatabase();
 		this.ourDb = new MySqlDAO();
 		
 	}
 
-	public void createStudent(String userID, String password) throws DatabaseException, InvalidInputException{
+	public void createStudent(String userID, String password) throws Exception{
 		//check is userID and password are valid
 		InputChecker.checkUserID(userID);
 		InputChecker.checkPassword(password);

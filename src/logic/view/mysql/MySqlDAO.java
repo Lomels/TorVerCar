@@ -64,7 +64,6 @@ public class MySqlDAO implements OurStudentDatabase {
 
 		try {
 			this.connect();
-
 			ResultSet rs = MyQueries.wasBannedByUserID(this.stmt, userID);
 			result = rs.first();
 			rs.close();
