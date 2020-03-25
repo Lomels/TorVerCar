@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import logic.controller.InputChecker;
 import logic.controller.StudentBuilder;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.entity.Student;
+import logic.utilities.InputChecker;
 import logic.view.OurStudentDatabase;
 
 public class MySqlDAO implements OurStudentDatabase {

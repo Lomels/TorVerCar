@@ -3,8 +3,8 @@ package logic.view.mysql;
 import java.sql.*;
 
 import logic.bean.UserInfo;
-import logic.controller.InputChecker;
 import logic.controller.exception.DatabaseException;
+import logic.utilities.InputChecker;
 import logic.view.DatabaseBoundary;
 
 public class UniDAO implements DatabaseBoundary{

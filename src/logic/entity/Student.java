@@ -2,8 +2,8 @@ package logic.entity;
 
 import java.util.List;
 
-import logic.controller.InputChecker;
 import logic.controller.exception.InvalidInputException;
+import logic.utilities.InputChecker;
 
 public class Student extends User {
 

@@ -7,6 +7,7 @@ import logic.entity.Lift;
 import logic.entity.Profile;
 import logic.entity.Student;
 import logic.entity.WeeklyPreferencies;
+import logic.utilities.InputChecker;
 
 public class StudentBuilder{
 

@@ -1,7 +1,7 @@
 package logic.entity;
 
-import logic.controller.InputChecker;
 import logic.controller.exception.InvalidInputException;
+import logic.utilities.InputChecker;
 import logic.controller.exception.*;
 public class User {
 

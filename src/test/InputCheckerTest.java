@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 import org.junit.Test;
-import logic.controller.*;
 import logic.controller.exception.InvalidInputException;
+import logic.utilities.InputChecker;
 
 public class InputCheckerTest {
 
