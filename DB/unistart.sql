@@ -1,10 +1,13 @@
+-- MySQL dump 10.13  Distrib 5.7.29, for Linux (x86_64)
+--
+-- Host: localhost    Database: UniDB
 -- ------------------------------------------------------
--- Server version	8.0.18
+-- Server version	5.7.29-0ubuntu0.18.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -18,7 +21,7 @@
 
 DROP TABLE IF EXISTS `students`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `students` (
   `userID` varchar(10) NOT NULL,
   `name` varchar(10) NOT NULL,
@@ -34,6 +37,7 @@ CREATE TABLE `students` (
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
+INSERT INTO `students` VALUES ('0001','pippo','baudo','pippob@prova.com'),('0123456','Raimondo','Vianello','raimondo@libero.it'),('0234567','Karl','Marx','communistparty@urss.ru'),('0241118','Marco','Lo Mele','marco.lomele@gmail.com'),('0345678','Sigmund','Freud','es@superio.ego'),('0456789','Francesco','Totti','pupone10@roma.as'),('0567891','Daniele','De Rossi','capitanfuturo@roma.as'),('0678912','Simone','Perrotta','supersimo@roma.as'),('0789123','Luca','Giurato','lcua.griuato@gmial.itti'),('1234','pippo','franco','abcdef'),('12345','mario','rossi','mariorossi@gmail.com');
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -46,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-24 12:08:36
+-- Dump completed on 2020-03-26 17:19:16
