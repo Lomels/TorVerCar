@@ -1,1 +1,3 @@
 bin/*
+/bin/
+src/logic/controller/maps/lastQuery.xml
