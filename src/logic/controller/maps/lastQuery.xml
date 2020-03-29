@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+  <summary>
+    <query>via prenestina nuova 51</query>
+    <queryType>NON_NEAR</queryType>
+    <queryTime>41</queryTime>
+    <numResults>7</numResults>
+    <offset>0</offset>
+    <totalResults>18</totalResults>
+    <fuzzyLevel>1</fuzzyLevel>
+  </summary>
+  <results>
+    <item>
+      <type>Address Range</type>
+      <id>IT/ADDR/p0/2278433</id>
+      <score>8.456450462341309</score>
+      <address>
+        <streetNumber>51</streetNumber>
+        <streetName>Via Prenestina Nuova</streetName>
+        <municipalitySubdivision>Palestrina</municipalitySubdivision>
+        <municipality>Palestrina</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00036</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Via Prenestina Nuova, 51, 00036 Palestrina</freeformAddress>
+        <localName>Palestrina</localName>
+      </address>
+      <position>
+        <lat>41.83326</lat>
+        <lon>12.88609</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.83333</lat>
+          <lon>12.8859</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.83323</lat>
+          <lon>12.88664</lon>
+        </btmRightPoint>
+      </viewport>
+      <addressRanges>
+        <rangeRight>57 - 35</rangeRight>
+        <from>
+          <lat>41.83333</lat>
+          <lon>12.8859</lon>
+        </from>
+        <to>
+          <lat>41.83323</lat>
+          <lon>12.88664</lon>
+        </to>
+      </addressRanges>
+    </item>
+    <item>
+      <type>Street</type>
+      <id>IT/STR/p0/274519</id>
+      <score>6.782489776611328</score>
+      <address>
+        <streetName>Via Prenestina Nuova</streetName>
+        <municipality>San Cesareo</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00030</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Via Prenestina Nuova, 00030 San Cesareo</freeformAddress>
+        <localName>San Cesareo</localName>
+      </address>
+      <position>
+        <lat>41.82801</lat>
+        <lon>12.81489</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.83505</lat>
+          <lon>12.80287</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.81706</lat>
+          <lon>12.82701</lon>
+        </btmRightPoint>
+      </viewport>
+    </item>
+    <item>
+      <type>Street</type>
+      <id>IT/STR/p0/373347</id>
+      <score>6.782489776611328</score>
+      <address>
+        <streetName>Via Prenestina Nuova</streetName>
+        <municipality>Palestrina</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00036</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Via Prenestina Nuova, 00036 Palestrina</freeformAddress>
+        <localName>Palestrina</localName>
+      </address>
+      <position>
+        <lat>41.8225</lat>
+        <lon>12.84791</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.82308</lat>
+          <lon>12.84683</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.82222</lat>
+          <lon>12.84857</lon>
+        </btmRightPoint>
+      </viewport>
+    </item>
+    <item>
+      <type>Street</type>
+      <id>IT/STR/p0/866118</id>
+      <score>6.782489776611328</score>
+      <address>
+        <streetName>Via Prenestina Nuova</streetName>
+        <municipality>Roma</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00132</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Via Prenestina Nuova, 00132 Roma</freeformAddress>
+        <localName>Roma</localName>
+      </address>
+      <position>
+        <lat>41.88878</lat>
+        <lon>12.69504</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.88949</lat>
+          <lon>12.6912</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.88817</lat>
+          <lon>12.69882</lon>
+        </btmRightPoint>
+      </viewport>
+    </item>
+    <item>
+      <type>Street</type>
+      <id>IT/STR/p0/874442</id>
+      <score>6.782489776611328</score>
+      <address>
+        <streetName>Via Prenestina Nuova</streetName>
+        <municipalitySubdivision>Cave</municipalitySubdivision>
+        <municipality>Cave</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00033</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Via Prenestina Nuova, 00033 Cave</freeformAddress>
+        <localName>Cave</localName>
+      </address>
+      <position>
+        <lat>41.82093</lat>
+        <lon>12.92624</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.82231</lat>
+          <lon>12.92588</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.81961</lat>
+          <lon>12.92693</lon>
+        </btmRightPoint>
+      </viewport>
+    </item>
+    <item>
+      <type>Street</type>
+      <id>IT/STR/p0/926545</id>
+      <score>6.782489776611328</score>
+      <address>
+        <streetName>Via Prenestina Nuova</streetName>
+        <municipality>Monte Compatri</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00077</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Via Prenestina Nuova, 00077 Monte Compatri</freeformAddress>
+        <localName>Monte Compatri</localName>
+      </address>
+      <position>
+        <lat>41.88548</lat>
+        <lon>12.71132</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.89582</lat>
+          <lon>12.70011</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.87783</lat>
+          <lon>12.72427</lon>
+        </btmRightPoint>
+      </viewport>
+    </item>
+    <item>
+      <type>Street</type>
+      <id>IT/STR/p0/1147792</id>
+      <score>6.782489776611328</score>
+      <address>
+        <streetName>Via Prenestina Nuova</streetName>
+        <municipality>Zagarolo</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00039</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Via Prenestina Nuova, 00039 Zagarolo</freeformAddress>
+        <localName>Zagarolo</localName>
+      </address>
+      <position>
+        <lat>41.82654</lat>
+        <lon>12.8365</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.83575</lat>
+          <lon>12.82417</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.81777</lat>
+          <lon>12.8483</lon>
+        </btmRightPoint>
+      </viewport>
+    </item>
+  </results>
+</response>
