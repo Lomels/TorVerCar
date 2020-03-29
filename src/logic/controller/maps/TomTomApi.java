@@ -7,17 +7,17 @@ import java.util.logging.Logger;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.*;
 import java.io.*;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpClient.Version;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 
 import logic.controller.PositionBuilder;
 import logic.controller.exception.ApiNotReachableException;
@@ -91,6 +91,7 @@ public class TomTomApi implements MapsApi {
 				break;
 			}
 
+			// TODO: implement a class to load the xml infos
 			// from string to document to get the results
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder;
@@ -131,16 +132,17 @@ public class TomTomApi implements MapsApi {
 		// TODO: implement a class to build better url
 		String urlAddress = address.trim().replaceAll("\\s", "%20");
 		String requestUrl = String.format(this.url, urlAddress);
-
 		try {
+			// TODO: implement a singleton client
 			// create client e request
-			HttpClient client = HttpClient.newBuilder().version(Version.HTTP_1_1).build();
-			HttpRequest req = HttpRequest.newBuilder(new URI(requestUrl)).GET().build();
-			LOGGER.log(Level.INFO, "Request sent.\n");
+			CloseableHttpClient client = HttpClients.createDefault();
+			HttpGet request = new HttpGet(requestUrl);
+			request.addHeader("accept", "application/xml");
 
 			// generazione response
-			HttpResponse<String> res = client.send(req, BodyHandlers.ofString());
-			xml = res.body();
+			CloseableHttpResponse response = client.execute(request);
+			HttpEntity entity = response.getEntity();
+			xml = EntityUtils.toString(entity);
 
 			// scrittura su file per cache
 			BufferedWriter writer = new BufferedWriter(new FileWriter(this.file));

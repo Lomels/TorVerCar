@@ -1,0 +1,46 @@
+package test;
+
+import static org.junit.Assert.assertNotNull;
+
+import java.util.logging.Logger;
+
+import org.junit.*;
+
+import logic.controller.exception.ApiNotReachableException;
+import logic.controller.maps.*;
+import logic.entity.Position;
+
+public class HereApiTest {
+
+	private static final String ADDRESS = "via folcarotonda 19 palestrina";
+	private static final Logger LOGGER = Logger.getLogger(HereApiTest.class.getName());
+	private static final MapsApi MAPS_API = TomTomApi.getInstance();
+	private static final ViewMapsApi VIEW_API = HereApi.getInstance();
+
+	@Test
+	public void normalTest() {
+		String url = null;
+		Position p = null;
+		try {
+			p = MAPS_API.addrToPos(ADDRESS).get(0);
+		} catch (ApiNotReachableException e) {
+			e.printStackTrace();
+		}
+		LOGGER.info(p.toString());
+		url = VIEW_API.viewFromPos(p);
+		LOGGER.info("\n" + url);
+		assertNotNull(url);
+	}
+	
+	@Test
+	public void saveTest() {
+		Position p = null;
+		try {
+			p = MAPS_API.addrToPos(ADDRESS).get(0);
+		} catch (ApiNotReachableException e) {
+			e.printStackTrace();
+		}
+		LOGGER.info(p.toString());
+		VIEW_API.saveImage(p);
+	}
+}

@@ -14,6 +14,7 @@ import java.util.logging.*;
 
 public class TomTomApiTest {
 
+	// TODO: implement test
 	private static final Logger LOGGER = Logger.getLogger(TomTomApi.class.getName());
 
 	@Test
