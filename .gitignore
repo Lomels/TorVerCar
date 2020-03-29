@@ -1,3 +1,4 @@
 bin/*
 /bin/
 src/logic/controller/maps/lastQuery.xml
+src/logic/controller/maps/image.jpg
