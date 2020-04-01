@@ -3,7 +3,7 @@ package test;
 import org.junit.Test;
 
 import logic.controller.exception.ApiNotReachableException;
-import logic.controller.maps.MapsApi;
+import logic.controller.maps.GeodecodeMapsApi;
 import logic.controller.maps.TomTomApi;
 import logic.entity.Position;
 
@@ -19,7 +19,7 @@ public class TomTomApiTest {
 
 	@Test
 	public void normalTest() {
-		MapsApi api = TomTomApi.getInstance();
+		GeodecodeMapsApi api = TomTomApi.getInstance();
 		List<Position> pos = new ArrayList<Position>();
 		try {
 			pos = api.addrToPos("via prenestina nuova 51");

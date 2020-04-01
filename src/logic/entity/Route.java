@@ -1,11 +1,22 @@
 package logic.entity;
 
+
+import logic.controller.exception.InvalidInputException;
+
 public class Route {
-	Position pickupPosition;
-	Position dropoffPosition;
-	RangeTime startTime;
-	RangeTime stopTime;
+	private Position pickupPosition;
+	private Position dropoffPosition;
+	private RangeTime startInterval;
+	//espressa in minuti
+	private Integer duration;
 	
+	//TODO: notNull required
+	public Route(Position pickupPosition, Position dropoffPosition, RangeTime startInterval, Integer duration) throws InvalidInputException {
+		this.pickupPosition = pickupPosition;
+		this.dropoffPosition = dropoffPosition;
+		this.startInterval = startInterval;
+		this.setDuration(duration);
+	}
 	public Position getPickupPosition() {
 		return pickupPosition;
 	}
@@ -18,16 +29,24 @@ public class Route {
 	public void setDropoffPosition(Position dropoffPosition) {
 		this.dropoffPosition = dropoffPosition;
 	}
-	public RangeTime getStartTime() {
-		return startTime;
+	public RangeTime getStartInterval() {
+		return startInterval;
 	}
-	public void setStartTime(RangeTime startTime) {
-		this.startTime = startTime;
+	public void setStartInterval(RangeTime startTime) {
+		this.startInterval = startTime;
 	}
-	public RangeTime getStopTime() {
-		return stopTime;
+	public Integer getDuration() {
+		return duration;
 	}
-	public void setStopTime(RangeTime stopTime) {
-		this.stopTime = stopTime;
-	}	
+	public void setDuration(Integer duration) throws InvalidInputException {
+		if(duration > 0)
+			this.duration = duration;
+		else
+			throw new InvalidInputException("Duration should be more than 0.");
+	}
+	
+	public RangeTime getStopInterval() throws InvalidInputException {
+		return this.getStartInterval().addMinutes(this.getDuration());
+	}
+		
 }

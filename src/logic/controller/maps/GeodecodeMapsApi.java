@@ -5,7 +5,7 @@ import java.util.List;
 import logic.controller.exception.ApiNotReachableException;
 import logic.entity.Position;
 
-public interface MapsApi {
+public interface GeodecodeMapsApi {
 
 	public List<Position> addrToPos(String address) throws ApiNotReachableException;
 	

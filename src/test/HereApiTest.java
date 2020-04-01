@@ -12,9 +12,9 @@ import logic.entity.Position;
 
 public class HereApiTest {
 
-	private static final String ADDRESS = "via folcarotonda 19 palestrina";
+	private static final String ADDRESS = "viale del cinema 8 zagarolo";
 	private static final Logger LOGGER = Logger.getLogger(HereApiTest.class.getName());
-	private static final MapsApi MAPS_API = TomTomApi.getInstance();
+	private static final GeodecodeMapsApi MAPS_API = TomTomApi.getInstance();
 	private static final ViewMapsApi VIEW_API = HereApi.getInstance();
 
 	@Test

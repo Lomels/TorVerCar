@@ -1,6 +1,7 @@
 package logic.entity;
 
 import java.time.*;
+import java.time.temporal.ChronoUnit;
 
 import logic.controller.exception.InvalidInputException;
 
@@ -14,9 +15,10 @@ public class RangeTime {
 	}
 
 	public void setStartTime(LocalDateTime time) throws InvalidInputException {
-		if (time.isBefore(LocalDateTime.now())) {
-			throw new InvalidInputException("Start time must not be before now");
-		}
+		//TODO: this should be done not here
+//		if (time.isBefore(LocalDateTime.now())) {
+//			throw new InvalidInputException("Start time must not be before now");
+//		}
 		this.startTime = time;
 	}
 
@@ -33,6 +35,13 @@ public class RangeTime {
 
 	public LocalDateTime getStopTime() {
 		return this.stopTime;
+	}
+	
+	public RangeTime addMinutes(int minutes) throws InvalidInputException {
+		LocalDateTime newStart, newStop;
+		newStart = this.getStartTime().plus(minutes, ChronoUnit.MINUTES);
+		newStop = this.getStartTime().plus(minutes, ChronoUnit.MINUTES);
+		return new RangeTime(newStart, newStop);
 	}
 
 }
