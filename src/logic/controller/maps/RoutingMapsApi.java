@@ -10,5 +10,5 @@ public interface RoutingMapsApi {
 
 	public Route startToStop(Position pickup, Position dropoff, RangeTime startInterval);
 	
-	public Route startToStop(Position pickup, Position dropoff, List<Position> stops, RangeTime startInterval);
+	public Route startToStop(List<Position> stops, RangeTime startInterval);
 }

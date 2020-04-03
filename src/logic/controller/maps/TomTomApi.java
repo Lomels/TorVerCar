@@ -19,19 +19,21 @@ public class TomTomApi {
 	protected static final int CACHE = 0;
 	protected static final int REFRESH = 1;
 	
+	protected String file;
+	
 	// prevent constructor
 	protected TomTomApi() {
 		
 	}
 	
 	// method to use the REST API
-	protected String useRestApi(URI requestUrl, String file) throws ApiNotReachableException {
+	protected String useRestApi(URI requestUrl) throws ApiNotReachableException {
 		String xml = null;		
 		try {
 			// create client e request
 			xml = MyHttpClient.getXmlFromUrl(requestUrl);
 			// scrittura su file per cache
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(this.file));
 			writer.write(xml);
 			writer.close();
 		} catch (Exception e) {

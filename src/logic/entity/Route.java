@@ -9,14 +9,17 @@ public class Route {
 	private RangeTime startInterval;
 	//espressa in minuti
 	private Integer duration;
+	private Integer distance;
 	
 	//TODO: notNull required
-	public Route(Position pickupPosition, Position dropoffPosition, RangeTime startInterval, Integer duration) throws InvalidInputException {
+	public Route(Position pickupPosition, Position dropoffPosition, RangeTime startInterval, Integer duration, Integer distance) throws InvalidInputException {
 		this.pickupPosition = pickupPosition;
 		this.dropoffPosition = dropoffPosition;
 		this.startInterval = startInterval;
 		this.setDuration(duration);
+		this.distance = distance;
 	}
+	
 	public Position getPickupPosition() {
 		return pickupPosition;
 	}
@@ -45,6 +48,14 @@ public class Route {
 			throw new InvalidInputException("Duration should be more than 0.");
 	}
 	
+	public Integer getDistance() {
+		return distance;
+	}
+
+	public void setDistance(Integer distance) {
+		this.distance = distance;
+	}
+
 	public RangeTime getStopInterval() throws InvalidInputException {
 		return this.getStartInterval().addMinutes(this.getDuration());
 	}

@@ -64,11 +64,9 @@ public class DecodeTomTomApi extends TomTomApi implements GeodecodeMapsApi {
 	// override the interface
 	@Override
 	public List<Position> addrToPos(String address) throws ApiNotReachableException {
-		if (address.equals(this.lastQuery)) {
+		if (address.equals(this.lastQuery)) 
 			return this.addrToPos(address, CACHE);
-		} else {
-			return this.addrToPos(address, REFRESH);
-		}
+		return this.addrToPos(address, REFRESH);
 	}
 
 	// internal call with mode
@@ -93,8 +91,7 @@ public class DecodeTomTomApi extends TomTomApi implements GeodecodeMapsApi {
 			}
 
 			// use our class to decode the xml response
-			XmlDecoder decoder = XmlDecoder.getInstance();
-			List<Element> elements = decoder.getElemFromNameParent(xml, "item", "results");
+			List<Element> elements = XmlDecoder.getElemFromNameParent(xml, "item", "results");
 			for(Element e : elements)
 				result.add(PositionBuilder.buildFromElement(e));
 
@@ -121,7 +118,7 @@ public class DecodeTomTomApi extends TomTomApi implements GeodecodeMapsApi {
 			// create the url and send it to the superclass
 			String urlAddress = address.trim().replaceAll("\\s", "%20");
 			URI requestUrl = new URI(String.format(this.geocodeFormat, urlAddress));
-			xml = super.useRestApi(requestUrl, this.file);
+			xml = super.useRestApi(requestUrl);
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
