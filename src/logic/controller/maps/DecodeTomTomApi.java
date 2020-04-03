@@ -3,7 +3,6 @@ package logic.controller.maps;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -13,14 +12,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+
 
 import org.w3c.dom.*;
 
-import org.xml.sax.InputSource;
 
-import javafx.fxml.FXMLLoader;
 import logic.controller.PositionBuilder;
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.httpClient.XmlDecoder;
@@ -118,7 +114,7 @@ public class DecodeTomTomApi extends TomTomApi implements GeodecodeMapsApi {
 			// create the url and send it to the superclass
 			String urlAddress = address.trim().replaceAll("\\s", "%20");
 			URI requestUrl = new URI(String.format(this.geocodeFormat, urlAddress));
-			xml = super.useRestApi(requestUrl);
+			xml = super.useRestApi(requestUrl, this.file);
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

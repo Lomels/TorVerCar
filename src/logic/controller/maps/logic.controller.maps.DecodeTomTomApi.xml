@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+  <summary>
+    <query>viale del cinema 8 zagarolo</query>
+    <queryType>NON_NEAR</queryType>
+    <queryTime>5</queryTime>
+    <numResults>9</numResults>
+    <offset>0</offset>
+    <totalResults>11</totalResults>
+    <fuzzyLevel>1</fuzzyLevel>
+  </summary>
+  <results>
+    <item>
+      <type>Point Address</type>
+      <id>IT/PAD/p0/6417193</id>
+      <score>10.420350074768066</score>
+      <address>
+        <streetNumber>8</streetNumber>
+        <streetName>Viale del Cinema</streetName>
+        <municipalitySubdivision>Zagarolo</municipalitySubdivision>
+        <municipality>Zagarolo</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00039</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Viale del Cinema, 8, 00039 Zagarolo</freeformAddress>
+        <localName>Zagarolo</localName>
+      </address>
+      <position>
+        <lat>41.83364</lat>
+        <lon>12.83709</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.83454</lat>
+          <lon>12.83588</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.83274</lat>
+          <lon>12.8383</lon>
+        </btmRightPoint>
+      </viewport>
+      <entryPoints>
+        <item>
+          <type>main</type>
+          <position>
+            <lat>41.83369</lat>
+            <lon>12.83722</lon>
+          </position>
+        </item>
+      </entryPoints>
+    </item>
+    <item>
+      <type>Street</type>
+      <id>IT/STR/p0/1065190</id>
+      <score>8.668889999389648</score>
+      <address>
+        <streetName>Viale del Cinema</streetName>
+        <municipalitySubdivision>Zagarolo</municipalitySubdivision>
+        <municipality>Zagarolo</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00039</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Viale del Cinema, 00039 Zagarolo</freeformAddress>
+        <localName>Zagarolo</localName>
+      </address>
+      <position>
+        <lat>41.83287</lat>
+        <lon>12.8386</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.83543</lat>
+          <lon>12.83708</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.83074</lat>
+          <lon>12.83955</lon>
+        </btmRightPoint>
+      </viewport>
+    </item>
+    <item>
+      <type>Cross Street</type>
+      <id>IT/XSTR/p0/172975</id>
+      <score>7.210849761962891</score>
+      <address>
+        <streetName>Via Vittorio De Sica &amp; Viale del Cinema</streetName>
+        <municipalitySubdivision>Zagarolo</municipalitySubdivision>
+        <municipality>Zagarolo</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00039</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Via Vittorio De Sica &amp; Viale del Cinema, 00039 Zagarolo</freeformAddress>
+        <localName>Zagarolo</localName>
+      </address>
+      <position>
+        <lat>41.83442</lat>
+        <lon>12.83749</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.83532</lat>
+          <lon>12.83628</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.83352</lat>
+          <lon>12.8387</lon>
+        </btmRightPoint>
+      </viewport>
+    </item>
+    <item>
+      <type>Cross Street</type>
+      <id>IT/XSTR/p0/189188</id>
+      <score>7.210849761962891</score>
+      <address>
+        <streetName>Via Pier Paolo Pasolini &amp; Viale del Cinema</streetName>
+        <municipalitySubdivision>Zagarolo</municipalitySubdivision>
+        <municipality>Zagarolo</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00039</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Via Pier Paolo Pasolini &amp; Viale del Cinema, 00039 Zagarolo</freeformAddress>
+        <localName>Zagarolo</localName>
+      </address>
+      <position>
+        <lat>41.83127</lat>
+        <lon>12.83925</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.83217</lat>
+          <lon>12.83804</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.83037</lat>
+          <lon>12.84046</lon>
+        </btmRightPoint>
+      </viewport>
+    </item>
+    <item>
+      <type>Cross Street</type>
+      <id>IT/XSTR/p0/189189</id>
+      <score>7.210849761962891</score>
+      <address>
+        <streetName>Via Roberto Rossellini &amp; Viale del Cinema</streetName>
+        <municipalitySubdivision>Zagarolo</municipalitySubdivision>
+        <municipality>Zagarolo</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00039</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Via Roberto Rossellini &amp; Viale del Cinema, 00039 Zagarolo</freeformAddress>
+        <localName>Zagarolo</localName>
+      </address>
+      <position>
+        <lat>41.83127</lat>
+        <lon>12.83925</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.83217</lat>
+          <lon>12.83804</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.83037</lat>
+          <lon>12.84046</lon>
+        </btmRightPoint>
+      </viewport>
+    </item>
+    <item>
+      <type>Cross Street</type>
+      <id>IT/XSTR/p0/189190</id>
+      <score>7.210849761962891</score>
+      <address>
+        <streetName>Via Luchino Visconti &amp; Viale del Cinema</streetName>
+        <municipalitySubdivision>Zagarolo</municipalitySubdivision>
+        <municipality>Zagarolo</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00039</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Via Luchino Visconti &amp; Viale del Cinema, 00039 Zagarolo</freeformAddress>
+        <localName>Zagarolo</localName>
+      </address>
+      <position>
+        <lat>41.83476</lat>
+        <lon>12.83807</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.83566</lat>
+          <lon>12.83686</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.83386</lat>
+          <lon>12.83928</lon>
+        </btmRightPoint>
+      </viewport>
+    </item>
+    <item>
+      <type>Cross Street</type>
+      <id>IT/XSTR/p0/189191</id>
+      <score>7.210849761962891</score>
+      <address>
+        <streetName>Via Colle Barco &amp; Viale del Cinema</streetName>
+        <municipalitySubdivision>Zagarolo</municipalitySubdivision>
+        <municipality>Zagarolo</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00039</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Via Colle Barco &amp; Viale del Cinema, 00039 Zagarolo</freeformAddress>
+        <localName>Zagarolo</localName>
+      </address>
+      <position>
+        <lat>41.83232</lat>
+        <lon>12.83822</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.83322</lat>
+          <lon>12.83701</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.83142</lat>
+          <lon>12.83943</lon>
+        </btmRightPoint>
+      </viewport>
+    </item>
+    <item>
+      <type>Cross Street</type>
+      <id>IT/XSTR/p0/198083</id>
+      <score>7.210849761962891</score>
+      <address>
+        <streetName>Via Sergio Leone &amp; Viale del Cinema</streetName>
+        <municipalitySubdivision>Zagarolo</municipalitySubdivision>
+        <municipality>Zagarolo</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00039</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Via Sergio Leone &amp; Viale del Cinema, 00039 Zagarolo</freeformAddress>
+        <localName>Zagarolo</localName>
+      </address>
+      <position>
+        <lat>41.83238</lat>
+        <lon>12.83862</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.83328</lat>
+          <lon>12.83741</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.83148</lat>
+          <lon>12.83983</lon>
+        </btmRightPoint>
+      </viewport>
+    </item>
+    <item>
+      <type>Cross Street</type>
+      <id>IT/XSTR/p0/198693</id>
+      <score>7.210849761962891</score>
+      <address>
+        <streetName>Via Pietro Germi &amp; Viale del Cinema</streetName>
+        <municipalitySubdivision>Zagarolo</municipalitySubdivision>
+        <municipality>Zagarolo</municipality>
+        <countrySecondarySubdivision>Roma</countrySecondarySubdivision>
+        <countrySubdivision>Lazio</countrySubdivision>
+        <postalCode>00039</postalCode>
+        <countryCode>IT</countryCode>
+        <country>Italia</country>
+        <countryCodeISO3>ITA</countryCodeISO3>
+        <freeformAddress>Via Pietro Germi &amp; Viale del Cinema, 00039 Zagarolo</freeformAddress>
+        <localName>Zagarolo</localName>
+      </address>
+      <position>
+        <lat>41.83238</lat>
+        <lon>12.83894</lon>
+      </position>
+      <viewport>
+        <topLeftPoint>
+          <lat>41.83328</lat>
+          <lon>12.83773</lon>
+        </topLeftPoint>
+        <btmRightPoint>
+          <lat>41.83148</lat>
+          <lon>12.84015</lon>
+        </btmRightPoint>
+      </viewport>
+    </item>
+  </results>
+</response>

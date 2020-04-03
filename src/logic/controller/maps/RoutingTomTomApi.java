@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.w3c.dom.Element;
-
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.httpClient.XmlDecoder;
@@ -29,11 +27,12 @@ public class RoutingTomTomApi extends TomTomApi implements RoutingMapsApi {
 	// using Routing
 	private static final String VERSION_NUMBER = "1";
 	private static final String FORMAT = SERVER + "routing/%s/calculateRoute/%s/%s?key=%s";
-	private static final String FILE = "src/logic/controller/maps/" + RoutingTomTomApi.class.getCanonicalName() + ".xml";
+	private static final String FILE = "src/logic/controller/maps/" + RoutingTomTomApi.class.getCanonicalName()
+			+ ".xml";
 
 	private String routingFormat;
 	private List<Position> lastQuery = null;
-	//private String file;
+	// private String file;
 
 	// constructor
 	private RoutingTomTomApi() {
@@ -47,16 +46,18 @@ public class RoutingTomTomApi extends TomTomApi implements RoutingMapsApi {
 	}
 
 	// singleton
-	//TODO check if it is a good idea, maybe if two users uses it in the sametime it breaks?
-	//probably the cache will break
-	public RoutingTomTomApi GetInstance() {
-		if(instance == null)
+	// TODO check if it is a good idea, maybe if two users uses it in the sametime
+	// it breaks?
+	// probably the cache will break
+	public static RoutingTomTomApi GetInstance() {
+		if (instance == null)
 			return new RoutingTomTomApi();
 		return instance;
 	}
 
 	@Override
 	public Route startToStop(Position pickup, Position dropoff, RangeTime startInterval) {
+
 		List<Position> allStops = new ArrayList<Position>();
 		allStops.add(pickup);
 		allStops.add(dropoff);
@@ -65,8 +66,8 @@ public class RoutingTomTomApi extends TomTomApi implements RoutingMapsApi {
 
 	@Override
 	public Route startToStop(List<Position> stops, RangeTime startIntervall) {
-		//TODO: build the route
-		//TODO: test if it works
+		// TODO: build the route
+		// TODO: test if it works
 		Route route = null;
 		Integer duration = null;
 		Integer distance = null;
@@ -88,14 +89,16 @@ public class RoutingTomTomApi extends TomTomApi implements RoutingMapsApi {
 	}
 
 	private List<Integer> evaluate(List<Position> stops) {
-		if(this.lastQuery.equals(stops))
+		if (this.lastQuery != null && this.lastQuery.equals(stops))
 			return this.evaluate(stops, CACHE);
 		return this.evaluate(stops, REFRESH);
 	}
 
 	private List<Integer> evaluate(List<Position> stops, int mode) {
-		//TODO find a better a solution two transmit the distance and duration
+		// TODO find a better a solution two transmit the distance and duration
 		ArrayList<Integer> result = new ArrayList<Integer>();
+		Integer duration = null;
+		Integer distance = null;
 		try {
 			String xml = null;
 			switch (mode) {
@@ -107,21 +110,24 @@ public class RoutingTomTomApi extends TomTomApi implements RoutingMapsApi {
 				break;
 			case REFRESH:
 				LOGGER.info("Using refresh mode.");
-				//TODO add null control
+				// TODO add null control
 				this.lastQuery = stops;
 				xml = this.xmlFromStops(stops);
 				break;
 			}
 
-			//TODO decode
-			Element summary = XmlDecoder.getElemFromNameParent(xml, "summary", "route").get(0);
-			Integer duration = Integer.parseInt(summary.getAttribute("travelTimeInSeconds")) / 60;
-			Integer distance = Integer.parseInt(summary.getAttribute("lengthInMeters"));
+			//TODO: implement XmlDecoder single element
+			duration = Integer.parseInt(
+					XmlDecoder.getElemFromNameParent(xml, "travelTimeInSeconds", "summary").get(0).getTextContent())
+					/ 60;
+			distance = Integer.parseInt(
+					XmlDecoder.getElemFromNameParent(xml, "lengthInMeters", "summary").get(0).getTextContent());
 			result.add(duration);
 			result.add(distance);
 
 		} catch (FileNotFoundException e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,15 +141,14 @@ public class RoutingTomTomApi extends TomTomApi implements RoutingMapsApi {
 		try {
 			// create the url and send it to the superclass
 			String urlField = "";
-			for(int index = 0; index < stops.size(); index++) {
+			for (int index = 0; index < stops.size(); index++) {
 				Position stop = stops.get(index);
 				urlField += stop.getLat() + "," + stop.getLon();
-				if(index < stops.size() - 1)
+				if (index < stops.size() - 1)
 					urlField += ":";
-			}				
+			}
 			URI requestUrl = new URI(String.format(this.routingFormat, urlField));
-			LOGGER.info(urlField + requestUrl);
-			xml = super.useRestApi(requestUrl);
+			xml = super.useRestApi(requestUrl, this.file);
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -154,10 +159,5 @@ public class RoutingTomTomApi extends TomTomApi implements RoutingMapsApi {
 		return xml;
 
 	}
-
-
-
-
-
 
 }
