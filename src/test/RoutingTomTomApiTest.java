@@ -15,8 +15,8 @@ import logic.entity.*;
 public class RoutingTomTomApiTest {
 
 	private static final Logger LOGGER = Logger.getLogger(TomTomApi.class.getName());
-	private static final GeodecodeMapsApi geoApi = DecodeTomTomApi.getInstance();
-	private static final RoutingMapsApi routeApi = RoutingTomTomApi.GetInstance();
+	private static final GeodecodeApi geoApi = GeodecodeTomTomApi.getInstance();
+	private static final RoutingApi routeApi = RoutingTomTomApi.getInstance();
 
 	private static final String ADDRESS_1 = "Via prenestina nuova 51, Palestrina";
 	private static final String ADDRESS_2 = "Via adua 10, Rocca Priora";

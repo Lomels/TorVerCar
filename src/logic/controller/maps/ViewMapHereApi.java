@@ -10,32 +10,32 @@ import javax.imageio.ImageIO;
 
 import logic.entity.Position;
 
-public class HereApi implements ViewMapsApi {
-	
-	private static HereApi instance = null;
-	
+public class ViewMapHereApi implements ViewMapApi {
+
+	private static ViewMapHereApi instance = null;
+
 	// use HERE REST Api
-	//TODO: implement class for better build the url
 	private static final String KEY = "JB1x92IV3wywdCVXejt2bDvpnRsK14Y9vBoLUONVBLE";
+	// TODO: implement class for better build the url
 	private static final String FORMAT = "https://image.maps.ls.hereapi.com/mia/1.6/mapview" + "?apiKey=%s" + "&c=%s,%s"
 			+ "&z=%s" + "&t=0" + "&vt=0" + "&ml=ita" + "&h=512" + "&w=512" + "&pip=13";
-	private static final String FILE = "src/logic/controller/maps/image.jpg";
+	private static final String FILE = "src/logic/controller/maps/" + ViewMapHereApi.class.getCanonicalName() + ".jpg";
 	private File actualFile;
 	private static int defaultZoom = 16;
 
-	private HereApi() {
+	private ViewMapHereApi() {
 		this.actualFile = new File(FILE);
 	}
-	
-	public static HereApi getInstance() {
-		if(HereApi.instance == null)
-			HereApi.instance = new HereApi();
-		return HereApi.instance;
+
+	public static ViewMapHereApi getInstance() {
+		if (ViewMapHereApi.instance == null)
+			ViewMapHereApi.instance = new ViewMapHereApi();
+		return ViewMapHereApi.instance;
 	}
 
 	@Override
 	public String viewFromPos(Position p) {
-		return this.viewFromPos(p, HereApi.defaultZoom);
+		return this.viewFromPos(p, ViewMapHereApi.defaultZoom);
 	}
 
 	@Override
@@ -44,6 +44,7 @@ public class HereApi implements ViewMapsApi {
 		return result;
 	}
 
+	// TODO: better the file position
 	@Override
 	public void saveImage(Position p) {
 		try {
@@ -57,9 +58,7 @@ public class HereApi implements ViewMapsApi {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
 
 }

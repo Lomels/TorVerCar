@@ -3,8 +3,8 @@ package test;
 import org.junit.Test;
 
 import logic.controller.exception.ApiNotReachableException;
-import logic.controller.maps.DecodeTomTomApi;
-import logic.controller.maps.GeodecodeMapsApi;
+import logic.controller.maps.GeodecodeTomTomApi;
+import logic.controller.maps.GeodecodeApi;
 import logic.controller.maps.TomTomApi;
 import logic.entity.Position;
 
@@ -17,7 +17,7 @@ public class GeodecodeTomTomApiTest {
 
 	// TODO: implement test
 	private static final Logger LOGGER = Logger.getLogger(TomTomApi.class.getName());
-	private static final GeodecodeMapsApi geoApi = DecodeTomTomApi.getInstance();
+	private static final GeodecodeApi geoApi = GeodecodeTomTomApi.getInstance();
 
 	@Test
 	public void normalTest() {

@@ -18,7 +18,7 @@ import logic.entity.Position;
 import logic.entity.RangeTime;
 import logic.entity.Route;
 
-public class RoutingTomTomApi extends TomTomApi implements RoutingMapsApi {
+public class RoutingTomTomApi extends TomTomApi implements RoutingApi {
 
 	private static RoutingTomTomApi instance = null;
 	// Logger
@@ -49,7 +49,7 @@ public class RoutingTomTomApi extends TomTomApi implements RoutingMapsApi {
 	// TODO check if it is a good idea, maybe if two users uses it in the sametime
 	// it breaks?
 	// probably the cache will break
-	public static RoutingTomTomApi GetInstance() {
+	public static RoutingTomTomApi getInstance() {
 		if (instance == null)
 			return new RoutingTomTomApi();
 		return instance;

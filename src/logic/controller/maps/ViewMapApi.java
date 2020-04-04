@@ -2,7 +2,7 @@ package logic.controller.maps;
 
 import logic.entity.Position;
 
-public interface ViewMapsApi {
+public interface ViewMapApi {
 
 	public String viewFromPos(Position p);
 

@@ -6,10 +6,8 @@ import java.net.URI;
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.httpClient.MyHttpClient;
 
-
+//TODO: maybe abstract
 public class TomTomApi {
-
-	private static TomTomApi instance = null;
 
 	// using TomTomApi
 	protected static final String KEY = "8xAoG57mmkjCxim04niX0NYPXAZMuAyV";

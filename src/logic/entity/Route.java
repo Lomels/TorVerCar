@@ -6,45 +6,55 @@ import java.util.List;
 import logic.controller.exception.InvalidInputException;
 
 public class Route {
-	private Position pickupPosition;
-	private Position dropoffPosition;
 	// TODO: very urgent: add stops list
 	private List<Position> stops = new ArrayList<Position>();
-	
+
 	private RangeTime startInterval;
 	// espressa in minuti
 	private Integer duration;
 	private Integer distance;
 
+	public Route(List<Position> stops, RangeTime startInterval, Integer duration, Integer distance) {
+		this.stops = stops;
+		this.startInterval = startInterval;
+		this.duration = duration;
+		this.distance = distance;
+	}
+
+
+
 	// TODO: notNull required
 	public Route(Position pickupPosition, Position dropoffPosition, RangeTime startInterval, Integer duration,
 			Integer distance) throws InvalidInputException {
-		List<Position> stops = new ArrayList<Position>();
 		this.stops.add(pickupPosition);
 		this.stops.add(dropoffPosition);
 		this.startInterval = startInterval;
 		this.setDuration(duration);
 		this.distance = distance;
 	}
-	
-	public Route(List<Position> stops, RangeTime startInterval, Integer duration, Integer distance) {
-		//TODO: constructor with stop list
+
+	public void addStop(Position stop) {
+		// TODO: input check
+		this.stops.add(stop);
 	}
 
 	public Position getPickupPosition() {
-		return pickupPosition;
-	}
-
-	public void setPickupPosition(Position pickupPosition) {
-		this.pickupPosition = pickupPosition;
+		return this.stops.get(0);
 	}
 
 	public Position getDropoffPosition() {
-		return dropoffPosition;
+		return this.stops.get(this.stops.size() - 1);
 	}
 
-	public void setDropoffPosition(Position dropoffPosition) {
-		this.dropoffPosition = dropoffPosition;
+	public Position getIndexPosition(Integer index) {
+		Position result = null;
+		try {
+			result = this.stops.get(index);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public RangeTime getStartInterval() {
@@ -71,6 +81,7 @@ public class Route {
 	}
 
 	public void setDistance(Integer distance) {
+		// TODO: input check
 		this.distance = distance;
 	}
 

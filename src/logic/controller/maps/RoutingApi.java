@@ -6,7 +6,7 @@ import logic.entity.Position;
 import logic.entity.RangeTime;
 import logic.entity.Route;
 
-public interface RoutingMapsApi {
+public interface RoutingApi {
 
 	public Route startToStop(Position pickup, Position dropoff, RangeTime startInterval);
 	

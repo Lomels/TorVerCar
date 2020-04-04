@@ -14,8 +14,8 @@ public class HereApiTest {
 
 	private static final String ADDRESS = "viale del cinema 8 zagarolo";
 	private static final Logger LOGGER = Logger.getLogger(HereApiTest.class.getName());
-	private static final GeodecodeMapsApi MAPS_API = DecodeTomTomApi.getInstance();
-	private static final ViewMapsApi VIEW_API = HereApi.getInstance();
+	private static final GeodecodeApi MAPS_API = GeodecodeTomTomApi.getInstance();
+	private static final ViewMapApi VIEW_API = ViewMapHereApi.getInstance();
 
 	@Test
 	public void normalTest() {

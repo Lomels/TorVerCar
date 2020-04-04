@@ -22,17 +22,17 @@ import logic.controller.exception.ApiNotReachableException;
 import logic.controller.httpClient.XmlDecoder;
 import logic.entity.Position;
 
-public class DecodeTomTomApi extends TomTomApi implements GeodecodeMapsApi {
+public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 
-	private static DecodeTomTomApi instance = null;
+	private static GeodecodeTomTomApi instance = null;
 
 	// Logger
-	private static final Logger LOGGER = Logger.getLogger(DecodeTomTomApi.class.getCanonicalName());
+	private static final Logger LOGGER = Logger.getLogger(GeodecodeTomTomApi.class.getCanonicalName());
 
 	// using GeoDecode
 	private static final String VERSION_NUMBER = "2";
 	private static final String FORMAT = SERVER + "search/%s/geocode/%s.%s?key=%s";
-	private static final String FILE = "src/logic/controller/maps/" + DecodeTomTomApi.class.getCanonicalName() + ".xml";
+	private static final String FILE = "src/logic/controller/maps/" + GeodecodeTomTomApi.class.getCanonicalName() + ".xml";
 
 	private String geocodeFormat;
 	private String lastQuery = null;
@@ -40,7 +40,7 @@ public class DecodeTomTomApi extends TomTomApi implements GeodecodeMapsApi {
 
 
 	// Costruttore
-	private DecodeTomTomApi() {
+	private GeodecodeTomTomApi() {
 		this.geocodeFormat = String.format(FORMAT, VERSION_NUMBER, "%s", EXT, KEY);
 		try {
 			this.file = new File(FILE).getCanonicalPath();
@@ -51,9 +51,9 @@ public class DecodeTomTomApi extends TomTomApi implements GeodecodeMapsApi {
 	}
 
 	// implemented as singleton
-	public static DecodeTomTomApi getInstance() {
+	public static GeodecodeTomTomApi getInstance() {
 		if (instance == null)
-			DecodeTomTomApi.instance = new DecodeTomTomApi();
+			GeodecodeTomTomApi.instance = new GeodecodeTomTomApi();
 		return instance;
 	}
 
