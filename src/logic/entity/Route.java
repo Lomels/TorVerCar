@@ -21,8 +21,6 @@ public class Route {
 		this.distance = distance;
 	}
 
-
-
 	// TODO: notNull required
 	public Route(Position pickupPosition, Position dropoffPosition, RangeTime startInterval, Integer duration,
 			Integer distance) throws InvalidInputException {
@@ -89,11 +87,14 @@ public class Route {
 		return this.getStartInterval().addMinutes(this.getDuration());
 	}
 
-//	@Override
-//	public String toString() {
-//		return "Route [pickupPosition=" + pickupPosition.getAddress() + ",\ndropoffPosition="
-//				+ dropoffPosition.getAddress() + ",\nstartInterval=" + startInterval.getStartTime() + ", duration="
-//				+ duration + ", distance=" + distance + "]";
-//	}
+	@Override
+	public String toString() {
+		return "Route [stops=" + stops + ", startInterval=" + startInterval + ", duration=" + duration + ", distance="
+				+ distance + "]";
+	}
+
+	public String toStringShort() {
+		return "Route [duration=" + duration + " minutes, distance=" + distance + "m]";
+	}
 
 }
