@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import logic.view.FXML.registration.RegistrationView;
 
 public class HomeView extends Application {
 	@FXML
