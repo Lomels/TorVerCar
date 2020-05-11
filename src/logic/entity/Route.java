@@ -6,9 +6,8 @@ import java.util.List;
 import logic.controller.exception.InvalidInputException;
 
 public class Route {
-	// TODO: very urgent: add stops list
+	
 	private List<Position> stops = new ArrayList<Position>();
-
 	private RangeTime startInterval;
 	// espressa in minuti
 	private Integer duration;
