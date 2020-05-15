@@ -9,11 +9,18 @@ import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import logic.bean.UserInfo;
 import logic.controller.RegistrationController;
 import logic.view.FXML.HomeView;
 
 public class EditInfoView extends Application{
 	@FXML Button btHome, btNext, btBack;
+	
+	private UserInfo user;
+	
+	public EditInfoView(UserInfo newUser) {
+		this.user = newUser;
+	}
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -40,7 +47,7 @@ public class EditInfoView extends Application{
 	}
 	
 	public void btBackController() throws Exception{
-		RecapView recap = new RecapView();
+		RecapView recap = new RecapView(user);
 		recap.start((Stage) btBack.getScene().getWindow());
 	}
 }

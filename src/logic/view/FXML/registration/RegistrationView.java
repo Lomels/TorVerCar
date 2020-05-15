@@ -39,7 +39,7 @@ public class RegistrationView extends Application {
 		try {
 			if(password.getText().contentEquals(repeat.getCharacters())) {
 				control.createStudent(userID.getText(), password.getText());
-				RecapView recap = new RecapView();
+				RecapView recap = new RecapView(userID.getText());
 				recap.start((Stage) btNext.getScene().getWindow());
 		}else {
 				throw new Exception("Le password non combaciano, riprova.");
