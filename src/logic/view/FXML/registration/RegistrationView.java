@@ -14,7 +14,7 @@ import logic.view.FXML.HomeView;
 
 
 public class RegistrationView extends Application {
-	@FXML private Button homeButton;
+	@FXML private Button btHome, btNext;
 	@FXML private TextField userID;
 	@FXML private TextField password;
 	@FXML private TextField repeat;
@@ -39,6 +39,8 @@ public class RegistrationView extends Application {
 		try {
 			if(password.getText().contentEquals(repeat.getCharacters())) {
 				control.createStudent(userID.getText(), password.getText());
+				RecapView recap = new RecapView();
+				recap.start((Stage) btNext.getScene().getWindow());
 		}else {
 				throw new Exception("Le password non combaciano, riprova.");
 			}
@@ -51,7 +53,7 @@ public class RegistrationView extends Application {
 	@FXML
 	public void homeButtonController() throws IOException {
 		HomeView home = new HomeView();
-		home.start((Stage) homeButton.getScene().getWindow());
+		home.start((Stage) btHome.getScene().getWindow());
 	}
 
 	public static void main(String[] args) {

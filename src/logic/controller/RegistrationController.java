@@ -42,4 +42,8 @@ public class RegistrationController {
 		}
 	}
 
+	public void recapInfo(UserInfo user) {
+		
+	}
+	
 }
