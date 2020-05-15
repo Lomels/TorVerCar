@@ -18,9 +18,9 @@ public class EditInfoView extends Application{
 	
 	private UserInfo user;
 	
-	public EditInfoView(UserInfo newUser) {
-		this.user = newUser;
-	}
+	/*
+	 * public EditInfoView(UserInfo newUser) { this.user = newUser; }
+	 */
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -47,7 +47,7 @@ public class EditInfoView extends Application{
 	}
 	
 	public void btBackController() throws Exception{
-		RecapView recap = new RecapView(user);
+		RecapView recap = new RecapView(/*user*/);
 		recap.start((Stage) btBack.getScene().getWindow());
 	}
 }

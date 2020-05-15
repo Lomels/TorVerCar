@@ -33,13 +33,14 @@ public class RegistrationView extends Application {
 	}
 	
 	//TODO criptare la password
-	
+	/*
 	@FXML
 	public void nextButtonController() throws Exception {
 		try {
 			if(password.getText().contentEquals(repeat.getCharacters())) {
-				control.createStudent(userID.getText(), password.getText());
-				RecapView recap = new RecapView(userID.getText());
+				//control.createStudent(userID.getText(), password.getText());
+				RecapView recap = new RecapView();//new RecapView(userID.getText());
+				//recap.setInfo();
 				recap.start((Stage) btNext.getScene().getWindow());
 		}else {
 				throw new Exception("Le password non combaciano, riprova.");
@@ -47,6 +48,14 @@ public class RegistrationView extends Application {
 		}catch(Exception e){
 			error.setText(e.getMessage());			
 		}
+	}
+	*/
+	
+	@FXML
+	public void nextButtonController() throws Exception {
+		RecapView recap = new RecapView();
+		RecapView.Controller controller = new RecapView.Controller(userID.getText());
+		recap.start((Stage) btNext.getScene().getWindow());
 	}
 		
 	

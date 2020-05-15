@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.FXML.registration.RecapView">
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.FXML.registration.RecapView$Controller">
    <children>
       <AnchorPane fx:id="pageRecapDBInfo" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -18,14 +18,33 @@
                </font>
             </Text>
             <Button id="btHome" fx:id="btHome" layoutX="28.0" layoutY="336.0" mnemonicParsing="false" onAction="#btHomeController" text="Home" />
-            <TextArea fx:id="tfName" disable="true" editable="false" layoutX="270.0" layoutY="105.0" minHeight="-Infinity" prefHeight="26.0" prefWidth="200.0" />
-            <TextArea fx:id="tfSurname" disable="true" editable="false" layoutX="270.0" layoutY="147.0" minHeight="-Infinity" prefHeight="26.0" prefWidth="200.0" />
-            <TextArea fx:id="tfId" disable="true" editable="false" layoutX="270.0" layoutY="190.0" minHeight="-Infinity" prefHeight="26.0" prefWidth="200.0" />
-            <TextArea fx:id="tfEmail" disable="true" editable="false" layoutX="270.0" layoutY="232.0" minHeight="-Infinity" prefHeight="26.0" prefWidth="200.0" />
-            <Text layoutX="225.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NAME:" />
+            <Text layoutX="225.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NAME:">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor></Text>
             <Text layoutX="204.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SURNAME:" />
             <Text layoutX="116.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MATRICULATION NUMBER:" />
             <Text layoutX="225.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EMAIL:" />
+            <Text fx:id="tfName" layoutX="270.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Text>
+            <Text fx:id="tfSurname" layoutX="270.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Text>
+            <Text fx:id="tfId" layoutX="270.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Text>
+            <Text fx:id="tfEmail" layoutX="270.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Text>
          </children>
       </AnchorPane>
    </children>
