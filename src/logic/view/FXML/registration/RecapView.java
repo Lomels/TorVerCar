@@ -17,17 +17,17 @@ import logic.controller.RegistrationController;
 import logic.view.FXML.HomeView;
 
 public class RecapView extends Application{
-	
+	Controller controller = new Controller();
 	
 	@Override
 	public void start(Stage stage) throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Recap_database_info.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
-		Controller controller = loader.getController();
+		controller = loader.getController();
 		stage.setTitle("Recap");
 		stage.setScene(scene);
-		//setInfo();
+		controller.setInfo();
 		stage.show();
 	}
 
@@ -44,9 +44,9 @@ public class RecapView extends Application{
 		@FXML private Text tfSurname;
 		@FXML private Text tfId;
 		@FXML private Text tfEmail;
-		private UserInfo user;
+		private UserInfo user = new UserInfo();
 		private RegistrationController control = new RegistrationController();
-		
+		/*
 		public Controller(String userID) throws Exception { 
 			user = control.recapInfo(userID);
 			setInfo(user);
@@ -56,21 +56,25 @@ public class RecapView extends Application{
 			this.user = newUser; 
 			setInfo(user); 
 		}
-		
+		*/
 		@FXML
 		public void btNextController() throws Exception {
 			//setInfo();
 		}
 		
-		public void setInfo(UserInfo user) {
-			tfName.setText(user.getName());
+		public void setUser(String userID) throws Exception {
+			user = control.recapInfo(userID);
+			System.out.println(user.getName()+" "+user.getSurname());
+		}
+		
+		public void setInfo() {
+			/*tfName.setText(this.user.getName());
 			tfSurname.setText(user.getSurname());
 			tfId.setText(user.getUserID());
-			tfEmail.setText(user.getEmail());
-			/*tfName.setText("");
-			tfSurname.setText("ciao");
-			tfId.setText("ciao");
-			tfEmail.setText("ciao");*/
+			tfEmail.setText(user.getEmail());*/
+			tfName.setText("ciao");
+			System.out.println(user.getEmail()+" "+user.getUserID());
+
 		}
 		
 		@FXML

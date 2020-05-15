@@ -36,10 +36,10 @@ public class UniDAO implements DatabaseBoundary{
 			this.connect();
 			
 			ResultSet rs = MyQueries.getInfoByUserID(this.stmt, userID);
-			/*
+			
 			if(!rs.first())
 				throw new DatabaseException("Student Not Found");
-			*/
+			
 			rs.first();
 			
 			String name = rs.getString("name");

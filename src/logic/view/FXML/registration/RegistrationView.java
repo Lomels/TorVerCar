@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import logic.controller.RegistrationController;
 import logic.view.FXML.HomeView;
+import logic.view.FXML.registration.RecapView.Controller;
 
 
 public class RegistrationView extends Application {
@@ -54,7 +55,7 @@ public class RegistrationView extends Application {
 	@FXML
 	public void nextButtonController() throws Exception {
 		RecapView recap = new RecapView();
-		RecapView.Controller controller = new RecapView.Controller(userID.getText());
+		recap.controller.setUser(userID.getText().toString());
 		recap.start((Stage) btNext.getScene().getWindow());
 	}
 		
