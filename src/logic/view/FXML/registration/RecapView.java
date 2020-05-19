@@ -18,6 +18,7 @@ import logic.view.FXML.HomeView;
 
 public class RecapView extends Application{
 	Controller controller = new Controller();
+	protected static UserInfo user = new UserInfo();
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -44,7 +45,7 @@ public class RecapView extends Application{
 		@FXML private Text tfSurname;
 		@FXML private Text tfId;
 		@FXML private Text tfEmail;
-		private UserInfo user = new UserInfo();
+		
 		private RegistrationController control = new RegistrationController();
 		/*
 		public Controller(String userID) throws Exception { 
@@ -68,11 +69,11 @@ public class RecapView extends Application{
 		}
 		
 		public void setInfo() {
-			/*tfName.setText(this.user.getName());
+			tfName.setText(user.getName());
 			tfSurname.setText(user.getSurname());
 			tfId.setText(user.getUserID());
-			tfEmail.setText(user.getEmail());*/
-			tfName.setText("ciao");
+			tfEmail.setText(user.getEmail());
+			//tfName.setText("ciao");
 			System.out.println(user.getEmail()+" "+user.getUserID());
 
 		}
