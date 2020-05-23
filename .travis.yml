@@ -1,11 +1,11 @@
 language: java
 jdk: 
- -openjdk8
+    -openjdk8
+script:
+    - ant build
+    - sonar-scanner
+
 addons:
   sonarcloud:
-    organization: "lomels"
-    token: "8b8178bbbf40e67980117bea74c138bbe77bc56f"
-
-script:
-  - ant build
-  - sonar-scanner
+    organization: lomels
+    token: ${SONAR_TOKEN}
