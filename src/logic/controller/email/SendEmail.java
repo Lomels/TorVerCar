@@ -14,12 +14,13 @@ public class SendEmail {
 	private static String API_KEY = 
 			"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";
 	
-	public static void main(String[] args) throws Exception{
+	public static void send(String userEmail, String code) throws IOException {
 		Email from = new Email("torvercar2020@gmail.com"); 
-		Email to = new Email("marco.lomele@gmail.com");
-		Email to2 = new Email("g.marseglia.it@gmail.com");
-		String subject = "ispw";
-		Content content = new Content("text/plain", "Se sboccia.");
+		Email to = new Email(userEmail);
+		String subject = "Confirm your identity";
+		String body = "Hi! Your activation code is: %s";
+		String mailText = String.format(body, code);
+		Content content = new Content("text/plain", mailText);
 		Mail mail = new Mail(from, subject, to, content);
 		
 		SendGrid sg = new SendGrid(API_KEY);

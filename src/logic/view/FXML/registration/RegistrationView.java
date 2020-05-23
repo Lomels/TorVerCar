@@ -9,9 +9,7 @@ import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import logic.controller.RegistrationController;
 import logic.view.FXML.HomeView;
-import logic.view.FXML.registration.RecapView.Controller;
 
 
 public class RegistrationView extends Application {
@@ -21,7 +19,6 @@ public class RegistrationView extends Application {
 	@FXML private TextField repeat;
 	@FXML private Text error;
 	
-	private RegistrationController control = new RegistrationController();
 	
 	@Override
 	public void start(Stage stage) throws IOException {

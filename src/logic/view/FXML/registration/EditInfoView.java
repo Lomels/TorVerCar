@@ -7,16 +7,11 @@ import javafx.stage.Stage;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
-import logic.bean.UserInfo;
-import logic.controller.RegistrationController;
 import logic.view.FXML.HomeView;
 
 public class EditInfoView extends Application{
 	@FXML Button btHome, btNext, btBack;
 	
-	private UserInfo user;
 	
 	/*
 	 * public EditInfoView(UserInfo newUser) { this.user = newUser; }

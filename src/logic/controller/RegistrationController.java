@@ -1,7 +1,6 @@
 package logic.controller;
 
 import logic.controller.exception.DatabaseException;
-import logic.controller.exception.InvalidInputException;
 import logic.entity.Student;
 import logic.utilities.InputChecker;
 import logic.view.DatabaseBoundary;
