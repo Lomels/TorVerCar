@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+   <children>
+      <MenuBar layoutX="7.0" layoutY="14.0" prefHeight="35.0" prefWidth="600.0" AnchorPane.bottomAnchor="366.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Home" />
+          <Menu mnemonicParsing="false" text="Book" />
+          <Menu mnemonicParsing="false" text="Offer" />
+            <Menu mnemonicParsing="false" text="My Lift">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Booked" />
+                  <MenuItem mnemonicParsing="false" text="Offered" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="My Car" />
+            <Menu mnemonicParsing="false" text="Profile" />
+            <Menu mnemonicParsing="false" text="Log out" />
+        </menus>
+      </MenuBar>
+      <Text layoutX="14.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hi" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="50.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text layoutX="60.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marco" AnchorPane.topAnchor="50.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text layoutX="170.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="!" AnchorPane.topAnchor="50.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="267.0" fitWidth="569.0" layoutX="14.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>
