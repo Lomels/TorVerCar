@@ -1,11 +1,17 @@
 package logic.controller;
 
+import logic.controller.email.SendEmail;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
+import logic.model.Singleton;
 import logic.model.Student;
+import logic.utilities.CodeGenerator;
 import logic.utilities.InputChecker;
 import logic.view.DatabaseBoundary;
 import logic.view.OurStudentDatabase;
+
+import java.io.IOException;
+
 import logic.bean.UserInfoBean;
 import logic.view.mysql.*;
 
@@ -14,6 +20,7 @@ public class RegistrationController {
 
 	private DatabaseBoundary uniDb;
 	private OurStudentDatabase ourDb;
+	Singleton sg = Singleton.getInstance();
 
 	public RegistrationController() {
 		this.uniDb = new UniDAO();
@@ -50,6 +57,12 @@ public class RegistrationController {
 
 	public UserInfoBean recapInfo(String userID) throws Exception{
 		return uniDb.getByUserID(userID);
+	}
+	
+	public void sendCode() throws IOException {
+		Student user = sg.getUser();
+		String code = CodeGenerator.randomCode();
+		SendEmail.send(user.getEmail(), code);
 	}
 	
 }

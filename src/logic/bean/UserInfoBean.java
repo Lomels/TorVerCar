@@ -3,6 +3,7 @@ package logic.bean;
 public class UserInfoBean {
 
 	private String userID;
+	private String password;
 	private String name;
 	private String surname;
 	private String email;
@@ -13,6 +14,15 @@ public class UserInfoBean {
 	public void setUserID(String userID) {
 		this.userID = userID;
 	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	public String getName() {
 		return name;
 	}
