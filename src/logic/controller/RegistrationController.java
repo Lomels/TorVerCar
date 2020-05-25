@@ -1,6 +1,7 @@
 package logic.controller;
 
 import logic.controller.exception.DatabaseException;
+import logic.controller.exception.InvalidInputException;
 import logic.entity.Student;
 import logic.utilities.InputChecker;
 import logic.view.DatabaseBoundary;
@@ -15,9 +16,7 @@ public class RegistrationController {
 	private OurStudentDatabase ourDb;
 
 	public RegistrationController() {
-		//TODO: implement uniDb and ourDb
 		this.uniDb = new UniDAO();
-		//this.ourDb = new DummyOurStudentDatabase();
 		this.ourDb = new MySqlDAO();
 		
 	}
@@ -39,7 +38,18 @@ public class RegistrationController {
 			//build and add student to our database
 			Student student = StudentBuilder.newBuilder(userID).password(password).fullname(response.getName(), response.getSurname()).build();
 			ourDb.addStudent(student);
+			
 		}
 	}
+	
+	public void addStudent(UserInfo user, String password) throws InvalidInputException, DatabaseException{
+		Student student = StudentBuilder.newBuilder(user.getUserID())
+				.password(password).fullname(user.getName(), user.getSurname()).build();
+		ourDb.addStudent(student);
+	}
 
+	public UserInfo recapInfo(String userID) throws Exception{
+		return uniDb.getByUserID(userID);
+	}
+	
 }

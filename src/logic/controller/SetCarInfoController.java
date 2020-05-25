@@ -9,19 +9,16 @@ import logic.entity.StudentCar;
 
 public class SetCarInfoController {
 
-	private StudentCarBuilder builder;
 	
 	
 	public StudentCar addCar(CarInfoBean carInfo, Student student) throws InvalidInputException {
 		CarInfo car = new CarInfo(carInfo.getPlate(), carInfo.getSeats(),
 				carInfo.getModel(), carInfo.getColour());
 		
-		builder = new StudentCarBuilder(student);
+		StudentCarBuilder builder = new StudentCarBuilder(student);
 		builder.carInfo(car);
 		
-		StudentCar studentCar = builder.build();
-		
-		return studentCar;
+		return builder.build();
 	}
 	
 	public void editCar(CarInfoBean newCarInfo, StudentCar studentCar) throws InvalidInputException {
@@ -31,6 +28,6 @@ public class SetCarInfoController {
 	}
 	
 	public void removeCar(StudentCar studentCar) {
-		//TODO Implementare removeCar
+		//TODO Implementare removeCar 	
 	}
 }

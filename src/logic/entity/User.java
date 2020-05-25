@@ -30,9 +30,9 @@ public class User {
 	}
 	
 	public void setState(Boolean newState) throws InvalidStateException{
-		if(this.state == newState && newState == true) {
+		if(this.state.equals(newState)&&newState) {
 			throw new InvalidStateException("User already logged in.");
-		}else if(this.state == newState && newState == false) {
+		}else if(this.state.equals(newState) && !newState) {
 			throw new InvalidStateException("User already logged out.");
 		}else {
 			this.state = newState;
