@@ -6,19 +6,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.FXML.registration.RegistrationView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.FXML.registration.RegistrationView">
    <children>
-      <TextField fx:id="userID" layoutX="878.0" layoutY="549.0" promptText="matricola" AnchorPane.leftAnchor="878.0" AnchorPane.topAnchor="549.0" />
-      <TextField fx:id="password" layoutX="878.0" layoutY="586.0" promptText="password" />
-      <TextField fx:id="repeat" layoutX="878.0" layoutY="623.0" promptText="repeat password" />
-      <Button fx:id="nextButton" layoutX="938.0" layoutY="661.0" mnemonicParsing="false" onAction="#nextButtonController" text="Next" textAlignment="CENTER" />
-      <Text fx:id="text" layoutX="792.0" layoutY="478.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registrazione" AnchorPane.bottomAnchor="590.3447265625" AnchorPane.leftAnchor="792.0" AnchorPane.rightAnchor="791.7158203125" AnchorPane.topAnchor="428.2099609375">
+      <TextField fx:id="userID" layoutX="215.0" layoutY="174.0" promptText="matricola" AnchorPane.leftAnchor="215.0" AnchorPane.topAnchor="174.0" />
+      <Button fx:id="nextButton" layoutX="187.0" layoutY="209.0" mnemonicParsing="false" onAction="#nextButtonController" text="Home" textAlignment="CENTER" />
+      <Text fx:id="text" layoutX="133.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration" AnchorPane.bottomAnchor="279.0" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="132.8642578125" AnchorPane.topAnchor="55.0">
          <font>
             <Font size="55.0" />
          </font>
       </Text>
-      <Button fx:id="homeButton" layoutX="934.0" layoutY="502.0" minWidth="53.0" mnemonicParsing="false" onAction="#homeButtonController" prefHeight="32.0" prefWidth="53.0" text="Home" textAlignment="CENTER" AnchorPane.bottomAnchor="546.0" AnchorPane.leftAnchor="934.0" AnchorPane.rightAnchor="933.0" AnchorPane.topAnchor="502.0" />
 	  <Text fx:id="error" layoutX="824.0" layoutY="849.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text layoutX="253.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error message" />
+      <Button fx:id="nextButton1" layoutX="362.0" layoutY="209.0" mnemonicParsing="false" onAction="#nextButtonController" text="Next" textAlignment="CENTER" />
       
    </children>
 </AnchorPane>
