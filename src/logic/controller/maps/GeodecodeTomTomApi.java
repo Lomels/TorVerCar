@@ -19,7 +19,7 @@ import org.w3c.dom.*;
 
 import logic.controller.PositionBuilder;
 import logic.controller.exception.ApiNotReachableException;
-import logic.controller.httpClient.XmlDecoder;
+import logic.controller.httpclient.XmlDecoder;
 import logic.entity.Position;
 
 public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {

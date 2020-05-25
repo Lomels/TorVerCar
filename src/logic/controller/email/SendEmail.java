@@ -11,8 +11,12 @@ import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
 
 public class SendEmail {
-	private static String API_KEY = 
+	private static String APIKEY = 
 			"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";
+	
+	private SendEmail() {
+		throw new IllegalStateException("Utility Class");
+	}
 	
 	public static void send(String userEmail, String code) throws IOException {
 		Email from = new Email("torvercar2020@gmail.com"); 
@@ -23,7 +27,7 @@ public class SendEmail {
 		Content content = new Content("text/plain", mailText);
 		Mail mail = new Mail(from, subject, to, content);
 		
-		SendGrid sg = new SendGrid(API_KEY);
+		SendGrid sg = new SendGrid(APIKEY);
 		Request request = new Request();
 		
 		try {
@@ -31,9 +35,6 @@ public class SendEmail {
 			request.setEndpoint("mail/send");
 			request.setBody(mail.build());
 			Response response = sg.api(request);
-			System.out.println(response.getStatusCode());
-			System.out.println(response.getBody());
-			System.out.println(response.getHeaders());
 		} catch(IOException ex) {
 			throw(ex);
 		}

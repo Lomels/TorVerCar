@@ -2,7 +2,8 @@ package logic.entity;
 
 public class Position {
 
-	private Double lat, lon;
+	private Double lat;
+	private Double lon;
 	private Double score;
 	private String address;
 
@@ -31,11 +32,11 @@ public class Position {
 	}
 
 	public void setLat(Double lat) {
-		this.lat = Double.valueOf(lat);
+		this.lat = lat;
 	}
 
 	public void setLon(Double lon) {
-		this.lon = Double.valueOf(lon);
+		this.lon = lon;
 	}
 
 	public void setScore(Double score) {

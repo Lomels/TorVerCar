@@ -38,7 +38,8 @@ public class RangeTime {
 	}
 	
 	public RangeTime addMinutes(int minutes) throws InvalidInputException {
-		LocalDateTime newStart, newStop;
+		LocalDateTime newStart;
+		LocalDateTime newStop;
 		newStart = this.getStartTime().plus(minutes, ChronoUnit.MINUTES);
 		newStop = this.getStartTime().plus(minutes, ChronoUnit.MINUTES);
 		return new RangeTime(newStart, newStop);

@@ -4,12 +4,12 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import logic.view.FXML.HomeView;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import logic.view.FXML.HomeView;
 
 
 public class RegistrationView extends Application {

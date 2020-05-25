@@ -6,15 +6,6 @@ public class UserInfo {
 	private String name;
 	private String surname;
 	private String email;
-
-	/*
-	public UserInfo(String userID, String name, String surname, String email) {
-		setUserID(userID);
-		setName(name);
-		setSurname(surname);
-		setEmail(email);
-	}
-	*/
 	
 	public String getUserID() {
 		return userID;

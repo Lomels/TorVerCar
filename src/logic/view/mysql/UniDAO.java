@@ -4,6 +4,7 @@ import java.sql.*;
 
 import logic.bean.UserInfo;
 import logic.controller.exception.DatabaseException;
+import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;
 import logic.view.DatabaseBoundary;
 
@@ -29,7 +30,7 @@ public class UniDAO implements DatabaseBoundary{
 	}
 	
 	@Override
-	public UserInfo getByUserID(String userID) throws Exception {
+	public UserInfo getByUserID(String userID) throws InvalidInputException, DatabaseException {
 		InputChecker.checkUserID(userID);
 		UserInfo info = null;
 		try {		
@@ -62,7 +63,7 @@ public class UniDAO implements DatabaseBoundary{
 	}
 		
 	@Override
-	public Boolean existByUserID(String userID) throws Exception {
+	public Boolean existByUserID(String userID) throws DatabaseException, InvalidInputException{
 		Boolean result = false;		
 		try {
 			this.connect();

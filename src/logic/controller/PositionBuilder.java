@@ -16,6 +16,10 @@ public class PositionBuilder {
 
 	private static final Logger LOGGER = Logger.getLogger(PositionBuilder.class.getName());
 
+	private PositionBuilder() {
+		throw new IllegalStateException("Utility Class");
+	}
+	
 	private static String getByTag(Element element, String tag) {
 		try {
 			return element.getElementsByTagName(tag).item(0).getTextContent();

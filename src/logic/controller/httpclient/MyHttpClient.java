@@ -1,4 +1,4 @@
-package logic.controller.httpClient;
+package logic.controller.httpclient;
 
 import java.io.IOException;
 import java.net.URI;

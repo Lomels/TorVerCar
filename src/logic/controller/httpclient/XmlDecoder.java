@@ -1,4 +1,4 @@
-package logic.controller.httpClient;
+package logic.controller.httpclient;
 
 import javax.xml.parsers.*;
 

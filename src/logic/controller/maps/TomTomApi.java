@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.URI;
 
 import logic.controller.exception.ApiNotReachableException;
-import logic.controller.httpClient.MyHttpClient;
+import logic.controller.httpclient.MyHttpClient;
 
 //TODO: maybe abstract
 public class TomTomApi {
