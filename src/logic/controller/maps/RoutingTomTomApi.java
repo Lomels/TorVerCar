@@ -14,9 +14,9 @@ import java.util.logging.Logger;
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.httpclient.XmlDecoder;
-import logic.entity.Position;
-import logic.entity.RangeTime;
-import logic.entity.Route;
+import logic.model.Position;
+import logic.model.RangeTime;
+import logic.model.Route;
 
 public class RoutingTomTomApi extends TomTomApi implements RoutingApi {
 

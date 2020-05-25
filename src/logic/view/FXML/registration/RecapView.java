@@ -45,20 +45,10 @@ public class RecapView extends Application{
 		@FXML private Text tfEmail;
 		
 		private RegistrationController control = new RegistrationController();
-		/*
-		public Controller(String userID) throws Exception { 
-			user = control.recapInfo(userID);
-			setInfo(user);
-		}
-		  
-		public Controller(UserInfo newUser) { 
-			this.user = newUser; 
-			setInfo(user); 
-		}
-		*/
+		
 		@FXML
 		public void btNextController() throws Exception {
-			//setInfo();
+			
 		}
 		
 		public void setUser(String userID) throws Exception {
@@ -71,7 +61,6 @@ public class RecapView extends Application{
 			tfSurname.setText(user.getSurname());
 			tfId.setText(user.getUserID());
 			tfEmail.setText(user.getEmail());
-			//tfName.setText("ciao");
 			System.out.println(user.getEmail()+" "+user.getUserID());
 
 		}

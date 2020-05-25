@@ -1,4 +1,4 @@
-package logic.entity;
+package logic.model;
 
 import java.util.List;
 

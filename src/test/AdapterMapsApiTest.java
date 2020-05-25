@@ -2,7 +2,7 @@ package test;
 
 import logic.controller.exception.*;
 import logic.controller.maps.*;
-import logic.entity.*;
+import logic.model.*;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;

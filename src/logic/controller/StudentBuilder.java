@@ -3,10 +3,10 @@ package logic.controller;
 import java.util.List;
 
 import logic.controller.exception.InvalidInputException;
-import logic.entity.Lift;
-import logic.entity.Profile;
-import logic.entity.Student;
-import logic.entity.WeeklyPreferencies;
+import logic.model.Lift;
+import logic.model.Profile;
+import logic.model.Student;
+import logic.model.WeeklyPreferencies;
 import logic.utilities.InputChecker;
 
 public class StudentBuilder{

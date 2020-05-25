@@ -8,7 +8,7 @@ import org.junit.*;
 
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.maps.*;
-import logic.entity.Position;
+import logic.model.Position;
 
 public class HereApiTest {
 

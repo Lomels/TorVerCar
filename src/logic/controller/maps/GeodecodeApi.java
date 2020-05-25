@@ -3,7 +3,7 @@ package logic.controller.maps;
 import java.util.List;
 
 import logic.controller.exception.ApiNotReachableException;
-import logic.entity.Position;
+import logic.model.Position;
 
 public interface GeodecodeApi {
 

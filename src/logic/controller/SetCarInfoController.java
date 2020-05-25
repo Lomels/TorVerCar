@@ -2,9 +2,9 @@ package logic.controller;
 
 import logic.bean.CarInfoBean;
 import logic.controller.exception.InvalidInputException;
-import logic.entity.CarInfo;
-import logic.entity.Student;
-import logic.entity.StudentCar;
+import logic.model.CarInfo;
+import logic.model.Student;
+import logic.model.StudentCar;
 
 
 public class SetCarInfoController {

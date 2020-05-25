@@ -1,4 +1,4 @@
-package logic.entity;
+package logic.model;
 
 import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;

@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import logic.entity.Student;
+import logic.model.Student;
 
 public class MyQueries {
 	

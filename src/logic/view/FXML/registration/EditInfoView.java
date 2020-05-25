@@ -10,12 +10,9 @@ import javafx.scene.*;
 import javafx.scene.control.Button;
 
 public class EditInfoView extends Application{
-	@FXML Button btHome, btNext, btBack;
-	
-	
-	/*
-	 * public EditInfoView(UserInfo newUser) { this.user = newUser; }
-	 */
+	@FXML Button btHome;
+	@FXML Button btNext;
+	@FXML Button btBack;
 	
 	@Override
 	public void start(Stage stage) throws Exception {

@@ -1,4 +1,4 @@
-package logic.entity;
+package logic.model;
 
 public class Position {
 

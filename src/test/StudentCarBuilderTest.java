@@ -8,11 +8,8 @@ import java.security.InvalidParameterException;
 import org.junit.Test;
 import logic.controller.StudentCarBuilder;
 import logic.controller.exception.InvalidInputException;
+import logic.model.*;
 import logic.controller.StudentBuilder;
-import logic.entity.CarInfo;
-
-
-import logic.entity.*;
 
 public class StudentCarBuilderTest {
 

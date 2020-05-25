@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 import org.w3c.dom.Element;
 
-import logic.entity.Position;
+import logic.model.Position;
 
 public class PositionBuilder {
 

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.Test;
 import logic.controller.StudentBuilder;
 import logic.controller.exception.InvalidInputException;
-import logic.entity.*;
+import logic.model.*;
 
 public class StudentBuilderTest {
 	

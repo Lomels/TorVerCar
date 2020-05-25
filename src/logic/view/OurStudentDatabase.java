@@ -2,7 +2,7 @@ package logic.view;
 
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
-import logic.entity.Student;
+import logic.model.Student;
 
 public interface OurStudentDatabase {
 

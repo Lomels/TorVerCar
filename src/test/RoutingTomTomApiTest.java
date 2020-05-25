@@ -10,7 +10,7 @@ import org.junit.*;
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.maps.*;
-import logic.entity.*;
+import logic.model.*;
 
 public class RoutingTomTomApiTest {
 

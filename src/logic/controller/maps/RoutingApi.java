@@ -2,9 +2,9 @@ package logic.controller.maps;
 
 import java.util.List;
 
-import logic.entity.Position;
-import logic.entity.RangeTime;
-import logic.entity.Route;
+import logic.model.Position;
+import logic.model.RangeTime;
+import logic.model.Route;
 
 public interface RoutingApi {
 

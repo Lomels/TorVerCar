@@ -4,10 +4,10 @@ import java.security.InvalidParameterException;
 import java.util.List;
 
 import logic.controller.exception.InvalidInputException;
-import logic.entity.CarInfo;
-import logic.entity.Report;
-import logic.entity.Student;
-import logic.entity.StudentCar;
+import logic.model.CarInfo;
+import logic.model.Report;
+import logic.model.Student;
+import logic.model.StudentCar;
 
 public class StudentCarBuilder extends StudentBuilder{
 

@@ -3,7 +3,7 @@ package logic.controller;
 import logic.bean.LoginBean;
 import logic.view.mysql.*;
 import logic.controller.exception.*;
-import logic.entity.Student;
+import logic.model.Student;
 
 public class LoginController {
 	private MySqlDAO ourDb;

@@ -6,7 +6,7 @@ import logic.controller.exception.ApiNotReachableException;
 import logic.controller.maps.GeodecodeTomTomApi;
 import logic.controller.maps.GeodecodeApi;
 import logic.controller.maps.TomTomApi;
-import logic.entity.Position;
+import logic.model.Position;
 
 import static org.junit.Assert.assertNotNull;
 

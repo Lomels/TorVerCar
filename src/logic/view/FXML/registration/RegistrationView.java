@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import logic.bean.UserInfo;
+import logic.controller.RegistrationController;
 import logic.view.FXML.HomeView;
 import javafx.fxml.*;
 import javafx.scene.*;
@@ -35,14 +37,15 @@ public class RegistrationView extends Application {
 	@FXML
 	public void nextButtonController() throws Exception {
 		try {
-			if(password.getText().contentEquals(repeat.getCharacters())) {
-				// TODO: passare la password
-				RecapView recap = new RecapView();
-				recap.controller.setUser(userID.getText().toString());
-				recap.start((Stage) btNext.getScene().getWindow());
-		}else {
-				throw new Exception("Le password non combaciano, riprova.");
-			}
+			/*
+			 * RecapView recap = new RecapView();
+			 * recap.controller.setUser(userID.getText().toString()); 
+			 * recap.start((Stage) btNext.getScene().getWindow());
+			 */
+			RegistrationController reg = new RegistrationController();
+			UserInfo user = reg.recapInfo(userID.getText().toString());
+			CheckIdentityView check = new CheckIdentityView();
+			check.start((Stage) btNext.getScene().getWindow());
 		}catch(Exception e){
 			error.setText(e.getMessage());			
 		}

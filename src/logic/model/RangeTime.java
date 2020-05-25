@@ -1,4 +1,4 @@
-package logic.entity;
+package logic.model;
 
 import java.time.*;
 import java.time.temporal.ChronoUnit;

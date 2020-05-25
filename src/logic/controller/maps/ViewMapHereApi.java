@@ -8,7 +8,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import logic.entity.Position;
+import logic.model.Position;
 
 public class ViewMapHereApi implements ViewMapApi {
 

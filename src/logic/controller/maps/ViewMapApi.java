@@ -1,6 +1,6 @@
 package logic.controller.maps;
 
-import logic.entity.Position;
+import logic.model.Position;
 
 public interface ViewMapApi {
 
