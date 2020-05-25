@@ -61,6 +61,23 @@ public class UniDAO implements DatabaseBoundary{
 		return info;
 	}
 		
+	@Override
+	public Boolean existByUserID(String userID) throws Exception {
+		Boolean result = false;		
+		try {
+			this.connect();
+			ResultSet rs = MyQueries.existByUserId_UniDB(this.stmt, userID);
+			result = rs.first();
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} 
+		finally {
+			this.disconnect();
+		}
+		return result;
+	}
+	
 	private void connect() {
 		try {
 			this.conn = DriverManager.getConnection(URL, USER, PASS);
@@ -85,4 +102,6 @@ public class UniDAO implements DatabaseBoundary{
 			}
 		}
 	}
+
+
 }

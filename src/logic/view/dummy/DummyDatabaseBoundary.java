@@ -14,4 +14,10 @@ public class DummyDatabaseBoundary implements DatabaseBoundary {
 		return response;
 	}
 
+	@Override
+	public Boolean existByUserID(String userID) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

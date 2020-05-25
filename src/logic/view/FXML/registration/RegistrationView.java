@@ -9,18 +9,16 @@ import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import logic.controller.RegistrationController;
 import logic.view.FXML.HomeView;
 
 
 public class RegistrationView extends Application {
-	@FXML private Button homeButton;
+	@FXML private Button btHome, btNext;
 	@FXML private TextField userID;
 	@FXML private TextField password;
 	@FXML private TextField repeat;
 	@FXML private Text error;
 	
-	private RegistrationController control = new RegistrationController();
 	
 	@Override
 	public void start(Stage stage) throws IOException {
@@ -38,7 +36,10 @@ public class RegistrationView extends Application {
 	public void nextButtonController() throws Exception {
 		try {
 			if(password.getText().contentEquals(repeat.getCharacters())) {
-				control.createStudent(userID.getText(), password.getText());
+				// TODO: passare la password
+				RecapView recap = new RecapView();
+				recap.controller.setUser(userID.getText().toString());
+				recap.start((Stage) btNext.getScene().getWindow());
 		}else {
 				throw new Exception("Le password non combaciano, riprova.");
 			}
@@ -46,12 +47,12 @@ public class RegistrationView extends Application {
 			error.setText(e.getMessage());			
 		}
 	}
-		
+	
 	
 	@FXML
 	public void homeButtonController() throws IOException {
 		HomeView home = new HomeView();
-		home.start((Stage) homeButton.getScene().getWindow());
+		home.start((Stage) btHome.getScene().getWindow());
 	}
 
 	public static void main(String[] args) {

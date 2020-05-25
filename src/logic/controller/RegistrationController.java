@@ -17,7 +17,6 @@ public class RegistrationController {
 	public RegistrationController() {
 		//TODO: implement uniDb and ourDb
 		this.uniDb = new UniDAO();
-		//this.ourDb = new DummyOurStudentDatabase();
 		this.ourDb = new MySqlDAO();
 		
 	}
@@ -39,7 +38,19 @@ public class RegistrationController {
 			//build and add student to our database
 			Student student = StudentBuilder.newBuilder(userID).password(password).fullname(response.getName(), response.getSurname()).build();
 			ourDb.addStudent(student);
+			
 		}
 	}
+	
+	public void addStudent(UserInfo user, String password) throws Exception {
+		Student student = StudentBuilder.newBuilder(user.getUserID())
+				.password(password).fullname(user.getName(), user.getSurname()).build();
+		ourDb.addStudent(student);
+	}
 
+	public UserInfo recapInfo(String userID) throws Exception {
+		UserInfo info = uniDb.getByUserID(userID);
+		return info;
+	}
+	
 }
