@@ -10,13 +10,13 @@ import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import logic.bean.UserInfo;
+import logic.bean.UserInfoBean;
 import logic.controller.RegistrationController;
 import logic.view.FXML.HomeView;
 
 public class RecapView extends Application{
 	Controller controller = new Controller();
-	protected static UserInfo user = new UserInfo();
+	protected static UserInfoBean user = new UserInfoBean();
 	
 	@Override
 	public void start(Stage stage) throws Exception {

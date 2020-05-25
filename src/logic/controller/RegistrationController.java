@@ -6,7 +6,7 @@ import logic.model.Student;
 import logic.utilities.InputChecker;
 import logic.view.DatabaseBoundary;
 import logic.view.OurStudentDatabase;
-import logic.bean.UserInfo;
+import logic.bean.UserInfoBean;
 import logic.view.mysql.*;
 
 public class RegistrationController {
@@ -33,7 +33,7 @@ public class RegistrationController {
 				throw new DatabaseException("User was previously banned");
 			}
 			//get the UserInfo bean from uniDb
-			UserInfo response = uniDb.getByUserID(userID);
+			UserInfoBean response = uniDb.getByUserID(userID);
 			//TODO: implement password encryption
 			//build and add student to our database
 			Student student = StudentBuilder.newBuilder(userID).password(password).fullname(response.getName(), response.getSurname()).build();
@@ -42,13 +42,13 @@ public class RegistrationController {
 		}
 	}
 	
-	public void addStudent(UserInfo user, String password) throws InvalidInputException, DatabaseException{
+	public void addStudent(UserInfoBean user, String password) throws InvalidInputException, DatabaseException{
 		Student student = StudentBuilder.newBuilder(user.getUserID())
 				.password(password).fullname(user.getName(), user.getSurname()).build();
 		ourDb.addStudent(student);
 	}
 
-	public UserInfo recapInfo(String userID) throws Exception{
+	public UserInfoBean recapInfo(String userID) throws Exception{
 		return uniDb.getByUserID(userID);
 	}
 	

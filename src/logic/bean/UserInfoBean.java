@@ -1,6 +1,6 @@
 package logic.bean;
 
-public class UserInfo {
+public class UserInfoBean {
 
 	private String userID;
 	private String name;

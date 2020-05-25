@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import logic.bean.UserInfo;
+import logic.bean.UserInfoBean;
 import logic.controller.RegistrationController;
 import logic.view.FXML.HomeView;
 import javafx.fxml.*;
@@ -43,7 +43,7 @@ public class RegistrationView extends Application {
 			 * recap.start((Stage) btNext.getScene().getWindow());
 			 */
 			RegistrationController reg = new RegistrationController();
-			UserInfo user = reg.recapInfo(userID.getText().toString());
+			UserInfoBean user = reg.recapInfo(userID.getText().toString());
 			CheckIdentityView check = new CheckIdentityView();
 			check.start((Stage) btNext.getScene().getWindow());
 		}catch(Exception e){
