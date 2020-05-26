@@ -1,6 +1,6 @@
 package logic.view.dummy;
 
-import logic.bean.UserInfoBean;
+import logic.bean.UserBean;
 import logic.controller.StudentBuilder;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
@@ -33,7 +33,7 @@ public class DummyOurStudentDatabase implements OurStudentDatabase {
 	@Override
 	public Student loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException {
 		DummyDatabaseBoundary uni = new DummyDatabaseBoundary();
-		UserInfoBean res = uni.getByUserID("12345");
+		UserBean res = uni.getByUserID("12345");
 		Student s;
 		s = StudentBuilder.newBuilder(userID).password("aaAAA123@").fullname(res.getName(), res.getSurname()).build();	
 		return s;

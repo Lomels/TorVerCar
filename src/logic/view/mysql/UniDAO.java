@@ -2,7 +2,7 @@ package logic.view.mysql;
 
 import java.sql.*;
 
-import logic.bean.UserInfoBean;
+import logic.bean.UserBean;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;
@@ -30,9 +30,9 @@ public class UniDAO implements DatabaseBoundary{
 	}
 	
 	@Override
-	public UserInfoBean getByUserID(String userID) throws InvalidInputException, DatabaseException {
+	public UserBean getByUserID(String userID) throws InvalidInputException, DatabaseException {
 		InputChecker.checkUserID(userID);
-		UserInfoBean info = null;
+		UserBean info = null;
 		try {		
 			this.connect();
 			
@@ -46,7 +46,7 @@ public class UniDAO implements DatabaseBoundary{
 			String name = rs.getString("name");
 			String surname = rs.getString("surname");
 			String email = rs.getString("email");
-			info = new UserInfoBean();
+			info = new UserBean();
 			info.setUserID(userID);
 			info.setName(name);
 			info.setSurname(surname);

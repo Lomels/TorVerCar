@@ -3,7 +3,7 @@ package logic.controller;
 import logic.controller.email.SendEmail;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
-import logic.model.Singleton;
+import logic.model.UserSingleton;
 import logic.model.Student;
 import logic.utilities.CodeGenerator;
 import logic.utilities.InputChecker;
@@ -12,7 +12,8 @@ import logic.view.OurStudentDatabase;
 
 import java.io.IOException;
 
-import logic.bean.UserInfoBean;
+import logic.bean.UserBean;
+import logic.bean.UserBeanSingleton;
 import logic.view.mysql.*;
 
 public class RegistrationController {
@@ -20,7 +21,8 @@ public class RegistrationController {
 
 	private DatabaseBoundary uniDb;
 	private OurStudentDatabase ourDb;
-	Singleton sg = Singleton.getInstance();
+	UserSingleton sg = UserSingleton.getInstance();
+	UserBeanSingleton beanSg = UserBeanSingleton.getInstance();
 
 	public RegistrationController() {
 		this.uniDb = new UniDAO();
@@ -40,29 +42,34 @@ public class RegistrationController {
 				throw new DatabaseException("User was previously banned");
 			}
 			//get the UserInfo bean from uniDb
-			UserInfoBean response = uniDb.getByUserID(userID);
+			UserBean response = uniDb.getByUserID(userID);
 			//TODO: implement password encryption
 			//build and add student to our database
 			Student student = StudentBuilder.newBuilder(userID).password(password).fullname(response.getName(), response.getSurname()).build();
 			ourDb.addStudent(student);
+			//TODO: addStudent should add also email, phone ecc ecc
 			
 		}
 	}
 	
-	public void addStudent(UserInfoBean user, String password) throws InvalidInputException, DatabaseException{
+	public void addStudent(UserBean user) throws InvalidInputException, DatabaseException{
 		Student student = StudentBuilder.newBuilder(user.getUserID())
-				.password(password).fullname(user.getName(), user.getSurname()).build();
+				.password(user.getPassword())
+				.fullname(user.getName(), user.getSurname())
+				.email(user.getEmail())
+				.phone(user.getPhone())
+				.build();
 		ourDb.addStudent(student);
 	}
 
-	public UserInfoBean recapInfo(String userID) throws Exception{
+	public UserBean recapInfo(String userID) throws Exception{
 		return uniDb.getByUserID(userID);
 	}
 	
 	public void sendCode() throws IOException {
-		Student user = sg.getUser();
+		UserBean user = beanSg.getUserBean();
 		String code = CodeGenerator.randomCode();
-		sg.setCode(code);
+		beanSg.setCode(code);
 		String[] recipients = new String[] {user.getEmail()};
 		new SendEmail().send(recipients,recipients, code);
 	}

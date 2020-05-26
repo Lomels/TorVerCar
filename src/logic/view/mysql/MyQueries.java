@@ -12,6 +12,8 @@ public class MyQueries {
 		throw new IllegalStateException("This class should not be instantiated.");
 	}
 	
+	/// TORVERCAR DB
+	
 	public static ResultSet existByUserID( Statement stmt, String userID) throws SQLException {
 		String format = "SELECT userID FROM Users WHERE userID = '%s';";
 		String sql = String.format(format, userID);
@@ -29,8 +31,13 @@ public class MyQueries {
 		String sql = String.format(format, student.getUserID(), student.getPassword());
 		stmt.executeUpdate(sql);
 		
-		format = "INSERT INTO Students( userID, name, surname) VALUES ('%s', '%s', '%s');";
-		sql = String.format(format, student.getUserID(), student.getName(), student.getSurname());
+		format = "INSERT INTO Students( userID, name, surname, email, phone) VALUES ('%s', '%s', '%s', '%s', '%s');";
+		sql = String.format(format, 
+				student.getUserID(), 
+				student.getName(), 
+				student.getSurname(), 
+				student.getEmail(), 
+				student.getPhone());
 		stmt.executeUpdate(sql);		
 	}
 	
@@ -46,6 +53,8 @@ public class MyQueries {
 		return stmt.executeQuery(sql);
 	}
 	
+	
+	/// UNIVERSITY DB
 	public static ResultSet getInfoByUserID(Statement stmt, String userID) throws SQLException{
 		String format = "SELECT name, surname, email FROM students WHERE userID = '%s';";
 		String sql = String.format(format, userID);

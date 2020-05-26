@@ -10,12 +10,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import logic.model.Singleton;
+import logic.bean.UserBeanSingleton;
 import logic.view.FXML.HomeView;
 
 public class CheckIdentityView extends Application{
 
-	Singleton sg = Singleton.getInstance();
+	UserBeanSingleton sg = UserBeanSingleton.getInstance();
 	@FXML private Button btNext;
 	@FXML private Button btHome;
 	@FXML private TextField etCode;
@@ -29,9 +29,6 @@ public class CheckIdentityView extends Application{
 		stage.show();
 	}
 
-	public static void main(String[] args) {
-		launch(args);
-	}
 		
 	@FXML
 	public void homeButtonController() throws IOException {

@@ -1,6 +1,6 @@
 package logic.view.dummy;
 
-import logic.bean.UserInfoBean;
+import logic.bean.UserBean;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.view.*;
@@ -8,8 +8,8 @@ import logic.view.*;
 public class DummyDatabaseBoundary implements DatabaseBoundary {
 
 	@Override
-	public UserInfoBean getByUserID(String userID) {
-		UserInfoBean response = new UserInfoBean();
+	public UserBean getByUserID(String userID) {
+		UserBean response = new UserBean();
 		response.setUserID(userID);
 		response.setName("Mario");
 		response.setSurname("Rossi");

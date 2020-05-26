@@ -4,11 +4,9 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import logic.bean.UserInfoBean;
+import logic.bean.UserBean;
+import logic.bean.UserBeanSingleton;
 import logic.controller.RegistrationController;
-import logic.controller.StudentBuilder;
-import logic.model.Singleton;
-import logic.utilities.CodeGenerator;
 import logic.view.FXML.HomeView;
 import javafx.fxml.*;
 import javafx.scene.*;
@@ -23,7 +21,7 @@ public class RegistrationView extends Application {
 	@FXML private TextField userID;
 	@FXML private Text error;
 	
-	Singleton sg = Singleton.getInstance();
+	UserBeanSingleton usBean = UserBeanSingleton.getInstance();
 	
 	
 	
@@ -43,16 +41,10 @@ public class RegistrationView extends Application {
 	public void nextButtonController() throws Exception {
 		try {
 			RegistrationController reg = new RegistrationController();
-			UserInfoBean user = reg.recapInfo(userID.getText().toString());
-			sg.setUser(StudentBuilder.newBuilder(user.getUserID())
-					.fullname(user.getName(), user.getSurname())
-					.password(user.getPassword())
-					.email(user.getEmail())
-					.build());
-			error.setText(user.getEmail());
-			reg.sendCode();
-			CheckIdentityView check = new CheckIdentityView();
-			check.start((Stage) btNext.getScene().getWindow());
+			UserBean user = reg.recapInfo(userID.getText().toString());
+			usBean.setUserBean(user);
+			RecapView recap = new RecapView();
+			recap.start((Stage) btNext.getScene().getWindow());
 			
 		}catch(Exception e){
 			error.setText(e.getMessage());			

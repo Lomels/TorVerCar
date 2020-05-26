@@ -3,9 +3,8 @@ package logic.view.FXML;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import logic.bean.LoginBean;
+import logic.bean.UserBean;
 import logic.controller.LoginController;
-import logic.utilities.InputChecker;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
@@ -14,14 +13,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 public class LoginView extends Application {
-    private LoginBean userBean;
-    private LoginController control = new LoginController();
-    
-    @FXML private Button homeButton;
-
+    @FXML private Button btHome;
 	@FXML private TextField matricola;
 	@FXML private TextField pwd;
-	@FXML private Button loginButton;
+	@FXML private Button btLogin;
 	@FXML private Text text;
 	@FXML private Text error;
 	
@@ -42,28 +37,27 @@ public class LoginView extends Application {
 	@FXML
 	public void homeButtonController() throws IOException {
 		HomeView home = new HomeView();
-		home.start((Stage) homeButton.getScene().getWindow());
+		home.start((Stage) btHome.getScene().getWindow());
 	}
 	
 	@FXML
-	public void buttonController() throws Exception{
+	public void loginButtonController() throws Exception{
 		try {
-			InputChecker.checkUserID(matricola.getText());
-			InputChecker.checkPassword(pwd.getText());
-			userBean = createBean(matricola.getText(), pwd.getText());
-			control.login(userBean);
-			//TODO chiamare controller grafico di homepage
-			text.setText("Succesfully logged in.");
+			UserBean bean = createBean(matricola.getText(), pwd.getText());
+			LoginController controller = new LoginController();
+			controller.login(bean);
+			MainMenuView main = new MainMenuView();
+			main.start((Stage) btLogin.getScene().getWindow());
 		} catch (Exception e) {
 			// TODO: handle exception
 			error.setText(e.getMessage());
 		}
 	}
 	
-	public LoginBean createBean(String userID, String password) {
-		LoginBean bean = new LoginBean();
-		bean.setUserID(userID);
-		bean.setPwd(password);
-		return bean;
+	public UserBean createBean(String userID, String password) {
+		UserBean user = new UserBean();
+		user.setUserID(userID);
+		user.setPassword(password);
+		return user;
 	}
 }

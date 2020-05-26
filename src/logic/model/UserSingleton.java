@@ -1,17 +1,17 @@
 package logic.model;
 
-public class Singleton {
+public class UserSingleton {
 
 	private Student user = null;
 	private String code;
 	
-	private static Singleton instance = null;
+	private static UserSingleton instance = null;
 	
-	private Singleton() {}
+	private UserSingleton() {}
 	
-	public static Singleton getInstance() {
+	public static UserSingleton getInstance() {
 		if(instance == null) 
-			instance = new Singleton();
+			instance = new UserSingleton();
 		return instance;
 	}
 	

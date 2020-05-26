@@ -1,12 +1,13 @@
 package logic.bean;
 
-public class UserInfoBean {
+public class UserBean {
 
 	private String userID;
 	private String password;
 	private String name;
 	private String surname;
 	private String email;
+	private String phone;
 	
 	public String getUserID() {
 		return userID;
@@ -42,4 +43,11 @@ public class UserInfoBean {
 		this.email = email;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
 }

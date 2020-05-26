@@ -33,13 +33,11 @@ public class HomeView extends Application {
 	}
 
 	public void loginButtonController() throws Exception {
-		System.out.println("Login\n");
 		LoginView login = new LoginView();
 		login.start((Stage) loginButton.getScene().getWindow());
 	}
 
 	public void regButtonController() throws IOException {
-		System.out.println("register\n");
 		RegistrationView register = new RegistrationView();
 		register.start((Stage) regButton.getScene().getWindow());
 	}

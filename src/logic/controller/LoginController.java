@@ -1,22 +1,24 @@
 package logic.controller;
 
-import logic.bean.LoginBean;
+import logic.bean.UserBean;
 import logic.view.mysql.*;
 import logic.controller.exception.*;
 import logic.model.Student;
+import logic.model.UserSingleton;
 
 public class LoginController {
-	private MySqlDAO ourDb;
+	private MySqlDAO ourDb = new MySqlDAO();
+	UserSingleton sg = UserSingleton.getInstance();
 	
-	public LoginController() {
-		this.ourDb = new MySqlDAO();
-	}
-	
-	public void login(LoginBean bean) throws InvalidInputException, DatabaseException, InvalidStateException{
+	public void login(UserBean bean) throws InvalidInputException, DatabaseException, InvalidStateException{
 		if(checkBean(bean)) {
+
 			if(!ourDb.wasBannedByUserID(bean.getUserID())) {
 				Student student = ourDb.loadStudentByUserID(bean.getUserID());
-				student.setState(true);
+
+				//student.setState(true);
+
+				sg.setUser(student);
 			}else {
 				throw new DatabaseException("Banned User");
 			}
@@ -26,8 +28,8 @@ public class LoginController {
 		
 	}
 	
-	public Boolean checkBean(LoginBean bean) throws InvalidInputException, DatabaseException{
-			return bean.getPwd().equals(ourDb.loadPasswordByUserID(bean.getUserID()));
+	public Boolean checkBean(UserBean bean) throws InvalidInputException, DatabaseException{
+			return bean.getPassword().equals(ourDb.loadPasswordByUserID(bean.getUserID()));
 	}
 	
 }

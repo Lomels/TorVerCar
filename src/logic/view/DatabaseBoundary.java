@@ -1,12 +1,12 @@
 package logic.view;
 
-import logic.bean.UserInfoBean;
+import logic.bean.UserBean;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 
 public interface DatabaseBoundary {
 
-	public UserInfoBean getByUserID(String userID) throws DatabaseException, InvalidInputException;
+	public UserBean getByUserID(String userID) throws DatabaseException, InvalidInputException;
 	
 	public Boolean existByUserID(String userID) throws DatabaseException, InvalidInputException;
 	

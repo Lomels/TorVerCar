@@ -17,7 +17,7 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	private static final String USER = "torvercar";
 	private static final String PASS = "ispw2020";
-	private static final String URL = "jdbc:mysql://localhost:3306/TorVerCar";
+	private static final String URL = "jdbc:mysql://localhost:3306/TorVerCar?autoReconnect=true&useSSL=false";
 	private static final String DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 
 	private Statement stmt;
@@ -94,17 +94,24 @@ public class MySqlDAO implements OurStudentDatabase {
 		Student s = null;
 		try {
 			this.connect();
-
 			ResultSet rs = MyQueries.loadStudentByUserID(this.stmt, userID);
 
 			if (!rs.first())
 				throw new DatabaseException("Student not found");
 
+
 			rs.first();
 			String password = rs.getString("password");
 			String name = rs.getString("name");
 			String surname = rs.getString("surname");
-			s = StudentBuilder.newBuilder(userID).password(password).fullname(name, surname).build();
+			String email = rs.getString("email");
+			String phone = rs.getString("phone");
+			s = StudentBuilder.newBuilder(userID)
+					.password(password)
+					.fullname(name, surname)
+					.email(email)
+					.phone(phone)
+					.build();
 
 			rs.close();
 		} catch (Exception e) {
@@ -113,6 +120,7 @@ public class MySqlDAO implements OurStudentDatabase {
 		} finally {
 			this.disconnect();
 		}
+
 		return s;
 	}
 

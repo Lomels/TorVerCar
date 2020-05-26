@@ -122,9 +122,9 @@ public class Student{
 	}
 	
 	public void setState(Boolean newState) throws InvalidStateException{
-		if(this.state.equals(newState)&&newState) {
+		if(this.state.equals(newState) && newState.equals(true)) {
 			throw new InvalidStateException("User already logged in.");
-		}else if(this.state.equals(newState) && !newState) {
+		}else if(this.state.equals(newState) && !newState.equals(true)) {
 			throw new InvalidStateException("User already logged out.");
 		}else {
 			this.state = newState;
