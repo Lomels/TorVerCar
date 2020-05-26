@@ -18,12 +18,13 @@ public class StudentCarBuilderTest {
 		String password = "aaaaa1@";
 		String name = "Mario";
 		String surname = "Rossi";
+		String email = "mariorossi@blabla.com";
 		Student s = StudentBuilder.newBuilder("1").password(password).fullname(name, surname).build();
 		String model = "Panda";
 		String colour = "Red";
 		CarInfo car = new CarInfo("AA123AA", 3, model, colour);
 		StudentCar scbuilt = StudentCarBuilder.newCarBuilder(s).rating(0).carInfo(car).build();
-		Student scostructor = new Student("1", password, name, surname, null, null, null);
+		Student scostructor = new Student("1", password, email, name, surname, null, null, null);
 		StudentCar sccostructor = new StudentCar(scostructor, 0, car, null);
 		assertEquals(scbuilt.toString(), sccostructor.toString());
 	}

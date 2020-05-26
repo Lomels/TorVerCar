@@ -2,7 +2,8 @@ package logic.model;
 
 public class Singleton {
 
-	private User user = null;
+	private Student user = null;
+	private String code;
 	
 	private static Singleton instance = null;
 	
@@ -14,12 +15,20 @@ public class Singleton {
 		return instance;
 	}
 	
-	public void setUser(User user) {
+	public void setUser(Student user) {
 		this.user = user;
 	}
 	
-	public User getUser() {
+	public Student getUser() {
 		return this.user;
+	}
+	
+	public void setCode(String code) {
+		this.code = code;
+	}
+	
+	public String getCode() {
+		return this.code;
 	}
 	
 }

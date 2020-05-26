@@ -18,6 +18,7 @@ public class StudentBuilder{
 	protected String name;
 	protected String surname;
 	protected Profile profile;
+	protected String email;
 	//Collection of favorite routes for the week
 	protected WeeklyPreferencies weeklyPreferencies;
 	//Collection of active lifts
@@ -35,7 +36,7 @@ public class StudentBuilder{
 
 	//Metodo che chiama correttamente il costruttore di Student
 	public Student build() throws InvalidInputException {
-		return new Student(this.userID, this.password, this.name, this.surname, this.profile, this.weeklyPreferencies, this.lifts);
+		return new Student(this.userID, this.password, this.email, this.name, this.surname, this.profile, this.weeklyPreferencies, this.lifts);
 	}
 
 	/*
@@ -64,6 +65,11 @@ public class StudentBuilder{
 
 	public StudentBuilder lifts(List<Lift> lifts) {
 		this.lifts = lifts;
+		return this;
+	}
+	
+	public StudentBuilder email(String email) {
+		this.email = email;
 		return this;
 	}
 

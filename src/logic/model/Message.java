@@ -6,9 +6,9 @@ import logic.utilities.InputChecker;
 public class Message {
 
 	private String content;
-	private User from;
+	private Student from;
 
-	public Message(String message, User from) throws InvalidInputException {
+	public Message(String message, Student from) throws InvalidInputException {
 		this.setContent(message);
 		this.setFrom(from);
 	}
@@ -18,7 +18,7 @@ public class Message {
 		this.content = message;
 	}
 
-	public void setFrom(User from) throws InvalidInputException {
+	public void setFrom(Student from) throws InvalidInputException {
 		if (from == null) {
 			throw new InvalidInputException("User must not be null");
 		}
@@ -29,7 +29,7 @@ public class Message {
 		return this.content;
 	}
 
-	public User getFrom() {
+	public Student getFrom() {
 		return this.from;
 	}
 }

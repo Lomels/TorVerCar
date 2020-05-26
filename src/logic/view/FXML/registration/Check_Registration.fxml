@@ -5,12 +5,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="logic.view.FXML.registration.CheckIdentityView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.FXML.registration.CheckIdentityView">
    <children>
-      <Text layoutX="125.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A moment please. We are sending you an email... " />
-      <Text layoutX="57.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please, check your university emails and put the number you see here:" />
-      <TextField layoutX="200.0" layoutY="174.0" />
-      <Button layoutX="257.0" layoutY="229.0" mnemonicParsing="false" text="Home" />
+      <Text layoutX="104.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please, check your university emails and put the security code here:" />
+      <TextField fx:id="etCode" layoutX="200.0" layoutY="174.0" />
+      <Button fx:id="btHome" layoutX="200.0" layoutY="207.0" mnemonicParsing="false" onAction="#homeButtonController" text="Home" />
+      <Button fx:id="btNext" layoutX="300.0" layoutY="207.0" mnemonicParsing="false" onAction="#nextButtonController" text="Next" />
    </children>
 </AnchorPane>

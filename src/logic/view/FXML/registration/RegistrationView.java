@@ -6,6 +6,9 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import logic.bean.UserInfoBean;
 import logic.controller.RegistrationController;
+import logic.controller.StudentBuilder;
+import logic.model.Singleton;
+import logic.utilities.CodeGenerator;
 import logic.view.FXML.HomeView;
 import javafx.fxml.*;
 import javafx.scene.*;
@@ -15,11 +18,13 @@ import javafx.scene.text.Text;
 
 
 public class RegistrationView extends Application {
-	@FXML private Button btHome, btNext;
+	@FXML private Button btHome;
+	@FXML private Button btNext;
 	@FXML private TextField userID;
-	@FXML private TextField password;
-	@FXML private TextField repeat;
 	@FXML private Text error;
+	
+	Singleton sg = Singleton.getInstance();
+	
 	
 	
 	@Override
@@ -37,15 +42,18 @@ public class RegistrationView extends Application {
 	@FXML
 	public void nextButtonController() throws Exception {
 		try {
-			/*
-			 * RecapView recap = new RecapView();
-			 * recap.controller.setUser(userID.getText().toString()); 
-			 * recap.start((Stage) btNext.getScene().getWindow());
-			 */
 			RegistrationController reg = new RegistrationController();
 			UserInfoBean user = reg.recapInfo(userID.getText().toString());
+			sg.setUser(StudentBuilder.newBuilder(user.getUserID())
+					.fullname(user.getName(), user.getSurname())
+					.password(user.getPassword())
+					.email(user.getEmail())
+					.build());
+			error.setText(user.getEmail());
+			reg.sendCode();
 			CheckIdentityView check = new CheckIdentityView();
 			check.start((Stage) btNext.getScene().getWindow());
+			
 		}catch(Exception e){
 			error.setText(e.getMessage());			
 		}
