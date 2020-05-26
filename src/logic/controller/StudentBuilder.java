@@ -17,7 +17,7 @@ public class StudentBuilder{
 	protected String password;
 	protected String name;
 	protected String surname;
-	protected Profile profile;
+	protected String phone;
 	protected String email;
 	//Collection of favorite routes for the week
 	protected WeeklyPreferencies weeklyPreferencies;
@@ -36,7 +36,7 @@ public class StudentBuilder{
 
 	//Metodo che chiama correttamente il costruttore di Student
 	public Student build() throws InvalidInputException {
-		return new Student(this.userID, this.password, this.email, this.name, this.surname, this.profile, this.weeklyPreferencies, this.lifts);
+		return new Student(this.userID, this.password, this.email, this.name, this.surname, this.phone, this.weeklyPreferencies, this.lifts);
 	}
 
 	/*
@@ -53,8 +53,8 @@ public class StudentBuilder{
 		return this;
 	}
 
-	public StudentBuilder profile(Profile profile) {
-		this.profile = profile;
+	public StudentBuilder phone(String phone) {
+		this.phone = phone;
 		return this;
 	}
 

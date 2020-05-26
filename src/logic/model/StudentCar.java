@@ -12,7 +12,7 @@ public class StudentCar extends Student {
 
 	// Costruttore che usa lo student
 	public StudentCar(Student student, int rating, CarInfo carInfo, List<Report> reports) throws InvalidInputException {
-		super(student.userID, student.password, student.email, student.name, student.surname, student.profile,
+		super(student.userID, student.password, student.email, student.name, student.surname, student.phone,
 				student.weeklyPreferencies, student.lifts);
 		this.rating = rating;
 		this.setCarInfo(carInfo);

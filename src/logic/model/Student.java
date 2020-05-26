@@ -13,7 +13,7 @@ public class Student{
 	protected String name;
 	protected String surname;
 	protected String email;
-	protected Profile profile;
+	protected String phone;
 	// Collection of favorite routes for the week
 	protected WeeklyPreferencies weeklyPreferencies;
 	// Collection of active lifts
@@ -22,13 +22,13 @@ public class Student{
 	protected Boolean state;
 
 	// Generated
-	public Student(String userID, String password, String email, String name, String surname, Profile profile,
+	public Student(String userID, String password, String email, String name, String surname, String phone,
 			WeeklyPreferencies weeklyPreferencies, List<Lift> lifts) throws InvalidInputException {
 		this.userID = userID;
 		this.password = password;
 		this.setName(name);
 		this.setSurname(surname);
-		this.profile = profile;
+		this.phone = phone;
 		this.weeklyPreferencies = weeklyPreferencies;
 		this.lifts = lifts;
 		this.email = email;
@@ -36,7 +36,7 @@ public class Student{
 
 	// Costruttore che parte dello studentCar
 	public Student(StudentCar studentCar) throws InvalidInputException {
-		this(studentCar.userID, studentCar.password, studentCar.email, studentCar.name, studentCar.surname, studentCar.profile,
+		this(studentCar.userID, studentCar.password, studentCar.email, studentCar.name, studentCar.surname, studentCar.phone,
 				studentCar.weeklyPreferencies, studentCar.lifts);
 	}
 
@@ -86,12 +86,12 @@ public class Student{
 		this.surname = surname;
 	}
 
-	public Profile getProfile() {
-		return this.profile;
+	public String getPhone() {
+		return this.phone;
 	}
 
-	public void setProfile(Profile profile) {
-		this.profile = profile;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public WeeklyPreferencies getWeeklyPreferencies() {
@@ -113,7 +113,7 @@ public class Student{
 	// Generato automaticamente
 	@Override
 	public String toString() {
-		return "Student [name=" + name + ", surname=" + surname + ", profile=" + profile + ", weeklyPreferencies="
+		return "Student [name=" + name + ", surname=" + surname + ", phone=" + phone + ", weeklyPreferencies="
 				+ weeklyPreferencies + ", lifts=" + lifts + "]";
 	}
 	
