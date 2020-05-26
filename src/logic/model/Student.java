@@ -22,7 +22,7 @@ public class Student{
 	protected Boolean state;
 
 	// Generated
-	public Student(String userID, String password, String name, String surname, Profile profile,
+	public Student(String userID, String password, String email, String name, String surname, Profile profile,
 			WeeklyPreferencies weeklyPreferencies, List<Lift> lifts) throws InvalidInputException {
 		this.userID = userID;
 		this.password = password;
@@ -31,11 +31,12 @@ public class Student{
 		this.profile = profile;
 		this.weeklyPreferencies = weeklyPreferencies;
 		this.lifts = lifts;
+		this.email = email;
 	}
 
 	// Costruttore che parte dello studentCar
 	public Student(StudentCar studentCar) throws InvalidInputException {
-		this(studentCar.userID, studentCar.password, studentCar.name, studentCar.surname, studentCar.profile,
+		this(studentCar.userID, studentCar.password, studentCar.email, studentCar.name, studentCar.surname, studentCar.profile,
 				studentCar.weeklyPreferencies, studentCar.lifts);
 	}
 

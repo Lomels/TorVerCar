@@ -62,7 +62,9 @@ public class RegistrationController {
 	public void sendCode() throws IOException {
 		Student user = sg.getUser();
 		String code = CodeGenerator.randomCode();
-		SendEmail.send(user.getEmail(), code);
+		sg.setCode(code);
+		String[] recipients = new String[] {user.getEmail()};
+		new SendEmail().send(recipients,recipients, code);
 	}
 	
 }

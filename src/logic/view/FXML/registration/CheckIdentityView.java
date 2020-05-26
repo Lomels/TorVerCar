@@ -41,7 +41,9 @@ public class CheckIdentityView extends Application{
 	
 	@FXML
 	public void nextButtonController() throws Exception {
-		if(etCode.getText().toString().contentEquals(sg.getCode())) {
+		String systemCode = sg.getCode();
+		String userCode = etCode.getText();
+		if(userCode.equals(systemCode)) {
 			AddInfoView next = new AddInfoView();
 			next.start((Stage) btNext.getScene().getWindow());
 		}else {

@@ -47,15 +47,16 @@ public class RegistrationView extends Application {
 			sg.setUser(StudentBuilder.newBuilder(user.getUserID())
 					.fullname(user.getName(), user.getSurname())
 					.password(user.getPassword())
+					.email(user.getEmail())
 					.build());
+			error.setText(user.getEmail());
 			reg.sendCode();
 			CheckIdentityView check = new CheckIdentityView();
 			check.start((Stage) btNext.getScene().getWindow());
+			
 		}catch(Exception e){
 			error.setText(e.getMessage());			
 		}
-		
-		userID.setVisible(false);
 	}
 	
 	

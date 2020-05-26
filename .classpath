@@ -23,5 +23,7 @@
 	<classpathentry kind="lib" path="Dependencies/slf4j-api-1.7.25.jar"/>
 	<classpathentry kind="lib" path="Dependencies/slf4j-simple-1.7.30.jar"/>
 	<classpathentry kind="lib" path="Dependencies/sendgrid-java.jar"/>
+	<classpathentry kind="lib" path="Dependencies/activation-1.1.1.jar"/>
+	<classpathentry kind="lib" path="Dependencies/javax.mail-1.6.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
