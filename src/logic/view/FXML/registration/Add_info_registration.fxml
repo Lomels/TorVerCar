@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AddInfoView">
    <children>
       <Text fx:id="txTitle" layoutX="42.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD PERSONAL INFORMATION:" wrappingWidth="333.7294921875" />
       <Text layoutX="42.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PASSWORD:" AnchorPane.leftAnchor="42.0">
@@ -19,21 +19,22 @@
             <Font size="11.0" />
          </font>
       </Text>
-      <TextField fx:id="txFUserName" layoutX="209.0" layoutY="103.0" />
-      <TextField fx:id="txFPhoneNr" layoutX="209.0" layoutY="138.0" />
-      <Button fx:id="btnHome" layoutX="42.0" layoutY="335.0" mnemonicParsing="false" text="Home" />
-      <Button fx:id="btnBack" layoutX="121.0" layoutY="335.0" mnemonicParsing="false" text="Back" />
-      <Button fx:id="btnNext" layoutX="502.0" layoutY="335.0" mnemonicParsing="false" text="Next" />
+      <TextField fx:id="etPassword" layoutX="209.0" layoutY="103.0" />
+      <TextField fx:id="etRepeat" layoutX="209.0" layoutY="138.0" />
+      <Button fx:id="btHome" layoutX="42.0" layoutY="335.0" mnemonicParsing="false" onAction="#homeButtonController" text="Home" />
+      <Button fx:id="btFinish" layoutX="502.0" layoutY="335.0" mnemonicParsing="false" onAction="#finishButtonContoller" text="Finish" />
       <Text fill="#bf0505" layoutX="42.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*Optional">
          <font>
             <Font size="10.0" />
          </font>
       </Text>
-      <TextField fx:id="txFPhoneNr1" layoutX="209.0" layoutY="174.0" />
+      <TextField fx:id="etPhone" layoutX="209.0" layoutY="174.0" />
       <Text layoutX="42.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="REPEAT PASSWORD:">
          <font>
             <Font size="11.0" />
          </font>
       </Text>
+      <Text fx:id="tfError" fill="RED" layoutX="393.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Passwords do not match" visible="false" />
+      <Button fx:id="btCar" layoutX="428.0" layoutY="335.0" mnemonicParsing="false" onAction="#carButtonController" text="Add Car" />
    </children>
 </AnchorPane>

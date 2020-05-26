@@ -45,6 +45,12 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Text>
+            <Text layoutX="222.0" layoutY="294.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PHONE:" />
+            <Text fx:id="tfPhone" layoutX="270.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Text>
          </children>
       </AnchorPane>
    </children>
