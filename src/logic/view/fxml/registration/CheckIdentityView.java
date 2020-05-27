@@ -1,4 +1,4 @@
-package logic.view.FXML.registration;
+package logic.view.fxml.registration;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.bean.UserBeanSingleton;
-import logic.view.FXML.HomeView;
+import logic.view.fxml.HomeView;
 
 public class CheckIdentityView extends Application{
 

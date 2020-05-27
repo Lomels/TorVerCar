@@ -1,4 +1,4 @@
-package logic.view.FXML;
+package logic.view.fxml;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import logic.view.FXML.registration.RegistrationView;
+import logic.view.fxml.registration.RegistrationView;
 
 public class HomeView extends Application {
 	@FXML

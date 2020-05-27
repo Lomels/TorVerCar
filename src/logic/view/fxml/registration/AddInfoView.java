@@ -1,4 +1,4 @@
-package logic.view.FXML.registration;
+package logic.view.fxml.registration;
 
 import java.io.IOException;
 
@@ -16,8 +16,8 @@ import logic.bean.UserBeanSingleton;
 import logic.controller.LoginController;
 import logic.controller.RegistrationController;
 import logic.controller.exception.InvalidInputException;
-import logic.view.FXML.HomeView;
-import logic.view.FXML.MainMenuView;
+import logic.view.fxml.HomeView;
+import logic.view.fxml.MainMenuView;
 
 public class AddInfoView extends Application{
 	@FXML private Button btHome;

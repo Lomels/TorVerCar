@@ -1,4 +1,4 @@
-package logic.view.FXML;
+package logic.view.fxml;
 
 import java.io.IOException;
 import javafx.application.Application;

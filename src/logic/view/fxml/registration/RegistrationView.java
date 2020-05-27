@@ -1,4 +1,4 @@
-package logic.view.FXML.registration;
+package logic.view.fxml.registration;
 
 import java.io.IOException;
 
@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import logic.bean.UserBean;
 import logic.bean.UserBeanSingleton;
 import logic.controller.RegistrationController;
-import logic.view.FXML.HomeView;
+import logic.view.fxml.HomeView;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.Button;

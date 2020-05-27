@@ -1,4 +1,4 @@
-package logic.view.FXML.registration;
+package logic.view.fxml.registration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
 import logic.bean.UserBean;
 import logic.bean.UserBeanSingleton;
 import logic.controller.RegistrationController;
-import logic.view.FXML.HomeView;
+import logic.view.fxml.HomeView;
 
 public class RecapView extends Application implements Initializable{
 	@FXML private Button btHome;

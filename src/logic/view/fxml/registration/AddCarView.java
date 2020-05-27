@@ -1,4 +1,4 @@
-package logic.view.FXML.registration;
+package logic.view.fxml.registration;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import logic.view.FXML.HomeView;
+import logic.view.fxml.HomeView;
 
 public class AddCarView extends Application{
 	Stage stage;

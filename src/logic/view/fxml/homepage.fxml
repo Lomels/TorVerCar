@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.FXML.HomeView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.fxml.HomeView">
    <children>
       <Button fx:id="loginButton" layoutX="250.0" layoutY="201.0" mnemonicParsing="false" onAction="#loginButtonController" prefHeight="36.0" prefWidth="101.0" text="Login" textAlignment="CENTER" />
       <Text fx:id="text" layoutX="172.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TorVerCar">

@@ -1,4 +1,4 @@
-package logic.view.FXML;
+package logic.view.fxml;
 
 import java.net.URL;
 import java.util.ResourceBundle;
