@@ -24,18 +24,16 @@ public class RoutingTomTomApiTest {
 
 	@Test
 	public void normalTest() throws ApiNotReachableException, InvalidInputException {
-		RangeTime now = new RangeTime(LocalDateTime.now(), LocalDateTime.now());
 		Position pickup = geoApi.addrToPos(ADDRESS_1).get(0);
 		Position dropoff = geoApi.addrToPos(ADDRESS_3).get(0);
 
-		Route route = routeApi.startToStop(pickup, dropoff, now);
+		Route route = routeApi.startToStop(pickup, dropoff, LocalDateTime.now());
 
 		LOGGER.info(route.toString() + "\n");
 	}
 
 	@Test
 	public void normalStopsTest() throws ApiNotReachableException, InvalidInputException {
-		RangeTime now = new RangeTime(LocalDateTime.now(), LocalDateTime.now());
 		Position pickup = geoApi.addrToPos(ADDRESS_1).get(0);
 		Position middle = geoApi.addrToPos(ADDRESS_2).get(0);
 		Position dropoff = geoApi.addrToPos(ADDRESS_3).get(0);
@@ -45,7 +43,7 @@ public class RoutingTomTomApiTest {
 		stops.add(middle);
 		stops.add(dropoff);
 
-		Route route = routeApi.startToStop(stops, now);
+		Route route = routeApi.startToStop(stops, LocalDateTime.now());
 
 		LOGGER.info(route.toString() + "\n");
 	}

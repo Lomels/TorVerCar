@@ -7,6 +7,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -15,7 +16,6 @@ import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.httpclient.XmlDecoder;
 import logic.model.Position;
-import logic.model.RangeTime;
 import logic.model.Route;
 
 public class RoutingTomTomApi extends TomTomApi implements RoutingApi {
@@ -56,7 +56,7 @@ public class RoutingTomTomApi extends TomTomApi implements RoutingApi {
 	}
 
 	@Override
-	public Route startToStop(Position pickup, Position dropoff, RangeTime startInterval) {
+	public Route startToStop(Position pickup, Position dropoff, LocalDateTime startInterval) {
 
 		List<Position> allStops = new ArrayList<Position>();
 		allStops.add(pickup);
@@ -65,7 +65,7 @@ public class RoutingTomTomApi extends TomTomApi implements RoutingApi {
 	}
 
 	@Override
-	public Route startToStop(List<Position> stops, RangeTime startIntervall) {
+	public Route startToStop(List<Position> stops, LocalDateTime startIntervall) {
 		// TODO: build the route
 		// TODO: test if it works
 		Route route = null;
@@ -80,7 +80,7 @@ public class RoutingTomTomApi extends TomTomApi implements RoutingApi {
 		pickup = stops.get(0);
 		dropoff = stops.get(stops.size() - 1);
 		try {
-			route = new Route(pickup, dropoff, startIntervall, duration, distance);
+			route = new Route(pickup, dropoff, duration, distance);
 		} catch (InvalidInputException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,7 +116,7 @@ public class RoutingTomTomApi extends TomTomApi implements RoutingApi {
 				break;
 			}
 
-			//TODO: implement XmlDecoder single element
+			// TODO: implement XmlDecoder single element
 			duration = Integer.parseInt(
 					XmlDecoder.getElemFromNameParent(xml, "travelTimeInSeconds", "summary").get(0).getTextContent())
 					/ 60;

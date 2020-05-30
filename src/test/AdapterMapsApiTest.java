@@ -40,7 +40,7 @@ public class AdapterMapsApiTest {
 
 	@Test
 	public void startToStopTest() throws InvalidInputException, ApiNotReachableException {
-		RangeTime startInterval = new RangeTime(LocalDateTime.now(), LocalDateTime.now());
+		LocalDateTime startInterval = LocalDateTime.now();
 		Position pickup, dropoff;
 		pickup = MAPS_API.addrToPos(ADDRESS_2).get(0);
 		dropoff = MAPS_API.addrToPos(ADDRESS_1).get(0);
@@ -56,11 +56,11 @@ public class AdapterMapsApiTest {
 		this.log("\n" + result, false);
 		assertNotNull(result);
 	}
-	
+
 	@Test
 	public void saveImageTest() throws ApiNotReachableException {
 		Position p = MAPS_API.addrToPos(ADDRESS_1).get(0);
 		MAPS_API.saveImage(p);
-		//TODO: better saveImage with file location
+		// TODO: better saveImage with file location
 	}
 }

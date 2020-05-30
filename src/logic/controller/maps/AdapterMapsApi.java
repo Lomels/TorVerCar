@@ -1,10 +1,10 @@
 package logic.controller.maps;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import logic.controller.exception.ApiNotReachableException;
 import logic.model.Position;
-import logic.model.RangeTime;
 import logic.model.Route;
 
 public class AdapterMapsApi implements MapsApi {
@@ -32,12 +32,12 @@ public class AdapterMapsApi implements MapsApi {
 	}
 
 	@Override
-	public Route startToStop(Position pickup, Position dropoff, RangeTime startInterval) {
+	public Route startToStop(Position pickup, Position dropoff, LocalDateTime startInterval) {
 		return routing.startToStop(pickup, dropoff, startInterval);
 	}
 
 	@Override
-	public Route startToStop(List<Position> stops, RangeTime startInterval) {
+	public Route startToStop(List<Position> stops, LocalDateTime startInterval) {
 		return routing.startToStop(stops, startInterval);
 	}
 
