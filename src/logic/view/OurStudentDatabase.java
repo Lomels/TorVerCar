@@ -20,4 +20,7 @@ public interface OurStudentDatabase {
 	
 	//load the password for the login
 	public String loadPasswordByUserID(String userID) throws InvalidInputException, DatabaseException;
+
+	//update student info
+	public void editInfoByUserID(Student student) throws DatabaseException;
 }

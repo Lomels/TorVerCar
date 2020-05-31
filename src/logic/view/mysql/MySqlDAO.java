@@ -149,6 +149,7 @@ public class MySqlDAO implements OurStudentDatabase {
 		return password;
 	}
 	
+	@Override
 	public void editInfoByUserID(Student student) throws DatabaseException {
 		try {
 			this.connect();
