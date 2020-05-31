@@ -22,5 +22,5 @@ public interface OurStudentDatabase {
 	public String loadPasswordByUserID(String userID) throws InvalidInputException, DatabaseException;
 
 	//update student info
-	public void editInfoByUserID(Student student) throws DatabaseException;
+	public void editInfoByUserID(String userID, String password, String email, String phone) throws DatabaseException;
 }

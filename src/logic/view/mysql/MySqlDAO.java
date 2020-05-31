@@ -150,10 +150,10 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 	
 	@Override
-	public void editInfoByUserID(Student student) throws DatabaseException {
+	public void editInfoByUserID(String userID, String password, String email, String phone) throws DatabaseException {
 		try {
 			this.connect();
-			MyQueries.updateStudent(this.stmt, student);
+			MyQueries.updateStudent(this.stmt, user, password, email, phone);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
