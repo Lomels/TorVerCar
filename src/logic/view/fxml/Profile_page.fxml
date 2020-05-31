@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#046104" height="40.0" layoutX="8.0" layoutY="4.0" stroke="#046104" strokeType="INSIDE" width="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Button fx:id="btHome" layoutX="24.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Home" />
+      <Button layoutX="88.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Book" />
+      <Button layoutX="145.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Offer" />
+      <Button layoutX="556.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: #046104;">
+         <graphic>
+            <ImageView fx:id="btLogout" fitHeight="29.0" fitWidth="33.0">
+               <image>
+                  <Image url="@../../../../../Scaricati/logout.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="510.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="46.0" style="-fx-background-color: Green;">
+         <graphic>
+            <ImageView fitHeight="27.0" fitWidth="28.0">
+               <image>
+                  <Image url="@../../../../../Scaricati/user.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="196.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="My Car " />
+      <ComboBox layoutX="264.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="103.0" promptText="My Lift" style="-fx-background-color: #046104; -fx-border-color: #046104;" />
+      <Text layoutX="19.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="My Profile:">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Text layoutX="24.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
+      <Text layoutX="24.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Surname:" />
+      <Text layoutX="24.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Matriculation number:" />
+      <Text layoutX="24.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone number:" />
+      <Text layoutX="24.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
+      <Text layoutX="24.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:" />
+      <Text fx:id="txName" layoutX="250.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="txSurname" layoutX="250.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="txMatNum" layoutX="250.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Button fx:id="btSave" layoutX="516.0" layoutY="352.0" mnemonicParsing="false" text="Save" />
+      <Button layoutX="22.0" layoutY="352.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="btEdit" layoutX="448.0" layoutY="352.0" mnemonicParsing="false" text="Edit" />
+      <TextField fx:id="tfPhone" layoutX="250.0" layoutY="224.0" />
+      <TextField fx:id="tfEmail" layoutX="250.0" layoutY="264.0" />
+      <TextField fx:id="tfPass" layoutX="250.0" layoutY="302.0" />
+   </children>
+</AnchorPane>

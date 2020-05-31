@@ -25,6 +25,10 @@
 	<classpathentry kind="lib" path="Dependencies/sendgrid-java.jar"/>
 	<classpathentry kind="lib" path="Dependencies/activation-1.1.1.jar"/>
 	<classpathentry kind="lib" path="Dependencies/javax.mail-1.6.2.jar"/>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="/home/giuseppe/git/TorVerCar/Dependencies/json-20200518.jar"/>
+=======
+	<classpathentry kind="lib" path="DB/mysql-connector-java-5.1.48-bin.jar"/>
+>>>>>>> 88b4274bb713372842a63ec3602400f15bda5826
 	<classpathentry kind="output" path="bin"/>
 </classpath>
