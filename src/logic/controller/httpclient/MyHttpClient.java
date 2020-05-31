@@ -17,20 +17,25 @@ public class MyHttpClient {
 
 	}
 
-	public static String getXmlFromUrl(URI requestUrl) {
-		String xml = null;
+	public static String getStringFromUrl(URI requestUrl) {
+		return MyHttpClient.getStringFromUrl(requestUrl, null);
+	}
+
+	public static String getStringFromUrl(URI requestUrl, String accept) {
+		String body = null;
 
 		// opening the client
 		CloseableHttpClient client = HttpClients.createDefault();
 		HttpGet request = new HttpGet(requestUrl);
-		request.addHeader("accept", "application/xml");
+		if (accept != null)
+			request.addHeader("accept", accept);
 
 		// generazione response
 		CloseableHttpResponse response;
 		try {
 			response = client.execute(request);
 			HttpEntity entity = response.getEntity();
-			xml = EntityUtils.toString(entity);
+			body = EntityUtils.toString(entity);
 			response.close();
 			client.close();
 		} catch (ParseException e) {
@@ -40,6 +45,7 @@ public class MyHttpClient {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return xml;
+		return body;
+
 	}
 }

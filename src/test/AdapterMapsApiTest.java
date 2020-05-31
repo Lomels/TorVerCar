@@ -33,7 +33,7 @@ public class AdapterMapsApiTest {
 	public void addrToPosTest() throws ApiNotReachableException {
 		List<Position> results = MAPS_API.addrToPos(ADDRESS_1);
 		for (Position p : results)
-			this.log(p.toString(), false);
+			this.log(p.toString(), true);
 		assertEquals(Position.class, results.get(0).getClass());
 		;
 	}
@@ -62,5 +62,16 @@ public class AdapterMapsApiTest {
 		Position p = MAPS_API.addrToPos(ADDRESS_1).get(0);
 		MAPS_API.saveImage(p);
 		// TODO: better saveImage with file location
+	}
+	
+	@Test
+	public void viewRouteTest() throws ApiNotReachableException {
+		LocalDateTime startInterval = LocalDateTime.now();
+		Position pickup, dropoff;
+		pickup = MAPS_API.addrToPos(ADDRESS_2).get(0);
+		dropoff = MAPS_API.addrToPos(ADDRESS_1).get(0);
+		Route route = MAPS_API.startToStop(pickup, dropoff, startInterval);
+		String url = MAPS_API.viewFromRoute(route);
+		Logger.getGlobal().info("URL:\n" + url);
 	}
 }

@@ -12,11 +12,11 @@ import logic.controller.exception.InvalidInputException;
 import logic.controller.maps.*;
 import logic.model.*;
 
-public class RoutingTomTomApiTest {
+public class RoutingHereApiTest {
 
-	private static final Logger LOGGER = Logger.getLogger(TomTomApi.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(RoutingHereApiTest.class.getName());
 	private static final GeodecodeApi geoApi = GeodecodeTomTomApi.getInstance();
-	private static final RoutingApi routeApi = RoutingTomTomApi.getInstance();
+	private static final RoutingApi routeApi = RoutingHereAPI.getInstance();
 
 	private static final String ADDRESS_1 = "Via prenestina nuova 51, Palestrina";
 	private static final String ADDRESS_2 = "Via adua 10, Rocca Priora";

@@ -5,11 +5,10 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.w3c.dom.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-import logic.controller.PositionBuilder;
 import logic.controller.httpclient.MyHttpClient;
-import logic.controller.httpclient.XmlDecoder;
 import logic.model.Position;
 
 public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
@@ -17,16 +16,12 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 	// Implemented as a Singleton
 	private static GeodecodeTomTomApi instance = null;
 
-
 	// API
-	private static final String VERSION_NUMBER = "2";
-	private static final String FORMAT = "%s/search/%s/geocode/%s.%s?key=%s";
-
-	private String geocodeFormat;
+	private final String path = "/search/2/geocode";
+	private final String ext = ".json";
 
 	// Costruttore
 	private GeodecodeTomTomApi() {
-		this.geocodeFormat = String.format(FORMAT, SERVER, VERSION_NUMBER, "%s", EXT, KEY);
 	}
 
 	// implemented as singleton
@@ -39,33 +34,44 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 	// override the interface
 	@Override
 	public List<Position> addrToPos(String address) {
-		List<Position> result = new ArrayList<Position>();
+		List<Position> positions = new ArrayList<Position>();
 		// TODO find where to handle errors
-		
-		// load result xml as string
-		String xml = null;
-		xml = this.xmlFromAddr(address);
 
-		// use our class to decode the xml response
-		List<Element> elements = XmlDecoder.getElemFromNameParent(xml, "item", "results");
-		for (Element e : elements)
-			result.add(PositionBuilder.buildFromElement(e));
+		StringBuilder builder = new StringBuilder();
+		builder.append(SCHEME);
+		builder.append(HOST);
+		builder.append(path);
 
-		return result;
+		this.addrToParameter(address, builder);
+
+		builder.append("?key=" + KEY);
+
+		URI uri = null;
+		try {
+			uri = new URI(builder.toString());
+			String json = MyHttpClient.getStringFromUrl(uri);
+//			Logger.getGlobal().info("URL:\n" + uri + "\nJSON:\n" + json);
+
+			JSONObject jsonObject = new JSONObject(json);
+			JSONArray jsonResults = jsonObject.getJSONArray("results");
+			for (int i = 0; i < jsonResults.length(); i++) {
+				JSONObject jsonResult = jsonResults.getJSONObject(i);
+
+				JSONObject jsonPosition = jsonResult.getJSONObject("position");
+				JSONObject jsonAddress = jsonResult.getJSONObject("address");
+
+				positions.add(new Position(jsonPosition.getDouble("lat"), jsonPosition.getDouble("lon"),
+						jsonResult.getDouble("score"), jsonAddress.getString("freeformAddress")));
+			}
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return positions;
 	}
 
-	// call the MyHttpClient
-	private String xmlFromAddr(String address) {
-		String xml = null;
-		try {
-			// create the url and send it to the superclass
-			String urlAddress = address.trim().replaceAll("\\s", "%20");
-			URI requestUrl = new URI(String.format(this.geocodeFormat, urlAddress));
-			xml = MyHttpClient.getXmlFromUrl(requestUrl);
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return xml;
+	private void addrToParameter(String address, StringBuilder builder) {
+		String urlAddress = "/" + address.trim().replaceAll("\\s", "%20") + ext;
+		builder.append(urlAddress);
 	}
 }

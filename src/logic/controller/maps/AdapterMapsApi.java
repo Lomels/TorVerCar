@@ -17,11 +17,13 @@ public class AdapterMapsApi implements MapsApi {
 	private static GeodecodeApi geodecode;
 	private static RoutingApi routing;
 	private static ViewMapApi viewmap;
+	private static ViewRouteApi viewroute;
 	
 	private AdapterMapsApi() {
 		geodecode = GeodecodeTomTomApi.getInstance();
-		routing = RoutingTomTomApi.getInstance();
+		routing = RoutingHereAPI.getInstance();
 		viewmap = ViewMapHereApi.getInstance();
+		viewroute = ViewRouteHereApi.getInstance();
 	}
 	
 	public static AdapterMapsApi getInstance() {
@@ -58,6 +60,11 @@ public class AdapterMapsApi implements MapsApi {
 	@Override
 	public void saveImage(Position p) {
 		viewmap.saveImage(p);
+	}
+
+	@Override
+	public String viewFromRoute(Route route) {
+		return viewroute.viewFromRoute(route);
 	}
 
 }

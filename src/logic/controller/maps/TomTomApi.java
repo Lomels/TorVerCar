@@ -5,8 +5,8 @@ public class TomTomApi {
 
 	// using TomTomApi
 	protected static final String KEY = "8xAoG57mmkjCxim04niX0NYPXAZMuAyV";
-	protected static final String EXT = "xml";
-	protected static final String SERVER = "https://api.tomtom.com";
+	protected static final String SCHEME = "https:/";
+	protected static final String HOST = "/api.tomtom.com";
 
 	// prevent constructor
 	protected TomTomApi() {

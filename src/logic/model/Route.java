@@ -7,7 +7,7 @@ import logic.controller.exception.InvalidInputException;
 
 public class Route {
 
-	private List<Position> stops = new ArrayList<>();
+	private List<Position> stops;
 	// in minutes
 	private Integer duration;
 	// in meters
@@ -22,15 +22,11 @@ public class Route {
 	// TODO: notNull required
 	public Route(Position pickupPosition, Position dropoffPosition, Integer duration, Integer distance)
 			throws InvalidInputException {
+		this.stops = new ArrayList<Position>();
 		this.stops.add(pickupPosition);
 		this.stops.add(dropoffPosition);
 		this.setDuration(duration);
 		this.distance = distance;
-	}
-
-	public void addStop(Position stop) {
-		// TODO: input check
-		this.stops.add(stop);
 	}
 
 	public Position getPickupPosition() {
@@ -41,7 +37,7 @@ public class Route {
 		return this.stops.get(this.stops.size() - 1);
 	}
 
-	public Position getIndexPosition(Integer index) {
+	public Position getStop(Integer index) {
 		Position result = null;
 		try {
 			result = this.stops.get(index);
@@ -51,16 +47,17 @@ public class Route {
 		}
 		return result;
 	}
+	
+	public Integer getStopsSize() {
+		return this.stops.size();
+	}
 
 	public Integer getDuration() {
 		return duration;
 	}
 
 	public void setDuration(Integer duration) throws InvalidInputException {
-		if (duration > 0)
-			this.duration = duration;
-		else
-			throw new InvalidInputException("Duration should be more than 0.");
+		this.duration = duration;
 	}
 
 	public Integer getDistance() {

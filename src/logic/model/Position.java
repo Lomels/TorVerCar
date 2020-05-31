@@ -47,6 +47,10 @@ public class Position {
 		this.address = address;
 	}
 
+	public String getLatLon() {
+		return getLat() + "," + getLon();
+	}
+
 	@Override
 	public String toString() {
 		return "Position [lat=" + lat + ", lon=" + lon + ", (lat,lon)=" + lat + "," + lon + ",\nscore=" + score
