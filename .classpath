@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="Dependencies/activation-1.1.1.jar"/>
 	<classpathentry kind="lib" path="Dependencies/commons-cli-1.4.jar"/>
 	<classpathentry kind="lib" path="Dependencies/commons-codec-1.13.jar"/>
 	<classpathentry kind="lib" path="Dependencies/httpclient5-5.0.jar"/>
@@ -15,20 +15,15 @@
 	<classpathentry kind="lib" path="Dependencies/httpcore5-h2-5.0.jar"/>
 	<classpathentry kind="lib" path="Dependencies/httpcore5-reactive-5.0.jar"/>
 	<classpathentry kind="lib" path="Dependencies/httpcore5-testing-5.0.jar"/>
+	<classpathentry kind="lib" path="Dependencies/javax.mail-1.6.2.jar"/>
 	<classpathentry kind="lib" path="Dependencies/jna-5.2.0.jar"/>
 	<classpathentry kind="lib" path="Dependencies/jna-platform-5.2.0.jar"/>
+	<classpathentry kind="lib" path="Dependencies/json-20200518.jar"/>
 	<classpathentry kind="lib" path="Dependencies/mysql-connector-java-5.1.48-bin.jar"/>
 	<classpathentry kind="lib" path="Dependencies/reactive-streams-1.0.2.jar"/>
 	<classpathentry kind="lib" path="Dependencies/rxjava-2.2.8.jar"/>
+	<classpathentry kind="lib" path="Dependencies/sendgrid-java.jar"/>
 	<classpathentry kind="lib" path="Dependencies/slf4j-api-1.7.25.jar"/>
 	<classpathentry kind="lib" path="Dependencies/slf4j-simple-1.7.30.jar"/>
-	<classpathentry kind="lib" path="Dependencies/sendgrid-java.jar"/>
-	<classpathentry kind="lib" path="Dependencies/activation-1.1.1.jar"/>
-	<classpathentry kind="lib" path="Dependencies/javax.mail-1.6.2.jar"/>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="/home/giuseppe/git/TorVerCar/Dependencies/json-20200518.jar"/>
-=======
-	<classpathentry kind="lib" path="DB/mysql-connector-java-5.1.48-bin.jar"/>
->>>>>>> 88b4274bb713372842a63ec3602400f15bda5826
 	<classpathentry kind="output" path="bin"/>
 </classpath>
