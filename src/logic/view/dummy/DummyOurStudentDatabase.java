@@ -49,4 +49,10 @@ public class DummyOurStudentDatabase implements OurStudentDatabase {
 		return "aaaA123@";
 	}
 
+	@Override
+	public void editInfoByUserID(String userID, String password, String email, String phone) throws DatabaseException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

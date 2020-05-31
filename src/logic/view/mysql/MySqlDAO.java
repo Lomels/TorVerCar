@@ -153,7 +153,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	public void editInfoByUserID(String userID, String password, String email, String phone) throws DatabaseException {
 		try {
 			this.connect();
-			MyQueries.updateStudent(this.stmt, user, password, email, phone);
+			MyQueries.updateStudent(this.stmt, userID, password, email, phone);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
