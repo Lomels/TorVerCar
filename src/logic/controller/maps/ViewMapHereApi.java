@@ -19,12 +19,10 @@ public class ViewMapHereApi implements ViewMapApi {
 	// TODO: implement class for better build the url
 	private static final String FORMAT = "https://image.maps.ls.hereapi.com/mia/1.6/mapview" + "?apiKey=%s" + "&c=%s,%s"
 			+ "&z=%s" + "&t=0" + "&vt=0" + "&ml=ita" + "&h=512" + "&w=512" + "&pip=13";
-	private static final String FILE = "src/logic/controller/maps/" + ViewMapHereApi.class.getCanonicalName() + ".jpg";
-	private File actualFile;
 	private static int defaultZoom = 16;
+	private static String pathname = "src/logic/controller/maps/" + ViewMapHereApi.class.getCanonicalName() + ".jpg";
 
 	private ViewMapHereApi() {
-		this.actualFile = new File(FILE);
 	}
 
 	public static ViewMapHereApi getInstance() {
@@ -48,9 +46,10 @@ public class ViewMapHereApi implements ViewMapApi {
 	@Override
 	public void saveImage(Position p) {
 		try {
+			File file = new File(ViewMapHereApi.pathname);
 			URL url = new URL(this.viewFromPos(p));
 			BufferedImage image = ImageIO.read(url);
-			ImageIO.write(image, "jpg", actualFile);
+			ImageIO.write(image, "jpg", file);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

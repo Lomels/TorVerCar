@@ -7,6 +7,10 @@ import logic.controller.exception.ApiNotReachableException;
 import logic.model.Position;
 import logic.model.Route;
 
+/*
+ * 	This adapter implementens the complete service MapsApi
+ * 	and redirects to the method of the implementation of the single service
+ */
 public class AdapterMapsApi implements MapsApi {
 	
 	private static AdapterMapsApi instance = null;
