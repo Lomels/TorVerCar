@@ -87,6 +87,11 @@ public class MySqlDAOTest {
 		Student sByDao = my.loadStudentByUserID(userID);
 		assertEquals(s.toString(), sByDao.toString());
 	}
+	
+	@Test
+	public void editInfo() throws Exception{
+		//TODO: implementare
+	}
 
 	@Test
 	public void existingPassword() throws InvalidInputException, DatabaseException {

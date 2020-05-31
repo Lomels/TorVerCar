@@ -148,6 +148,19 @@ public class MySqlDAO implements OurStudentDatabase {
 		}
 		return password;
 	}
+	
+	public void editInfoByUserID(Student student) throws DatabaseException {
+		try {
+			this.connect();
+			MyQueries.updateStudent(this.stmt, student);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new DatabaseException(e.getMessage());
+		} finally {
+			this.disconnect();
+		}
+	}
 
 	private void connect() {
 		try {

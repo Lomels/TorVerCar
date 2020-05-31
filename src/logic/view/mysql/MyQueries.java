@@ -26,6 +26,17 @@ public class MyQueries {
 		return stmt.executeQuery(sql);
 	}
 	
+	public static void updateStudent(Statement stmt, Student student) throws SQLException {
+		String format = "UPDATE Students SET email = '%s', phone = '%s' WHERE userID = '%s';";
+		String sql = String.format(format, student.getEmail(), student.getPhone(), student.getUserID());
+		stmt.executeUpdate(sql);
+		
+		format = "Update Users SET password = '%s' WHERE userID = '%s';";
+		sql = String.format(format, student.getPassword(),student.getUserID());
+		stmt.executeUpdate(sql);
+		
+	}
+	
 	public static void addStudent(Statement stmt, Student student) throws SQLException {
 		String format = "INSERT INTO Users( userID, password) VALUES ('%s', '%s');";
 		String sql = String.format(format, student.getUserID(), student.getPassword());
