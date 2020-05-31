@@ -10,21 +10,16 @@ import javax.imageio.ImageIO;
 
 import logic.model.Position;
 
-public class ViewMapHereApi implements ViewMapApi {
+public class ViewMapHereApi extends HereApi implements ViewMapApi {
 
 	private static ViewMapHereApi instance = null;
 
-	// use HERE REST Api
-	private static final String KEY = "JB1x92IV3wywdCVXejt2bDvpnRsK14Y9vBoLUONVBLE";
 	// TODO: implement class for better build the url
-	private static final String FORMAT = "https://image.maps.ls.hereapi.com/mia/1.6/mapview" + "?apiKey=%s" + "&c=%s,%s"
-			+ "&z=%s" + "&t=0" + "&vt=0" + "&ml=ita" + "&h=512" + "&w=512" + "&pip=13";
-	private static final String FILE = "src/logic/controller/maps/" + ViewMapHereApi.class.getCanonicalName() + ".jpg";
-	private File actualFile;
-	private static int defaultZoom = 16;
+	private final  String path = "/mia/1.6/mapview";
+	private final int zoom = 16;
+	private final String pathname = "src/logic/controller/maps/" + ViewMapHereApi.class.getCanonicalName() + ".jpg";
 
 	private ViewMapHereApi() {
-		this.actualFile = new File(FILE);
 	}
 
 	public static ViewMapHereApi getInstance() {
@@ -35,22 +30,34 @@ public class ViewMapHereApi implements ViewMapApi {
 
 	@Override
 	public String viewFromPos(Position p) {
-		return this.viewFromPos(p, ViewMapHereApi.defaultZoom);
+		return this.viewFromPos(p, zoom);
 	}
 
 	@Override
 	public String viewFromPos(Position p, int zoom) {
-		String result = String.format(FORMAT, KEY, p.getLat(), p.getLon(), zoom);
-		return result;
+		StringBuilder builder = new StringBuilder();
+		builder.append(SCHEME);
+		builder.append(IMAGE_HOST);
+		builder.append(path);
+		builder.append("?apiKey=" + KEY);
+		// coordinates of the point to visualize
+		builder.append("&lat=" + p.getLat());
+		builder.append("&lon=" + p.getLon());
+		builder.append("&z=" + zoom);
+		for (ViewMapHereParameter parameter : ViewMapHereParameter.values()) {
+			builder.append(parameter.getParameter());
+		}
+		return builder.toString();
 	}
 
 	// TODO: better the file position
 	@Override
 	public void saveImage(Position p) {
 		try {
+			File file = new File(pathname);
 			URL url = new URL(this.viewFromPos(p));
 			BufferedImage image = ImageIO.read(url);
-			ImageIO.write(image, "jpg", actualFile);
+			ImageIO.write(image, "jpg", file);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

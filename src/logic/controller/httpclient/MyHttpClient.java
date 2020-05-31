@@ -12,34 +12,40 @@ import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 
 public class MyHttpClient {
-	
+
 	private MyHttpClient() {
-		
+
 	}
 
-	public static String getXmlFromUrl(URI requestUrl) {
-		String xml = null;
-		
+	public static String getStringFromUrl(URI requestUrl) {
+		return MyHttpClient.getStringFromUrl(requestUrl, null);
+	}
+
+	public static String getStringFromUrl(URI requestUrl, String accept) {
+		String body = null;
+
 		// opening the client
 		CloseableHttpClient client = HttpClients.createDefault();
 		HttpGet request = new HttpGet(requestUrl);
-		request.addHeader("accept", "application/xml");
+		if (accept != null)
+			request.addHeader("accept", accept);
 
 		// generazione response
 		CloseableHttpResponse response;
 		try {
 			response = client.execute(request);
 			HttpEntity entity = response.getEntity();
-			xml = EntityUtils.toString(entity);
+			body = EntityUtils.toString(entity);
 			response.close();
 			client.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return xml;
+		return body;
+
 	}
 }

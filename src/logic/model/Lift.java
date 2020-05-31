@@ -1,73 +1,94 @@
 package logic.model;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-
-import logic.controller.exception.InvalidInputException;
-import logic.utilities.InputChecker;
 
 public class Lift {
 	private String liftID;
-	private StudentCar driver;
+	private LocalDateTime startTime;
+	private int maxDistance, maxDuration;
 	private String note;
-	private Route route;
-	private List<Message> messages;
 
-	public Lift(String liftID, String note, Route route, StudentCar driver) throws InvalidInputException {
-		this.setLiftID(liftID);
-		this.setNote(note);
-		this.setRoute(route);
-		this.setDriver(driver);
+	private StudentCar driver;
+	private List<Student> passengers = new ArrayList<Student>();
+	private Route route;
+
+	public Lift(String liftID, LocalDateTime startTime, int maxDistance, int maxDuration, String note,
+			StudentCar driver, List<Student> passengers, Route route) {
+		super();
+		this.liftID = liftID;
+		this.startTime = startTime;
+		this.maxDistance = maxDistance;
+		this.maxDuration = maxDuration;
+		this.note = note;
+		this.driver = driver;
+		this.passengers = passengers;
+		this.route = route;
 	}
 
 	public String getLiftID() {
 		return liftID;
 	}
 
-	public StudentCar getDriver() {
-		return driver;
+	public void setLiftID(String liftID) {
+		this.liftID = liftID;
+	}
+
+	public LocalDateTime getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(LocalDateTime startTime) {
+		this.startTime = startTime;
+	}
+
+	public int getMaxDistance() {
+		return maxDistance;
+	}
+
+	public void setMaxDistance(int maxDistance) {
+		this.maxDistance = maxDistance;
+	}
+
+	public int getMaxDuration() {
+		return maxDuration;
+	}
+
+	public void setMaxDuration(int maxDuration) {
+		this.maxDuration = maxDuration;
 	}
 
 	public String getNote() {
 		return note;
 	}
 
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public StudentCar getDriver() {
+		return driver;
+	}
+
+	public void setDriver(StudentCar driver) {
+		this.driver = driver;
+	}
+
+	public List<Student> getPassengers() {
+		return passengers;
+	}
+
+	public void setPassengers(List<Student> passengers) {
+		this.passengers = passengers;
+	}
+
 	public Route getRoute() {
 		return route;
 	}
 
-	public List<Message> getMessages() {
-		return messages;
-	}
-
-	public void setLiftID(String liftID) throws InvalidInputException {
-		InputChecker.checkGeneric(liftID);
-		this.liftID = liftID;
-	}
-
-	public void setDriver(StudentCar driver) throws InvalidInputException {
-		if (driver == null) {
-			throw new InvalidInputException("Driver must not be null");
-		}
-		this.driver = driver;
-	}
-
-	public void setNote(String note) throws InvalidInputException {
-		InputChecker.checkGeneric(note);
-		this.note = note;
-	}
-
-	public void setRoute(Route route) throws InvalidInputException {
-		if (route == null) {
-			throw new InvalidInputException("Route must not be null");
-		}
+	public void setRoute(Route route) {
 		this.route = route;
-	}
-
-	public void addMessage(Message message) throws InvalidInputException {
-		if (message == null) {
-			throw new InvalidInputException("Message must not be null");
-		}
-		this.messages.add(message);
 	}
 
 }

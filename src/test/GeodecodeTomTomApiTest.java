@@ -23,7 +23,7 @@ public class GeodecodeTomTomApiTest {
 	public void normalTest() {
 		List<Position> pos = new ArrayList<Position>();
 		try {
-			pos = geoApi.addrToPos("via prenestina nuova 51");
+			pos = geoApi.addrToPos(" zagarolo");
 		} catch (ApiNotReachableException e) {
 			e.printStackTrace();
 		}

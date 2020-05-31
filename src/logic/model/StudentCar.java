@@ -13,7 +13,7 @@ public class StudentCar extends Student {
 	// Costruttore che usa lo student
 	public StudentCar(Student student, int rating, CarInfo carInfo, List<Report> reports) throws InvalidInputException {
 		super(student.userID, student.password, student.email, student.name, student.surname, student.phone,
-				student.weeklyPreferencies, student.lifts);
+				student.lifts);
 		this.rating = rating;
 		this.setCarInfo(carInfo);
 		this.reports = reports;
@@ -53,7 +53,7 @@ public class StudentCar extends Student {
 		return reports;
 	}
 
-	public void addReport(Report report) throws InvalidInputException{
+	public void addReport(Report report) throws InvalidInputException {
 		if (report == null) {
 			throw new InvalidInputException("Report must not be null");
 		}

@@ -1,23 +1,29 @@
 package logic.controller.maps;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import logic.controller.exception.ApiNotReachableException;
 import logic.model.Position;
-import logic.model.RangeTime;
 import logic.model.Route;
 
+/*
+ * 	This adapter implementens the complete service MapsApi
+ * 	and redirects to the method of the implementation of the single service
+ */
 public class AdapterMapsApi implements MapsApi {
 	
 	private static AdapterMapsApi instance = null;
 	private static GeodecodeApi geodecode;
 	private static RoutingApi routing;
 	private static ViewMapApi viewmap;
+	private static ViewRouteApi viewroute;
 	
 	private AdapterMapsApi() {
 		geodecode = GeodecodeTomTomApi.getInstance();
-		routing = RoutingTomTomApi.getInstance();
+		routing = RoutingHereAPI.getInstance();
 		viewmap = ViewMapHereApi.getInstance();
+		viewroute = ViewRouteHereApi.getInstance();
 	}
 	
 	public static AdapterMapsApi getInstance() {
@@ -32,12 +38,12 @@ public class AdapterMapsApi implements MapsApi {
 	}
 
 	@Override
-	public Route startToStop(Position pickup, Position dropoff, RangeTime startInterval) {
+	public Route startToStop(Position pickup, Position dropoff, LocalDateTime startInterval) {
 		return routing.startToStop(pickup, dropoff, startInterval);
 	}
 
 	@Override
-	public Route startToStop(List<Position> stops, RangeTime startInterval) {
+	public Route startToStop(List<Position> stops, LocalDateTime startInterval) {
 		return routing.startToStop(stops, startInterval);
 	}
 
@@ -54,6 +60,11 @@ public class AdapterMapsApi implements MapsApi {
 	@Override
 	public void saveImage(Position p) {
 		viewmap.saveImage(p);
+	}
+
+	@Override
+	public String viewFromRoute(Route route) {
+		return viewroute.viewFromRoute(route);
 	}
 
 }

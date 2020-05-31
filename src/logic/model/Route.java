@@ -6,33 +6,27 @@ import java.util.List;
 import logic.controller.exception.InvalidInputException;
 
 public class Route {
-	
-	private List<Position> stops = new ArrayList<>();
-	private RangeTime startInterval;
-	// espressa in minuti
+
+	private List<Position> stops;
+	// in minutes
 	private Integer duration;
+	// in meters
 	private Integer distance;
 
-	public Route(List<Position> stops, RangeTime startInterval, Integer duration, Integer distance) {
+	public Route(List<Position> stops, Integer duration, Integer distance) {
 		this.stops = stops;
-		this.startInterval = startInterval;
 		this.duration = duration;
 		this.distance = distance;
 	}
 
 	// TODO: notNull required
-	public Route(Position pickupPosition, Position dropoffPosition, RangeTime startInterval, Integer duration,
-			Integer distance) throws InvalidInputException {
+	public Route(Position pickupPosition, Position dropoffPosition, Integer duration, Integer distance)
+			throws InvalidInputException {
+		this.stops = new ArrayList<Position>();
 		this.stops.add(pickupPosition);
 		this.stops.add(dropoffPosition);
-		this.startInterval = startInterval;
 		this.setDuration(duration);
 		this.distance = distance;
-	}
-
-	public void addStop(Position stop) {
-		// TODO: input check
-		this.stops.add(stop);
 	}
 
 	public Position getPickupPosition() {
@@ -43,7 +37,7 @@ public class Route {
 		return this.stops.get(this.stops.size() - 1);
 	}
 
-	public Position getIndexPosition(Integer index) {
+	public Position getStop(Integer index) {
 		Position result = null;
 		try {
 			result = this.stops.get(index);
@@ -53,13 +47,9 @@ public class Route {
 		}
 		return result;
 	}
-
-	public RangeTime getStartInterval() {
-		return startInterval;
-	}
-
-	public void setStartInterval(RangeTime startTime) {
-		this.startInterval = startTime;
+	
+	public Integer getStopsSize() {
+		return this.stops.size();
 	}
 
 	public Integer getDuration() {
@@ -67,10 +57,7 @@ public class Route {
 	}
 
 	public void setDuration(Integer duration) throws InvalidInputException {
-		if (duration > 0)
-			this.duration = duration;
-		else
-			throw new InvalidInputException("Duration should be more than 0.");
+		this.duration = duration;
 	}
 
 	public Integer getDistance() {
@@ -82,14 +69,9 @@ public class Route {
 		this.distance = distance;
 	}
 
-	public RangeTime getStopInterval() throws InvalidInputException {
-		return this.getStartInterval().addMinutes(this.getDuration());
-	}
-
 	@Override
 	public String toString() {
-		return "Route [stops=" + stops + ", startInterval=" + startInterval + ", duration=" + duration + ", distance="
-				+ distance + "]";
+		return "Route [stops=" + stops + ", duration=" + duration + ", distance=" + distance + "]";
 	}
 
 	public String toStringShort() {

@@ -1,53 +1,27 @@
 package logic.controller.maps;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-
-import org.w3c.dom.*;
-
-
-import logic.controller.PositionBuilder;
-import logic.controller.exception.ApiNotReachableException;
-import logic.controller.httpclient.XmlDecoder;
+import logic.controller.httpclient.MyHttpClient;
 import logic.model.Position;
 
 public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 
+	// Implemented as a Singleton
 	private static GeodecodeTomTomApi instance = null;
 
-	// Logger
-	private static final Logger LOGGER = Logger.getLogger(GeodecodeTomTomApi.class.getCanonicalName());
-
-	// using GeoDecode
-	private static final String VERSION_NUMBER = "2";
-	private static final String FORMAT = SERVER + "search/%s/geocode/%s.%s?key=%s";
-	private static final String FILE = "src/logic/controller/maps/" + GeodecodeTomTomApi.class.getCanonicalName() + ".xml";
-
-	private String geocodeFormat;
-	private String lastQuery = null;
-	private String file;
-
+	// API
+	private final String path = "/search/2/geocode";
+	private final String ext = ".json";
 
 	// Costruttore
 	private GeodecodeTomTomApi() {
-		this.geocodeFormat = String.format(FORMAT, VERSION_NUMBER, "%s", EXT, KEY);
-		try {
-			this.file = new File(FILE).getCanonicalPath();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	// implemented as singleton
@@ -59,66 +33,45 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 
 	// override the interface
 	@Override
-	public List<Position> addrToPos(String address) throws ApiNotReachableException {
-		if (address.equals(this.lastQuery)) 
-			return this.addrToPos(address, CACHE);
-		return this.addrToPos(address, REFRESH);
-	}
+	public List<Position> addrToPos(String address) {
+		List<Position> positions = new ArrayList<Position>();
+		// TODO find where to handle errors
 
-	// internal call with mode
-	private List<Position> addrToPos(String address, int mode) throws ApiNotReachableException {
-		List<Position> result = new ArrayList<Position>();
+		StringBuilder builder = new StringBuilder();
+		builder.append(SCHEME);
+		builder.append(HOST);
+		builder.append(path);
+
+		this.addrToParameter(address, builder);
+
+		builder.append("?key=" + KEY);
+
+		URI uri = null;
 		try {
-			// load result as xml string
-			String xml = null;
+			uri = new URI(builder.toString());
+			String json = MyHttpClient.getStringFromUrl(uri);
+//			Logger.getGlobal().info("URL:\n" + uri + "\nJSON:\n" + json);
 
-			switch (mode) {
-			case CACHE:
-				LOGGER.info("Using cache mode.");
-				xml = new String(Files.readAllBytes(Paths.get(this.file)));
-				if (xml.equals(""))
-					throw new FileNotFoundException("The file was empty.");
-				break;
-			case REFRESH:
-				LOGGER.info("Using refresh mode.");
-				this.lastQuery = address;
-				xml = this.xmlFromAddress(address);
-				break;
+			JSONObject jsonObject = new JSONObject(json);
+			JSONArray jsonResults = jsonObject.getJSONArray("results");
+			for (int i = 0; i < jsonResults.length(); i++) {
+				JSONObject jsonResult = jsonResults.getJSONObject(i);
+
+				JSONObject jsonPosition = jsonResult.getJSONObject("position");
+				JSONObject jsonAddress = jsonResult.getJSONObject("address");
+
+				positions.add(new Position(jsonPosition.getDouble("lat"), jsonPosition.getDouble("lon"),
+						jsonResult.getDouble("score"), jsonAddress.getString("freeformAddress")));
 			}
-
-			// use our class to decode the xml response
-			List<Element> elements = XmlDecoder.getElemFromNameParent(xml, "item", "results");
-			for(Element e : elements)
-				result.add(PositionBuilder.buildFromElement(e));
-
-		} catch (FileNotFoundException e) {
-			LOGGER.log(Level.WARNING, e.getMessage());
-			this.addrToPos(address, REFRESH);
-		} catch (ApiNotReachableException e) {
-			LOGGER.log(Level.SEVERE, e.getMessage());
-			throw e;
-		} catch (IOException e) {
-			LOGGER.log(Level.WARNING, "Could not load the cache file.");
-			this.addrToPos(address, REFRESH);
-		} catch (Exception e) {
+		} catch (URISyntaxException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
-		return result;
+		return positions;
 	}
 
-	// call the superclass
-	private String xmlFromAddress(String address) throws ApiNotReachableException {
-		String xml = null;
-		try {
-			// create the url and send it to the superclass
-			String urlAddress = address.trim().replaceAll("\\s", "%20");
-			URI requestUrl = new URI(String.format(this.geocodeFormat, urlAddress));
-			xml = super.useRestApi(requestUrl, this.file);
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return xml;
+	private void addrToParameter(String address, StringBuilder builder) {
+		String urlAddress = "/" + address.trim().replaceAll("\\s", "%20") + ext;
+		builder.append(urlAddress);
 	}
 }
