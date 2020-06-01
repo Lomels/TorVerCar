@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import logic.model.Student;
+import logic.model.StudentCar;
 
 public class MyQueries {
 	
@@ -51,6 +52,24 @@ public class MyQueries {
 				student.getPhone());
 		stmt.executeUpdate(sql);		
 	}
+	
+	
+	public static void addStudentCar( Statement stmt, StudentCar studentCar) throws SQLException {
+		String format = "INSERT INTO StudentsCar( userID, rating, carID) VALUES('%s', '%s', '%s');";
+		String sql = String.format(format, studentCar.getUserID(), studentCar.getRating(), studentCar.getCarInfo().getPlate());
+		stmt.executeUpdate(sql);
+		
+		format = "INSERT INTO Cars( model, plate, seats, color, carID) VALUES ('%s', '%s', '%s', '%s', '%s');";
+		sql = String.format(format, 
+				studentCar.getCarInfo().getModel(),
+				studentCar.getCarInfo().getPlate(),
+				studentCar.getCarInfo().getSeats(),
+				studentCar.getCarInfo().getColour(),
+				studentCar.getCarInfo().getPlate());
+		stmt.executeUpdate(sql);
+	
+	}	
+	
 	
 	public static ResultSet loadStudentByUserID(Statement stmt, String userID) throws SQLException {
 		String format = "SELECT * FROM Users as U, Students as S WHERE U.userID = S.userID && U.userID = '%s';";

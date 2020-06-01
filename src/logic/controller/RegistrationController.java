@@ -4,7 +4,9 @@ import logic.controller.email.SendEmail;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.UserSingleton;
+import logic.model.CarInfo;
 import logic.model.Student;
+import logic.model.StudentCar;
 import logic.utilities.CodeGenerator;
 import logic.utilities.InputChecker;
 import logic.view.DatabaseBoundary;
@@ -12,6 +14,7 @@ import logic.view.OurStudentDatabase;
 
 import java.io.IOException;
 
+import logic.bean.CarInfoBean;
 import logic.bean.UserBean;
 import logic.bean.UserBeanSingleton;
 import logic.view.mysql.*;
@@ -61,10 +64,20 @@ public class RegistrationController {
 				.build();
 		ourDb.addStudent(student);
 	}
-
+	
+	public void addStudentCar(CarInfoBean carInfo) throws InvalidInputException, DatabaseException {
+		SetCarInfoController controller = new SetCarInfoController();
+		StudentCar studentCar = controller.addCar(carInfo);
+				
+		ourDb.addStudentCar(studentCar);
+	}
+	
+	
+	
 	public UserBean recapInfo(String userID) throws Exception{
 		return uniDb.getByUserID(userID);
 	}
+	
 	
 	public void sendCode() throws IOException {
 		UserBean user = beanSg.getUserBean();

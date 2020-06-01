@@ -5,6 +5,7 @@ import logic.controller.StudentBuilder;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Student;
+import logic.model.StudentCar;
 import logic.view.*;
 
 
@@ -51,6 +52,12 @@ public class DummyOurStudentDatabase implements OurStudentDatabase {
 
 	@Override
 	public void editInfoByUserID(String userID, String password, String email, String phone) throws DatabaseException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addStudentCar(StudentCar studentCar) throws DatabaseException, InvalidInputException {
 		// TODO Auto-generated method stub
 		
 	}

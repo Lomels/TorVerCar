@@ -10,6 +10,7 @@ import logic.controller.StudentBuilder;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Student;
+import logic.model.StudentCar;
 import logic.utilities.InputChecker;
 import logic.view.OurStudentDatabase;
 
@@ -87,6 +88,22 @@ public class MySqlDAO implements OurStudentDatabase {
 			this.disconnect();
 		}
 	}
+	
+	@Override
+	public void addStudentCar(StudentCar studentCar) throws DatabaseException, InvalidInputException{
+		try {
+			this.connect();
+			MyQueries.addStudent(stmt, studentCar);
+			MyQueries.addStudentCar(this.stmt, studentCar);
+			
+		} catch(SQLException e) {
+			throw new DatabaseException(e.getMessage());
+		} finally {
+			this.disconnect();
+		}
+	}
+		
+	
 
 	@Override
 	public Student loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException {

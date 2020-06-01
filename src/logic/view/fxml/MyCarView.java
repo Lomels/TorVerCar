@@ -11,8 +11,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import logic.model.StudentCarSingleton;
 import logic.model.UserSingleton;
 
 public class MyCarView extends Application implements Initializable{
@@ -22,13 +24,14 @@ public class MyCarView extends Application implements Initializable{
 	@FXML private Button btProfile;
 	@FXML private Button btLogout;
 	@FXML private Button btMyCar;
+	@FXML private Button btSave;
 	
-	@FXML private Text txModel;
-	@FXML private Text txColor;
-	@FXML private Text txLicense;
-	@FXML private Text txPlaces;
+	@FXML private TextField tfModel;
+	@FXML private TextField tfColour;
+	@FXML private TextField tfPlate;
+	@FXML private TextField tfSeats;
 
-	UserSingleton sg = UserSingleton.getInstance();
+	StudentCarSingleton sg = StudentCarSingleton.getInstance();
 	
 	
 	@Override
@@ -44,14 +47,47 @@ public class MyCarView extends Application implements Initializable{
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		tfModel.setText(sg.getUser().getCarInfo().getModel());
+		tfColour.setText(sg.getUser().getCarInfo().getColour());
+		tfPlate.setText(sg.getUser().getCarInfo().getPlate());
+		tfSeats.setText(sg.getUser().getCarInfo().getSeats().toString());
 		
-		
-		
-		
+		tfModel.setDisable(true);
+		tfColour.setDisable(true);
+		tfPlate.setDisable(true);
+		tfSeats.setDisable(true);
 	}
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	
+	
+	@FXML
+	public void editButtonController() throws Exception {
+		MyCarView myCar = new MyCarView();
+		myCar.start((Stage) btEdit.getScene().getWindow());
+		
+		tfModel.setDisable(false);
+		tfColour.setDisable(false);
+		tfPlate.setDisable(false);
+		tfSeats.setDisable(false);
+	}
+	
+	@FXML
+	public void saveButtonController() throws Exception {
+		
+		sg.getUser().getCarInfo().setModel(tfModel.getText());
+		sg.getUser().getCarInfo().setColour(tfColour.getText());
+		sg.getUser().getCarInfo().setPlate(tfPlate.getText());
+		sg.getUser().getCarInfo().setSeats(Integer.parseInt(tfSeats.getText()));
+		
+		
+		
+		MyCarView myCar = new MyCarView();
+		myCar.start((Stage) btSave.getScene().getWindow());
+		
+		
 	}
 
 	@FXML
@@ -60,11 +96,7 @@ public class MyCarView extends Application implements Initializable{
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 	
-	/*@FXML
-	public void backButtonController() throws Exception {
-		ProfileView profile = new ProfileView();
-		profile.start((Stage) btBack.getScene().getWindow());
-	}*/
+	
 
 	@FXML
 	public void profileButtonController() throws Exception {

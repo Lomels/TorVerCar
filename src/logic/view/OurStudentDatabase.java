@@ -3,6 +3,7 @@ package logic.view;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Student;
+import logic.model.StudentCar;
 
 public interface OurStudentDatabase {
 
@@ -23,4 +24,6 @@ public interface OurStudentDatabase {
 
 	//update student info
 	public void editInfoByUserID(String userID, String password, String email, String phone) throws DatabaseException;
+
+	void addStudentCar(StudentCar studentCar) throws DatabaseException, InvalidInputException;
 }

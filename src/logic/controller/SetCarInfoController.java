@@ -1,21 +1,25 @@
 package logic.controller;
 
 import logic.bean.CarInfoBean;
+import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.CarInfo;
 import logic.model.Student;
 import logic.model.StudentCar;
+import logic.model.UserSingleton;
+import logic.view.OurStudentDatabase;
 
 
 public class SetCarInfoController {
-
+	 UserSingleton sg = UserSingleton.getInstance();
+	 private OurStudentDatabase ourDb;
 	
 	
-	public StudentCar addCar(CarInfoBean carInfo, Student student) throws InvalidInputException {
+	public StudentCar addCar(CarInfoBean carInfo) throws InvalidInputException, DatabaseException {
 		CarInfo car = new CarInfo(carInfo.getPlate(), carInfo.getSeats(),
 				carInfo.getModel(), carInfo.getColour());
 		
-		StudentCarBuilder builder = new StudentCarBuilder(student);
+		StudentCarBuilder builder = new StudentCarBuilder(sg.getUser());
 		builder.carInfo(car);
 		
 		return builder.build();
