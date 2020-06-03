@@ -24,7 +24,6 @@
             <Text layoutX="150.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SURNAME:" />
             <Text layoutX="150.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" />
             <Text layoutX="150.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EMAIL:" />
-            <Text layoutX="150.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PHONE:" />
             <Text fx:id="tfName" layoutX="250.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
@@ -41,11 +40,6 @@
                </cursor>
             </Text>
             <Text fx:id="tfEmail" layoutX="250.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-            </Text>
-            <Text fx:id="tfPhone" layoutX="250.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>

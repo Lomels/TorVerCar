@@ -22,7 +22,6 @@ public class RecapView extends Application implements Initializable{
 	@FXML private Text tfSurname;
 	@FXML private Text tfId;
 	@FXML private Text tfEmail;
-	@FXML private Text tfPhone;
 	UserBeanSingleton sg = UserBeanSingleton.getInstance();
 	
 	@Override
@@ -42,7 +41,6 @@ public class RecapView extends Application implements Initializable{
 		tfName.setText(user.getName());
 		tfSurname.setText(user.getSurname());
 		tfEmail.setText(user.getEmail());
-		tfPhone.setText(user.getPhone());
 	}
 
 	@FXML
