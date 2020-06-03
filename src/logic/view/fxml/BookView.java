@@ -1,45 +1,41 @@
 package logic.view.fxml;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.text.Text;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.model.UserSingleton;
 
-public class MainMenuView extends Application implements Initializable{
-	@FXML private Text tvWelcome;
+public class BookView extends Application  {
 	@FXML private Button btHome;
+	@FXML private Button btBook;
 	@FXML private Button btMyCar;
 	@FXML private Button btProfile;
 	@FXML private Button btLogout;
+	@FXML private TextField tfStartPoint;
+	@FXML private TextField tfArrivalPoint;
+	@FXML private TextField tfStartTime;
+	@FXML private TextField tfArrivalTime;
 	
 	
-	UserSingleton sg = UserSingleton.getInstance();
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Home_menu.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Book.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
-		stage.show();
+		stage.show();		
 	}
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		String string = "Hi, %s!";
-		String welcome = String.format(string, sg.getUser().getName().toString());
-		tvWelcome.setText(welcome);
-	}
+	
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -48,6 +44,11 @@ public class MainMenuView extends Application implements Initializable{
 	public void HomeButtonController() throws Exception {
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
+	}
+	
+	public void BookButtonController() throws Exception {
+		BookView book = new BookView();
+		book.start((Stage) btBook.getScene().getWindow());
 	}
 	
 	public void MyCarButtonController() throws Exception {
@@ -65,4 +66,7 @@ public class MainMenuView extends Application implements Initializable{
 		HomeView home = new HomeView();
 		home.start((Stage) btLogout.getScene().getWindow());
 	}
+	
+	//TODO: implement FIND button
+
 }

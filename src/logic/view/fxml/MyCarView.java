@@ -91,8 +91,8 @@ public class MyCarView extends Application implements Initializable{
 	}
 
 	@FXML
-	public void homeButtonController() throws IOException {
-		HomeView home = new HomeView();
+	public void homeButtonController() throws Exception {
+		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 	
@@ -112,8 +112,8 @@ public class MyCarView extends Application implements Initializable{
 	
 	@FXML
 	public void logoutButtonController() throws Exception {
-		LoginView login = new LoginView();
-		login.start((Stage) btLogout.getScene().getWindow());
+		HomeView home = new HomeView();
+		home.start((Stage) btLogout.getScene().getWindow());
 	}
 	
 }
