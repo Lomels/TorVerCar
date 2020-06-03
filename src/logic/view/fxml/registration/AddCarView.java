@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.bean.CarInfoBean;
+import logic.bean.UserBeanSingleton;
 import logic.controller.RegistrationController;
 import logic.controller.SetCarInfoController;
 import logic.model.UserSingleton;
@@ -22,7 +23,7 @@ public class AddCarView extends Application{
 	Stage stage;
 	@FXML private Button btHome, btNext, btBack;
 	@FXML private TextField tfModel, tfColour, tfSeats, tfPlate;
-	UserSingleton sg = UserSingleton.getInstance();
+	UserBeanSingleton sg = UserBeanSingleton.getInstance();
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {

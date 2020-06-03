@@ -59,13 +59,12 @@ public class MyQueries {
 		String sql = String.format(format, studentCar.getUserID(), studentCar.getRating(), studentCar.getCarInfo().getPlate());
 		stmt.executeUpdate(sql);
 		
-		format = "INSERT INTO Cars( model, plate, seats, color, carID) VALUES ('%s', '%s', '%s', '%s', '%s');";
+		format = "INSERT INTO Cars( model, plate, seats, color) VALUES ('%s', '%s', '%s', '%s');";
 		sql = String.format(format, 
 				studentCar.getCarInfo().getModel(),
 				studentCar.getCarInfo().getPlate(),
 				studentCar.getCarInfo().getSeats(),
-				studentCar.getCarInfo().getColour(),
-				studentCar.getCarInfo().getPlate());
+				studentCar.getCarInfo().getColour());
 		stmt.executeUpdate(sql);
 	
 	}	

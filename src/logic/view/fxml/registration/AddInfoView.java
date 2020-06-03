@@ -58,8 +58,14 @@ public class AddInfoView extends Application{
 	}
 	
 	@FXML void carButtonController() throws Exception {
-		AddCarView car = new AddCarView();
-		car.start((Stage)btCar.getScene().getWindow());
+		if(etPassword.getText().equals(etRepeat.getText())) {
+			sg.getUserBean().setPassword(etPassword.getText());
+			sg.getUserBean().setPhone(etPhone.getText());
+			AddCarView car = new AddCarView();
+			car.start((Stage)btCar.getScene().getWindow());
+		}else {
+			tfError.setVisible(true);
+		}
 	}
 	
 	@FXML

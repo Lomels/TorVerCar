@@ -5,7 +5,7 @@ import java.security.SecureRandom;
 public class CodeGenerator {
 	private static final String ALLOWED = "0123456789ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 	private static SecureRandom rnd = new SecureRandom();
-	private static int len = 16;
+	private static int len = 8;
 	
 	private CodeGenerator() {
 		throw new IllegalStateException("Utility class");
