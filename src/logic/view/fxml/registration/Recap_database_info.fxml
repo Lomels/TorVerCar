@@ -17,29 +17,35 @@
                </font>
             </Text>
             <Button id="btHome" fx:id="btHome" layoutX="28.0" layoutY="336.0" mnemonicParsing="false" onAction="#btHomeController" text="Home" />
-            <Text layoutX="225.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NAME:">
+            <Text layoutX="150.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NAME:">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor></Text>
-            <Text layoutX="204.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SURNAME:" />
-            <Text layoutX="116.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MATRICULATION NUMBER:" />
-            <Text layoutX="225.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EMAIL:" />
-            <Text fx:id="tfName" layoutX="270.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <Text layoutX="150.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SURNAME:" />
+            <Text layoutX="150.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" />
+            <Text layoutX="150.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EMAIL:" />
+            <Text layoutX="150.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PHONE:" />
+            <Text fx:id="tfName" layoutX="250.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Text>
-            <Text fx:id="tfSurname" layoutX="270.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <Text fx:id="tfSurname" layoutX="250.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Text>
-            <Text fx:id="tfId" layoutX="270.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <Text fx:id="tfId" layoutX="250.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Text>
-            <Text fx:id="tfEmail" layoutX="270.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <Text fx:id="tfEmail" layoutX="250.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Text>
+            <Text fx:id="tfPhone" layoutX="250.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
