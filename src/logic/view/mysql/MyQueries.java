@@ -38,18 +38,19 @@ public class MyQueries {
 		
 	}
 	
-	public static void addStudent(Statement stmt, Student student) throws SQLException {
+	public static void addStudent(Statement stmt, Student student, String role) throws SQLException {
 		String format = "INSERT INTO Users( userID, password) VALUES ('%s', '%s');";
 		String sql = String.format(format, student.getUserID(), student.getPassword());
 		stmt.executeUpdate(sql);
 		
-		format = "INSERT INTO Students( userID, name, surname, email, phone) VALUES ('%s', '%s', '%s', '%s', '%s');";
+		format = "INSERT INTO Students( userID, name, surname, email, phone, role) VALUES ('%s', '%s', '%s', '%s', '%s', '%s');";
 		sql = String.format(format, 
 				student.getUserID(), 
 				student.getName(), 
 				student.getSurname(), 
 				student.getEmail(), 
-				student.getPhone());
+				student.getPhone(),
+				role);
 		stmt.executeUpdate(sql);		
 	}
 	
@@ -73,6 +74,18 @@ public class MyQueries {
 	public static ResultSet loadStudentByUserID(Statement stmt, String userID) throws SQLException {
 		String format = "SELECT * FROM Users as U, Students as S WHERE U.userID = S.userID && U.userID = '%s';";
 		String sql = String.format(format, userID);
+		return stmt.executeQuery(sql);
+	}
+	
+	public static ResultSet loadStudentCarByUserID(Statement stmt, String userID) throws SQLException {
+		String format = "SELECT * FROM StudentsCar WHERE userID = '%s';";
+		String sql = String.format(format, userID);
+		return stmt.executeQuery(sql);
+	}
+	
+	public static ResultSet loadCarInfoByCarID(Statement stmt, String carID) throws SQLException {
+		String format = "SELECT * FROM Cars WHERE carID = '%s';";
+		String sql = String.format(format, carID);
 		return stmt.executeQuery(sql);
 	}
 	

@@ -16,6 +16,7 @@ import logic.bean.UserBeanSingleton;
 import logic.controller.LoginController;
 import logic.controller.RegistrationController;
 import logic.controller.exception.InvalidInputException;
+import logic.model.Role;
 import logic.view.fxml.HomeView;
 import logic.view.fxml.MainMenuView;
 
@@ -46,6 +47,7 @@ public class AddInfoView extends Application{
 		if(etPassword.getText().equals(etRepeat.getText())) {
 			user.setPassword(etPassword.getText());
 			user.setPhone(etPhone.getText());
+			user.setRole(Role.STUDENT);
 			RegistrationController controller = new RegistrationController();
 			controller.addStudent(user);
 			LoginController login = new LoginController();
@@ -61,6 +63,8 @@ public class AddInfoView extends Application{
 		if(etPassword.getText().equals(etRepeat.getText())) {
 			sg.getUserBean().setPassword(etPassword.getText());
 			sg.getUserBean().setPhone(etPhone.getText());
+			sg.getUserBean().setRole(Role.DRIVER);
+			
 			AddCarView car = new AddCarView();
 			car.start((Stage)btCar.getScene().getWindow());
 		}else {

@@ -27,7 +27,6 @@ public class AddCarView extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
 		Parent root = FXMLLoader.load(getClass().getResource("Add_car_info.fxml"));
 		this.stage = primaryStage;
 		Scene scene = new Scene(root);
@@ -35,8 +34,6 @@ public class AddCarView extends Application{
 		stage.setScene(scene);
 		stage.show();
 	}
-	
-	
 	
 
 	public static void main(String[] args) {
@@ -51,10 +48,8 @@ public class AddCarView extends Application{
 		carInfo.setPlate(tfPlate.getText());
 		carInfo.setSeats(Integer.parseInt(tfSeats.getText()));
 		
-		
 		RegistrationController controller = new RegistrationController();
 		controller.addStudentCar(carInfo);
-		
 		
 		LoginView login = new LoginView();
 		login.start((Stage) btNext.getScene().getWindow());

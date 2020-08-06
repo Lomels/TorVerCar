@@ -10,24 +10,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.fxml.MyCarView">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#046104" height="40.0" stroke="#046104" strokeType="INSIDE" width="600.0" />
-      <Button fx:id="btHome" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Home" />
-      <Button fx:id="btBook" layoutX="79.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Book" />
-      <Button fx:id="btOffer" layoutX="138.0" layoutY="8.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Offer" />
-      <Button layoutX="543.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: #046104;">
+      <Button fx:id="btHome" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#homeButtonController" style="-fx-background-color: #046104;" text="Home" />
+      <Button fx:id="btBook" layoutX="79.0" layoutY="7.0" mnemonicParsing="false" onAction="#bookButtonController" style="-fx-background-color: #046104;" text="Book" />
+      <Button fx:id="btOffer" layoutX="138.0" layoutY="8.0" mnemonicParsing="false" onAction="#offerButtonController" style="-fx-background-color: #046104;" text="Offer" />
+      <Button fx:id="btLogout" layoutX="543.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonController" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: #046104;">
          <graphic>
-            <ImageView fx:id="btLogout" fitHeight="29.0" fitWidth="33.0">
+            <ImageView fitHeight="29.0" fitWidth="33.0">
                <image>
                   <Image url="@../../../../../Scaricati/logout.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <Button layoutX="497.0" layoutY="7.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="46.0" style="-fx-background-color: #046104;">
+      <Button fx:id="btProfile" layoutX="497.0" layoutY="7.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#profileButtonController" prefHeight="26.0" prefWidth="46.0" style="-fx-background-color: #046104;">
          <graphic>
-            <ImageView fx:id="btProfile" fitHeight="30.0" fitWidth="28.0">
+            <ImageView fitHeight="30.0" fitWidth="28.0">
                <image>
                   <Image url="@../../../../../Scaricati/user.png" />
                </image>
@@ -46,12 +46,12 @@
       <Text layoutX="28.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colour:" />
       <Text layoutX="28.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Plate:" />
       <Text layoutX="28.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Seats availables:" />
-      <Button fx:id="btEdit" layoutX="453.0" layoutY="353.0" mnemonicParsing="false" text="Edit" />
+      <Button fx:id="btEdit" layoutX="453.0" layoutY="353.0" mnemonicParsing="false" onAction="#editButtonController" text="Edit" />
       <TextField fx:id="tfModel" layoutX="186.0" layoutY="131.0" />
       <TextField fx:id="tfColour" layoutX="186.0" layoutY="179.0" />
       <TextField fx:id="tfPlate" layoutX="186.0" layoutY="231.0" />
       <TextField fx:id="tfSeats" layoutX="186.0" layoutY="283.0" />
-      <Button fx:id="btSave" layoutX="520.0" layoutY="353.0" mnemonicParsing="false" text="Save" />
+      <Button fx:id="btSave" layoutX="520.0" layoutY="353.0" mnemonicParsing="false" onAction="#saveButtonController" text="Save" />
       	
       
    </children>

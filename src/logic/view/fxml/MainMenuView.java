@@ -21,7 +21,8 @@ public class MainMenuView extends Application implements Initializable{
 	@FXML private Button btMyCar;
 	@FXML private Button btProfile;
 	@FXML private Button btLogout;
-	
+	@FXML private Button btOffer;
+	@FXML private Button btBook;
 	
 	UserSingleton sg = UserSingleton.getInstance();
 	
@@ -37,7 +38,7 @@ public class MainMenuView extends Application implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		String string = "Hi, %s!";
-		String welcome = String.format(string, sg.getUser().getName().toString());
+		String welcome = String.format(string, sg.getStudent().getName().toString());
 		tvWelcome.setText(welcome);
 	}
 	
@@ -45,24 +46,32 @@ public class MainMenuView extends Application implements Initializable{
 		launch(args);
 	}
 	
-	public void HomeButtonController() throws Exception {
+	public void homeButtonController() throws Exception {
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 	
-	public void MyCarButtonController() throws Exception {
+	public void myCarButtonController() throws Exception {
 		MyCarView car = new MyCarView();
 		car.start((Stage) btMyCar.getScene().getWindow());
-		
 	}
 	
-	public void ProfileButtonController() throws Exception {
+	public void profileButtonController() throws Exception {
 		ProfileView profile = new  ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
 	}
 	
-	public void LogoutButtonController() throws IOException {
+	public void logoutButtonController() throws IOException {
 		HomeView home = new HomeView();
 		home.start((Stage) btLogout.getScene().getWindow());
+	}
+	
+	public void offerButtonController() throws IOException {
+		//TODO: implementare
+	}
+	
+	public void bookButtonController() throws Exception {		
+		BookView book = new BookView();
+		book.start((Stage) btBook.getScene().getWindow());
 	}
 }

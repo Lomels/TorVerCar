@@ -17,28 +17,28 @@
          </font>
       </Text>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#046104" height="40.0" layoutX="5.0" layoutY="10.0" stroke="#046104" strokeType="INSIDE" width="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Button layoutX="23.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Home" underline="true" />
-      <Button layoutX="86.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Book" />
-      <Button layoutX="145.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Offer" />
-      <Button layoutX="553.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: #046104;">
-         <graphic>
+      <Button fx:id="btHome" onAction="#homeButtonController" layoutX="23.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Home" underline="true" />
+      <Button fx:id="btBook" onAction="#bookButtonController" layoutX="86.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Book" />
+      <Button fx:id="btOffer" onAction="#offerButtonController" layoutX="145.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Offer" />
+      <Button fx:id="btLogout" onAction="#logoutButtonController" layoutX="553.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: #046104;">
+         <!-- <graphic>
             <ImageView fitHeight="29.0" fitWidth="33.0">
                <image>
                   <Image url="@../../../../../Scaricati/logout.png" />
                </image>
             </ImageView>
-         </graphic>
+         </graphic> -->
       </Button>
-      <Button layoutX="507.0" layoutY="7.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="46.0" style="-fx-background-color: #046104;">
-         <graphic>
+      <Button fx:id="btProfile" onAction="#profileButtonController" layoutX="507.0" layoutY="7.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="46.0" style="-fx-background-color: #046104;" text="Profile">
+         <!-- <graphic>
             <ImageView fitHeight="30.0" fitWidth="28.0">
                <image>
                   <Image url="@../../../../../Scaricati/user.png" />
                </image>
             </ImageView>
-         </graphic>
+         </graphic> -->
       </Button>
-      <Button layoutX="206.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="My Car " />
+      <Button fx:id="btMyCar" onAction="#myCarButtonController" layoutX="206.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="My Car " />
       <ComboBox layoutX="288.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="103.0" promptText="My Lift" style="-fx-background-color: #046104; -fx-border-color: #046104;" />
       <ImageView fitHeight="202.0" fitWidth="537.0" layoutX="32.0" layoutY="112.0">
          <image>

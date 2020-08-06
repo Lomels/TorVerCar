@@ -41,32 +41,32 @@ public class BookView extends Application  {
 		launch(args);
 	}
 	
-	public void HomeButtonController() throws Exception {
+	public void homeButtonController() throws Exception {
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 	
-	public void BookButtonController() throws Exception {
+	public void bookButtonController() throws Exception {
 		BookView book = new BookView();
 		book.start((Stage) btBook.getScene().getWindow());
 	}
 	
-	public void MyCarButtonController() throws Exception {
+	public void myCarButtonController() throws Exception {
 		MyCarView car = new MyCarView();
 		car.start((Stage) btMyCar.getScene().getWindow());
 		
 	}
 	
-	public void ProfileButtonController() throws Exception {
+	public void profileButtonController() throws Exception {
 		ProfileView profile = new  ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
 	}
 	
-	public void LogoutButtonController() throws IOException {
+	public void logoutButtonController() throws IOException {
 		HomeView home = new HomeView();
 		home.start((Stage) btLogout.getScene().getWindow());
 	}
 	
-	//TODO: implement FIND button
+	//TODO: implementare Find e Offer
 
 }

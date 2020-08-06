@@ -9,14 +9,13 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.fxml.BookView">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#046104" height="40.0" layoutX="8.0" layoutY="10.0" stroke="#046104" strokeType="INSIDE" width="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Button fx:id="btHome" layoutX="23.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Home" />
+      <Button fx:id="btHome" layoutX="23.0" layoutY="7.0" mnemonicParsing="false" onAction="#homeButtonController" style="-fx-background-color: #046104;" text="Home" />
       <Button fx:id="btBook" layoutX="89.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Book" underline="true" />
       <Button fx:id="btOffer" layoutX="147.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Offer" />
-      <Button fx:id="btLogout" layoutX="557.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: #046104;">
+      <Button fx:id="btLogout" layoutX="557.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonController" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: #046104;">
          <graphic>
             <ImageView fitHeight="29.0" fitWidth="33.0">
                <image>
@@ -25,7 +24,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btProfile" layoutX="511.0" layoutY="7.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="46.0" style="-fx-background-color: #046104;">
+      <Button fx:id="btProfile" layoutX="511.0" layoutY="7.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#profileButtonController" prefHeight="26.0" prefWidth="46.0" style="-fx-background-color: #046104;">
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="28.0">
                <image>
@@ -34,7 +33,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Button fx:id="btMyCar" layoutX="205.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="My Car " />
+      <Button fx:id="btMyCar" layoutX="205.0" layoutY="7.0" mnemonicParsing="false" onAction="#myCarButtonController" style="-fx-background-color: #046104;" text="My Car " />
       <ComboBox fx:id="btMyLift" layoutX="273.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="103.0" promptText="My Lift" style="-fx-background-color: #046104; -fx-border-color: #046104;" />
       <Text layoutX="23.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Starting point:" />
       <Text layoutX="23.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destination:" />
