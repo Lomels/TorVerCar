@@ -2,7 +2,10 @@ package logic.model;
 
 public class UserSingleton {
 
-	private Student user = null;
+	private Student student = null;
+	private StudentCar studentCar = null;
+	private Role role;
+
 	private String code;
 	
 	private static UserSingleton instance = null;
@@ -15,12 +18,20 @@ public class UserSingleton {
 		return instance;
 	}
 	
-	public void setUser(Student user) {
-		this.user = user;
+	public void setStudent(Student user) {
+		this.student = user;
 	}
 	
-	public Student getUser() {
-		return this.user;
+	public Student getStudent() {
+		return this.student;
+	}
+	
+	public void setStudentCar(StudentCar user) {
+		this.studentCar = user;
+	}
+	
+	public StudentCar getStudentCar() {
+		return this.studentCar;
 	}
 	
 	public void setCode(String code) {
@@ -29,6 +40,14 @@ public class UserSingleton {
 	
 	public String getCode() {
 		return this.code;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 	
 }

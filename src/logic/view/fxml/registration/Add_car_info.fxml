@@ -24,7 +24,7 @@
       </TextArea>
       <TextField fx:id="tfModel" layoutX="194.0" layoutY="94.0" prefHeight="26.0" prefWidth="303.0" />
       <TextField fx:id="tfColour" layoutX="196.0" layoutY="135.0" prefHeight="26.0" prefWidth="303.0" />
-      <TextField fx:id="tfPlate" alignment="CENTER" layoutX="196.0" layoutY="174.0" prefHeight="26.0" prefWidth="303.0" />
+      <TextField fx:id="tfPlate" layoutX="196.0" layoutY="174.0" prefHeight="26.0" prefWidth="303.0" />
       <TextField fx:id="tfSeats" layoutX="196.0" layoutY="218.0" prefHeight="26.0" prefWidth="303.0" />
    </children>
 </AnchorPane>

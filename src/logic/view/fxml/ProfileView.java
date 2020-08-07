@@ -37,12 +37,12 @@ public class ProfileView extends Application implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-		txName.setText(sg.getUser().getName().toString());
-		txSurname.setText(sg.getUser().getSurname().toString());
-		txMatNum.setText(sg.getUser().getUserID().toString());
-		tfPhone.setText(sg.getUser().getPhone().toString());
-		tfEmail.setText(sg.getUser().getEmail().toString());
-		tfPass.setText(sg.getUser().getPassword().toString());
+		txName.setText(sg.getStudent().getName().toString());
+		txSurname.setText(sg.getStudent().getSurname().toString());
+		txMatNum.setText(sg.getStudent().getUserID().toString());
+		tfPhone.setText(sg.getStudent().getPhone().toString());
+		tfEmail.setText(sg.getStudent().getEmail().toString());
+		tfPass.setText(sg.getStudent().getPassword().toString());
 		
 		tfPhone.setDisable(true);
 		tfEmail.setDisable(true);
@@ -67,8 +67,6 @@ public class ProfileView extends Application implements Initializable{
 		launch(args);
 	}
 	
-	
-
 	@FXML
 	public void homeButtonController() throws IOException {
 		HomeView home = new HomeView();
@@ -112,10 +110,9 @@ public class ProfileView extends Application implements Initializable{
 	}
 	
 	public void saveButtonController() throws Exception {
-		
-		sg.getUser().setPhone(tfPhone.getText());
-		sg.getUser().setEmail(tfEmail.getText());
-		sg.getUser().setPassword(tfPass.getText());
+		sg.getStudent().setPhone(tfPhone.getText());
+		sg.getStudent().setEmail(tfEmail.getText());
+		sg.getStudent().setPassword(tfPass.getText());
 		
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btSave.getScene().getWindow());
