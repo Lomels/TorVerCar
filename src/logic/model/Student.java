@@ -23,13 +23,13 @@ public class Student {
 	// Generated
 	public Student(String userID, String password, String email, String name, String surname, String phone,
 			List<Lift> lifts) throws InvalidInputException {
-		this.userID = userID;
-		this.password = password;
+		this.setUserID(userID);
+		this.setPassword(password);
 		this.setName(name);
 		this.setSurname(surname);
-		this.phone = phone;
+		this.setPhone(phone);
 		this.lifts = lifts;
-		this.email = email;
+		this.setEmail(email);
 	}
 
 	// Costruttore che parte dello studentCar
@@ -38,7 +38,8 @@ public class Student {
 				studentCar.phone, studentCar.lifts);
 	}
 
-	public void setUserID(String id) {
+	public void setUserID(String id) throws InvalidInputException {
+		InputChecker.checkUserID(id);
 		this.userID = id;
 	}
 
@@ -88,7 +89,8 @@ public class Student {
 		return this.phone;
 	}
 
-	public void setPhone(String phone) {
+	public void setPhone(String phone) throws InvalidInputException {
+		InputChecker.checkPhone(phone);
 		this.phone = phone;
 	}
 

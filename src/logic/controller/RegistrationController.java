@@ -20,8 +20,6 @@ import logic.bean.UserBeanSingleton;
 import logic.view.mysql.*;
 
 public class RegistrationController {
-	//TODO: amplia, guarda class diagram, cambiare input del createStudent con il bean
-
 	private DatabaseBoundary uniDb;
 	private OurStudentDatabase ourDb;
 	UserSingleton sg = UserSingleton.getInstance();
@@ -49,9 +47,7 @@ public class RegistrationController {
 			//TODO: implement password encryption
 			//build and add student to our database
 			Student student = StudentBuilder.newBuilder(userID).password(password).fullname(response.getName(), response.getSurname()).build();
-			ourDb.addStudent(student);
-			//TODO: addStudent should add also email, phone ecc ecc
-			
+			ourDb.addStudent(student);			
 		}
 	}
 	
