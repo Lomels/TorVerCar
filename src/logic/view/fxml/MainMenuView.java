@@ -38,7 +38,18 @@ public class MainMenuView extends Application implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		String string = "Hi, %s!";
-		String welcome = String.format(string, sg.getStudent().getName().toString());
+		String welcome = null;
+		switch(sg.getRole()) {
+			case DRIVER:
+				welcome = String.format(string, sg.getStudentCar().getName().toString());
+				break;
+			case STUDENT:
+				welcome = String.format(string, sg.getStudent().getName().toString());
+				break;
+			case ADMIN:
+				//TODO: implementare
+				break;
+		}
 		tvWelcome.setText(welcome);
 	}
 	

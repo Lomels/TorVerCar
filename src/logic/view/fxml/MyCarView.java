@@ -16,6 +16,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import logic.bean.CarInfoBean;
 import logic.controller.SetCarInfoController;
+import logic.controller.exception.DatabaseException;
+import logic.controller.exception.InvalidInputException;
 import logic.model.Role;
 import logic.model.StudentCar;
 import logic.model.StudentCarSingleton;
@@ -81,7 +83,7 @@ public class MyCarView extends Application implements Initializable{
 	}
 	
 	@FXML
-	public void saveButtonController() throws Exception {		
+	public void saveButtonController() throws Exception{		
 		cIBean.setModel(tfModel.getText());
 		cIBean.setColour(tfColour.getText());
 		cIBean.setPlate(tfPlate.getText());

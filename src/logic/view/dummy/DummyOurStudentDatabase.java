@@ -1,5 +1,6 @@
 package logic.view.dummy;
 
+import logic.bean.CarInfoBean;
 import logic.bean.UserBean;
 import logic.controller.StudentBuilder;
 import logic.controller.exception.DatabaseException;
@@ -65,6 +66,12 @@ public class DummyOurStudentDatabase implements OurStudentDatabase {
 	public StudentCar loadStudentCarByUserID(Student s) throws DatabaseException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void editCarInfoByUserID(String userID, CarInfoBean carInfo) throws DatabaseException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

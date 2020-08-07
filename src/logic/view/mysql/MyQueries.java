@@ -84,7 +84,7 @@ public class MyQueries {
 	}
 	
 	public static ResultSet loadCarInfoByCarID(Statement stmt, String carID) throws SQLException {
-		String format = "SELECT * FROM Cars WHERE carID = '%s';";
+		String format = "SELECT * FROM Cars WHERE plate = '%s';";
 		String sql = String.format(format, carID);
 		return stmt.executeQuery(sql);
 	}
@@ -109,6 +109,18 @@ public class MyQueries {
 		String sql = String.format(format, userID);
 		
 		return stmt.executeQuery(sql);
+	}
+
+	public static void updateCar(Statement stmt, String userID, String plate, String model, Integer seats, String color) throws SQLException {
+		String format = "UPDATE Cars SET plate='%s', model='%s', seats='%s', color='%s' WHERE userID='%s';";
+		String sql = String.format(format, plate, model, seats, color, userID);
+		
+		stmt.executeUpdate(sql);
+		
+		format = "UPDATE StudentsCar SET carID='%s' WHERE userID='%s';";
+		sql = String.format(format, plate, userID);
+		
+		stmt.executeUpdate(sql);
 	}
 
 }

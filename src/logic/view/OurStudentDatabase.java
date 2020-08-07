@@ -1,5 +1,6 @@
 package logic.view;
 
+import logic.bean.CarInfoBean;
 import logic.bean.UserBean;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
@@ -32,4 +33,6 @@ public interface OurStudentDatabase {
 
 	//load a student with car from our database
 	public StudentCar loadStudentCarByUserID(Student s) throws DatabaseException;
+
+	public void editCarInfoByUserID(String userID, CarInfoBean carInfo) throws DatabaseException;
 }

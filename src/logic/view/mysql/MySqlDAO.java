@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import logic.bean.CarInfoBean;
 import logic.bean.UserBean;
 import logic.controller.StudentBuilder;
 import logic.controller.StudentCarBuilder;
@@ -113,7 +114,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	public UserBean loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException {
 		InputChecker.checkUserID(userID);
 		//Student s = null;
-		UserBean usr = null;
+		UserBean usr = new UserBean();
 		try {
 			this.connect();
 			ResultSet rs = MyQueries.loadStudentByUserID(this.stmt, userID);
@@ -152,10 +153,11 @@ public class MySqlDAO implements OurStudentDatabase {
 		return usr;
 	}
 
+	// TODO: migliorare e ridurre le query
 	@Override
 	public StudentCar loadStudentCarByUserID(Student s) throws DatabaseException {
 		StudentCar sCar = null;
-		CarInfo carInfo = null;
+		CarInfo carInfo;
 		try {
 			this.connect();
 			ResultSet rs = MyQueries.loadStudentCarByUserID(this.stmt, s.getUserID());
@@ -170,10 +172,10 @@ public class MySqlDAO implements OurStudentDatabase {
 			
 			rs = MyQueries.loadCarInfoByCarID(this.stmt, carID);
 			rs.first();
-			carInfo.setPlate(rs.getString("plate"));
-			carInfo.setModel(rs.getString("model"));
-			carInfo.setColour(rs.getString("color"));
-			carInfo.setSeats(rs.getInt("seats"));
+			carInfo = new CarInfo(rs.getString("plate"),
+					rs.getInt("seats"),
+					rs.getString("model"), 
+					rs.getString("color"));
 			  
 			sCar = new StudentCarBuilder(s)
 					.rating(Integer.parseInt(rating))
@@ -221,6 +223,21 @@ public class MySqlDAO implements OurStudentDatabase {
 		try {
 			this.connect();
 			MyQueries.updateStudent(this.stmt, userID, password, email, phone);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new DatabaseException(e.getMessage());
+		} finally {
+			this.disconnect();
+		}
+	}
+	
+	@Override
+	public void editCarInfoByUserID(String userID, CarInfoBean carInfo) throws DatabaseException {
+		try {
+			this.connect();
+			MyQueries.updateCar(this.stmt, userID, carInfo.getPlate(), carInfo.getModel(), carInfo.getSeats(), carInfo.getColour());
+
 			
 		}catch(Exception e) {
 			e.printStackTrace();

@@ -10,14 +10,13 @@ import logic.model.StudentCar;
 import logic.model.StudentCarSingleton;
 import logic.model.UserSingleton;
 import logic.view.OurStudentDatabase;
+import logic.view.mysql.MySqlDAO;
 
 
 public class SetCarInfoController {
 	 UserSingleton sg = UserSingleton.getInstance();
 	 UserBeanSingleton sgBean = UserBeanSingleton.getInstance();
-	 StudentCarSingleton sCarSg = StudentCarSingleton.getInstance();
-	 private OurStudentDatabase ourDb;
-	
+	 MySqlDAO ourDb = new MySqlDAO();
 	
 	public StudentCar addCar(CarInfoBean carInfo) throws InvalidInputException, DatabaseException {
 		CarInfo car = new CarInfo(carInfo.getPlate(), carInfo.getSeats(),
@@ -36,11 +35,13 @@ public class SetCarInfoController {
 		return builder.build();
 	}
 	
-	public void editCar(CarInfoBean newCarInfo, StudentCar studentCar) throws InvalidInputException {
+	public void editCar(CarInfoBean newCarInfo, StudentCar studentCar) throws InvalidInputException, DatabaseException {
 		CarInfo carInfo = new CarInfo(newCarInfo.getPlate(), newCarInfo.getSeats(),
 				newCarInfo.getModel(), newCarInfo.getColour());
 		studentCar.setCarInfo(carInfo);
-		sCarSg.setUser(studentCar);
+		sg.setStudentCar(studentCar);
+		
+		ourDb.editCarInfoByUserID(studentCar.getUserID(), newCarInfo);
 	}
 	
 	public void removeCar(StudentCar studentCar) {
