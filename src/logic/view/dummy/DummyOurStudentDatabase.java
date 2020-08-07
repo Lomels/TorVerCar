@@ -2,7 +2,6 @@ package logic.view.dummy;
 
 import logic.bean.CarInfoBean;
 import logic.bean.UserBean;
-import logic.controller.StudentBuilder;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Student;

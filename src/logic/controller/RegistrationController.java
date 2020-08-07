@@ -4,7 +4,6 @@ import logic.controller.email.SendEmail;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.UserSingleton;
-import logic.model.CarInfo;
 import logic.model.Student;
 import logic.model.StudentCar;
 import logic.utilities.CodeGenerator;

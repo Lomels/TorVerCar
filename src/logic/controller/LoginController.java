@@ -6,7 +6,6 @@ import logic.controller.exception.*;
 import logic.model.Student;
 import logic.model.StudentCar;
 import logic.model.UserSingleton;
-import logic.model.Role;
 
 public class LoginController {
 	private MySqlDAO ourDb = new MySqlDAO();

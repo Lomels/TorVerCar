@@ -1,7 +1,6 @@
 package logic.view.fxml.registration;
 
 import java.io.IOException;
-import java.net.URL;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -14,8 +13,6 @@ import javafx.stage.Stage;
 import logic.bean.CarInfoBean;
 import logic.bean.UserBeanSingleton;
 import logic.controller.RegistrationController;
-import logic.controller.SetCarInfoController;
-import logic.model.UserSingleton;
 import logic.view.fxml.HomeView;
 import logic.view.fxml.LoginView;
 

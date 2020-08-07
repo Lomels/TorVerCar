@@ -30,12 +30,11 @@ public class AdapterMapsApiTest {
 	}
 
 	@Test
-	public void addrToPosTest() throws ApiNotReachableException {
+	public void addrToPosTest() throws ApiNotReachableException, InvalidInputException {
 		List<Position> results = MAPS_API.addrToPos(ADDRESS_1);
 		for (Position p : results)
 			this.log(p.toString(), true);
 		assertEquals(Position.class, results.get(0).getClass());
-		;
 	}
 
 	@Test
@@ -50,7 +49,7 @@ public class AdapterMapsApiTest {
 	}
 
 	@Test
-	public void viewFromPTest() throws ApiNotReachableException {
+	public void viewFromPTest() throws ApiNotReachableException, InvalidInputException {
 		Position p = MAPS_API.addrToPos(ADDRESS_3).get(0);
 		String result = MAPS_API.viewFromPos(p);
 		this.log("\n" + result, false);
@@ -58,14 +57,13 @@ public class AdapterMapsApiTest {
 	}
 
 	@Test
-	public void saveImageTest() throws ApiNotReachableException {
+	public void saveImageTest() throws ApiNotReachableException, InvalidInputException {
 		Position p = MAPS_API.addrToPos(ADDRESS_1).get(0);
 		MAPS_API.saveImage(p);
-		// TODO: better saveImage with file location
 	}
-	
+
 	@Test
-	public void viewRouteTest() throws ApiNotReachableException {
+	public void viewRouteTest() throws ApiNotReachableException, InvalidInputException {
 		LocalDateTime startInterval = LocalDateTime.now();
 		Position pickup, dropoff;
 		pickup = MAPS_API.addrToPos(ADDRESS_2).get(0);

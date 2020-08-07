@@ -7,9 +7,7 @@ import logic.controller.exception.InvalidInputException;
 import logic.model.CarInfo;
 import logic.model.Student;
 import logic.model.StudentCar;
-import logic.model.StudentCarSingleton;
 import logic.model.UserSingleton;
-import logic.view.OurStudentDatabase;
 import logic.view.mysql.MySqlDAO;
 
 

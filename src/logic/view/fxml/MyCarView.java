@@ -1,6 +1,5 @@
 package logic.view.fxml;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -12,15 +11,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import logic.bean.CarInfoBean;
 import logic.controller.SetCarInfoController;
-import logic.controller.exception.DatabaseException;
-import logic.controller.exception.InvalidInputException;
 import logic.model.Role;
-import logic.model.StudentCar;
-import logic.model.StudentCarSingleton;
 import logic.model.UserSingleton;
 
 public class MyCarView extends Application implements Initializable{
