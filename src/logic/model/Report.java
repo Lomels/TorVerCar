@@ -1,6 +1,5 @@
 package logic.model;
 
-
 import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;
 
@@ -9,9 +8,11 @@ public class Report {
 	private String message;
 	private StudentCar target;
 	private Student from;
+	private Admin handler;
 	private Boolean resolved;
 
-	public Report(String message, StudentCar target, Student from, Boolean resolved) throws InvalidInputException {
+	public Report(Student from, StudentCar target, String message, Boolean resolved, Admin handler)
+			throws InvalidInputException {
 		super();
 		this.message = message;
 		this.setTarget(target);
@@ -52,6 +53,14 @@ public class Report {
 	public void setResolved(Boolean resolved) throws InvalidInputException {
 		InputChecker.checkNotNull(resolved, "Resolved");
 		this.resolved = resolved;
+	}
+
+	public Admin getHandler() {
+		return handler;
+	}
+
+	public void setHandler(Admin handler) {
+		this.handler = handler;
 	}
 
 }
