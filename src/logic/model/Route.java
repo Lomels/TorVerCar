@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import logic.controller.exception.InvalidInputException;
+import logic.utilities.InputChecker;
 
 public class Route {
 
@@ -13,20 +14,19 @@ public class Route {
 	// in meters
 	private Integer distance;
 
-	public Route(List<Position> stops, Integer duration, Integer distance) {
+	public Route(List<Position> stops, Integer duration, Integer distance) throws InvalidInputException {
 		this.stops = stops;
-		this.duration = duration;
-		this.distance = distance;
+		this.setDuration(duration);
+		this.setDistance(distance);
 	}
 
-	// TODO: notNull required
 	public Route(Position pickupPosition, Position dropoffPosition, Integer duration, Integer distance)
 			throws InvalidInputException {
 		this.stops = new ArrayList<Position>();
 		this.stops.add(pickupPosition);
 		this.stops.add(dropoffPosition);
+		this.setDistance(distance);
 		this.setDuration(duration);
-		this.distance = distance;
 	}
 
 	public Position getPickupPosition() {
@@ -47,7 +47,7 @@ public class Route {
 		}
 		return result;
 	}
-	
+
 	public Integer getStopsSize() {
 		return this.stops.size();
 	}
@@ -64,9 +64,19 @@ public class Route {
 		return distance;
 	}
 
-	public void setDistance(Integer distance) {
-		// TODO: input check
+	public void setDistance(Integer distance) throws InvalidInputException {
+		if (distance == null || distance <= 0)
+			throw new InvalidInputException("Distance must be not null and greater than 0.");
 		this.distance = distance;
+	}
+
+	public List<Position> getStops() {
+		return stops;
+	}
+
+	public void setStops(List<Position> stops) throws InvalidInputException {
+		InputChecker.checkNotNull(stops, "Stops");
+		this.stops = stops;
 	}
 
 	@Override

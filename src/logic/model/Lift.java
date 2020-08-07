@@ -4,29 +4,31 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.controller.exception.InvalidInputException;
+import logic.utilities.InputChecker;
+
 public class Lift {
 	private String liftID;
 	private LocalDateTime startTime;
-	private int maxDistance, maxDuration;
+	private Integer maxDistance, maxDuration;
 	private String note;
-
 	private StudentCar driver;
-	private List<Student> passengers = new ArrayList<Student>();
+	private List<Student> passengers = new ArrayList<>();
 	private Route route;
 
 	public Lift(String liftID, LocalDateTime startTime, int maxDistance, int maxDuration, String note,
-			StudentCar driver, List<Student> passengers, Route route) {
-		super();
+			StudentCar driver, List<Student> passengers, Route route) throws InvalidInputException {
 		this.liftID = liftID;
-		this.startTime = startTime;
-		this.maxDistance = maxDistance;
-		this.maxDuration = maxDuration;
+		this.setStartTime(startTime);
+		this.setMaxDistance(maxDistance);
+		this.setMaxDuration(maxDuration);
 		this.note = note;
-		this.driver = driver;
+		this.setDriver(driver);
 		this.passengers = passengers;
-		this.route = route;
+		this.setRoute(route);
 	}
 
+	// TODO: implement lift database
 	public String getLiftID() {
 		return liftID;
 	}
@@ -39,7 +41,9 @@ public class Lift {
 		return startTime;
 	}
 
-	public void setStartTime(LocalDateTime startTime) {
+	public void setStartTime(LocalDateTime startTime) throws InvalidInputException {
+		if (startTime == null)
+			throw new InvalidInputException("startTime must be not null.");
 		this.startTime = startTime;
 	}
 
@@ -47,7 +51,10 @@ public class Lift {
 		return maxDistance;
 	}
 
-	public void setMaxDistance(int maxDistance) {
+	public void setMaxDistance(Integer maxDistance) throws InvalidInputException {
+		if (maxDistance == null || maxDistance <= 0) {
+			throw new InvalidInputException("maxDuration must be not null and greater than 0.");
+		}
 		this.maxDistance = maxDistance;
 	}
 
@@ -55,7 +62,10 @@ public class Lift {
 		return maxDuration;
 	}
 
-	public void setMaxDuration(int maxDuration) {
+	public void setMaxDuration(Integer maxDuration) throws InvalidInputException {
+		if (maxDuration == null || maxDuration <= 0) {
+			throw new InvalidInputException("maxDuration must be not null and greater than 0.");
+		}
 		this.maxDuration = maxDuration;
 	}
 
@@ -71,7 +81,8 @@ public class Lift {
 		return driver;
 	}
 
-	public void setDriver(StudentCar driver) {
+	public void setDriver(StudentCar driver) throws InvalidInputException {
+		InputChecker.checkNotNull(driver, "Driver");
 		this.driver = driver;
 	}
 
@@ -87,7 +98,8 @@ public class Lift {
 		return route;
 	}
 
-	public void setRoute(Route route) {
+	public void setRoute(Route route) throws InvalidInputException {
+		InputChecker.checkNotNull(route, "Route");
 		this.route = route;
 	}
 
