@@ -47,11 +47,11 @@ DROP TABLE IF EXISTS `Cars`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Cars` (
   `model` varchar(20) DEFAULT NULL,
-  `plate` varchar(10) DEFAULT NULL,
+  `plate` varchar(10) NOT NULL,
   `seats` int(11) DEFAULT NULL,
   `color` varchar(10) DEFAULT NULL,
-  `carID` varchar(10) NOT NULL,
-  PRIMARY KEY (`carID`)
+  `userID` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`plate`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -61,6 +61,7 @@ CREATE TABLE `Cars` (
 
 LOCK TABLES `Cars` WRITE;
 /*!40000 ALTER TABLE `Cars` DISABLE KEYS */;
+INSERT INTO `Cars` VALUES ('Hyundai i20','AA345BC',4,'Bianca','0241118'),('Alfa Romeo GIulia','AB123CD',4,'Rosso','0245061');
 /*!40000 ALTER TABLE `Cars` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -77,6 +78,7 @@ CREATE TABLE `Students` (
   `surname` varchar(20) NOT NULL,
   `email` varchar(100) DEFAULT NULL,
   `phone` varchar(10) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
   UNIQUE KEY `userID` (`userID`),
   CONSTRAINT `Students_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -88,7 +90,7 @@ CREATE TABLE `Students` (
 
 LOCK TABLES `Students` WRITE;
 /*!40000 ALTER TABLE `Students` DISABLE KEYS */;
-INSERT INTO `Students` VALUES ('0241118','Marco','Lo Mele','marco.lomele@gmail.com','3349352478');
+INSERT INTO `Students` VALUES ('0241118','Marco','Lo Mele','marco.lomele@gmail.com','3349352478','DRIVER'),('0245061','Giulia','Desideri','giuls.desideri@gmail.com','3923165944','DRIVER');
 /*!40000 ALTER TABLE `Students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,6 +116,7 @@ CREATE TABLE `StudentsCar` (
 
 LOCK TABLES `StudentsCar` WRITE;
 /*!40000 ALTER TABLE `StudentsCar` DISABLE KEYS */;
+INSERT INTO `StudentsCar` VALUES ('0241118',0,'AA345BC'),('0245061',0,'AB123CD');
 /*!40000 ALTER TABLE `StudentsCar` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,7 +140,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES ('0241118','aaaAAA123@');
+INSERT INTO `Users` VALUES ('0241118','aaaAAA123@'),('0245061','aaaAAA123@');
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -150,4 +153,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-31 19:44:46
+-- Dump completed on 2020-08-07 16:28:49

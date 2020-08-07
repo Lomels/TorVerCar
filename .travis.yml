@@ -5,6 +5,9 @@ script:
     - ant build
     - sonar-scanner
 
+git:
+  depth: false
+
 addons:
   sonarcloud:
     organization: lomels

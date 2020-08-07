@@ -1,5 +1,7 @@
 package logic.bean;
 
+import logic.model.Role;
+
 public class UserBean {
 
 	private String userID;
@@ -8,6 +10,7 @@ public class UserBean {
 	private String surname;
 	private String email;
 	private String phone;
+	private Role role;
 	
 	public String getUserID() {
 		return userID;
@@ -48,6 +51,12 @@ public class UserBean {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
 	}
 	
 }

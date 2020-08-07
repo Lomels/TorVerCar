@@ -1,5 +1,6 @@
 package logic.view.dummy;
 
+import logic.bean.CarInfoBean;
 import logic.bean.UserBean;
 import logic.controller.StudentBuilder;
 import logic.controller.exception.DatabaseException;
@@ -31,14 +32,7 @@ public class DummyOurStudentDatabase implements OurStudentDatabase {
 		DummyOurStudentDatabase.incrementCounter();
 	}
 
-	@Override
-	public Student loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException {
-		DummyDatabaseBoundary uni = new DummyDatabaseBoundary();
-		UserBean res = uni.getByUserID("12345");
-		Student s;
-		s = StudentBuilder.newBuilder(userID).password("aaAAA123@").fullname(res.getName(), res.getSurname()).build();	
-		return s;
-	}
+	
 
 	@Override
 	public boolean wasBannedByUserID(String userID) throws DatabaseException, InvalidInputException {
@@ -58,6 +52,24 @@ public class DummyOurStudentDatabase implements OurStudentDatabase {
 
 	@Override
 	public void addStudentCar(StudentCar studentCar) throws DatabaseException, InvalidInputException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public UserBean loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public StudentCar loadStudentCarByUserID(Student s) throws DatabaseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void editCarInfoByUserID(String userID, CarInfoBean carInfo) throws DatabaseException {
 		// TODO Auto-generated method stub
 		
 	}
