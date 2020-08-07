@@ -37,7 +37,7 @@ CREATE TABLE `students` (
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
-INSERT INTO `students` VALUES ('0001','pippo','baudo','pippob@prova.com'),('0123456','Raimondo','Vianello','raimondo@libero.it'),('0234567','Karl','Marx','communistparty@urss.ru'),('0241118','Marco','Lo Mele','marco.lomele@gmail.com'),('0345678','Sigmund','Freud','es@superio.ego'),('0456789','Francesco','Totti','pupone10@roma.as'),('0567891','Daniele','De Rossi','capitanfuturo@roma.as'),('0678912','Simone','Perrotta','supersimo@roma.as'),('0789123','Luca','Giurato','lcua.griuato@gmial.itti'),('1234','pippo','franco','abcdef'),('12345','mario','rossi','mariorossi@gmail.com');
+INSERT INTO `students` VALUES ('0001','Pippo','Baudo','pippob@prova.com'),('0123456','Raimondo','Vianello','raimondo@libero.it'),('0234567','Karl','Marx','communistparty@urss.ru'),('0241118','Marco','Lo Mele','marco.lomele@gmail.com'),('0245061','Giulia','Desideri','giuls.desideri@gmail.com'),('0252379','Giuseppe','Marseglia','g.marseglia.it@gmail.com'),('0345678','Sigmund','Freud','es@superio.ego'),('0456789','Francesco','Totti','pupone10@roma.as'),('0567891','Daniele','De Rossi','capitanfuturo@roma.as'),('0678912','Simone','Perrotta','supersimo@roma.as'),('0789123','Luca','Giurato','lcua.griuato@gmial.itti'),('1234','pippo','franco','abcdef'),('12345','mario','rossi','mariorossi@gmail.com');
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-03-26 17:19:16
+-- Dump completed on 2020-08-07 16:28:35
