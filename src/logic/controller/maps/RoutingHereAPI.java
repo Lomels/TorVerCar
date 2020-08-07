@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.json.*;
 
+import logic.controller.exception.InvalidInputException;
 import logic.controller.httpclient.MyHttpClient;
 import logic.model.Position;
 import logic.model.Route;
@@ -24,7 +25,7 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 	}
 
 	@Override
-	public Route startToStop(Position pickup, Position dropoff, LocalDateTime startInterval) {
+	public Route startToStop(Position pickup, Position dropoff, LocalDateTime startInterval) throws InvalidInputException {
 		List<Position> stops = new ArrayList<Position>();
 		stops.add(pickup);
 		stops.add(dropoff);
@@ -32,7 +33,7 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 	}
 
 	@Override
-	public Route startToStop(List<Position> stops, LocalDateTime startInterval) {
+	public Route startToStop(List<Position> stops, LocalDateTime startInterval) throws InvalidInputException {
 		Integer duration = null, distance = null;
 
 		StringBuilder builder = new StringBuilder();

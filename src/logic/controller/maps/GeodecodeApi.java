@@ -3,6 +3,7 @@ package logic.controller.maps;
 import java.util.List;
 
 import logic.controller.exception.ApiNotReachableException;
+import logic.controller.exception.InvalidInputException;
 import logic.model.Position;
 
 /*
@@ -11,6 +12,6 @@ import logic.model.Position;
  */
 public interface GeodecodeApi {
 
-	public List<Position> addrToPos(String address) throws ApiNotReachableException;
+	public List<Position> addrToPos(String address) throws ApiNotReachableException, InvalidInputException;
 	
 }
