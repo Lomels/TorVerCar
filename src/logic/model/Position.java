@@ -58,8 +58,7 @@ public class Position {
 
 	@Override
 	public String toString() {
-		return "Position [lat=" + lat + ", lon=" + lon + ", (lat,lon)=" + lat + "," + lon + ",\nscore=" + score
-				+ ",\nlongAddress=" + address + "]";
+		return "Position [lat=" + lat + ", lon=" + lon + ",\nscore=" + score + ",\nlongAddress=" + address + "]";
 	}
 
 }

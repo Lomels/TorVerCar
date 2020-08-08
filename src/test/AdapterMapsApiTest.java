@@ -7,7 +7,6 @@ import logic.model.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -39,12 +38,11 @@ public class AdapterMapsApiTest {
 
 	@Test
 	public void startToStopTest() throws InvalidInputException, ApiNotReachableException {
-		LocalDateTime startInterval = LocalDateTime.now();
 		Position pickup, dropoff;
 		pickup = MAPS_API.addrToPos(ADDRESS_2).get(0);
 		dropoff = MAPS_API.addrToPos(ADDRESS_1).get(0);
-		Route result = MAPS_API.startToStop(pickup, dropoff, startInterval);
-		this.log(result.toStringShort(), false);
+		Route result = MAPS_API.startToStop(pickup, dropoff);
+		this.log(result.toString(), false);
 		assertEquals(Route.class, result.getClass());
 	}
 
@@ -64,11 +62,10 @@ public class AdapterMapsApiTest {
 
 	@Test
 	public void viewRouteTest() throws ApiNotReachableException, InvalidInputException {
-		LocalDateTime startInterval = LocalDateTime.now();
 		Position pickup, dropoff;
 		pickup = MAPS_API.addrToPos(ADDRESS_2).get(0);
 		dropoff = MAPS_API.addrToPos(ADDRESS_1).get(0);
-		Route route = MAPS_API.startToStop(pickup, dropoff, startInterval);
+		Route route = MAPS_API.startToStop(pickup, dropoff);
 		String url = MAPS_API.viewFromRoute(route);
 		Logger.getGlobal().info("URL:\n" + url);
 	}

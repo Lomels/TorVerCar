@@ -1,6 +1,5 @@
 package logic.controller.maps;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import logic.controller.exception.ApiNotReachableException;
@@ -39,14 +38,13 @@ public class AdapterMapsApi implements MapsApi {
 	}
 
 	@Override
-	public Route startToStop(Position pickup, Position dropoff, LocalDateTime startInterval)
-			throws InvalidInputException {
-		return this.routing.startToStop(pickup, dropoff, startInterval);
+	public Route startToStop(Position pickup, Position dropoff) throws InvalidInputException {
+		return this.routing.startToStop(pickup, dropoff);
 	}
 
 	@Override
-	public Route startToStop(List<Position> stops, LocalDateTime startInterval) throws InvalidInputException {
-		return this.routing.startToStop(stops, startInterval);
+	public Route startToStop(List<Position> stops) throws InvalidInputException {
+		return this.routing.startToStop(stops);
 	}
 
 	@Override
@@ -67,6 +65,11 @@ public class AdapterMapsApi implements MapsApi {
 	@Override
 	public String viewFromRoute(Route route) {
 		return this.viewroute.viewFromRoute(route);
+	}
+
+	@Override
+	public Route addInternalRoute(Route startingRoute, List<Position> stops) throws InvalidInputException {
+		return this.routing.addInternalRoute(startingRoute, stops);
 	}
 
 }

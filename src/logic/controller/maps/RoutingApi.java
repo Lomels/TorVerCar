@@ -1,6 +1,5 @@
 package logic.controller.maps;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import logic.controller.exception.InvalidInputException;
@@ -13,7 +12,9 @@ import logic.model.Route;
  */
 public interface RoutingApi {
 
-	public Route startToStop(Position pickup, Position dropoff, LocalDateTime startInterval) throws InvalidInputException;
-	
-	public Route startToStop(List<Position> stops, LocalDateTime startInterval) throws InvalidInputException;
+	public Route startToStop(Position pickup, Position dropoff) throws InvalidInputException;
+
+	public Route startToStop(List<Position> stops) throws InvalidInputException;
+
+	public Route addInternalRoute(Route startingRoute, List<Position> stops) throws InvalidInputException;
 }

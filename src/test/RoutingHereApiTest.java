@@ -1,6 +1,5 @@
 package test;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -27,7 +26,7 @@ public class RoutingHereApiTest {
 		Position pickup = geoApi.addrToPos(ADDRESS_1).get(0);
 		Position dropoff = geoApi.addrToPos(ADDRESS_3).get(0);
 
-		Route route = routeApi.startToStop(pickup, dropoff, LocalDateTime.now());
+		Route route = routeApi.startToStop(pickup, dropoff);
 
 		LOGGER.info(route.toString() + "\n");
 	}
@@ -43,7 +42,7 @@ public class RoutingHereApiTest {
 		stops.add(middle);
 		stops.add(dropoff);
 
-		Route route = routeApi.startToStop(stops, LocalDateTime.now());
+		Route route = routeApi.startToStop(stops);
 
 		LOGGER.info(route.toString() + "\n");
 	}

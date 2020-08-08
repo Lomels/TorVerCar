@@ -79,13 +79,13 @@ public class Route {
 		this.stops = stops;
 	}
 
-	@Override
-	public String toString() {
+	public String toStringLong() {
 		return "Route [stops=" + stops + ", duration=" + duration + ", distance=" + distance + "]";
 	}
 
-	public String toStringShort() {
-		return "Route [duration=" + duration + " minutes, distance=" + distance + "m]";
+	@Override
+	public String toString() {
+		return "Route [stops=" + stops.size() + ", duration=" + duration + " minutes, distance=" + distance + "m]";
 	}
 
 }
