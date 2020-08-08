@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.29, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.31, for Linux (x86_64)
 --
 -- Host: localhost    Database: TorVerCar
 -- ------------------------------------------------------
--- Server version	5.7.29-0ubuntu0.18.04.1
+-- Server version	5.7.31-0ubuntu0.18.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -50,8 +50,10 @@ CREATE TABLE `Cars` (
   `plate` varchar(10) NOT NULL,
   `seats` int(11) DEFAULT NULL,
   `color` varchar(10) DEFAULT NULL,
-  `userID` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`plate`)
+  `userID` varchar(10) NOT NULL,
+  PRIMARY KEY (`plate`),
+  KEY `fk_userID` (`userID`),
+  CONSTRAINT `fk_userID` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -61,8 +63,64 @@ CREATE TABLE `Cars` (
 
 LOCK TABLES `Cars` WRITE;
 /*!40000 ALTER TABLE `Cars` DISABLE KEYS */;
-INSERT INTO `Cars` VALUES ('Hyundai i20','AA345BC',4,'Bianca','0241118'),('Alfa Romeo GIulia','AB123CD',4,'Rosso','0245061');
+INSERT INTO `Cars` VALUES ('Hyundai i20','AA345BC',4,'Bianca','0241118'),('Alfa Romeo GIulia','AB123CD',4,'Rosso','0245061'),('Toyota Aygo','DP227XC',2,'Blu','0252379');
 /*!40000 ALTER TABLE `Cars` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Lifts`
+--
+
+DROP TABLE IF EXISTS `Lifts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Lifts` (
+  `liftID` int(11) NOT NULL AUTO_INCREMENT,
+  `startTime` datetime DEFAULT NULL,
+  `maxDuration` int(11) DEFAULT NULL,
+  `note` text,
+  `driverID` varchar(10) NOT NULL,
+  `route` text,
+  `freeSeats` int(11) DEFAULT NULL,
+  PRIMARY KEY (`liftID`),
+  KEY `driverID` (`driverID`),
+  CONSTRAINT `Lifts_ibfk_1` FOREIGN KEY (`driverID`) REFERENCES `Users` (`userID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Lifts`
+--
+
+LOCK TABLES `Lifts` WRITE;
+/*!40000 ALTER TABLE `Lifts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Lifts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Passengers`
+--
+
+DROP TABLE IF EXISTS `Passengers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Passengers` (
+  `liftID` int(11) NOT NULL,
+  `passengerID` varchar(10) NOT NULL,
+  PRIMARY KEY (`liftID`,`passengerID`),
+  KEY `passengerID` (`passengerID`),
+  CONSTRAINT `Passengers_ibfk_1` FOREIGN KEY (`liftID`) REFERENCES `Lifts` (`liftID`),
+  CONSTRAINT `Passengers_ibfk_2` FOREIGN KEY (`passengerID`) REFERENCES `Users` (`userID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Passengers`
+--
+
+LOCK TABLES `Passengers` WRITE;
+/*!40000 ALTER TABLE `Passengers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Passengers` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -90,34 +148,8 @@ CREATE TABLE `Students` (
 
 LOCK TABLES `Students` WRITE;
 /*!40000 ALTER TABLE `Students` DISABLE KEYS */;
-INSERT INTO `Students` VALUES ('0241118','Marco','Lo Mele','marco.lomele@gmail.com','3349352478','DRIVER'),('0245061','Giulia','Desideri','giuls.desideri@gmail.com','3923165944','DRIVER');
+INSERT INTO `Students` VALUES ('0241118','Marco','Lo Mele','marco.lomele@gmail.com','3349352478','DRIVER'),('0245061','Giulia','Desideri','giuls.desideri@gmail.com','3923165944','DRIVER'),('0252379','Giuseppe','Marseglia','g.marseglia.it@gmail.com','333666990','STUDENT');
 /*!40000 ALTER TABLE `Students` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `StudentsCar`
---
-
-DROP TABLE IF EXISTS `StudentsCar`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `StudentsCar` (
-  `userID` varchar(10) DEFAULT NULL,
-  `rating` decimal(3,0) DEFAULT '0',
-  `carID` varchar(10) DEFAULT NULL,
-  UNIQUE KEY `userID` (`userID`),
-  CONSTRAINT `StudentsCar_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Students` (`userID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `StudentsCar`
---
-
-LOCK TABLES `StudentsCar` WRITE;
-/*!40000 ALTER TABLE `StudentsCar` DISABLE KEYS */;
-INSERT INTO `StudentsCar` VALUES ('0241118',0,'AA345BC'),('0245061',0,'AB123CD');
-/*!40000 ALTER TABLE `StudentsCar` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -140,7 +172,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES ('0241118','aaaAAA123@'),('0245061','aaaAAA123@');
+INSERT INTO `Users` VALUES ('0241118','aaaAAA123@'),('0245061','aaaAAA123@'),('0252379','peppe14');
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -153,4 +185,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-07 16:28:49
+-- Dump completed on 2020-08-09  0:08:47
