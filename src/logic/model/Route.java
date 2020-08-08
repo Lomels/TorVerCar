@@ -3,6 +3,10 @@ package logic.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;
 
@@ -86,6 +90,30 @@ public class Route {
 	@Override
 	public String toString() {
 		return "Route [stops=" + stops.size() + ", duration=" + duration + " minutes, distance=" + distance + "m]";
+	}
+	
+	public JSONObject JSONencode() {
+		JSONObject result = new JSONObject();
+		result.put("duration", this.getDuration());
+		result.put("distance", this.getDistance());
+		JSONArray JSONstops = new JSONArray();
+		for(Position stop : this.stops) {
+			JSONstops.put(stop.JSONencode());
+		}
+		result.put("stops", JSONstops);
+		return result;
+	}
+	
+	public static Route JSONdecode(JSONObject json) throws JSONException, InvalidInputException {
+		Route result = new Route(null, json.getInt("duration"), json.getInt("distance"));
+		List<Position> stops = new ArrayList<Position>();
+		JSONArray jsonStops = json.getJSONArray("stops");
+		for(int i = 0; i < jsonStops.length(); i++) {
+			JSONObject jsonStop = jsonStops.getJSONObject(i);
+			stops.add(Position.JSONdecode(jsonStop));
+		}
+		result.setStops(stops);
+		return result;
 	}
 
 }

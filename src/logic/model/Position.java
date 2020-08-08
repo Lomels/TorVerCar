@@ -1,5 +1,8 @@
 package logic.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;
 
@@ -59,6 +62,20 @@ public class Position {
 	@Override
 	public String toString() {
 		return "Position [lat=" + lat + ", lon=" + lon + ",\nscore=" + score + ",\nlongAddress=" + address + "]";
+	}
+
+	public JSONObject JSONencode() {
+		JSONObject result = new JSONObject();
+		result.put("lat", this.getLat());
+		result.put("lon", this.getLon());
+		result.put("score", this.getScore());
+		result.put("address", this.getAddress());
+		return result;
+	}
+
+	public static Position JSONdecode(JSONObject json) throws JSONException, InvalidInputException {
+		return new Position(json.getDouble("lat"), json.getDouble("lon"), json.getDouble("score"),
+				json.getString("address"));
 	}
 
 }
