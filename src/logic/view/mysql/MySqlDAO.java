@@ -52,11 +52,10 @@ public class MySqlDAO implements OurStudentDatabase {
 			result = rs.first(); // return true if is not empty
 			rs.close();
 
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
-		} 
-		finally {
+		} finally {
 			this.disconnect();
 		}
 		return result;
@@ -94,26 +93,37 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 	
 	@Override
-	public void addStudentCar(StudentCar studentCar) throws DatabaseException, InvalidInputException{
+	public void addCar(StudentCar studentCar) throws DatabaseException {
 		try {
 			this.connect();
-			MyQueries.addStudent(stmt, studentCar, Role.DRIVER.name());
 			MyQueries.addStudentCar(this.stmt, studentCar);
-			
-		} catch(SQLException e) {
+
+		} catch (SQLException e) {
 			throw new DatabaseException(e.getMessage());
 		} finally {
 			this.disconnect();
 		}
 	}
-		
-	
 
 	@Override
-	public UserBean loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException {
+	public void addStudentCar(StudentCar studentCar) throws DatabaseException, InvalidInputException {
+		try {
+			this.connect();
+			MyQueries.addStudent(stmt, studentCar, Role.DRIVER.name());
+			MyQueries.addStudentCar(this.stmt, studentCar);
+
+		} catch (SQLException e) {
+			throw new DatabaseException(e.getMessage());
+		} finally {
+			this.disconnect();
+		}
+	}
+
+	@Override
+	public Student loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException {
 		InputChecker.checkUserID(userID);
-		//Student s = null;
-		UserBean usr = new UserBean();
+		// Student s = null;
+		Student s = null;
 		try {
 			this.connect();
 			ResultSet rs = MyQueries.loadStudentByUserID(this.stmt, userID);
@@ -121,26 +131,20 @@ public class MySqlDAO implements OurStudentDatabase {
 			if (!rs.first())
 				throw new DatabaseException("Student not found");
 
-
 			rs.first();
-			usr.setPassword(rs.getString("password"));
-			usr.setUserID(userID);
-			usr.setEmail(rs.getString("name"));
-			usr.setName(rs.getString("name"));
-			usr.setSurname(rs.getString("surname"));
-			usr.setPhone(rs.getString("phone"));
-			usr.setRole(Role.valueOf(rs.getString("role")));
-			
-			/*
-			 * String password = rs.getString("password"); String name =
-			 * rs.getString("name"); String surname = rs.getString("surname"); String email
-			 * = rs.getString("email"); String phone = rs.getString("phone"); Role role =
-			 * Role.valueOf(rs.getString("role"));
-			 * 
-			 * s = StudentBuilder.newBuilder(userID) .password(password)
-			 * .fullname(name,surname) .email(email) .phone(phone) .build();
-			 */
+			String password = rs.getString("password");
+			String name = rs.getString("name");
+			String surname = rs.getString("surname");
+			String email = rs.getString("email");
+			String phone = rs.getString("phone");
 
+			s = new StudentBuilder(userID)
+					.email(email)
+					.fullname(name, surname)
+					.password(password)
+					.phone(phone)
+					.build();
+			
 			rs.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -149,36 +153,40 @@ public class MySqlDAO implements OurStudentDatabase {
 			this.disconnect();
 		}
 
-		return usr;
+		return s;
 	}
 
 	// TODO: migliorare e ridurre le query
 	@Override
-	public StudentCar loadStudentCarByUserID(Student s) throws DatabaseException {
+	public StudentCar loadStudentCarByUserID(String userID) throws DatabaseException {
 		StudentCar sCar = null;
 		CarInfo carInfo;
 		try {
 			this.connect();
-			ResultSet rs = MyQueries.loadStudentCarByUserID(this.stmt, s.getUserID());
+			ResultSet rs = MyQueries.loadStudentCarByUserID(this.stmt, userID);
 
 			if (!rs.first())
 				throw new DatabaseException("Student not found");
 
 			rs.first();
-			
-			String rating = rs.getString("rating"); 
-			String carID = rs.getString("carID");
-			
-			rs = MyQueries.loadCarInfoByCarID(this.stmt, carID);
-			rs.first();
-			carInfo = new CarInfo(rs.getString("plate"),
-					rs.getInt("seats"),
-					rs.getString("model"), 
+
+			String password = rs.getString("password");
+			String name = rs.getString("name");
+			String surname = rs.getString("surname");
+			String email = rs.getString("email");
+			String phone = rs.getString("phone");
+			Integer rating = rs.getInt("rating");
+			carInfo = new CarInfo(rs.getString("plate"), rs.getInt("seats"), rs.getString("model"),
 					rs.getString("color"));
-			  
-			sCar = new StudentCarBuilder(s)
-					.rating(Integer.parseInt(rating))
+
+			sCar = new StudentCarBuilder(new StudentBuilder(userID)
+					.email(email)
+					.fullname(name, surname)
+					.password(password)
+					.phone(phone)
+					.build())
 					.carInfo(carInfo)
+					.rating(rating)
 					.build();
 
 			rs.close();
@@ -191,7 +199,7 @@ public class MySqlDAO implements OurStudentDatabase {
 
 		return sCar;
 	}
-	
+
 	@Override
 	public String loadPasswordByUserID(String userID) throws InvalidInputException, DatabaseException {
 		InputChecker.checkUserID(userID);
@@ -216,14 +224,29 @@ public class MySqlDAO implements OurStudentDatabase {
 		}
 		return password;
 	}
-	
+
 	@Override
 	public void editInfoByUserID(String userID, String password, String email, String phone) throws DatabaseException {
 		try {
 			this.connect();
 			MyQueries.updateStudent(this.stmt, userID, password, email, phone);
-			
-		}catch(Exception e) {
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DatabaseException(e.getMessage());
+		} finally {
+			this.disconnect();
+		}
+	}
+
+	@Override
+	public void editCarInfoByUserID(String userID, CarInfoBean carInfo) throws DatabaseException {
+		try {
+			this.connect();
+			MyQueries.updateCar(this.stmt, userID, carInfo.getPlate(), carInfo.getModel(), carInfo.getSeats(),
+					carInfo.getColour());
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DatabaseException(e.getMessage());
 		} finally {
@@ -232,18 +255,27 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 	
 	@Override
-	public void editCarInfoByUserID(String userID, CarInfoBean carInfo) throws DatabaseException {
+	public Role loadRoleByUserID(String userID) throws DatabaseException {
+		Role role = null;
 		try {
 			this.connect();
-			MyQueries.updateCar(this.stmt, userID, carInfo.getPlate(), carInfo.getModel(), carInfo.getSeats(), carInfo.getColour());
+			ResultSet rs = MyQueries.loadRoleByUserID(this.stmt, userID);
 
-			
-		}catch(Exception e) {
+			if (!rs.first())
+				throw new DatabaseException("User not found");
+
+			rs.first();
+			role = Role.valueOf(rs.getString("role"));
+
+			rs.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw new DatabaseException(e.getMessage());
 		} finally {
 			this.disconnect();
 		}
+		
+		return role;
 	}
 
 	private void connect() {
