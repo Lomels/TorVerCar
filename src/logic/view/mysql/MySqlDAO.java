@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 import logic.bean.CarInfoBean;
 import logic.bean.UserBean;
+import logic.controller.StudentBuilder;
 import logic.controller.StudentCarBuilder;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;

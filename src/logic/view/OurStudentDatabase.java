@@ -4,6 +4,7 @@ import logic.bean.CarInfoBean;
 import logic.bean.UserBean;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
+import logic.model.Role;
 import logic.model.Student;
 import logic.model.StudentCar;
 
