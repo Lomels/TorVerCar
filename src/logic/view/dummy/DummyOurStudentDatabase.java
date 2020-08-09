@@ -4,6 +4,7 @@ import logic.bean.CarInfoBean;
 import logic.bean.UserBean;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
+import logic.model.Role;
 import logic.model.Student;
 import logic.model.StudentCar;
 import logic.view.*;
@@ -56,21 +57,35 @@ public class DummyOurStudentDatabase implements OurStudentDatabase {
 	}
 
 	@Override
-	public UserBean loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException {
+	public Student loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public StudentCar loadStudentCarByUserID(Student s) throws DatabaseException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public void editCarInfoByUserID(String userID, CarInfoBean carInfo) throws DatabaseException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void addCar(StudentCar studentCar) throws DatabaseException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public StudentCar loadStudentCarByUserID(String userID) throws DatabaseException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Role loadRoleByUserID(String userID) throws DatabaseException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

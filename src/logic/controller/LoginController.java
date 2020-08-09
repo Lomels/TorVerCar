@@ -14,21 +14,17 @@ public class LoginController {
 	public void login(UserBean bean) throws InvalidInputException, DatabaseException, InvalidStateException{
 		if(checkBean(bean)) {
 			if(!ourDb.wasBannedByUserID(bean.getUserID())) {
-				UserBean user = ourDb.loadStudentByUserID(bean.getUserID());
-				Student s = new StudentBuilder(user.getUserID())
-						.password(user.getPassword())
-						.email(user.getEmail())
-						.fullname(user.getName(), user.getSurname())
-						.phone(user.getPhone())
-						.build();
-				sg.setRole(user.getRole());
+
+				sg.setRole(ourDb.loadRoleByUserID(bean.getUserID()));
+				
 				//TODO: implementare controllo sessione attiva
 				switch(sg.getRole()) {
 					case STUDENT:
+						Student s = ourDb.loadStudentByUserID(bean.getUserID());
 						sg.setStudent(s);
 						break;
 					case DRIVER:
-						StudentCar sCar = ourDb.loadStudentCarByUserID(s);
+						StudentCar sCar = ourDb.loadStudentCarByUserID(bean.getUserID());
 						sg.setStudentCar(sCar);
 						break;
 					case ADMIN:
