@@ -4,6 +4,7 @@ import logic.bean.CarInfoBean;
 import logic.bean.UserBean;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
+import logic.model.Role;
 import logic.model.Student;
 import logic.model.StudentCar;
 
@@ -19,7 +20,7 @@ public interface OurStudentDatabase {
 	public void addStudent(Student student) throws DatabaseException, InvalidInputException;
 	
 	//load a student from our database
-	public UserBean loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException;
+	public Student loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException;
 	
 	//load the password for the login
 	public String loadPasswordByUserID(String userID) throws InvalidInputException, DatabaseException;
@@ -31,7 +32,11 @@ public interface OurStudentDatabase {
 	public void addStudentCar(StudentCar studentCar) throws DatabaseException, InvalidInputException;
 
 	//load a student with car from our database
-	public StudentCar loadStudentCarByUserID(Student s) throws DatabaseException;
+	public StudentCar loadStudentCarByUserID(String userID) throws DatabaseException;
 
 	public void editCarInfoByUserID(String userID, CarInfoBean carInfo) throws DatabaseException;
+
+	public void addCar(StudentCar studentCar) throws DatabaseException;
+
+	public Role loadRoleByUserID(String userID) throws DatabaseException;
 }
