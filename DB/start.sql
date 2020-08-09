@@ -63,11 +63,7 @@ CREATE TABLE `Cars` (
 
 LOCK TABLES `Cars` WRITE;
 /*!40000 ALTER TABLE `Cars` DISABLE KEYS */;
-<<<<<<< HEAD
 INSERT INTO `Cars` VALUES ('Hyundai i20','AA345BC',4,'Bianca','0241118'),('Alfa Romeo GIulia','AB123CD',4,'Rosso','0245061'),('Toyota Aygo','DP227XC',2,'Blu','0252379');
-=======
-INSERT INTO `Cars` VALUES ('Hyundai i20','AA123AA',4,'Bianca','0241118'),('Alfa Romeo GIulia','AB123CD',4,'Rosso','0245061');
->>>>>>> master
 /*!40000 ALTER TABLE `Cars` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,7 +74,6 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `Lifts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-<<<<<<< HEAD
 CREATE TABLE `Lifts` (
   `liftID` int(11) NOT NULL AUTO_INCREMENT,
   `startTime` datetime DEFAULT NULL,
@@ -116,17 +111,6 @@ CREATE TABLE `Passengers` (
   KEY `passengerID` (`passengerID`),
   CONSTRAINT `Passengers_ibfk_1` FOREIGN KEY (`liftID`) REFERENCES `Lifts` (`liftID`),
   CONSTRAINT `Passengers_ibfk_2` FOREIGN KEY (`passengerID`) REFERENCES `Users` (`userID`)
-=======
-CREATE TABLE `Students` (
-  `userID` varchar(10) DEFAULT NULL,
-  `name` varchar(20) NOT NULL,
-  `surname` varchar(20) NOT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `phone` varchar(10) DEFAULT NULL,
-  `rating` int(11) DEFAULT NULL,
-  UNIQUE KEY `userID` (`userID`),
-  CONSTRAINT `Students_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`)
->>>>>>> master
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -134,7 +118,6 @@ CREATE TABLE `Students` (
 -- Dumping data for table `Passengers`
 --
 
-<<<<<<< HEAD
 LOCK TABLES `Passengers` WRITE;
 /*!40000 ALTER TABLE `Passengers` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Passengers` ENABLE KEYS */;
@@ -170,15 +153,6 @@ INSERT INTO `Students` VALUES ('0241118','Marco','Lo Mele','marco.lomele@gmail.c
 UNLOCK TABLES;
 
 --
-=======
-LOCK TABLES `Students` WRITE;
-/*!40000 ALTER TABLE `Students` DISABLE KEYS */;
-INSERT INTO `Students` VALUES ('0245061','Giulia','Desideri','giuls.desideri@gmail.com','3923165944',NULL),('0241118','Marco','Lo Mele','marco.lomele@gmail.com','3336669990',NULL);
-/*!40000 ALTER TABLE `Students` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
->>>>>>> master
 -- Table structure for table `Users`
 --
 
@@ -188,7 +162,6 @@ DROP TABLE IF EXISTS `Users`;
 CREATE TABLE `Users` (
   `userID` varchar(10) NOT NULL,
   `password` varchar(20) NOT NULL,
-  `role` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -199,11 +172,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-<<<<<<< HEAD
 INSERT INTO `Users` VALUES ('0241118','aaaAAA123@'),('0245061','aaaAAA123@'),('0252379','peppe14');
-=======
-INSERT INTO `Users` VALUES ('0241118','aaaAAA123@','DRIVER'),('0245061','aaaAAA123@','DRIVER');
->>>>>>> master
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -216,8 +185,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-<<<<<<< HEAD
 -- Dump completed on 2020-08-09  0:08:47
-=======
--- Dump completed on 2020-08-09 12:02:13
->>>>>>> master
