@@ -88,10 +88,14 @@ public class MyCarView extends Application implements Initializable{
 		cIBean.setColour(tfColour.getText());
 		cIBean.setPlate(tfPlate.getText());
 		cIBean.setSeats(Integer.parseInt(tfSeats.getText()));
-		controller.editCar(cIBean, sg.getStudentCar());
+		controller.editCar(cIBean);
 		
-		MyCarView myCar = new MyCarView();
-		myCar.start((Stage) btSave.getScene().getWindow());
+		tfModel.setDisable(true);
+		tfColour.setDisable(true);
+		tfPlate.setDisable(true);
+		tfSeats.setDisable(true);
+		btEdit.setDisable(false);
+
 	}
 
 	@FXML
