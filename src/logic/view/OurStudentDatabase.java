@@ -1,9 +1,12 @@
 package logic.view;
 
+import org.json.JSONException;
+
 import logic.bean.CarInfoBean;
 import logic.bean.UserBean;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
+import logic.model.Lift;
 import logic.model.Role;
 import logic.model.Student;
 import logic.model.StudentCar;
@@ -39,4 +42,8 @@ public interface OurStudentDatabase {
 	public void addCar(StudentCar studentCar) throws DatabaseException;
 
 	public Role loadRoleByUserID(String userID) throws DatabaseException;
+	
+	public void saveLift(Lift lift) throws DatabaseException;
+	
+	public Lift loadLiftbyLiftID(Integer liftID) throws DatabaseException, JSONException, InvalidInputException;
 }

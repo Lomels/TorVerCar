@@ -32,7 +32,7 @@ public class StudentBuilder {
 
 	// Metodo che chiama correttamente il costruttore di Student
 	public Student build() throws InvalidInputException {
-		return new Student(this.userID, this.password, this.email, this.name, this.surname, this.phone, this.lifts);
+		return new Student(this.userID, this.password, this.email, this.name, this.surname, this.phone);
 	}
 
 	/*

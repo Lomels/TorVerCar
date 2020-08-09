@@ -9,7 +9,7 @@ import logic.utilities.InputChecker;
 
 public class Lift {
 	
-	private String liftID;
+	private Integer liftID;
 	private LocalDateTime startTime;
 	private Integer maxDuration;
 	private String note;
@@ -19,7 +19,7 @@ public class Lift {
 	
 	private Route route;
 
-	public Lift(String liftID, LocalDateTime startTime, int maxDuration, String note,
+	public Lift(Integer liftID, LocalDateTime startTime, int maxDuration, String note,
 			StudentCar driver, List<Student> passengers, Route route) throws InvalidInputException {
 		this.liftID = liftID;
 		this.setStartTime(startTime);
@@ -31,11 +31,11 @@ public class Lift {
 	}
 
 	// TODO: implement lift database
-	public String getLiftID() {
+	public Integer getLiftID() {
 		return liftID;
 	}
 
-	public void setLiftID(String liftID) {
+	public void setLiftID(Integer liftID) {
 		this.liftID = liftID;
 	}
 
@@ -93,5 +93,13 @@ public class Lift {
 		InputChecker.checkNotNull(route, "Route");
 		this.route = route;
 	}
+
+	@Override
+	public String toString() {
+		return "Lift [liftID=" + liftID + ", startTime=" + startTime + ", maxDuration=" + maxDuration + ", note=" + note
+				+ ", driver=" + driver + ", passengers=" + passengers + ", route=" + route + "]";
+	}
+	
+	
 
 }

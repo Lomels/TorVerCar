@@ -3,6 +3,7 @@ package logic.view.mysql;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 
 import logic.model.Student;
 import logic.model.StudentCar;
@@ -114,5 +115,21 @@ public class MyQueries {
 
 		stmt.executeUpdate(sql);
 	}
-	
+
+	public static void saveLift(Statement stmt, LocalDateTime startTime, Integer maxDuration, String note,
+			String driverID, String route, Integer freeSeats) throws SQLException {
+		String format = "INSERT INTO Lifts (startTime, maxDuration, note, driverID, route, freeSeats) VALUES "
+				+ "('%s', %d, '%s', '%s', '%s', %d);";
+		String sql = String.format(format, startTime, maxDuration, note, driverID, route, freeSeats);
+
+		stmt.executeUpdate(sql);
+	}
+
+	public static ResultSet loadLiftByLiftID(Statement stmt, Integer liftID) throws SQLException {
+		String format = "SELECT * FROM Lifts WHERE liftID = %d;";
+		String sql = String.format(format, liftID);
+		
+		return stmt.executeQuery(sql);
+	}
+
 }

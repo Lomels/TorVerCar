@@ -5,6 +5,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.logging.Logger;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import logic.bean.CarInfoBean;
 import logic.bean.UserBean;
@@ -13,7 +19,9 @@ import logic.controller.StudentCarBuilder;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.CarInfo;
+import logic.model.Lift;
 import logic.model.Role;
+import logic.model.Route;
 import logic.model.Student;
 import logic.model.StudentCar;
 import logic.utilities.InputChecker;
@@ -92,7 +100,7 @@ public class MySqlDAO implements OurStudentDatabase {
 			this.disconnect();
 		}
 	}
-	
+
 	@Override
 	public void addCar(StudentCar studentCar) throws DatabaseException {
 		try {
@@ -121,9 +129,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	@Override
-	public Student loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException {
-		InputChecker.checkUserID(userID);
-		// Student s = null;
+	public Student loadStudentByUserID(String userID) throws DatabaseException, InvalidInputException {
 		Student s = null;
 		try {
 			this.connect();
@@ -139,15 +145,10 @@ public class MySqlDAO implements OurStudentDatabase {
 			String email = rs.getString("email");
 			String phone = rs.getString("phone");
 
-			s = new StudentBuilder(userID)
-					.email(email)
-					.fullname(name, surname)
-					.password(password)
-					.phone(phone)
-					.build();
-			
+			s = new StudentBuilder(userID).email(email).fullname(name, surname).password(password).phone(phone).build();
+
 			rs.close();
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DatabaseException(e.getMessage());
 		} finally {
@@ -157,7 +158,6 @@ public class MySqlDAO implements OurStudentDatabase {
 		return s;
 	}
 
-	// TODO: migliorare e ridurre le query
 	@Override
 	public StudentCar loadStudentCarByUserID(String userID) throws DatabaseException {
 		StudentCar sCar = null;
@@ -180,15 +180,8 @@ public class MySqlDAO implements OurStudentDatabase {
 			carInfo = new CarInfo(rs.getString("plate"), rs.getInt("seats"), rs.getString("model"),
 					rs.getString("color"));
 
-			sCar = new StudentCarBuilder(new StudentBuilder(userID)
-					.email(email)
-					.fullname(name, surname)
-					.password(password)
-					.phone(phone)
-					.build())
-					.carInfo(carInfo)
-					.rating(rating)
-					.build();
+			sCar = new StudentCarBuilder(new StudentBuilder(userID).email(email).fullname(name, surname)
+					.password(password).phone(phone).build()).carInfo(carInfo).rating(rating).build();
 
 			rs.close();
 		} catch (Exception e) {
@@ -254,7 +247,7 @@ public class MySqlDAO implements OurStudentDatabase {
 			this.disconnect();
 		}
 	}
-	
+
 	@Override
 	public Role loadRoleByUserID(String userID) throws DatabaseException {
 		Role role = null;
@@ -275,7 +268,7 @@ public class MySqlDAO implements OurStudentDatabase {
 		} finally {
 			this.disconnect();
 		}
-		
+
 		return role;
 	}
 
@@ -306,5 +299,69 @@ public class MySqlDAO implements OurStudentDatabase {
 			}
 		}
 
+	}
+
+	@Override
+	public void saveLift(Lift lift) throws DatabaseException {
+		try {
+			this.connect();
+			if (lift.getLiftID() == null) {
+				// this is the insert
+				StudentCar driver = lift.getDriver();
+				MyQueries.saveLift(stmt, lift.getStartTime(), lift.getMaxDuration(), lift.getNote(), driver.getUserID(),
+						lift.getRoute().JSONencode().toString(), driver.getCarInfo().getSeats());
+			} else
+				// TODO
+				Logger.getGlobal().severe("Update lift TODO!");
+		} catch (Exception e) {
+			// TODO: handle exception
+		} finally {
+			this.disconnect();
+		}
+
+	}
+
+	@Override
+	public Lift loadLiftbyLiftID(Integer liftID) throws DatabaseException, JSONException, InvalidInputException {
+
+		Lift lift = null;
+		try {
+			this.connect();
+			ResultSet rs = MyQueries.loadLiftByLiftID(stmt, liftID);
+
+			if (!rs.first())
+				throw new DatabaseException("Lift not found");
+
+			rs.first();
+			Integer liftId = rs.getInt("liftID");
+			
+			// TODO: solve parsing problem
+			String startTimeString = rs.getString("startTime");
+			startTimeString = startTimeString.substring(0, startTimeString.length() - 2);
+			LocalDateTime startTime = LocalDateTime.parse(startTimeString);
+			
+			Integer maxDuration = rs.getInt("maxDuration");
+			
+			String note = rs.getString("note");
+
+			String driverID = rs.getString("driverID");
+			StudentCar driver = this.loadStudentCarByUserID(driverID);
+
+			// TODO: implement retrieve of passengers
+			List<Student> passengers = null;
+
+			String routeJson = rs.getString("route");
+			Route route = Route.JSONdecode(new JSONObject(routeJson));
+
+			lift = new Lift(liftID, startTime, maxDuration, note, driver, passengers, route);
+
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DatabaseException(e.getMessage());
+		} finally {
+			this.disconnect();
+		}
+		return lift;
 	}
 }
