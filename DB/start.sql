@@ -74,7 +74,8 @@ DROP TABLE IF EXISTS `Lifts`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Lifts` (
   `liftID` int(11) NOT NULL AUTO_INCREMENT,
-  `startTime` datetime DEFAULT NULL,
+  `startDateTime` datetime DEFAULT NULL,
+  `stopDateTime` datetime DEFAULT NULL,
   `maxDuration` int(11) DEFAULT NULL,
   `note` text,
   `driverID` varchar(10) NOT NULL,
@@ -83,7 +84,7 @@ CREATE TABLE `Lifts` (
   PRIMARY KEY (`liftID`),
   KEY `driverID` (`driverID`),
   CONSTRAINT `Lifts_ibfk_1` FOREIGN KEY (`driverID`) REFERENCES `Users` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +93,7 @@ CREATE TABLE `Lifts` (
 
 LOCK TABLES `Lifts` WRITE;
 /*!40000 ALTER TABLE `Lifts` DISABLE KEYS */;
-INSERT INTO `Lifts` VALUES (3,'2020-08-09 16:30:03',120,'Ciao mamma guarda come mi diverto','0241118','Route json',3);
+INSERT INTO `Lifts` VALUES (5,'2020-08-10 15:54:34', '2020-08-10 16:27:34' ,90,'Oh vita, oh vita','0241118','{\"duration\":33,\"distance\":27083,\"stops\":[{\"score\":10.2996511459,\"address\":\"Via Prenestina Nuova, 51, 00036 Palestrina\",\"lon\":12.88611,\"lat\":41.83322},{\"score\":8.6688928604,\"address\":\"Via del Politecnico, 00133 Roma\",\"lon\":12.62165,\"lat\":41.85573}]}',4);
 /*!40000 ALTER TABLE `Lifts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,7 +109,7 @@ CREATE TABLE `Passengers` (
   `passengerID` varchar(10) NOT NULL,
   PRIMARY KEY (`liftID`,`passengerID`),
   KEY `passengerID` (`passengerID`),
-  CONSTRAINT `Passengers_ibfk_1` FOREIGN KEY (`liftID`) REFERENCES `Lifts` (`liftID`),
+  CONSTRAINT `Passengers_ibfk_1` FOREIGN KEY (`liftID`) REFERENCES `Lifts` (`liftID`) ON DELETE CASCADE,
   CONSTRAINT `Passengers_ibfk_2` FOREIGN KEY (`passengerID`) REFERENCES `Users` (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -119,7 +120,6 @@ CREATE TABLE `Passengers` (
 
 LOCK TABLES `Passengers` WRITE;
 /*!40000 ALTER TABLE `Passengers` DISABLE KEYS */;
-INSERT INTO `Passengers` VALUES (3,'0245061');
 /*!40000 ALTER TABLE `Passengers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +148,7 @@ CREATE TABLE `Students` (
 
 LOCK TABLES `Students` WRITE;
 /*!40000 ALTER TABLE `Students` DISABLE KEYS */;
-INSERT INTO `Students` VALUES ('0245061','Giulia','Desideri','giuls.desideri@gmail.com','3923165944',NULL),('0241118','Marco','Lo Mele','marco.lomele@gmail.com','3336669990',NULL);
+INSERT INTO `Students` VALUES ('0245061','Giulia','Desideri','giuls.desideri@gmail.com','3923165944',NULL),('0241118','Marco','Lo Mele','marco.lomele@gmail.com','3336669990',NULL),('0252379','Giuseppe','Marseglia','g.marseglia.it@gmail.com','3336669990',NULL);
 /*!40000 ALTER TABLE `Students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -173,7 +173,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES ('0241118','aaaAAA123@','DRIVER'),('0245061','aaaAAA123@','DRIVER');
+INSERT INTO `Users` VALUES ('0241118','aaaAAA123@','DRIVER'),('0245061','aaaAAA123@','DRIVER'),('0252379','peppe14','STUDENT');
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -186,4 +186,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-09 16:31:45
+-- Dump completed on 2020-08-10 15:58:56

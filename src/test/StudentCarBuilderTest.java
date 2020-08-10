@@ -24,8 +24,8 @@ public class StudentCarBuilderTest {
 		String colour = "Red";
 		CarInfo car = new CarInfo("AA123AA", 3, model, colour);
 		StudentCar scbuilt = StudentCarBuilder.newCarBuilder(s).rating(0).carInfo(car).build();
-		Student scostructor = new Student("1", password, email, name, surname, null, null);
-		StudentCar sccostructor = new StudentCar(scostructor, 0, car, null);
+		Student scostructor = new Student("1", password, email, name, surname, null);
+		StudentCar sccostructor = new StudentCar(scostructor, 0, car);
 		assertEquals(scbuilt.toString(), sccostructor.toString());
 	}
 	

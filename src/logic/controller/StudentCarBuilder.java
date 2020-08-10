@@ -1,11 +1,9 @@
 package logic.controller;
 
 import java.security.InvalidParameterException;
-import java.util.List;
 
 import logic.controller.exception.InvalidInputException;
 import logic.model.CarInfo;
-import logic.model.Report;
 import logic.model.Student;
 import logic.model.StudentCar;
 
@@ -13,7 +11,6 @@ public class StudentCarBuilder extends StudentBuilder{
 
 	private int rating;
 	private CarInfo carInfo;
-	private List<Report> reports;
 	private Student student;
 
 	public StudentCarBuilder(Student student) throws InvalidInputException {
@@ -41,11 +38,6 @@ public class StudentCarBuilder extends StudentBuilder{
 
 	public StudentCarBuilder carInfo(CarInfo carInfo) {
 		this.carInfo = carInfo;
-		return this;
-	}
-
-	public StudentCarBuilder reports(List<Report> reports) {
-		this.reports = reports;
 		return this;
 	}
 

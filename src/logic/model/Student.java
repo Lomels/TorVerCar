@@ -1,7 +1,5 @@
 package logic.model;
 
-import java.util.List;
-
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
 import logic.utilities.InputChecker;
