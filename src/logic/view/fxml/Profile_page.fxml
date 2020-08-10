@@ -10,15 +10,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.fxml.ProfileView">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#046104" height="40.0" layoutX="8.0" layoutY="4.0" stroke="#046104" strokeType="INSIDE" width="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Button fx:id="btHome" layoutX="24.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Home" />
-      <Button layoutX="88.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Book" />
-      <Button layoutX="145.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Offer" />
-      <Button layoutX="556.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: #046104;">
+      <Button fx:id="btHome" onAction="#homeButtonController" layoutX="24.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Home" />
+      <Button fx:id="btBook" onAction="#bookButtonController" layoutX="88.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Book" />
+      <Button fx:id="btOffer" onAction="#offerButtonController" layoutX="145.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Offer" />
+      <Button fx:id="btLogout" onAction="#logoutButtonController" layoutX="556.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: #046104;">
          <graphic>
-            <ImageView fx:id="btLogout" fitHeight="29.0" fitWidth="33.0">
+            <ImageView fitHeight="29.0" fitWidth="33.0">
                <image>
                   <Image url="@../../../../../Scaricati/logout.png" />
                </image>
@@ -32,7 +32,7 @@
                   <Image url="@../../../../../Scaricati/user.png" />
                </image>
             </ImageView>
-         </graphic>
+          </graphic>
       </Button>
       <Button layoutX="196.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="My Car " />
       <ComboBox layoutX="264.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="103.0" promptText="My Lift" style="-fx-background-color: #046104; -fx-border-color: #046104;" />
@@ -47,12 +47,12 @@
       <Text layoutX="24.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone number:" />
       <Text layoutX="24.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
       <Text layoutX="24.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:" />
-      <Text fx:id="txName" layoutX="250.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text fx:id="txSurname" layoutX="250.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Text fx:id="txMatNum" layoutX="250.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-      <Button fx:id="btSave" layoutX="516.0" layoutY="352.0" mnemonicParsing="false" text="Save" />
-      <Button layoutX="22.0" layoutY="352.0" mnemonicParsing="false" text="Back" />
-      <Button fx:id="btEdit" layoutX="448.0" layoutY="352.0" mnemonicParsing="false" text="Edit" />
+      <Text fx:id="txName" layoutX="250.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
+      <Text fx:id="txSurname" layoutX="250.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
+      <Text fx:id="txMatNum" layoutX="250.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
+      <Button fx:id="btSave" onAction="#saveButtonController" layoutX="516.0" layoutY="352.0" mnemonicParsing="false" text="Save" />
+      <Button fx:id="btBack" onAction="#backButtonController" layoutX="22.0" layoutY="352.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="btEdit" onAction="#editButtonController" layoutX="448.0" layoutY="352.0" mnemonicParsing="false" text="Edit" />
       <TextField fx:id="tfPhone" layoutX="250.0" layoutY="224.0" />
       <TextField fx:id="tfEmail" layoutX="250.0" layoutY="264.0" />
       <TextField fx:id="tfPass" layoutX="250.0" layoutY="302.0" />

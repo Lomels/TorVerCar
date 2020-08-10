@@ -21,22 +21,22 @@
       <Button fx:id="btBook" onAction="#bookButtonController" layoutX="86.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Book" />
       <Button fx:id="btOffer" onAction="#offerButtonController" layoutX="145.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Offer" />
       <Button fx:id="btLogout" onAction="#logoutButtonController" layoutX="553.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: #046104;">
-         <!-- <graphic>
+         <graphic>
             <ImageView fitHeight="29.0" fitWidth="33.0">
                <image>
-                  <Image url="@../../../../../Scaricati/logout.png" />
+                  <Image url="@logic/view/fxml/images/logout.png" />
                </image>
             </ImageView>
-         </graphic> -->
+         </graphic>
       </Button>
       <Button fx:id="btProfile" onAction="#profileButtonController" layoutX="507.0" layoutY="7.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="46.0" style="-fx-background-color: #046104;" text="Profile">
-         <!-- <graphic>
+         <graphic>
             <ImageView fitHeight="30.0" fitWidth="28.0">
                <image>
-                  <Image url="@../../../../../Scaricati/user.png" />
+                  <Image url="@logic/view/fxml/images/user.png" />
                </image>
             </ImageView>
-         </graphic> -->
+          </graphic>
       </Button>
       <Button fx:id="btMyCar" onAction="#myCarButtonController" layoutX="206.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="My Car " />
       <ComboBox layoutX="288.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="103.0" promptText="My Lift" style="-fx-background-color: #046104; -fx-border-color: #046104;" />

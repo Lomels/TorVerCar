@@ -11,67 +11,93 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import logic.controller.ProfileController;
 import logic.model.UserSingleton;
 
-public class ProfileView extends Application implements Initializable{
-	private Text txName;
-	private Text txSurname;
-	private Text txMatNum;
-	private Text tfEmail;
-	private Text tfPass;
-	private Text tfPhone;
-	private Button btHome;
-	private Button btBack;
-	private Button btProfile;
-	private Button btMyCar;
-	private Button btSave;
-	private Button btEdit;
-	private Button btLogout;
+public class ProfileView extends Application implements Initializable {
+	@FXML private Text txName;
+	@FXML private Text txSurname;
+	@FXML private Text txMatNum;
+	@FXML private TextField tfEmail;
+	@FXML private TextField tfPass;
+	@FXML private TextField tfPhone;
 	
-	
+	@FXML private Button btHome;
+	@FXML private Button btBack;
+	@FXML private Button btProfile;
+	@FXML private Button btMyCar;
+	@FXML private Button btSave;
+	@FXML private Button btEdit;
+	@FXML private Button btLogout;
+	@FXML private Button btOffer;
+	@FXML private Button btBook;
+
 	UserSingleton sg = UserSingleton.getInstance();
-	
+	ProfileController controller = new ProfileController();
+	String userID;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		txName.setText(sg.getStudent().getName().toString());
-		txSurname.setText(sg.getStudent().getSurname().toString());
-		txMatNum.setText(sg.getStudent().getUserID().toString());
-		tfPhone.setText(sg.getStudent().getPhone().toString());
-		tfEmail.setText(sg.getStudent().getEmail().toString());
-		tfPass.setText(sg.getStudent().getPassword().toString());
-		
+		switch (sg.getRole()) {
+		case STUDENT:
+			txName.setText(sg.getStudent().getName().toString());
+			txSurname.setText(sg.getStudent().getSurname().toString());
+			txMatNum.setText(sg.getStudent().getUserID().toString());
+			tfPhone.setText(sg.getStudent().getPhone().toString());
+			tfEmail.setText(sg.getStudent().getEmail().toString());
+			tfPass.setText(sg.getStudent().getPassword().toString());
+			userID = sg.getStudent().getUserID();
+			break;
+			
+		case DRIVER:
+			txName.setText(sg.getStudentCar().getName().toString());
+			txSurname.setText(sg.getStudentCar().getSurname().toString());
+			txMatNum.setText(sg.getStudentCar().getUserID().toString());
+			tfPhone.setText(sg.getStudentCar().getPhone().toString());
+			tfEmail.setText(sg.getStudentCar().getEmail().toString());
+			tfPass.setText(sg.getStudentCar().getPassword().toString());
+			userID = sg.getStudentCar().getUserID();
+			break;
+		}
+
 		tfPhone.setDisable(true);
 		tfEmail.setDisable(true);
 		tfPass.setDisable(true);
-		
-		
+
 	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Profile_page.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-		
-	
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	@FXML
-	public void homeButtonController() throws IOException {
-		HomeView home = new HomeView();
+	public void homeButtonController() throws Exception {
+		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 	
+	@FXML
+	public void bookButtonController() throws IOException {
+		//TODO: implementare
+	}
+	
+	@FXML
+	public void offerButtonController() throws IOException {
+		//TODO: implementare
+	}
+
 	@FXML
 	public void backButtonController() throws Exception {
 		ProfileView profile = new ProfileView();
@@ -83,38 +109,39 @@ public class ProfileView extends Application implements Initializable{
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
 	}
-	
+
 	@FXML
 	public void myCarButtonController() throws Exception {
 		MyCarView myCar = new MyCarView();
 		myCar.start((Stage) btMyCar.getScene().getWindow());
 	}
-	
+
 	@FXML
 	public void logoutButtonController() throws Exception {
 		LoginView login = new LoginView();
 		login.start((Stage) btLogout.getScene().getWindow());
 	}
-	
+
 	@FXML
-	public void editButtonController() throws Exception {
-		ProfileView profile = new ProfileView();
-		profile.start((Stage) btEdit.getScene().getWindow());
-		
+	public void editButtonController() {
 		tfPhone.setDisable(false);
 		tfEmail.setDisable(false);
 		tfPass.setDisable(false);
-		
-		
 	}
-	
+
+	@FXML
 	public void saveButtonController() throws Exception {
-		sg.getStudent().setPhone(tfPhone.getText());
-		sg.getStudent().setEmail(tfEmail.getText());
-		sg.getStudent().setPassword(tfPass.getText());
-		
-		ProfileView profile = new ProfileView();
-		profile.start((Stage) btSave.getScene().getWindow());
-		
+		switch (sg.getRole()) {
+		case STUDENT:
+			controller.edit(sg.getStudent().getUserID(), tfEmail.getText(), tfPhone.getText(), tfPass.getText());
+			break;
+		case DRIVER:
+			controller.edit(sg.getStudentCar().getUserID(), tfEmail.getText(), tfPhone.getText(), tfPass.getText());
+			break;
+		default:
+			tfPhone.setDisable(true);
+			tfEmail.setDisable(true);
+			tfPass.setDisable(true);
+		}
 	}
 }
