@@ -3,6 +3,7 @@ package logic.view.mysql;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 
 import logic.model.Student;
 import logic.model.StudentCar;
@@ -114,5 +115,60 @@ public class MyQueries {
 
 		stmt.executeUpdate(sql);
 	}
+
+	public static void saveLiftWithoutID(Statement stmt, LocalDateTime startDateTime, LocalDateTime stopDateTime,
+			Integer maxDuration, String note, String driverID, String route, Integer freeSeats) throws SQLException {
+		String format = "INSERT INTO Lifts (startDateTime, stopDateTime, maxDuration, note, driverID, route, freeSeats) VALUES "
+				+ "('%s', '%s', %d, '%s', '%s', '%s', %d);";
+		String sql = String.format(format, startDateTime, stopDateTime, maxDuration, note, driverID, route, freeSeats);
+
+		stmt.executeUpdate(sql);
+	}
+
+	public static void saveLiftWithID(Statement stmt, Integer liftID, LocalDateTime startDateTime,
+			LocalDateTime stopDateTime, Integer maxDuration, String note, String driverID, String route,
+			Integer freeSeats) throws SQLException {
+		String format = "INSERT INTO Lifts (liftID, startDateTime, stopDateTime, maxDuration, note, driverID, route, freeSeats) VALUES "
+				+ "(%d, '%s', '%s', %d, '%s', '%s', '%s', %d);";
+		String sql = String.format(format, liftID, startDateTime, stopDateTime, maxDuration, note, driverID, route,
+				freeSeats);
+
+		stmt.executeUpdate(sql);
+	}
+
+	public static ResultSet loadLiftByLiftID(Statement stmt, Integer liftID) throws SQLException {
+		String format = "SELECT * FROM Lifts WHERE liftID = %d;";
+		String sql = String.format(format, liftID);
+
+		return stmt.executeQuery(sql);
+	}
+
+	public static void deleteLiftByID(Statement stmt, Integer liftID) throws SQLException {
+		String format = "DELETE FROM Lifts WHERE liftID = %d;";
+		String sql = String.format(format, liftID);
+
+		stmt.executeUpdate(sql);
+	}
+
+	public static ResultSet listLiftStartingAfterDateTime(Statement stmt, LocalDateTime startDateTime) throws SQLException {
+		String format = "SELECT * FROM Lifts WHERE startDateTime > '%s';";
+		String sql = String.format(format, startDateTime);
+
+		return stmt.executeQuery(sql);
+	}
 	
+	public static ResultSet listLiftStoppingBeforeDateTime(Statement stmt, LocalDateTime stopDateTime) throws SQLException {
+		String format = "SELECT * FROM Lifts WHERE startDateTime < '%s';";
+		String sql = String.format(format, stopDateTime);
+		
+		return stmt.executeQuery(sql);
+	}
+	
+	public static ResultSet getDriverIDByLiftID(Statement stmt, Integer liftID) throws SQLException {
+		String format = "SELECT driverID FROM Lifts WHERE liftID = %d;";
+		String sql = String.format(format, liftID);
+		
+		return stmt.executeQuery(sql);
+	}
+
 }

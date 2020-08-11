@@ -1,7 +1,5 @@
 package logic.model;
 
-import java.util.List;
-
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
 import logic.utilities.InputChecker;
@@ -15,27 +13,23 @@ public class Student {
 	protected String email;
 	protected String phone;
 
-	// Collection of active lifts
-	protected List<Lift> lifts;
-
 	protected Boolean state;
 
 	// Generated
-	public Student(String userID, String password, String email, String name, String surname, String phone,
-			List<Lift> lifts) throws InvalidInputException {
+	public Student(String userID, String password, String email, String name, String surname, String phone)
+			throws InvalidInputException {
 		this.setUserID(userID);
 		this.setPassword(password);
 		this.setName(name);
 		this.setSurname(surname);
 		this.setPhone(phone);
-		this.lifts = lifts;
 		this.setEmail(email);
 	}
 
 	// Costruttore che parte dello studentCar
 	public Student(StudentCar studentCar) throws InvalidInputException {
 		this(studentCar.userID, studentCar.password, studentCar.email, studentCar.name, studentCar.surname,
-				studentCar.phone, studentCar.lifts);
+				studentCar.phone);
 	}
 
 	public void setUserID(String id) throws InvalidInputException {
@@ -94,20 +88,6 @@ public class Student {
 		this.phone = phone;
 	}
 
-	public List<Lift> getLifts() {
-		return this.lifts;
-	}
-
-	public void setLifts(List<Lift> lifts) {
-		this.lifts = lifts;
-	}
-
-	// Generato automaticamente
-	@Override
-	public String toString() {
-		return "Student [name=" + name + ", surname=" + surname + ", phone=" + phone + ", lifts=" + lifts + "]";
-	}
-
 	public Boolean getState() {
 		return state;
 	}
@@ -120,6 +100,12 @@ public class Student {
 		} else {
 			this.state = newState;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Student [userID=" + userID + ", password=" + password + ", name=" + name + ", surname=" + surname
+				+ ", email=" + email + ", phone=" + phone + "]";
 	}
 
 }

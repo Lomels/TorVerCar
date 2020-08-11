@@ -8,21 +8,21 @@ import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;
 
 public class Lift {
-	
-	private String liftID;
-	private LocalDateTime startTime;
+
+	private Integer liftID;
+	private LocalDateTime startDateTime;
 	private Integer maxDuration;
 	private String note;
-	
+
 	private StudentCar driver;
 	private List<Student> passengers = new ArrayList<>();
-	
+
 	private Route route;
 
-	public Lift(String liftID, LocalDateTime startTime, int maxDuration, String note,
-			StudentCar driver, List<Student> passengers, Route route) throws InvalidInputException {
+	public Lift(Integer liftID, LocalDateTime startTime, int maxDuration, String note, StudentCar driver,
+			List<Student> passengers, Route route) throws InvalidInputException {
 		this.liftID = liftID;
-		this.setStartTime(startTime);
+		this.setStartDateTime(startTime);
 		this.setMaxDuration(maxDuration);
 		this.note = note;
 		this.setDriver(driver);
@@ -30,23 +30,22 @@ public class Lift {
 		this.setRoute(route);
 	}
 
-	// TODO: implement lift database
-	public String getLiftID() {
+	public Integer getLiftID() {
 		return liftID;
 	}
 
-	public void setLiftID(String liftID) {
+	public void setLiftID(Integer liftID) {
 		this.liftID = liftID;
 	}
 
-	public LocalDateTime getStartTime() {
-		return startTime;
+	public LocalDateTime getStartDateTime() {
+		return startDateTime;
 	}
 
-	public void setStartTime(LocalDateTime startTime) throws InvalidInputException {
-		if (startTime == null)
+	public void setStartDateTime(LocalDateTime startDateTime) throws InvalidInputException {
+		if (startDateTime == null)
 			throw new InvalidInputException("startTime must be not null.");
-		this.startTime = startTime;
+		this.startDateTime = startDateTime;
 	}
 
 	public int getMaxDuration() {
@@ -92,6 +91,21 @@ public class Lift {
 	public void setRoute(Route route) throws InvalidInputException {
 		InputChecker.checkNotNull(route, "Route");
 		this.route = route;
+	}
+
+	public LocalDateTime getStopDateTime() {
+		return this.getStartDateTime().plusMinutes(this.getRoute().getDuration());
+	}
+
+	public Integer getFreeSeats() {
+		Integer carSeats = this.getDriver().getCarInfo().getSeats();
+		return carSeats - (this.getPassengers() == null ? 0 : this.getPassengers().size());
+	}
+
+	@Override
+	public String toString() {
+		return "Lift [liftID=" + liftID + ", startDateTime=" + startDateTime + ", maxDuration=" + maxDuration + ", note=" + note
+				+ ", driver=" + driver + ", passengers=" + passengers + ", route=" + route + "]";
 	}
 
 }

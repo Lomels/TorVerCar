@@ -55,4 +55,10 @@ public class CarInfo {
 		InputChecker.checkGeneric(colour);
 		this.colour = colour;
 	}
+
+	@Override
+	public String toString() {
+		return "CarInfo [plate=" + plate + ", seats=" + seats + ", model=" + model + ", colour=" + colour + "]";
+	}
+
 }

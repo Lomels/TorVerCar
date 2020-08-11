@@ -5,18 +5,27 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import logic.bean.CarInfoBean;
-import logic.bean.UserBean;
 import logic.controller.StudentBuilder;
 import logic.controller.StudentCarBuilder;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.CarInfo;
+import logic.model.Lift;
 import logic.model.Role;
+import logic.model.Route;
 import logic.model.Student;
 import logic.model.StudentCar;
 import logic.utilities.InputChecker;
+import logic.utilities.MyLogger;
 import logic.view.OurStudentDatabase;
 
 public class MySqlDAO implements OurStudentDatabase {
@@ -92,7 +101,7 @@ public class MySqlDAO implements OurStudentDatabase {
 			this.disconnect();
 		}
 	}
-	
+
 	@Override
 	public void addCar(StudentCar studentCar) throws DatabaseException {
 		try {
@@ -121,9 +130,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	@Override
-	public Student loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException {
-		InputChecker.checkUserID(userID);
-		// Student s = null;
+	public Student loadStudentByUserID(String userID) throws DatabaseException, InvalidInputException {
 		Student s = null;
 		try {
 			this.connect();
@@ -139,15 +146,10 @@ public class MySqlDAO implements OurStudentDatabase {
 			String email = rs.getString("email");
 			String phone = rs.getString("phone");
 
-			s = new StudentBuilder(userID)
-					.email(email)
-					.fullname(name, surname)
-					.password(password)
-					.phone(phone)
-					.build();
-			
+			s = new StudentBuilder(userID).email(email).fullname(name, surname).password(password).phone(phone).build();
+
 			rs.close();
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DatabaseException(e.getMessage());
 		} finally {
@@ -157,7 +159,6 @@ public class MySqlDAO implements OurStudentDatabase {
 		return s;
 	}
 
-	// TODO: migliorare e ridurre le query
 	@Override
 	public StudentCar loadStudentCarByUserID(String userID) throws DatabaseException {
 		StudentCar sCar = null;
@@ -180,15 +181,8 @@ public class MySqlDAO implements OurStudentDatabase {
 			carInfo = new CarInfo(rs.getString("plate"), rs.getInt("seats"), rs.getString("model"),
 					rs.getString("color"));
 
-			sCar = new StudentCarBuilder(new StudentBuilder(userID)
-					.email(email)
-					.fullname(name, surname)
-					.password(password)
-					.phone(phone)
-					.build())
-					.carInfo(carInfo)
-					.rating(rating)
-					.build();
+			sCar = new StudentCarBuilder(new StudentBuilder(userID).email(email).fullname(name, surname)
+					.password(password).phone(phone).build()).carInfo(carInfo).rating(rating).build();
 
 			rs.close();
 		} catch (Exception e) {
@@ -254,7 +248,7 @@ public class MySqlDAO implements OurStudentDatabase {
 			this.disconnect();
 		}
 	}
-	
+
 	@Override
 	public Role loadRoleByUserID(String userID) throws DatabaseException {
 		Role role = null;
@@ -275,7 +269,7 @@ public class MySqlDAO implements OurStudentDatabase {
 		} finally {
 			this.disconnect();
 		}
-		
+
 		return role;
 	}
 
@@ -305,6 +299,178 @@ public class MySqlDAO implements OurStudentDatabase {
 				se2.printStackTrace();
 			}
 		}
+
+	}
+
+	@Override
+	public void saveLift(Lift lift) throws DatabaseException {
+		try {
+			this.connect();
+			StudentCar driver = lift.getDriver();
+
+			if (lift.getLiftID() == null) {
+				// this is the insert
+				MyLogger.info("First time insert of Lift in DB");
+				MyQueries.saveLiftWithoutID(stmt, lift.getStartDateTime(), lift.getStopDateTime(),
+						lift.getMaxDuration(), lift.getNote(), driver.getUserID(),
+						lift.getRoute().JSONencode().toString(), lift.getFreeSeats());
+			} else {
+				// TODO: salvataggio nel caso il lift già esista
+				// fare prima il delete e poi il reinsert
+				MyLogger.info("Update of Lift in DB");
+				MyQueries.deleteLiftByID(stmt, lift.getLiftID());
+
+				MyQueries.saveLiftWithID(stmt, lift.getLiftID(), lift.getStartDateTime(), lift.getStopDateTime(),
+						lift.getMaxDuration(), lift.getNote(), driver.getUserID(),
+						lift.getRoute().JSONencode().toString(), lift.getFreeSeats());
+
+				// TODO: qui salva i passeggeri
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			MyLogger.severe("catch nel saveLift del MySqlDao", e);
+		} finally {
+			this.disconnect();
+		}
+
+	}
+
+	@Override
+	public Lift loadLiftByID(Integer liftID) throws DatabaseException, JSONException, InvalidInputException {
+
+		Lift lift = null;
+		try {
+			this.connect();
+			ResultSet rs = MyQueries.loadLiftByLiftID(stmt, liftID);
+
+			if (!rs.first())
+				throw new DatabaseException("Lift not found");
+
+			rs.first();
+
+			lift = this.liftFromResult(rs);
+
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DatabaseException(e.getMessage());
+		} finally {
+			this.disconnect();
+		}
+		return lift;
+	}
+
+	@Override
+	public void deleteLiftByID(Integer liftID) {
+		try {
+			this.connect();
+
+			MyQueries.deleteLiftByID(stmt, liftID);
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+		} finally {
+			this.disconnect();
+		}
+
+	}
+
+	@Override
+	public List<Lift> listLiftStartingAfterDateTime(LocalDateTime startDateTime) {
+		List<Lift> result = null;
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.listLiftStartingAfterDateTime(stmt, startDateTime);
+
+			if (!rs.first())
+				throw new DatabaseException("No lift found starting after " + startDateTime.toString());
+
+			result = new ArrayList<Lift>();
+
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	private Lift liftFromResult(ResultSet rs)
+			throws SQLException, DatabaseException, JSONException, InvalidInputException {
+		// liftID
+		Integer liftIDFromDB = rs.getInt("liftID");
+		// startTime
+		Timestamp sqlTimestamp = rs.getTimestamp("startDateTime");
+		LocalDateTime startDateTime = sqlTimestamp.toLocalDateTime();
+		// maxDuration
+		Integer maxDuration = rs.getInt("maxDuration");
+		// note
+		String note = rs.getString("note");
+		// driver
+		String driverID = rs.getString("driverID");
+		StudentCar driver = this.loadStudentCarByUserID(driverID);
+		// TODO: implement retrieve of passengers
+		List<Student> passengers = null;
+		// route
+		String routeJson = rs.getString("route");
+		Route route = Route.JSONdecode(new JSONObject(routeJson));
+
+		return new Lift(liftIDFromDB, startDateTime, maxDuration, note, driver, passengers, route);
+	}
+
+	@Override
+	public List<Lift> listLiftStoppingBeforeDateTime(LocalDateTime stopDateTime) {
+		List<Lift> result = null;
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.listLiftStoppingBeforeDateTime(stmt, stopDateTime);
+
+			if (!rs.first())
+				throw new DatabaseException("No lift found stopping before" + stopDateTime.toString());
+
+			result = new ArrayList<Lift>();
+
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public String getDriverIDByLiftID(Integer liftID) {
+
+		String result = null;
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.getDriverIDByLiftID(stmt, liftID);
+
+			if (!rs.first())
+				throw new DatabaseException("No lift with liftID: " + liftID.toString());
+
+			rs.first();
+
+			result = rs.getString("driverID");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public void addPassengerByLiftIDAndUserID(Integer liftID, String passengerID) {
+		// TODO Auto-generated method stub
 
 	}
 }
