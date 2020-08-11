@@ -1,12 +1,14 @@
 package test;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
+import logic.controller.PassengerController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Lift;
@@ -20,6 +22,10 @@ public class LiftPersitenceTest {
 
 	private MySqlDAO dao = new MySqlDAO();
 
+	private static final String MARCO_ID = "0241118";
+	private static final String GIULIA_ID = "0245061";
+	private static final String GIUSEPPE_ID = "0252379";
+
 //	@Test
 	public void saveLiftWithoutPassengers() throws InvalidInputException, DatabaseException {
 
@@ -29,7 +35,7 @@ public class LiftPersitenceTest {
 		LocalDateTime startDateTime = LocalDateTime.now();
 		Integer maxDuration = 200;
 		String note = "Ma non so cosa ce nella mia pelle bianca";
-		StudentCar driver = dao.loadStudentCarByUserID("0241118");
+		StudentCar driver = dao.loadStudentCarByUserID(MARCO_ID);
 		List<Student> passengers = null;
 		Route route = Route.JSONdecode(new JSONObject(fromData));
 
@@ -85,15 +91,63 @@ public class LiftPersitenceTest {
 		}
 	}
 
-	@Test
+//	@Test
 	public void addPassenger() throws DatabaseException, InvalidInputException {
-		Student passenger = dao.loadStudentByUserID("0241118");
+		Integer liftID = 7;
+
+		Student passenger = dao.loadStudentByUserID(GIUSEPPE_ID);
 		MyLogger.info("Passenger", passenger);
 
-		Lift lift = dao.loadLiftByID(5);
+		Lift lift = dao.loadLiftByID(liftID);
 		MyLogger.info("lift", lift);
 
-		MyLogger.info("Lift 5 driver" + dao.getDriverIDByLiftID(5));
+		PassengerController pc = new PassengerController();
+
+		try {
+			dao.addPassengerByLiftIDAndUserID(liftID, GIULIA_ID);
+			pc.addPassenger(lift, passenger);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+
+//	@Test
+	public void listPassenger() throws DatabaseException, InvalidInputException {
+		Integer liftID = 7;
+
+		List<Student> passengers = dao.listPassengersByLiftID(liftID);
+
+		for (Student p : passengers) {
+			MyLogger.info("One of the passenger", p);
+		}
+	}
+
+	@Test
+	public void removePassenger() throws DatabaseException, InvalidInputException {
+		Integer liftID = 7;
+
+		List<Student> passengers = new ArrayList<Student>();
+		try {
+			passengers = dao.listPassengersByLiftID(liftID);
+			for (Student p : passengers) {
+				MyLogger.info("One of the passenger", p);
+			}
+			Student first = passengers.get(0);
+
+			dao.removePassengerByLiftIDAndUserID(liftID, first.getUserID());
+
+			MyLogger.info("Removed: " + first.getUserID());
+
+			passengers = dao.listPassengersByLiftID(liftID);
+
+			for (Student pNew : passengers) {
+				MyLogger.info("One of the new passenger", pNew);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
 	}
 
 }

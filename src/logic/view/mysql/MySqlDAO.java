@@ -49,6 +49,72 @@ public class MySqlDAO implements OurStudentDatabase {
 		}
 	}
 
+	private void connect() {
+		try {
+			this.conn = DriverManager.getConnection(URL, USER, PASS);
+			// TODO: informati su parametri
+			this.stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+	private void disconnect() {
+
+		try {
+			if (this.stmt != null)
+				this.stmt.close();
+		} catch (SQLException se) {
+			try {
+				if (this.conn != null)
+					this.conn.close();
+
+			} catch (SQLException se2) {
+				// TODO handle exception
+				se2.printStackTrace();
+			}
+		}
+
+	}
+
+	private Lift liftFromResult(ResultSet rs)
+			throws SQLException, DatabaseException, JSONException, InvalidInputException {
+		// liftID
+		Integer liftIDFromDB = rs.getInt("liftID");
+		// startTime
+		Timestamp sqlTimestamp = rs.getTimestamp("startDateTime");
+		LocalDateTime startDateTime = sqlTimestamp.toLocalDateTime();
+		// maxDuration
+		Integer maxDuration = rs.getInt("maxDuration");
+		// note
+		String note = rs.getString("note");
+		// driver
+		String driverID = rs.getString("driverID");
+		StudentCar driver = this.loadStudentCarByUserID(driverID);
+		// TODO: implement retrieve of passengers
+		List<Student> passengers = this.listPassengersByLiftID(liftIDFromDB);
+		// route
+		String routeJson = rs.getString("route");
+		Route route = Route.JSONdecode(new JSONObject(routeJson));
+
+		return new Lift(liftIDFromDB, startDateTime, maxDuration, note, driver, passengers, route);
+	}
+
+	private Student studentFromResult(ResultSet rs) throws SQLException, InvalidInputException {
+		String userID = rs.getString("userID");
+		String password = rs.getString("password");
+		String name = rs.getString("name");
+		String surname = rs.getString("surname");
+		String email = rs.getString("email");
+		String phone = rs.getString("phone");
+
+		Student result = new StudentBuilder(userID).email(email).fullname(name, surname).password(password).phone(phone)
+				.build();
+
+		return result;
+	}
+
 	@Override
 	public boolean existByUserID(String userID) throws DatabaseException, InvalidInputException {
 		InputChecker.checkUserID(userID);
@@ -140,13 +206,7 @@ public class MySqlDAO implements OurStudentDatabase {
 				throw new DatabaseException("Student not found");
 
 			rs.first();
-			String password = rs.getString("password");
-			String name = rs.getString("name");
-			String surname = rs.getString("surname");
-			String email = rs.getString("email");
-			String phone = rs.getString("phone");
-
-			s = new StudentBuilder(userID).email(email).fullname(name, surname).password(password).phone(phone).build();
+			s = this.studentFromResult(rs);
 
 			rs.close();
 		} catch (SQLException e) {
@@ -273,35 +333,6 @@ public class MySqlDAO implements OurStudentDatabase {
 		return role;
 	}
 
-	private void connect() {
-		try {
-			this.conn = DriverManager.getConnection(URL, USER, PASS);
-			// TODO: informati su parametri
-			this.stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-	}
-
-	private void disconnect() {
-
-		try {
-			if (this.stmt != null)
-				this.stmt.close();
-		} catch (SQLException se) {
-			try {
-				if (this.conn != null)
-					this.conn.close();
-
-			} catch (SQLException se2) {
-				// TODO handle exception
-				se2.printStackTrace();
-			}
-		}
-
-	}
-
 	@Override
 	public void saveLift(Lift lift) throws DatabaseException {
 		try {
@@ -399,29 +430,6 @@ public class MySqlDAO implements OurStudentDatabase {
 		return result;
 	}
 
-	private Lift liftFromResult(ResultSet rs)
-			throws SQLException, DatabaseException, JSONException, InvalidInputException {
-		// liftID
-		Integer liftIDFromDB = rs.getInt("liftID");
-		// startTime
-		Timestamp sqlTimestamp = rs.getTimestamp("startDateTime");
-		LocalDateTime startDateTime = sqlTimestamp.toLocalDateTime();
-		// maxDuration
-		Integer maxDuration = rs.getInt("maxDuration");
-		// note
-		String note = rs.getString("note");
-		// driver
-		String driverID = rs.getString("driverID");
-		StudentCar driver = this.loadStudentCarByUserID(driverID);
-		// TODO: implement retrieve of passengers
-		List<Student> passengers = null;
-		// route
-		String routeJson = rs.getString("route");
-		Route route = Route.JSONdecode(new JSONObject(routeJson));
-
-		return new Lift(liftIDFromDB, startDateTime, maxDuration, note, driver, passengers, route);
-	}
-
 	@Override
 	public List<Lift> listLiftStoppingBeforeDateTime(LocalDateTime stopDateTime) {
 		List<Lift> result = null;
@@ -470,7 +478,58 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	@Override
 	public void addPassengerByLiftIDAndUserID(Integer liftID, String passengerID) {
-		// TODO Auto-generated method stub
+		try {
+			this.connect();
+
+			MyQueries.addPassengerByLiftIDAndUserID(stmt, liftID, passengerID);
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+
+	}
+
+	@Override
+	public List<Student> listPassengersByLiftID(Integer liftID) throws DatabaseException, InvalidInputException {
+		List<Student> result = null;
+		try {
+			this.connect();
+			ResultSet rs = MyQueries.listPassengersByLiftID(stmt, liftID);
+
+			if (!rs.first())
+				throw new DatabaseException("No Passenger found");
+
+			rs.first();
+			result = new ArrayList<Student>();
+			do {
+				result.add(this.studentFromResult(rs));
+			} while (rs.next());
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+		return result;
+	}
+
+	@Override
+	public void removePassengerByLiftIDAndUserID(Integer liftID, String passengerID) {
+		try {
+			this.connect();
+
+			MyQueries.removePassengerByLiftIDAndUserID(stmt, liftID, passengerID);
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
 
 	}
 }

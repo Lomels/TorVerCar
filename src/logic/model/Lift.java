@@ -26,7 +26,7 @@ public class Lift {
 		this.setMaxDuration(maxDuration);
 		this.note = note;
 		this.setDriver(driver);
-		this.passengers = passengers;
+		this.setPassengers(passengers);
 		this.setRoute(route);
 	}
 
@@ -81,7 +81,10 @@ public class Lift {
 	}
 
 	public void setPassengers(List<Student> passengers) {
-		this.passengers = passengers;
+		if (passengers == null)
+			this.passengers = new ArrayList<Student>();
+		else
+			this.passengers = passengers;
 	}
 
 	public Route getRoute() {
@@ -99,13 +102,25 @@ public class Lift {
 
 	public Integer getFreeSeats() {
 		Integer carSeats = this.getDriver().getCarInfo().getSeats();
-		return carSeats - (this.getPassengers() == null ? 0 : this.getPassengers().size());
+		return carSeats - this.getPassengers().size();
+	}
+
+	public Boolean isPassenger(Student student) {
+		if (this.getPassengers() == null)
+			return false;
+		else {
+			for (Student passenger : this.getPassengers()) {
+				if (student.getUserID().equals(passenger.getUserID()))
+					return true;
+			}
+			return false;
+		}
 	}
 
 	@Override
 	public String toString() {
-		return "Lift [liftID=" + liftID + ", startDateTime=" + startDateTime + ", maxDuration=" + maxDuration + ", note=" + note
-				+ ", driver=" + driver + ", passengers=" + passengers + ", route=" + route + "]";
+		return "Lift [liftID=" + liftID + ", startDateTime=" + startDateTime + ", maxDuration=" + maxDuration
+				+ ", note=" + note + ", driver=" + driver + ", passengers=" + passengers + ", route=" + route + "]";
 	}
 
 }

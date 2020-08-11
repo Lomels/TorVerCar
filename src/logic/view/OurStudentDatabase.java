@@ -62,4 +62,8 @@ public interface OurStudentDatabase {
 	// Passenger queries
 	
 	public void addPassengerByLiftIDAndUserID(Integer liftID, String passengerID);
+	
+	public List<Student> listPassengersByLiftID(Integer liftID) throws DatabaseException, InvalidInputException;
+	
+	public void removePassengerByLiftIDAndUserID(Integer liftID, String passengerID);
 }

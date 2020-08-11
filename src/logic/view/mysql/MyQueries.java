@@ -150,25 +150,50 @@ public class MyQueries {
 		stmt.executeUpdate(sql);
 	}
 
-	public static ResultSet listLiftStartingAfterDateTime(Statement stmt, LocalDateTime startDateTime) throws SQLException {
+	public static ResultSet listLiftStartingAfterDateTime(Statement stmt, LocalDateTime startDateTime)
+			throws SQLException {
 		String format = "SELECT * FROM Lifts WHERE startDateTime > '%s';";
 		String sql = String.format(format, startDateTime);
 
 		return stmt.executeQuery(sql);
 	}
-	
-	public static ResultSet listLiftStoppingBeforeDateTime(Statement stmt, LocalDateTime stopDateTime) throws SQLException {
+
+	public static ResultSet listLiftStoppingBeforeDateTime(Statement stmt, LocalDateTime stopDateTime)
+			throws SQLException {
 		String format = "SELECT * FROM Lifts WHERE startDateTime < '%s';";
 		String sql = String.format(format, stopDateTime);
-		
+
 		return stmt.executeQuery(sql);
 	}
-	
+
 	public static ResultSet getDriverIDByLiftID(Statement stmt, Integer liftID) throws SQLException {
 		String format = "SELECT driverID FROM Lifts WHERE liftID = %d;";
 		String sql = String.format(format, liftID);
-		
+
 		return stmt.executeQuery(sql);
+	}
+
+	public static void addPassengerByLiftIDAndUserID(Statement stmt, Integer liftID, String passengerID)
+			throws SQLException {
+		String format = "INSERT INTO Passengers (liftID, passengerID) VALUE (%d, '%s');";
+		String sql = String.format(format, liftID, passengerID);
+
+		stmt.executeUpdate(sql);
+	}
+
+	public static ResultSet listPassengersByLiftID(Statement stmt, Integer liftID) throws SQLException {
+		String format = "SELECT U.userID, password, name, surname, email, phone, rating FROM Passengers AS P, Students AS S, Users AS U WHERE P.liftID = %d && P.passengerID = S.userID && S.userID = U.userID;";
+		String sql = String.format(format, liftID);
+
+		return stmt.executeQuery(sql);
+	}
+	
+	public static void removePassengerByLiftIDAndUserID(Statement stmt, Integer liftID, String passengerID)
+			throws SQLException {
+		String format = "DELETE FROM Passengers WHERE liftID = %d && passengerID = '%s';";
+		String sql = String.format(format, liftID, passengerID);
+
+		stmt.executeUpdate(sql);
 	}
 
 }
