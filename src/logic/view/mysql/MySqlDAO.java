@@ -32,7 +32,7 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	private static final String USER = "torvercar";
 	private static final String PASS = "ispw2020";
-	private static final String URL = "jdbc:mysql://localhost:3306/TorVerCar?autoReconnect=true&useSSL=false";
+	private static final String URL = "jdbc:mysql://localhost:3306/TorVerCar?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true";
 	private static final String DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 
 	private Statement stmt;
@@ -408,16 +408,14 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	@Override
 	public List<Lift> listLiftStartingAfterDateTime(LocalDateTime startDateTime) {
-		List<Lift> result = null;
+		List<Lift> result = new ArrayList<Lift>();
 		try {
 			this.connect();
 
 			ResultSet rs = MyQueries.listLiftStartingAfterDateTime(stmt, startDateTime);
 
 			if (!rs.first())
-				throw new DatabaseException("No lift found starting after " + startDateTime.toString());
-
-			result = new ArrayList<Lift>();
+				return result;
 
 			do {
 				result.add(this.liftFromResult(rs));
@@ -457,16 +455,14 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	@Override
 	public List<Lift> listLiftStoppingBeforeDateTime(LocalDateTime stopDateTime) {
-		List<Lift> result = null;
+		List<Lift> result = new ArrayList<Lift>();
 		try {
 			this.connect();
 
 			ResultSet rs = MyQueries.listLiftStoppingBeforeDateTime(stmt, stopDateTime);
 
 			if (!rs.first())
-				throw new DatabaseException("No lift found stopping before" + stopDateTime.toString());
-
-			result = new ArrayList<Lift>();
+				return result;
 
 			do {
 				result.add(this.liftFromResult(rs));
@@ -543,16 +539,15 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	@Override
 	public List<Student> listPassengersByLiftID(Integer liftID) throws DatabaseException, InvalidInputException {
-		List<Student> result = null;
+		List<Student> result = new ArrayList<Student>();
 		try {
 			this.connect();
 			ResultSet rs = MyQueries.listPassengersByLiftID(stmt, liftID);
 
 			if (!rs.first())
-				throw new DatabaseException("No Passenger found");
+				return result;
 
 			rs.first();
-			result = new ArrayList<Student>();
 			do {
 				result.add(this.studentFromResult(rs));
 			} while (rs.next());
@@ -580,5 +575,54 @@ public class MySqlDAO implements OurStudentDatabase {
 			this.disconnect();
 		}
 
+	}
+
+	@Override
+	public List<Lift> listLiftsByDriverID(String driverID) {
+		List<Lift> result = new ArrayList<Lift>();
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.listLiftsByDriverID(stmt, driverID);
+
+			if (!rs.first())
+				return result;
+
+			rs.first();
+
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public List<Lift> listLiftsByPassengerID(String passengerID) {
+		List<Lift> result = new ArrayList<Lift>();
+
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.listLiftsByPassengerID(stmt, passengerID);
+
+			if (!rs.first())
+				return result;
+
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+		return result;
 	}
 }

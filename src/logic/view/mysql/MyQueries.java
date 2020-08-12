@@ -182,6 +182,21 @@ public class MyQueries {
 		return stmt.executeQuery(sql);
 	}
 	
+	public static ResultSet listLiftsByDriverID(Statement stmt, String driverID) throws SQLException {
+		String format = "SELECT * FROM Lifts WHERE driverID = '%s';";
+		String sql = String.format(format, driverID);
+
+		return stmt.executeQuery(sql);
+	}
+
+	public static ResultSet listLiftsByPassengerID(Statement stmt, String passengerID) throws SQLException {
+		String format = "SELECT L.* FROM Passengers as P, Lifts as L WHERE P.liftID = L.liftID && P.passengerID = '%s';";
+		String sql = String.format(format, passengerID);
+
+		return stmt.executeQuery(sql);
+	}
+
+
 	public static ResultSet getDriverIDByLiftID(Statement stmt, Integer liftID) throws SQLException {
 		String format = "SELECT driverID FROM Lifts WHERE liftID = %d;";
 		String sql = String.format(format, liftID);
@@ -203,7 +218,7 @@ public class MyQueries {
 
 		return stmt.executeQuery(sql);
 	}
-	
+
 	public static void removePassengerByLiftIDAndUserID(Statement stmt, Integer liftID, String passengerID)
 			throws SQLException {
 		String format = "DELETE FROM Passengers WHERE liftID = %d && passengerID = '%s';";

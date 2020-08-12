@@ -12,7 +12,7 @@ public class UniDAO implements DatabaseBoundary{
 
 	private static final String USER = "torvercar";
 	private static final String PASS = "ispw2020";
-	private static final String URL = "jdbc:mysql://localhost:3306/UniDB?autoReconnect=true&useSSL=false";
+	private static final String URL = "jdbc:mysql://localhost:3306/UniDB?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true";
 	private static final String DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 	
 	private Statement stmt;

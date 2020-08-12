@@ -14,13 +14,14 @@
       <PasswordField fx:id="hiddenPwd" layoutX="225.0" layoutY="211.0" promptText="password" />
       <TextField fx:id="tfPwd" layoutX="225.0" layoutY="211.0" promptText="password" />
       <Button fx:id="btLogin" layoutX="277.0" layoutY="248.0" mnemonicParsing="false" onAction="#loginButtonController" text="Login" textAlignment="CENTER" />
-      <Text fx:id="text" layoutX="164.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Benvenuto.">
+      <Text fx:id="text" layoutX="172.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome!">
          <font>
             <Font size="55.0" />
          </font>
       </Text>
       <Button fx:id="btHome" layoutX="274.0" layoutY="134.0" mnemonicParsing="false" onAction="#homeButtonController" text="Home" textAlignment="CENTER" />
       <Text fx:id="error" layoutX="164.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+
       <CheckBox fx:id="cbShow" layoutX="402.0" layoutY="215.0" mnemonicParsing="false" text="Show Password" />
    </children>
 </AnchorPane>
