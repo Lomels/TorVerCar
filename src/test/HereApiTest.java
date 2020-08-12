@@ -26,12 +26,12 @@ public class HereApiTest {
 		p = MAPS_API.addrToPos(ADDRESS).get(0);
 
 		LOGGER.info(p.toString());
-		url = VIEW_API.viewFromPos(p);
+		url = VIEW_API.viewFromPos(p, 15);
 		LOGGER.info("\n" + url);
 		assertNotNull(url);
 	}
 
-	@Test
+//	@Test
 	public void saveTest() throws ApiNotReachableException, InvalidInputException {
 		Position p = null;
 
