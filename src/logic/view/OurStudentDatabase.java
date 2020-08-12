@@ -75,4 +75,6 @@ public interface OurStudentDatabase {
 
 	public List<Lift> listAvailableLiftStoppingBeforeDateTime(LocalDateTime stopDateTime);
 
+	public void addNotificationByUserID(String userID, String message);
+
 }
