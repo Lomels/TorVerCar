@@ -124,8 +124,7 @@ public class MyCarView extends Application implements Initializable{
 	
 	@FXML
 	public void offerButtonController() throws Exception {
-		HomeView home = new HomeView();
-		home.start((Stage) btLogout.getScene().getWindow());
+		//TODO: Implementare
 	}
 	
 	public boolean checkCar() {

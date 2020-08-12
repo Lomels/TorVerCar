@@ -76,9 +76,18 @@ public class LiftPersitenceTest {
 
 //	@Test
 	public void listLiftAfter() {
-		LocalDateTime startDateTime = LocalDateTime.parse("2020-08-10T16:00:00");
+		LocalDateTime startDateTime = LocalDateTime.parse("2020-08-10T14:00:00");
 		List<Lift> results = dao.listLiftStartingAfterDateTime(startDateTime);
 		for (Lift lift : results) {
+			MyLogger.info("One of the result", lift);
+		}
+	}
+	
+	@Test
+	public void listAvailableListAfter() {
+		LocalDateTime startDateTime = LocalDateTime.parse("2020-08-10T15:00:00");
+		List<Lift> results = dao.listAvailableLiftStartingAfterDateTime(startDateTime);
+		for(Lift lift : results) {
 			MyLogger.info("One of the result", lift);
 		}
 	}
@@ -89,6 +98,15 @@ public class LiftPersitenceTest {
 		List<Lift> results = dao.listLiftStoppingBeforeDateTime(stopDateTime);
 		for (Lift lift : results) {
 			MyLogger.info(lift.getStopDateTime().toString());
+		}
+	}
+	
+//	@Test
+	public void listAvailableLiftBefore() {
+		LocalDateTime stopDateTime = LocalDateTime.parse("2020-08-10T16:00:00");
+		List<Lift> results = dao.listAvailableLiftStoppingBeforeDateTime(stopDateTime);
+		for (Lift lift : results) {
+			MyLogger.info("One of the result", lift);
 		}
 	}
 

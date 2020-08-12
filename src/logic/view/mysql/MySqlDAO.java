@@ -427,6 +427,31 @@ public class MySqlDAO implements OurStudentDatabase {
 		}
 		return result;
 	}
+	
+	@Override
+	public List<Lift> listAvailableLiftStartingAfterDateTime(LocalDateTime startDateTime) {
+		List<Lift> result = null;
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.listFreeLiftStartingAfterDateTime(stmt, startDateTime);
+
+			if (!rs.first())
+				throw new DatabaseException("No available lift found starting after " + startDateTime.toString());
+
+			result = new ArrayList<Lift>();
+
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 
 	@Override
 	public List<Lift> listLiftStoppingBeforeDateTime(LocalDateTime stopDateTime) {
@@ -438,6 +463,30 @@ public class MySqlDAO implements OurStudentDatabase {
 
 			if (!rs.first())
 				return result;
+
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	@Override
+	public List<Lift> listAvailableLiftStoppingBeforeDateTime(LocalDateTime stopDateTime) {
+		List<Lift> result = null;
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.listFreeLiftStoppingBeforeDateTime(stmt, stopDateTime);
+
+			if (!rs.first())
+				throw new DatabaseException("No lift found stopping before" + stopDateTime.toString());
+
+			result = new ArrayList<Lift>();
 
 			do {
 				result.add(this.liftFromResult(rs));

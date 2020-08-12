@@ -33,16 +33,16 @@ public class SetCarInfoController {
 		CarInfo carInfo = new CarInfo(newCarInfo.getPlate(), newCarInfo.getSeats(), newCarInfo.getModel(),
 				newCarInfo.getColour());
 		switch (sg.getRole()) {
-		case DRIVER:
-			sg.getStudentCar().setCarInfo(carInfo);
-			ourDb.editCarInfoByUserID(sg.getStudentCar().getUserID(), newCarInfo);
-			break;
-		case STUDENT:
-			StudentCar sCar = new StudentCarBuilder(sg.getStudent())
-			.carInfo(carInfo)
-			.build();
-			ourDb.addCar(sCar);
-			break;
+			case DRIVER:
+				sg.getStudentCar().setCarInfo(carInfo);
+				ourDb.editCarInfoByUserID(sg.getStudentCar().getUserID(), newCarInfo);
+				break;
+			case STUDENT:
+				StudentCar sCar = new StudentCarBuilder(sg.getStudent())
+					.carInfo(carInfo)
+					.build();
+				ourDb.addCar(sCar);
+				break;
 		}
 
 	}

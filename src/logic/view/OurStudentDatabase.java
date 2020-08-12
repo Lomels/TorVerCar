@@ -71,5 +71,8 @@ public interface OurStudentDatabase {
 	
 	public void removePassengerByLiftIDAndUserID(Integer liftID, String passengerID);
 
+	public List<Lift> listAvailableLiftStartingAfterDateTime(LocalDateTime startDateTime);
+
+	public List<Lift> listAvailableLiftStoppingBeforeDateTime(LocalDateTime stopDateTime);
 
 }
