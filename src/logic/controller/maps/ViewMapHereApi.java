@@ -16,7 +16,7 @@ public class ViewMapHereApi extends HereApi implements ViewMapApi {
 
 	// TODO: implement class for better build the url
 	private final  String path = "/mia/1.6/mapview";
-	private final int zoom = 16;
+	private final int zoom = 15;
 	private final String pathname = "src/logic/controller/maps/" + ViewMapHereApi.class.getCanonicalName() + ".jpg";
 
 	private ViewMapHereApi() {

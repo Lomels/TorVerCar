@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.httpclient.MyHttpClient;
 import logic.model.Position;
+import logic.utilities.MyLogger;
 
 public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 
@@ -50,6 +51,7 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 		URI uri = null;
 		try {
 			uri = new URI(builder.toString());
+			MyLogger.severe("URL", uri);
 			String json = MyHttpClient.getStringFromUrl(uri);
 //			Logger.getGlobal().info("URL:\n" + uri + "\nJSON:\n" + json);
 

@@ -4,8 +4,8 @@ public enum ViewMapHereParameter {
 
 	STYLE("t", "0"),
 	MAPTYPE("vt", "0"),
-	WIDTH("w", "512"), 
-	HEIGHT("h", "512"),
+	WIDTH("w", "256"), 
+	HEIGHT("h", "180"),
 	PICTURE_IN_PICTURE("pip","13")
 	;
 
