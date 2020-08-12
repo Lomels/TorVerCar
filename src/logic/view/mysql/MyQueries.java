@@ -157,6 +157,14 @@ public class MyQueries {
 
 		return stmt.executeQuery(sql);
 	}
+	
+	public static ResultSet listFreeLiftStartingAfterDateTime(Statement stmt, LocalDateTime startDateTime)
+			throws SQLException {
+		String format = "SELECT * FROM Lifts WHERE startDateTime > '%s' && freeSeats > 0;";
+		String sql = String.format(format, startDateTime);
+
+		return stmt.executeQuery(sql);
+	}
 
 	public static ResultSet listLiftStoppingBeforeDateTime(Statement stmt, LocalDateTime stopDateTime)
 			throws SQLException {
@@ -166,6 +174,14 @@ public class MyQueries {
 		return stmt.executeQuery(sql);
 	}
 
+	public static ResultSet listFreeLiftStoppingBeforeDateTime(Statement stmt, LocalDateTime startDateTime)
+			throws SQLException {
+		String format = "SELECT * FROM Lifts WHERE startDateTime < '%s' && freeSeats > 0;";
+		String sql = String.format(format, startDateTime);
+
+		return stmt.executeQuery(sql);
+	}
+	
 	public static ResultSet getDriverIDByLiftID(Statement stmt, Integer liftID) throws SQLException {
 		String format = "SELECT driverID FROM Lifts WHERE liftID = %d;";
 		String sql = String.format(format, liftID);

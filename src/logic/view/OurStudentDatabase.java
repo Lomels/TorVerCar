@@ -66,4 +66,8 @@ public interface OurStudentDatabase {
 	public List<Student> listPassengersByLiftID(Integer liftID) throws DatabaseException, InvalidInputException;
 	
 	public void removePassengerByLiftIDAndUserID(Integer liftID, String passengerID);
+
+	public List<Lift> listAvailableLiftStartingAfterDateTime(LocalDateTime startDateTime);
+
+	public List<Lift> listAvailableLiftStoppingBeforeDateTime(LocalDateTime stopDateTime);
 }

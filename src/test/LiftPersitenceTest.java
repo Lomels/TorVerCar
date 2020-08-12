@@ -81,9 +81,27 @@ public class LiftPersitenceTest {
 			MyLogger.info("One of the result", lift);
 		}
 	}
+	
+//	@Test
+	public void listAvailableListAfter() {
+		LocalDateTime startDateTime = LocalDateTime.parse("2020-08-10T15:00:00");
+		List<Lift> results = dao.listAvailableLiftStartingAfterDateTime(startDateTime);
+		for(Lift lift : results) {
+			MyLogger.info("One of the result", lift);
+		}
+	}
 
 //	@Test
 	public void listLiftBefore() {
+		LocalDateTime stopDateTime = LocalDateTime.parse("2020-08-10T16:00:00");
+		List<Lift> results = dao.listLiftStoppingBeforeDateTime(stopDateTime);
+		for (Lift lift : results) {
+			MyLogger.info(lift.getStopDateTime().toString());
+		}
+	}
+	
+//	@Test
+	public void listAvailableLiftBefore() {
 		LocalDateTime stopDateTime = LocalDateTime.parse("2020-08-10T16:00:00");
 		List<Lift> results = dao.listLiftStoppingBeforeDateTime(stopDateTime);
 		for (Lift lift : results) {
@@ -123,7 +141,7 @@ public class LiftPersitenceTest {
 		}
 	}
 
-	@Test
+//	@Test
 	public void removePassenger() throws DatabaseException, InvalidInputException {
 		Integer liftID = 7;
 
