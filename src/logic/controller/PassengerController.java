@@ -18,10 +18,12 @@ public class PassengerController {
 			// If student is the driver
 			String errorMessage = "Passenger: " + passenger.getUserID() + " is the driver.";
 			throw new InvalidStateException(errorMessage);
-		} else if (lift.getFreeSeats() > 0) {
-			// If lift has no free seats.0
+		} else if (lift.getFreeSeats() <= 0) {
+			// If lift has no free seats.
 			String errorMessage = "Lift has no more free seats";
 			throw new InvalidStateException(errorMessage);
+		} else if (false) {
+			// If passenger has already a passage in the same time
 		} else {
 			// Add the passenger at the application level
 			lift.getPassengers().add(passenger);

@@ -11,6 +11,7 @@ import org.junit.Test;
 import logic.controller.PassengerController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
+import logic.controller.exception.InvalidStateException;
 import logic.model.Lift;
 import logic.model.Route;
 import logic.model.Student;
@@ -93,10 +94,10 @@ public class LiftPersitenceTest {
 
 //	@Test
 	public void addPassenger() throws DatabaseException, InvalidInputException {
-		Integer liftID = 7;
+		Integer liftID = 5;
 
-		Student passenger = dao.loadStudentByUserID(GIUSEPPE_ID);
-		MyLogger.info("Passenger", passenger);
+		Student passenger1 = dao.loadStudentByUserID(GIUSEPPE_ID);
+//		Student passenger2 = dao.loadStudentByUserID(GIULIA_ID);
 
 		Lift lift = dao.loadLiftByID(liftID);
 		MyLogger.info("lift", lift);
@@ -104,10 +105,10 @@ public class LiftPersitenceTest {
 		PassengerController pc = new PassengerController();
 
 		try {
-			dao.addPassengerByLiftIDAndUserID(liftID, GIULIA_ID);
-			pc.addPassenger(lift, passenger);
-		} catch (Exception e) {
-			// TODO: handle exception
+			pc.addPassenger(lift, passenger1);
+		} catch (InvalidStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
@@ -123,7 +124,7 @@ public class LiftPersitenceTest {
 		}
 	}
 
-	@Test
+//	@Test
 	public void removePassenger() throws DatabaseException, InvalidInputException {
 		Integer liftID = 7;
 
@@ -147,7 +148,22 @@ public class LiftPersitenceTest {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-
+	}
+	
+//	@Test
+	public void listByDriver() {
+		
+		List<Lift> driverLifts = dao.listLiftsByDriverID(MARCO_ID);
+		
+		MyLogger.info("driverLifts", driverLifts.size());
+	}
+	
+	@Test
+	public void listByPassenger() {
+		
+		List<Lift> passengerLifts = dao.listLiftsByPassengerID(GIUSEPPE_ID);
+		
+		MyLogger.info("passengerLifts", passengerLifts.size());
 	}
 
 }
