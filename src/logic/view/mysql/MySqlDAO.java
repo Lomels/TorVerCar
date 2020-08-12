@@ -436,7 +436,7 @@ public class MySqlDAO implements OurStudentDatabase {
 		try {
 			this.connect();
 
-			ResultSet rs = MyQueries.listLiftStartingAfterDateTime(stmt, startDateTime);
+			ResultSet rs = MyQueries.listFreeLiftStartingAfterDateTime(stmt, startDateTime);
 
 			if (!rs.first())
 				throw new DatabaseException("No available lift found starting after " + startDateTime.toString());

@@ -176,7 +176,7 @@ public class MyQueries {
 
 	public static ResultSet listFreeLiftStoppingBeforeDateTime(Statement stmt, LocalDateTime startDateTime)
 			throws SQLException {
-		String format = "SELECT * FROM Lifts WHERE startDateTime < '%s' && freeSeats > 0;";
+		String format = "SELECT * FROM Lifts WHERE stopDateTime < '%s' && freeSeats > 0;";
 		String sql = String.format(format, startDateTime);
 
 		return stmt.executeQuery(sql);
