@@ -1,7 +1,5 @@
 package logic.model;
 
-import java.util.List;
-
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
 import logic.utilities.InputChecker;
@@ -15,30 +13,27 @@ public class Student {
 	protected String email;
 	protected String phone;
 
-	// Collection of active lifts
-	protected List<Lift> lifts;
-
 	protected Boolean state;
 
 	// Generated
-	public Student(String userID, String password, String email, String name, String surname, String phone,
-			List<Lift> lifts) throws InvalidInputException {
-		this.userID = userID;
-		this.password = password;
+	public Student(String userID, String password, String email, String name, String surname, String phone)
+			throws InvalidInputException {
+		this.setUserID(userID);
+		this.setPassword(password);
 		this.setName(name);
 		this.setSurname(surname);
-		this.phone = phone;
-		this.lifts = lifts;
-		this.email = email;
+		this.setPhone(phone);
+		this.setEmail(email);
 	}
 
 	// Costruttore che parte dello studentCar
 	public Student(StudentCar studentCar) throws InvalidInputException {
 		this(studentCar.userID, studentCar.password, studentCar.email, studentCar.name, studentCar.surname,
-				studentCar.phone, studentCar.lifts);
+				studentCar.phone);
 	}
 
-	public void setUserID(String id) {
+	public void setUserID(String id) throws InvalidInputException {
+		InputChecker.checkUserID(id);
 		this.userID = id;
 	}
 
@@ -88,22 +83,9 @@ public class Student {
 		return this.phone;
 	}
 
-	public void setPhone(String phone) {
+	public void setPhone(String phone) throws InvalidInputException {
+		InputChecker.checkPhone(phone);
 		this.phone = phone;
-	}
-
-	public List<Lift> getLifts() {
-		return this.lifts;
-	}
-
-	public void setLifts(List<Lift> lifts) {
-		this.lifts = lifts;
-	}
-
-	// Generato automaticamente
-	@Override
-	public String toString() {
-		return "Student [name=" + name + ", surname=" + surname + ", phone=" + phone + ", lifts=" + lifts + "]";
 	}
 
 	public Boolean getState() {
@@ -118,6 +100,12 @@ public class Student {
 		} else {
 			this.state = newState;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Student [userID=" + userID + ", password=" + password + ", name=" + name + ", surname=" + surname
+				+ ", email=" + email + ", phone=" + phone + "]";
 	}
 
 }

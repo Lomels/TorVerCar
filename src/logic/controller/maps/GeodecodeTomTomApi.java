@@ -8,6 +8,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import logic.controller.exception.InvalidInputException;
 import logic.controller.httpclient.MyHttpClient;
 import logic.model.Position;
 
@@ -33,7 +34,7 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 
 	// override the interface
 	@Override
-	public List<Position> addrToPos(String address) {
+	public List<Position> addrToPos(String address) throws InvalidInputException {
 		List<Position> positions = new ArrayList<Position>();
 		// TODO find where to handle errors
 

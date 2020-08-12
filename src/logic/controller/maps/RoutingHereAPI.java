@@ -2,20 +2,24 @@ package logic.controller.maps;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.json.*;
 
+import logic.controller.exception.InvalidInputException;
 import logic.controller.httpclient.MyHttpClient;
 import logic.model.Position;
 import logic.model.Route;
+import logic.utilities.PositionListCombiner;
 
 public class RoutingHereAPI extends HereApi implements RoutingApi {
 
 	private static RoutingHereAPI instance = null;
 	private final String path = "/v8/routes";
+	
+	private Route bestRoute = null;
 
 	public static RoutingApi getInstance() {
 		if (instance == null)
@@ -24,17 +28,18 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 	}
 
 	@Override
-	public Route startToStop(Position pickup, Position dropoff, LocalDateTime startInterval) {
+	public Route startToStop(Position pickup, Position dropoff) throws InvalidInputException {
 		List<Position> stops = new ArrayList<Position>();
 		stops.add(pickup);
 		stops.add(dropoff);
-		return this.startToStop(stops, startInterval);
+		return this.startToStop(stops);
 	}
 
 	@Override
-	public Route startToStop(List<Position> stops, LocalDateTime startInterval) {
+	public Route startToStop(List<Position> stops) throws InvalidInputException {
 		Integer duration = null, distance = null;
 
+		// Build the URL for the request
 		StringBuilder builder = new StringBuilder();
 		builder.append(SCHEME);
 		builder.append(ROUTE_HOST);
@@ -44,6 +49,8 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 		for (RoutingHereParameter param : RoutingHereParameter.values()) {
 			builder.append(param.getParameter());
 		}
+
+		// add in the URL all the stops
 		this.setStopsParameter(builder, stops);
 
 		try {
@@ -81,6 +88,34 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 				parameter = "&via=" + coordinates;
 			}
 			builder.append(parameter);
+		}
+	}
+
+	@Override
+	public Route addInternalRoute(Route startRoute, List<Position> addStops) throws InvalidInputException {
+		List<Position> startStops = startRoute.getStops();
+
+		PositionListCombiner combiner = new PositionListCombiner();
+
+		List<List<Position>> updatedStops = combiner.combinePositions(startStops, addStops);
+
+		this.bestRoute = null;
+
+		for (List<Position> tempStops : updatedStops) {
+			Route tempRoute = this.startToStop(tempStops);
+			Logger.getGlobal().info("Route is: " + tempRoute.toString() + "\n\n");
+			this.keepBetter(tempRoute);
+		}
+
+	return this.bestRoute;
+
+	}
+
+	private void keepBetter(Route tempRoute) {
+		if (this.bestRoute == null || tempRoute.getDuration() < this.bestRoute.getDuration()
+				|| (tempRoute.getDuration() == this.bestRoute.getDuration()
+						&& tempRoute.getDistance() < this.bestRoute.getDistance())) {
+			this.bestRoute = tempRoute;
 		}
 	}
 

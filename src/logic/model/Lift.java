@@ -4,58 +4,58 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.controller.exception.InvalidInputException;
+import logic.utilities.InputChecker;
+
 public class Lift {
-	private String liftID;
-	private LocalDateTime startTime;
-	private int maxDistance, maxDuration;
+
+	private Integer liftID;
+	private LocalDateTime startDateTime;
+	private Integer maxDuration;
 	private String note;
 
 	private StudentCar driver;
-	private List<Student> passengers = new ArrayList<Student>();
+	private List<Student> passengers = new ArrayList<>();
+
 	private Route route;
 
-	public Lift(String liftID, LocalDateTime startTime, int maxDistance, int maxDuration, String note,
-			StudentCar driver, List<Student> passengers, Route route) {
-		super();
+	public Lift(Integer liftID, LocalDateTime startTime, int maxDuration, String note, StudentCar driver,
+			List<Student> passengers, Route route) throws InvalidInputException {
 		this.liftID = liftID;
-		this.startTime = startTime;
-		this.maxDistance = maxDistance;
-		this.maxDuration = maxDuration;
+		this.setStartDateTime(startTime);
+		this.setMaxDuration(maxDuration);
 		this.note = note;
-		this.driver = driver;
-		this.passengers = passengers;
-		this.route = route;
+		this.setDriver(driver);
+		this.setPassengers(passengers);
+		this.setRoute(route);
 	}
 
-	public String getLiftID() {
+	public Integer getLiftID() {
 		return liftID;
 	}
 
-	public void setLiftID(String liftID) {
+	public void setLiftID(Integer liftID) {
 		this.liftID = liftID;
 	}
 
-	public LocalDateTime getStartTime() {
-		return startTime;
+	public LocalDateTime getStartDateTime() {
+		return startDateTime;
 	}
 
-	public void setStartTime(LocalDateTime startTime) {
-		this.startTime = startTime;
-	}
-
-	public int getMaxDistance() {
-		return maxDistance;
-	}
-
-	public void setMaxDistance(int maxDistance) {
-		this.maxDistance = maxDistance;
+	public void setStartDateTime(LocalDateTime startDateTime) throws InvalidInputException {
+		if (startDateTime == null)
+			throw new InvalidInputException("startTime must be not null.");
+		this.startDateTime = startDateTime;
 	}
 
 	public int getMaxDuration() {
 		return maxDuration;
 	}
 
-	public void setMaxDuration(int maxDuration) {
+	public void setMaxDuration(Integer maxDuration) throws InvalidInputException {
+		if (maxDuration == null || maxDuration <= 0) {
+			throw new InvalidInputException("maxDuration must be not null and greater than 0.");
+		}
 		this.maxDuration = maxDuration;
 	}
 
@@ -71,7 +71,8 @@ public class Lift {
 		return driver;
 	}
 
-	public void setDriver(StudentCar driver) {
+	public void setDriver(StudentCar driver) throws InvalidInputException {
+		InputChecker.checkNotNull(driver, "Driver");
 		this.driver = driver;
 	}
 
@@ -80,15 +81,46 @@ public class Lift {
 	}
 
 	public void setPassengers(List<Student> passengers) {
-		this.passengers = passengers;
+		if (passengers == null)
+			this.passengers = new ArrayList<Student>();
+		else
+			this.passengers = passengers;
 	}
 
 	public Route getRoute() {
 		return route;
 	}
 
-	public void setRoute(Route route) {
+	public void setRoute(Route route) throws InvalidInputException {
+		InputChecker.checkNotNull(route, "Route");
 		this.route = route;
+	}
+
+	public LocalDateTime getStopDateTime() {
+		return this.getStartDateTime().plusMinutes(this.getRoute().getDuration());
+	}
+
+	public Integer getFreeSeats() {
+		Integer carSeats = this.getDriver().getCarInfo().getSeats();
+		return carSeats - this.getPassengers().size();
+	}
+
+	public Boolean isPassenger(Student student) {
+		if (this.getPassengers() == null)
+			return false;
+		else {
+			for (Student passenger : this.getPassengers()) {
+				if (student.getUserID().equals(passenger.getUserID()))
+					return true;
+			}
+			return false;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "Lift [liftID=" + liftID + ", startDateTime=" + startDateTime + ", maxDuration=" + maxDuration
+				+ ", note=" + note + ", driver=" + driver + ", passengers=" + passengers + ", route=" + route + "]";
 	}
 
 }

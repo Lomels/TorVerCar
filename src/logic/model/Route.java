@@ -3,7 +3,12 @@ package logic.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import logic.controller.exception.InvalidInputException;
+import logic.utilities.InputChecker;
 
 public class Route {
 
@@ -13,20 +18,19 @@ public class Route {
 	// in meters
 	private Integer distance;
 
-	public Route(List<Position> stops, Integer duration, Integer distance) {
+	public Route(List<Position> stops, Integer duration, Integer distance) throws InvalidInputException {
 		this.stops = stops;
-		this.duration = duration;
-		this.distance = distance;
+		this.setDuration(duration);
+		this.setDistance(distance);
 	}
 
-	// TODO: notNull required
 	public Route(Position pickupPosition, Position dropoffPosition, Integer duration, Integer distance)
 			throws InvalidInputException {
 		this.stops = new ArrayList<Position>();
 		this.stops.add(pickupPosition);
 		this.stops.add(dropoffPosition);
+		this.setDistance(distance);
 		this.setDuration(duration);
-		this.distance = distance;
 	}
 
 	public Position getPickupPosition() {
@@ -47,7 +51,7 @@ public class Route {
 		}
 		return result;
 	}
-	
+
 	public Integer getStopsSize() {
 		return this.stops.size();
 	}
@@ -64,18 +68,52 @@ public class Route {
 		return distance;
 	}
 
-	public void setDistance(Integer distance) {
-		// TODO: input check
+	public void setDistance(Integer distance) throws InvalidInputException {
+		if (distance == null || distance <= 0)
+			throw new InvalidInputException("Distance must be not null and greater than 0.");
 		this.distance = distance;
+	}
+
+	public List<Position> getStops() {
+		return stops;
+	}
+
+	public void setStops(List<Position> stops) throws InvalidInputException {
+		InputChecker.checkNotNull(stops, "Stops");
+		this.stops = stops;
+	}
+
+	public String toStringLong() {
+		return "Route [stops=" + stops + ", duration=" + duration + ", distance=" + distance + "]";
 	}
 
 	@Override
 	public String toString() {
-		return "Route [stops=" + stops + ", duration=" + duration + ", distance=" + distance + "]";
+		return "Route [stops=" + stops.size() + ", duration=" + duration + " minutes, distance=" + distance + "m]";
 	}
-
-	public String toStringShort() {
-		return "Route [duration=" + duration + " minutes, distance=" + distance + "m]";
+	
+	public JSONObject JSONencode() {
+		JSONObject result = new JSONObject();
+		result.put("duration", this.getDuration());
+		result.put("distance", this.getDistance());
+		JSONArray JSONstops = new JSONArray();
+		for(Position stop : this.stops) {
+			JSONstops.put(stop.JSONencode());
+		}
+		result.put("stops", JSONstops);
+		return result;
+	}
+	
+	public static Route JSONdecode(JSONObject json) throws JSONException, InvalidInputException {
+		Route result = new Route(null, json.getInt("duration"), json.getInt("distance"));
+		List<Position> stops = new ArrayList<Position>();
+		JSONArray jsonStops = json.getJSONArray("stops");
+		for(int i = 0; i < jsonStops.length(); i++) {
+			JSONObject jsonStop = jsonStops.getJSONObject(i);
+			stops.add(Position.JSONdecode(jsonStop));
+		}
+		result.setStops(stops);
+		return result;
 	}
 
 }

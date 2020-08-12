@@ -7,22 +7,24 @@ public class Report {
 
 	private String message;
 	private StudentCar target;
-	private Boolean resolved;
+	private Student from;
 	private Admin handler;
+	private Boolean resolved;
 
-	public Report(String message, StudentCar target, Admin handler) throws InvalidInputException {
-		this.setMessage(message);
+	public Report(Student from, StudentCar target, String message, Boolean resolved, Admin handler)
+			throws InvalidInputException {
+		super();
+		this.message = message;
 		this.setTarget(target);
-		this.resolved = false;
-		this.setHandler(handler);
+		this.setFrom(from);
+		this.setResolved(resolved);
 	}
 
 	public String getMessage() {
 		return message;
 	}
 
-	public void setMessage(String message) throws InvalidInputException {
-		InputChecker.checkGeneric(message);
+	public void setMessage(String message) {
 		this.message = message;
 	}
 
@@ -31,18 +33,25 @@ public class Report {
 	}
 
 	public void setTarget(StudentCar target) throws InvalidInputException {
-		if (target == null) {
-			throw new InvalidInputException("Target must not be null");
-		} else {
-			this.target = target;
-		}
+		InputChecker.checkNotNull(target, "Target");
+		this.target = target;
+	}
+
+	public Student getFrom() {
+		return from;
+	}
+
+	public void setFrom(Student from) throws InvalidInputException {
+		InputChecker.checkNotNull(from, "From");
+		this.from = from;
 	}
 
 	public Boolean getResolved() {
 		return resolved;
 	}
 
-	public void setResolved(Boolean resolved) {
+	public void setResolved(Boolean resolved) throws InvalidInputException {
+		InputChecker.checkNotNull(resolved, "Resolved");
 		this.resolved = resolved;
 	}
 
@@ -50,12 +59,8 @@ public class Report {
 		return handler;
 	}
 
-	public void setHandler(Admin handler) throws InvalidInputException {
-		if (handler == null) {
-			throw new InvalidInputException("Handler must not be null");
-		} else {
-			this.handler = handler;
-		}
+	public void setHandler(Admin handler) {
+		this.handler = handler;
 	}
 
 }

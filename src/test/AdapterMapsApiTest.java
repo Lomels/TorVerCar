@@ -7,7 +7,6 @@ import logic.model.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -30,27 +29,25 @@ public class AdapterMapsApiTest {
 	}
 
 	@Test
-	public void addrToPosTest() throws ApiNotReachableException {
+	public void addrToPosTest() throws ApiNotReachableException, InvalidInputException {
 		List<Position> results = MAPS_API.addrToPos(ADDRESS_1);
 		for (Position p : results)
 			this.log(p.toString(), true);
 		assertEquals(Position.class, results.get(0).getClass());
-		;
 	}
 
 	@Test
 	public void startToStopTest() throws InvalidInputException, ApiNotReachableException {
-		LocalDateTime startInterval = LocalDateTime.now();
 		Position pickup, dropoff;
 		pickup = MAPS_API.addrToPos(ADDRESS_2).get(0);
 		dropoff = MAPS_API.addrToPos(ADDRESS_1).get(0);
-		Route result = MAPS_API.startToStop(pickup, dropoff, startInterval);
-		this.log(result.toStringShort(), false);
+		Route result = MAPS_API.startToStop(pickup, dropoff);
+		this.log(result.toString(), false);
 		assertEquals(Route.class, result.getClass());
 	}
 
 	@Test
-	public void viewFromPTest() throws ApiNotReachableException {
+	public void viewFromPTest() throws ApiNotReachableException, InvalidInputException {
 		Position p = MAPS_API.addrToPos(ADDRESS_3).get(0);
 		String result = MAPS_API.viewFromPos(p);
 		this.log("\n" + result, false);
@@ -58,19 +55,17 @@ public class AdapterMapsApiTest {
 	}
 
 	@Test
-	public void saveImageTest() throws ApiNotReachableException {
+	public void saveImageTest() throws ApiNotReachableException, InvalidInputException {
 		Position p = MAPS_API.addrToPos(ADDRESS_1).get(0);
 		MAPS_API.saveImage(p);
-		// TODO: better saveImage with file location
 	}
-	
+
 	@Test
-	public void viewRouteTest() throws ApiNotReachableException {
-		LocalDateTime startInterval = LocalDateTime.now();
+	public void viewRouteTest() throws ApiNotReachableException, InvalidInputException {
 		Position pickup, dropoff;
 		pickup = MAPS_API.addrToPos(ADDRESS_2).get(0);
 		dropoff = MAPS_API.addrToPos(ADDRESS_1).get(0);
-		Route route = MAPS_API.startToStop(pickup, dropoff, startInterval);
+		Route route = MAPS_API.startToStop(pickup, dropoff);
 		String url = MAPS_API.viewFromRoute(route);
 		Logger.getGlobal().info("URL:\n" + url);
 	}

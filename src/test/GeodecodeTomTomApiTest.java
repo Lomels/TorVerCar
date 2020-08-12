@@ -3,6 +3,7 @@ package test;
 import org.junit.Test;
 
 import logic.controller.exception.ApiNotReachableException;
+import logic.controller.exception.InvalidInputException;
 import logic.controller.maps.GeodecodeTomTomApi;
 import logic.controller.maps.GeodecodeApi;
 import logic.controller.maps.TomTomApi;
@@ -20,7 +21,7 @@ public class GeodecodeTomTomApiTest {
 	private static final GeodecodeApi geoApi = GeodecodeTomTomApi.getInstance();
 
 	@Test
-	public void normalTest() {
+	public void normalTest() throws InvalidInputException {
 		List<Position> pos = new ArrayList<Position>();
 		try {
 			pos = geoApi.addrToPos(" zagarolo");

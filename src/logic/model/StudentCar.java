@@ -1,22 +1,17 @@
 package logic.model;
 
-import java.util.List;
-
 import logic.controller.exception.InvalidInputException;
 
 public class StudentCar extends Student {
 
 	private int rating;
 	private CarInfo carInfo;
-	private List<Report> reports;
 
 	// Costruttore che usa lo student
-	public StudentCar(Student student, int rating, CarInfo carInfo, List<Report> reports) throws InvalidInputException {
-		super(student.userID, student.password, student.email, student.name, student.surname, student.phone,
-				student.lifts);
+	public StudentCar(Student student, int rating, CarInfo carInfo) throws InvalidInputException {
+		super(student.userID, student.password, student.email, student.name, student.surname, student.phone);
 		this.rating = rating;
 		this.setCarInfo(carInfo);
-		this.reports = reports;
 	}
 
 	public boolean isAvailable(Route route) {
@@ -49,25 +44,9 @@ public class StudentCar extends Student {
 		this.carInfo = carInfo;
 	}
 
-	public List<Report> getReports() {
-		return reports;
-	}
-
-	public void addReport(Report report) throws InvalidInputException {
-		if (report == null) {
-			throw new InvalidInputException("Report must not be null");
-		}
-		this.reports.add(report);
-	}
-
-	public void removeReport(Report report) {
-		this.reports.remove(report);
-	}
-
 	@Override
 	public String toString() {
-		return super.toString() + ", " + "StudentCar [rating=" + rating + ", carInfo=" + carInfo + ", reports="
-				+ reports + "]";
+		return super.toString() + ", " + "StudentCar [rating=" + rating + ", carInfo=" + carInfo + "]";
 	}
 
 }

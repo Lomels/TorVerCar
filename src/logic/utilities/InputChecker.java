@@ -79,4 +79,9 @@ public class InputChecker {
 		}
 	}
 	
+	public static void checkNotNull(Object object, String name) throws InvalidInputException{
+		if(object == null)
+			throw new InvalidInputException(String.format("{} must not be null.", name));
+	}
+	
 }
