@@ -32,6 +32,14 @@ public class RegistrationController {
 		this.ourDb = new MySqlDAO();
 		
 	}
+	
+	public boolean alreadyExist(String userID) throws DatabaseException, InvalidInputException {
+		if(ourDb.existByUserID(userID)) {
+			return true;
+			
+		} 
+		return false;
+	}
 
 	public void createStudent(String userID, String password) throws Exception{
 		//check is userID and password are valid
@@ -40,6 +48,7 @@ public class RegistrationController {
 		//if to check if student already exist in our database
 		if(ourDb.existByUserID(userID)) {
 			throw new DatabaseException("Already registered student");
+			
 		} else {
 			if(ourDb.wasBannedByUserID(userID)) {
 				throw new DatabaseException("User was previously banned");

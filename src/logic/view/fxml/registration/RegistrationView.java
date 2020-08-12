@@ -2,11 +2,14 @@ package logic.view.fxml.registration;
 
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import logic.bean.UserBean;
 import logic.bean.UserBeanSingleton;
 import logic.controller.RegistrationController;
+import logic.controller.exception.DatabaseException;
 import logic.view.fxml.HomeView;
 import javafx.fxml.*;
 import javafx.scene.*;
@@ -19,7 +22,7 @@ public class RegistrationView extends Application {
 	@FXML private Button btHome;
 	@FXML private Button btNext;
 	@FXML private TextField userID;
-	@FXML private Text error;
+	@FXML private Text txMessage;
 	
 	UserBeanSingleton usBean = UserBeanSingleton.getInstance();
 	
@@ -38,16 +41,21 @@ public class RegistrationView extends Application {
 	//TODO criptare la password
 	
 	@FXML
-	public void nextButtonController() throws Exception {
+	public void nextButtonController() throws DatabaseException {
 		try {
+
 			RegistrationController reg = new RegistrationController();
+			if(!reg.alreadyExist(userID.getText())) {
 			UserBean user = reg.recapInfo(userID.getText().toString());
 			usBean.setUserBean(user);
 			RecapView recap = new RecapView();
 			recap.start((Stage) btNext.getScene().getWindow());
+			}else {
+				txMessage.setText("Already registered");
+			}
 			
 		}catch(Exception e){
-			error.setText(e.getMessage());			
+			e.printStackTrace();
 		}
 	}
 	
