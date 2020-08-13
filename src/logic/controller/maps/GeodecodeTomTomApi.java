@@ -51,7 +51,6 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 		URI uri = null;
 		try {
 			uri = new URI(builder.toString());
-			MyLogger.severe("URL", uri);
 			String json = MyHttpClient.getStringFromUrl(uri);
 //			Logger.getGlobal().info("URL:\n" + uri + "\nJSON:\n" + json);
 

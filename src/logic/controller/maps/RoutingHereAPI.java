@@ -4,9 +4,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
-import org.json.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import logic.controller.exception.InvalidInputException;
 import logic.controller.httpclient.MyHttpClient;
@@ -103,7 +103,6 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 
 		for (List<Position> tempStops : updatedStops) {
 			Route tempRoute = this.startToStop(tempStops);
-			Logger.getGlobal().info("Route is: " + tempRoute.toString() + "\n\n");
 			this.keepBetter(tempRoute);
 		}
 

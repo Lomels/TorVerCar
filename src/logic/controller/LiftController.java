@@ -18,22 +18,26 @@ import logic.view.mysql.MySqlDAO;
 
 public class LiftController {
 
-	private final static Integer MAX_LIFTS_LISTED = 10;
+	private final static Integer MINUTES_OF_MARGIN = 10;
+	private final static Integer MAX_LIFTS_LISTED = 100;
 	private MySqlDAO ourDb = new MySqlDAO();
+	private Integer autoID = 0;
 
 	private class UnorderedLift implements Comparable<UnorderedLift> {
 
 		protected Lift lift;
 		protected Integer deltaDuration;
+		protected Integer comparator;
 
 		public UnorderedLift(Lift lift, Integer deltaDuration) {
 			this.lift = lift;
 			this.deltaDuration = deltaDuration;
+			this.comparator = this.deltaDuration * MAX_LIFTS_LISTED + autoID++;
 		}
 
 		@Override
 		public int compareTo(UnorderedLift o) {
-			return this.deltaDuration - o.deltaDuration;
+			return this.comparator - o.comparator;
 		}
 
 		public Lift getLift() {
@@ -50,7 +54,8 @@ public class LiftController {
 		MapsApi maps = AdapterMapsApi.getInstance();
 
 		// Get all the lifts starting after startDateTime
-		List<Lift> possibleLifts = dao.listAvailableLiftStartingAfterDateTime(startDateTime);
+		List<Lift> possibleLifts = dao
+				.listAvailableLiftStartingAfterDateTime(startDateTime.minusMinutes(MINUTES_OF_MARGIN));
 
 		// For cycle that stops once it reaches the end of possibileLifts or after
 		// MAX_LIFTS_LISTED iterations
