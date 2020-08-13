@@ -622,4 +622,46 @@ public class MySqlDAO implements OurStudentDatabase {
 		}
 		return result;
 	}
+
+	@Override
+	public void addNotificationByUserID(String userID, String message) {
+		try {
+			this.connect();
+
+			MyQueries.addNotificationByUserID(stmt, userID, message);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+	}
+
+	public List<String> loadNotificationsByUserID(String userID) {
+		List<String> notifications = new ArrayList<String>();
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.loadNotificationsByUserID(stmt, userID);
+
+			if (!rs.first())
+				return notifications;
+
+			rs.first();
+
+			do {
+				notifications.add(rs.getString("message"));
+			} while (rs.next());
+
+			rs.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+
+		return notifications;
+	}
 }

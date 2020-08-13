@@ -6,12 +6,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import logic.controller.email.SendEmail;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.Lift;
 import logic.model.Position;
 import logic.model.Route;
+import logic.model.Student;
+import logic.model.UserSingleton;
 import logic.view.mysql.MySqlDAO;
 
 public class LiftController {
@@ -83,5 +86,31 @@ public class LiftController {
 		
 		// TODO: test
 	}
+
+public void deleteLift(Lift lift) {
+		if (!lift.getPassengers().isEmpty())
+			notifyPassengers(lift);
+		ourDb.deleteLiftByID(lift.getLiftID());
+	}
+
+	public void notifyPassengers(Lift lift) {
+		String subject = "You lift has been deleted!";
+		String format = "The lift you booked for: %s, departing at: %s, has been deleted by the driver.";
+		String message = String.format(format, lift.getRoute().getDropoffPosition().getAddress(),
+				lift.getStartDateTime());
+
+		for (Student student : lift.getPassengers()) {
+			ourDb.addNotificationByUserID(student.getUserID(), message);
+
+			String[] recipients = new String[] { student.getEmail() };
+			new SendEmail().send(recipients, recipients, subject, message);
+		}
+	}
+
+	public List<String> loadNotifications(String userID) {
+		return ourDb.loadNotificationsByUserID(userID);
+	}
+	
+	
 
 }

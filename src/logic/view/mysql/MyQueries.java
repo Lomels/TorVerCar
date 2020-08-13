@@ -227,4 +227,18 @@ public class MyQueries {
 		stmt.executeUpdate(sql);
 	}
 
+	public static void addNotificationByUserID(Statement stmt, String userID, String message) throws SQLException {
+		String format = "INSERT INTO Notifications( userID, message ) VALUES ('%s', '%s');";
+		String sql = String.format(format, userID, message);
+		
+		stmt.executeUpdate(sql);
+	}
+
+	public static ResultSet loadNotificationsByUserID(Statement stmt, String userID) throws SQLException {
+		String format = "SELECT * FROM Notifications WHERE userID = '%s';";
+		String sql = String.format(format, userID);
+		
+		return stmt.executeQuery(sql);
+	}
+
 }

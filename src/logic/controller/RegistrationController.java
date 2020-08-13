@@ -86,9 +86,13 @@ public class RegistrationController {
 	public void sendCode() throws IOException {
 		UserBean user = beanSg.getUserBean();
 		String code = CodeGenerator.randomCode();
+		String subject = "Confirm your identity";
+        String body = "Hi! Your activation code is: %s";
+        String message = String.format(body, code);
 		beanSg.setCode(code);
+		
 		String[] recipients = new String[] {user.getEmail()};
-		new SendEmail().send(recipients,recipients, code);
+		new SendEmail().send(recipients,recipients, subject, message);
 	}
 	
 }
