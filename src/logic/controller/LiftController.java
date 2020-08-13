@@ -14,12 +14,12 @@ import logic.model.Lift;
 import logic.model.Position;
 import logic.model.Route;
 import logic.model.Student;
-import logic.model.UserSingleton;
 import logic.view.mysql.MySqlDAO;
 
 public class LiftController {
 
 	private final static Integer MAX_LIFTS_LISTED = 10;
+	private MySqlDAO ourDb = new MySqlDAO();
 
 	private class UnorderedLift implements Comparable<UnorderedLift> {
 
@@ -83,11 +83,11 @@ public class LiftController {
 		}
 
 		return matchedLifts;
-		
+
 		// TODO: test
 	}
 
-public void deleteLift(Lift lift) {
+	public void deleteLift(Lift lift) {
 		if (!lift.getPassengers().isEmpty())
 			notifyPassengers(lift);
 		ourDb.deleteLiftByID(lift.getLiftID());
@@ -110,7 +110,5 @@ public void deleteLift(Lift lift) {
 	public List<String> loadNotifications(String userID) {
 		return ourDb.loadNotificationsByUserID(userID);
 	}
-	
-	
 
 }
