@@ -8,9 +8,11 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 import logic.controller.LiftController;
+import logic.controller.PassengerController;
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
+import logic.controller.exception.InvalidStateException;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.Lift;
@@ -26,15 +28,16 @@ public class LiftMatchTest {
 	MySqlDAO dao = new MySqlDAO();
 	MapsApi maps = AdapterMapsApi.getInstance();
 
-	private static final String MARCO_ID = "0241118";
 	private static final String GIULIA_ID = "0245061";
 
 	private static final Integer LIFT_TO_INSERT = 5;
+
 	private static final Boolean RECOMPUTE = false;
 	private static final Boolean INSERT = false;
 	private static final boolean LIST = false;
-	private static final boolean LOG_FINE = true;
+	private static final boolean ADD_PASSENGERS = false;
 
+	private static final boolean LOG_FINE = true;
 	private static final MyLogger logger = new MyLogger(LOG_FINE);
 
 	@Test
@@ -109,13 +112,12 @@ public class LiftMatchTest {
 
 		if (!RECOMPUTE) {
 			LiftController liftController = new LiftController();
-
+			List<Lift> matchedLifts;
 			// Short route, no passengers on Lift
-//			List<Lift> matchedLifts = 
-			liftController.matchLiftStartingAfter(startDateTime, routeShort.getStops(), 0);
+//			matchedLifts = liftController.matchLiftStartingAfter(startDateTime, routeShort.getStops(), 0);
 
 			// Long route, no passengers
-			List<Lift> matchedLifts = liftController.matchLiftStartingAfter(startDateTime, routeLong.getStops(), 0);
+			matchedLifts = liftController.matchLiftStartingAfter(startDateTime, routeLong.getStops(), 0);
 
 			this.logLifts(matchedLifts);
 		}
@@ -126,6 +128,54 @@ public class LiftMatchTest {
 		int i = 0;
 		for (Lift lift : lifts) {
 			MyLogger.info("Lift #" + i++, lift);
+		}
+	}
+
+//	@Test
+	public void insertStudents() throws InvalidInputException, DatabaseException {
+
+		String userID, password, email, name, surname, phone;
+		for (Integer i = 0; i < 4; i++) {
+			userID = "000000" + i.toString();
+			password = "aaaAAA123@";
+			email = i.toString() + "@torvercar.com";
+			name = "Jova";
+			surname = "Notti";
+			phone = "1234567890";
+			Student dummy = new Student(userID, password, email, name, surname, phone);
+			dao.addStudent(dummy);
+		}
+	}
+
+//	@Test
+	public void addPassengers() throws DatabaseException, InvalidInputException, InvalidStateException {
+		Integer liftID;
+		Lift lift;
+		PassengerController controller = new PassengerController();
+
+		List<Student> passengers = new ArrayList<Student>();
+		for (Integer idPass = 0; idPass < 4; idPass++) {
+			String userID = "000000" + idPass.toString();
+			Student student = dao.loadStudentByUserID(userID);
+			logger.infoB("Student #" + idPass, student);
+			passengers.add(student);
+		}
+
+		for (Integer idStart = 8; idStart <= 18; idStart += 10) {
+
+			for (Integer idLift = 0; idLift < 5; idLift++) {
+				liftID = idStart + idLift;
+				lift = dao.loadLiftByID(liftID);
+				logger.infoB("Lift #" + liftID, lift);
+
+				if (ADD_PASSENGERS) {
+
+					for (Student passenger : passengers) {
+						controller.addPassenger(lift, passenger);
+					}
+				}
+
+			}
 		}
 	}
 
