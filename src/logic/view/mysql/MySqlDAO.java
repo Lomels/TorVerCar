@@ -408,16 +408,36 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	@Override
 	public List<Lift> listLiftStartingAfterDateTime(LocalDateTime startDateTime) {
-		List<Lift> result = null;
+		List<Lift> result = new ArrayList<Lift>();
 		try {
 			this.connect();
 
 			ResultSet rs = MyQueries.listLiftStartingAfterDateTime(stmt, startDateTime);
 
 			if (!rs.first())
-				throw new DatabaseException("No lift found starting after " + startDateTime.toString());
+				return result;
 
-			result = new ArrayList<Lift>();
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public List<Lift> listAvailableLiftStartingAfterDateTime(LocalDateTime startDateTime) {
+		List<Lift> result = new ArrayList<Lift>();
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.listFreeLiftStartingAfterDateTime(stmt, startDateTime);
+
+			if (!rs.first())
+				return result;
 
 			do {
 				result.add(this.liftFromResult(rs));
@@ -432,11 +452,33 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	@Override
 	public List<Lift> listLiftStoppingBeforeDateTime(LocalDateTime stopDateTime) {
-		List<Lift> result = null;
+		List<Lift> result = new ArrayList<Lift>();
 		try {
 			this.connect();
 
 			ResultSet rs = MyQueries.listLiftStoppingBeforeDateTime(stmt, stopDateTime);
+
+			if (!rs.first())
+				return result;
+
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public List<Lift> listAvailableLiftStoppingBeforeDateTime(LocalDateTime stopDateTime) {
+		List<Lift> result = null;
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.listFreeLiftStoppingBeforeDateTime(stmt, stopDateTime);
 
 			if (!rs.first())
 				throw new DatabaseException("No lift found stopping before" + stopDateTime.toString());
@@ -494,16 +536,15 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	@Override
 	public List<Student> listPassengersByLiftID(Integer liftID) throws DatabaseException, InvalidInputException {
-		List<Student> result = null;
+		List<Student> result = new ArrayList<Student>();
 		try {
 			this.connect();
 			ResultSet rs = MyQueries.listPassengersByLiftID(stmt, liftID);
 
 			if (!rs.first())
-				throw new DatabaseException("No Passenger found");
+				return result;
 
 			rs.first();
-			result = new ArrayList<Student>();
 			do {
 				result.add(this.studentFromResult(rs));
 			} while (rs.next());
@@ -531,5 +572,96 @@ public class MySqlDAO implements OurStudentDatabase {
 			this.disconnect();
 		}
 
+	}
+
+	@Override
+	public List<Lift> listLiftsByDriverID(String driverID) {
+		List<Lift> result = new ArrayList<Lift>();
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.listLiftsByDriverID(stmt, driverID);
+
+			if (!rs.first())
+				return result;
+
+			rs.first();
+
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public List<Lift> listLiftsByPassengerID(String passengerID) {
+		List<Lift> result = new ArrayList<Lift>();
+
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.listLiftsByPassengerID(stmt, passengerID);
+
+			if (!rs.first())
+				return result;
+
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+		return result;
+	}
+
+	@Override
+	public void addNotificationByUserID(String userID, String message) {
+		try {
+			this.connect();
+
+			MyQueries.addNotificationByUserID(stmt, userID, message);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+	}
+
+	public List<String> loadNotificationsByUserID(String userID) {
+		List<String> notifications = new ArrayList<String>();
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.loadNotificationsByUserID(stmt, userID);
+
+			if (!rs.first())
+				return notifications;
+
+			rs.first();
+
+			do {
+				notifications.add(rs.getString("message"));
+			} while (rs.next());
+
+			rs.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+
+		return notifications;
 	}
 }

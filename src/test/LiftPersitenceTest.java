@@ -8,9 +8,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
+import logic.controller.LiftController;
 import logic.controller.PassengerController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
+import logic.controller.exception.InvalidStateException;
 import logic.model.Lift;
 import logic.model.Route;
 import logic.model.Student;
@@ -31,7 +33,7 @@ public class LiftPersitenceTest {
 
 		String fromData = "{\"duration\":33,\"distance\":27083,\"stops\":[{\"score\":10.2996511459,\"address\":\"Via Prenestina Nuova, 51, 00036 Palestrina\",\"lon\":12.88611,\"lat\":41.83322},{\"score\":8.6688928604,\"address\":\"Via del Politecnico, 00133 Roma\",\"lon\":12.62165,\"lat\":41.85573}]}";
 
-		Integer liftID = null;
+		Integer liftID = 5;
 		LocalDateTime startDateTime = LocalDateTime.now();
 		Integer maxDuration = 200;
 		String note = "Ma non so cosa ce nella mia pelle bianca";
@@ -54,9 +56,11 @@ public class LiftPersitenceTest {
 	}
 
 //	@Test
-	public void deleteLiftByID() {
-		Integer liftIDToRemove = 4;
-		dao.deleteLiftByID(liftIDToRemove);
+	public void deleteLiftByID() throws JSONException, DatabaseException, InvalidInputException {
+		LiftController controller = new LiftController();
+		Integer liftIDToRemove = 5;
+		Lift lift = dao.loadLiftByID(liftIDToRemove);
+		controller.deleteLift(lift);
 	}
 
 //	@Test
@@ -75,8 +79,17 @@ public class LiftPersitenceTest {
 
 //	@Test
 	public void listLiftAfter() {
-		LocalDateTime startDateTime = LocalDateTime.parse("2020-08-10T16:00:00");
+		LocalDateTime startDateTime = LocalDateTime.parse("2020-08-10T14:00:00");
 		List<Lift> results = dao.listLiftStartingAfterDateTime(startDateTime);
+		for (Lift lift : results) {
+			MyLogger.info("One of the result", lift);
+		}
+	}
+
+//	@Test
+	public void listAvailableListAfter() {
+		LocalDateTime startDateTime = LocalDateTime.parse("2020-08-10T15:00:00");
+		List<Lift> results = dao.listAvailableLiftStartingAfterDateTime(startDateTime);
 		for (Lift lift : results) {
 			MyLogger.info("One of the result", lift);
 		}
@@ -92,11 +105,20 @@ public class LiftPersitenceTest {
 	}
 
 //	@Test
-	public void addPassenger() throws DatabaseException, InvalidInputException {
-		Integer liftID = 7;
+	public void listAvailableLiftBefore() {
+		LocalDateTime stopDateTime = LocalDateTime.parse("2020-08-10T16:00:00");
+		List<Lift> results = dao.listAvailableLiftStoppingBeforeDateTime(stopDateTime);
+		for (Lift lift : results) {
+			MyLogger.info("One of the result", lift);
+		}
+	}
 
-		Student passenger = dao.loadStudentByUserID(GIUSEPPE_ID);
-		MyLogger.info("Passenger", passenger);
+//	@Test
+	public void addPassenger() throws DatabaseException, InvalidInputException {
+		Integer liftID = 5;
+
+		Student passenger1 = dao.loadStudentByUserID(GIUSEPPE_ID);
+		Student passenger2 = dao.loadStudentByUserID(GIULIA_ID);
 
 		Lift lift = dao.loadLiftByID(liftID);
 		MyLogger.info("lift", lift);
@@ -104,17 +126,19 @@ public class LiftPersitenceTest {
 		PassengerController pc = new PassengerController();
 
 		try {
-			dao.addPassengerByLiftIDAndUserID(liftID, GIULIA_ID);
-			pc.addPassenger(lift, passenger);
-		} catch (Exception e) {
-			// TODO: handle exception
+			pc.addPassenger(lift, passenger1);
+			pc.addPassenger(lift, passenger2);
+
+		} catch (InvalidStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
 
 //	@Test
 	public void listPassenger() throws DatabaseException, InvalidInputException {
-		Integer liftID = 7;
+		Integer liftID = 5;
 
 		List<Student> passengers = dao.listPassengersByLiftID(liftID);
 
@@ -123,7 +147,7 @@ public class LiftPersitenceTest {
 		}
 	}
 
-	@Test
+//	@Test
 	public void removePassenger() throws DatabaseException, InvalidInputException {
 		Integer liftID = 7;
 
@@ -147,7 +171,22 @@ public class LiftPersitenceTest {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+	}
 
+//	@Test
+	public void listByDriver() {
+
+		List<Lift> driverLifts = dao.listLiftsByDriverID(MARCO_ID);
+
+		MyLogger.info("driverLifts", driverLifts.size());
+	}
+
+//	@Test
+	public void listByPassenger() {
+
+		List<Lift> passengerLifts = dao.listLiftsByPassengerID(GIUSEPPE_ID);
+
+		MyLogger.info("passengerLifts", passengerLifts.size());
 	}
 
 }

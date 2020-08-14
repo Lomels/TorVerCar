@@ -54,6 +54,7 @@ public class ListCombiner {
 		return result;
 	}
 
+	
 	private void singleCombine(Object elementToAdd) {
 		for (UnfinishedList unfinished : this.lastCompletedIteration) {
 			for (Integer index = unfinished.getLastAddition() + 1; index < unfinished.size(); index++) {
