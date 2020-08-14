@@ -57,6 +57,10 @@ public interface OurStudentDatabase {
 	
 	public List<Lift> listLiftStoppingBeforeDateTime(LocalDateTime stopDateTime);
 	
+	public List<Lift> listLiftsByDriverID(String driverID);
+	
+	public List<Lift> listLiftsByPassengerID(String passengerID);
+	
 	public String getDriverIDByLiftID(Integer liftID);
 	
 	// Passenger queries
@@ -66,4 +70,11 @@ public interface OurStudentDatabase {
 	public List<Student> listPassengersByLiftID(Integer liftID) throws DatabaseException, InvalidInputException;
 	
 	public void removePassengerByLiftIDAndUserID(Integer liftID, String passengerID);
+
+	public List<Lift> listAvailableLiftStartingAfterDateTime(LocalDateTime startDateTime);
+
+	public List<Lift> listAvailableLiftStoppingBeforeDateTime(LocalDateTime stopDateTime);
+
+	public void addNotificationByUserID(String userID, String message);
+
 }

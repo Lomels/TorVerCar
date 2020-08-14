@@ -24,7 +24,7 @@ public class GeodecodeTomTomApiTest {
 	public void normalTest() throws InvalidInputException {
 		List<Position> pos = new ArrayList<Position>();
 		try {
-			pos = geoApi.addrToPos(" zagarolo");
+			pos = geoApi.addrToPos("via folcarotonda 19, palestrina");
 		} catch (ApiNotReachableException e) {
 			e.printStackTrace();
 		}

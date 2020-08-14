@@ -19,10 +19,10 @@ public class Lift {
 
 	private Route route;
 
-	public Lift(Integer liftID, LocalDateTime startTime, int maxDuration, String note, StudentCar driver,
+	public Lift(Integer liftID, LocalDateTime startDateTime, int maxDuration, String note, StudentCar driver,
 			List<Student> passengers, Route route) throws InvalidInputException {
 		this.liftID = liftID;
-		this.setStartDateTime(startTime);
+		this.setStartDateTime(startDateTime);
 		this.setMaxDuration(maxDuration);
 		this.note = note;
 		this.setDriver(driver);

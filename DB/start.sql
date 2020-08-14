@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.31, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.29, for Linux (x86_64)
 --
 -- Host: localhost    Database: TorVerCar
 -- ------------------------------------------------------
--- Server version	5.7.31-0ubuntu0.18.04.1
+-- Server version	5.7.29-0ubuntu0.18.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -84,7 +84,7 @@ CREATE TABLE `Lifts` (
   PRIMARY KEY (`liftID`),
   KEY `driverID` (`driverID`),
   CONSTRAINT `Lifts_ibfk_1` FOREIGN KEY (`driverID`) REFERENCES `Users` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,8 +93,35 @@ CREATE TABLE `Lifts` (
 
 LOCK TABLES `Lifts` WRITE;
 /*!40000 ALTER TABLE `Lifts` DISABLE KEYS */;
-INSERT INTO `Lifts` VALUES (5,'2020-08-10 15:54:34', '2020-08-10 16:27:34' ,90,'Oh vita, oh vita','0241118','{\"duration\":33,\"distance\":27083,\"stops\":[{\"score\":10.2996511459,\"address\":\"Via Prenestina Nuova, 51, 00036 Palestrina\",\"lon\":12.88611,\"lat\":41.83322},{\"score\":8.6688928604,\"address\":\"Via del Politecnico, 00133 Roma\",\"lon\":12.62165,\"lat\":41.85573}]}',4);
+INSERT INTO `Lifts` VALUES (6,'2020-08-12 17:23:12','2020-08-12 17:56:12',200,'Ma non so cosa ce nella mia pelle bianca','0241118','{\"duration\":33,\"distance\":27083,\"stops\":[{\"score\":10.2996511459,\"address\":\"Via Prenestina Nuova, 51, 00036 Palestrina\",\"lon\":12.88611,\"lat\":41.83322},{\"score\":8.6688928604,\"address\":\"Via del Politecnico, 00133 Roma\",\"lon\":12.62165,\"lat\":41.85573}]}',4);
 /*!40000 ALTER TABLE `Lifts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Notifications`
+--
+
+DROP TABLE IF EXISTS `Notifications`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Notifications` (
+  `notificationsID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` varchar(10) DEFAULT NULL,
+  `message` text,
+  PRIMARY KEY (`notificationsID`),
+  KEY `userID_idx` (`userID`),
+  CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Notifications`
+--
+
+LOCK TABLES `Notifications` WRITE;
+/*!40000 ALTER TABLE `Notifications` DISABLE KEYS */;
+INSERT INTO `Notifications` VALUES (1,'0245061','The lift you booked for: Via del Politecnico, 00133 Roma, departing at: 2020-08-10T15:54:34, has been deleted by the driver.'),(2,'0245061','The lift you booked for: Via del Politecnico, 00133 Roma, departing at: 2020-08-12T17:24:12, has been deleted by the driver.'),(3,'0252379','The lift you booked for: Via del Politecnico, 00133 Roma, departing at: 2020-08-12T17:24:12, has been deleted by the driver.');
+/*!40000 ALTER TABLE `Notifications` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -120,7 +147,6 @@ CREATE TABLE `Passengers` (
 
 LOCK TABLES `Passengers` WRITE;
 /*!40000 ALTER TABLE `Passengers` DISABLE KEYS */;
-INSERT INTO `Passengers` VALUES (5,'0245061');
 /*!40000 ALTER TABLE `Passengers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,4 +213,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-08-10 15:58:56
+-- Dump completed on 2020-08-12 17:37:21

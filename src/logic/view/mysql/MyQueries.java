@@ -157,6 +157,14 @@ public class MyQueries {
 
 		return stmt.executeQuery(sql);
 	}
+	
+	public static ResultSet listFreeLiftStartingAfterDateTime(Statement stmt, LocalDateTime startDateTime)
+			throws SQLException {
+		String format = "SELECT * FROM Lifts WHERE startDateTime > '%s' && freeSeats > 0;";
+		String sql = String.format(format, startDateTime);
+
+		return stmt.executeQuery(sql);
+	}
 
 	public static ResultSet listLiftStoppingBeforeDateTime(Statement stmt, LocalDateTime stopDateTime)
 			throws SQLException {
@@ -165,6 +173,29 @@ public class MyQueries {
 
 		return stmt.executeQuery(sql);
 	}
+
+	public static ResultSet listFreeLiftStoppingBeforeDateTime(Statement stmt, LocalDateTime startDateTime)
+			throws SQLException {
+		String format = "SELECT * FROM Lifts WHERE stopDateTime < '%s' && freeSeats > 0;";
+		String sql = String.format(format, startDateTime);
+
+		return stmt.executeQuery(sql);
+	}
+	
+	public static ResultSet listLiftsByDriverID(Statement stmt, String driverID) throws SQLException {
+		String format = "SELECT * FROM Lifts WHERE driverID = '%s';";
+		String sql = String.format(format, driverID);
+
+		return stmt.executeQuery(sql);
+	}
+
+	public static ResultSet listLiftsByPassengerID(Statement stmt, String passengerID) throws SQLException {
+		String format = "SELECT L.* FROM Passengers as P, Lifts as L WHERE P.liftID = L.liftID && P.passengerID = '%s';";
+		String sql = String.format(format, passengerID);
+
+		return stmt.executeQuery(sql);
+	}
+
 
 	public static ResultSet getDriverIDByLiftID(Statement stmt, Integer liftID) throws SQLException {
 		String format = "SELECT driverID FROM Lifts WHERE liftID = %d;";
@@ -187,13 +218,27 @@ public class MyQueries {
 
 		return stmt.executeQuery(sql);
 	}
-	
+
 	public static void removePassengerByLiftIDAndUserID(Statement stmt, Integer liftID, String passengerID)
 			throws SQLException {
 		String format = "DELETE FROM Passengers WHERE liftID = %d && passengerID = '%s';";
 		String sql = String.format(format, liftID, passengerID);
 
 		stmt.executeUpdate(sql);
+	}
+
+	public static void addNotificationByUserID(Statement stmt, String userID, String message) throws SQLException {
+		String format = "INSERT INTO Notifications( userID, message ) VALUES ('%s', '%s');";
+		String sql = String.format(format, userID, message);
+		
+		stmt.executeUpdate(sql);
+	}
+
+	public static ResultSet loadNotificationsByUserID(Statement stmt, String userID) throws SQLException {
+		String format = "SELECT * FROM Notifications WHERE userID = '%s';";
+		String sql = String.format(format, userID);
+		
+		return stmt.executeQuery(sql);
 	}
 
 }

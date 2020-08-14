@@ -1,5 +1,6 @@
 package logic.controller;
 
+import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidStateException;
 import logic.model.Lift;
 import logic.model.Student;
@@ -7,7 +8,7 @@ import logic.view.mysql.MySqlDAO;
 
 public class PassengerController {
 
-	public void addPassenger(Lift lift, Student passenger) throws InvalidStateException {
+	public void addPassenger(Lift lift, Student passenger) throws InvalidStateException, DatabaseException {
 		// Add the student only if was not already added and it's not the driver and
 		// there are available seats
 		if (lift.isPassenger(passenger)) {
@@ -18,16 +19,20 @@ public class PassengerController {
 			// If student is the driver
 			String errorMessage = "Passenger: " + passenger.getUserID() + " is the driver.";
 			throw new InvalidStateException(errorMessage);
-		} else if (lift.getFreeSeats() > 0) {
-			// If lift has no free seats.0
+		} else if (lift.getFreeSeats() <= 0) {
+			// If lift has no free seats.
 			String errorMessage = "Lift has no more free seats";
 			throw new InvalidStateException(errorMessage);
+		} else if (false) {
+			// If passenger has already a passage in the same time
+			// TODO
 		} else {
 			// Add the passenger at the application level
 			lift.getPassengers().add(passenger);
-			// Add the passenger to the persistence
+			// Add the passenger to the persistence and update the lift
 			MySqlDAO dao = new MySqlDAO();
 			dao.addPassengerByLiftIDAndUserID(lift.getLiftID(), passenger.getUserID());
+			dao.saveLift(lift);
 		}
 	}
 
