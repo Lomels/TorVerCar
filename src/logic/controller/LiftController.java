@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.Callable;
 
 import logic.controller.email.SendEmail;
 import logic.controller.exception.InvalidInputException;
@@ -46,52 +47,6 @@ public class LiftController {
 
 	}
 
-	public List<Lift> matchLiftStartingAfter(LocalDateTime startDateTime, List<Position> stops, Integer initIndex) {
-		List<Lift> matchedLifts = new ArrayList<Lift>();
-
-		Set<UnorderedLift> unorderedLifts = new TreeSet<>();
-		MySqlDAO dao = new MySqlDAO();
-		MapsApi maps = AdapterMapsApi.getInstance();
-
-		// Get all the lifts starting after startDateTime
-		List<Lift> possibleLifts = dao
-				.listAvailableLiftStartingAfterDateTime(startDateTime.minusMinutes(MINUTES_OF_MARGIN));
-
-		// For cycle that stops once it reaches the end of possibileLifts or after
-		// MAX_LIFTS_LISTED iterations
-		for (Integer index = initIndex; (index < possibleLifts.size()) && (index < MAX_LIFTS_LISTED); index++) {
-			Lift possibileLift = possibleLifts.get(index);
-			Integer currentMaxDuration = possibileLift.getMaxDuration();
-			Route currentRoute = possibileLift.getRoute();
-			Integer currentDuration = currentRoute.getDuration();
-
-			// Add all the possibile routes and order them
-			try {
-				// Compute the route passing for the positions given in stops
-				Route newRoute = maps.addInternalRoute(currentRoute, stops);
-				// If the newRoute has a duration less than the maxDuration, it is considered a
-				// match
-				if (newRoute.getDuration() <= currentMaxDuration) {
-					possibileLift.setRoute(newRoute);
-					Integer deltaDuration = newRoute.getDuration() - currentDuration;
-					unorderedLifts.add(new UnorderedLift(possibileLift, deltaDuration));
-				}
-			} catch (InvalidInputException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		// Ordered list of routes by smaller variation of duration
-		for (UnorderedLift ur : unorderedLifts) {
-			matchedLifts.add(ur.getLift());
-		}
-
-		return matchedLifts;
-
-		// TODO: test
-	}
-
 	public void deleteLift(Lift lift) {
 		if (!lift.getPassengers().isEmpty())
 			notifyPassengers(lift);
@@ -116,4 +71,68 @@ public class LiftController {
 		return ourDb.loadNotificationsByUserID(userID);
 	}
 
+	public class LiftThread implements Callable<List<Lift>> {
+
+		private LocalDateTime startDateTime;
+		private List<Position> stops;
+		private Integer initIndex;
+
+		public LiftThread(LocalDateTime startDateTime, List<Position> stops, Integer initIndex) {
+			this.startDateTime = startDateTime;
+			this.stops = stops;
+			this.initIndex = initIndex;
+		}
+
+		@Override
+		public List<Lift> call() throws Exception {
+			List<Lift> matchedLifts = matchLiftStartingAfter();
+			return matchedLifts;
+		}
+
+		public List<Lift> matchLiftStartingAfter() {
+			List<Lift> matchedLifts = new ArrayList<Lift>();
+
+			Set<UnorderedLift> unorderedLifts = new TreeSet<>();
+			MySqlDAO dao = new MySqlDAO();
+			MapsApi maps = AdapterMapsApi.getInstance();
+
+			// Get all the lifts starting after startDateTime
+			List<Lift> possibleLifts = dao
+					.listAvailableLiftStartingAfterDateTime(startDateTime.minusMinutes(MINUTES_OF_MARGIN));
+
+			// For cycle that stops once it reaches the end of possibileLifts or after
+			// MAX_LIFTS_LISTED iterations
+			for (Integer index = initIndex; (index < possibleLifts.size()) && (index < MAX_LIFTS_LISTED); index++) {
+				Lift possibileLift = possibleLifts.get(index);
+				Integer currentMaxDuration = possibileLift.getMaxDuration();
+				Route currentRoute = possibileLift.getRoute();
+				Integer currentDuration = currentRoute.getDuration();
+
+				// Add all the possibile routes and order them
+				try {
+					// Compute the route passing for the positions given in stops
+					Route newRoute = maps.addInternalRoute(currentRoute, stops);
+					// If the newRoute has a duration less than the maxDuration, it is considered a
+					// match
+					if (newRoute.getDuration() <= currentMaxDuration) {
+						possibileLift.setRoute(newRoute);
+						Integer deltaDuration = newRoute.getDuration() - currentDuration;
+						unorderedLifts.add(new UnorderedLift(possibileLift, deltaDuration));
+					}
+				} catch (InvalidInputException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			// Ordered list of routes by smaller variation of duration
+			for (UnorderedLift ur : unorderedLifts) {
+				matchedLifts.add(ur.getLift());
+			}
+
+			return matchedLifts;
+
+			// TODO: test
+		}
+	}
 }
