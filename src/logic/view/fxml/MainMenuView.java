@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import logic.controller.LiftController;
 import logic.model.UserSingleton;
 
 public class MainMenuView extends Application implements Initializable{
@@ -39,18 +40,24 @@ public class MainMenuView extends Application implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		String string = "Hi, %s!";
 		String welcome = null;
+		String userID = null;
 		switch(sg.getRole()) {
 			case DRIVER:
 				welcome = String.format(string, sg.getStudentCar().getName().toString());
+				userID = sg.getStudentCar().getUserID();
 				break;
 			case STUDENT:
 				welcome = String.format(string, sg.getStudent().getName().toString());
+				userID = sg.getStudent().getUserID();
 				break;
 			case ADMIN:
 				//TODO: implementare
 				break;
 		}
 		tvWelcome.setText(welcome);
+		
+		LiftController liftContr = new LiftController();
+		liftContr.loadNotifications(userID);
 	}
 	
 	public static void main(String[] args) {
