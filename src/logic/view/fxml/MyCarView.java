@@ -26,6 +26,7 @@ public class MyCarView extends Application implements Initializable{
 	@FXML private Button btMyCar;
 	@FXML private Button btSave;
 	@FXML private Button btBook;
+	@FXML private Button btOffer;
 	
 	@FXML private TextField tfModel;
 	@FXML private TextField tfColour;
@@ -124,8 +125,8 @@ public class MyCarView extends Application implements Initializable{
 	
 	@FXML
 	public void offerButtonController() throws Exception {
-		HomeView home = new HomeView();
-		home.start((Stage) btLogout.getScene().getWindow());
+		OfferView offer = new OfferView();
+		offer.start((Stage) btOffer.getScene().getWindow());
 	}
 	
 	public boolean checkCar() {

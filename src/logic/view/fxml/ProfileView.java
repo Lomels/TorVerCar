@@ -89,15 +89,12 @@ public class ProfileView extends Application implements Initializable {
 	}
 	
 	@FXML
-	public void bookButtonController() throws IOException {
-		//TODO: implementare
+	public void bookButtonController() throws Exception {
+		BookView book = new BookView();
+		book.start((Stage) btBook.getScene().getWindow());
 	}
 	
-	@FXML
-	public void offerButtonController() throws IOException {
-		//TODO: implementare
-	}
-
+	
 	@FXML
 	public void backButtonController() throws Exception {
 		ProfileView profile = new ProfileView();
@@ -121,6 +118,12 @@ public class ProfileView extends Application implements Initializable {
 		LoginView login = new LoginView();
 		login.start((Stage) btLogout.getScene().getWindow());
 	}
+	
+	public void offerButtonController() throws Exception {
+		OfferView offer = new OfferView();
+		offer.start((Stage) btOffer.getScene().getWindow());
+	}
+	
 
 	@FXML
 	public void editButtonController() {

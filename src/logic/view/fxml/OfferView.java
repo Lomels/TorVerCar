@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class BookView extends Application  {
+public class OfferView extends Application  {
 	@FXML private Button btHome;
 	@FXML private Button btBook;
 	@FXML private Button btMyCar;
@@ -24,12 +24,15 @@ public class BookView extends Application  {
 	@FXML private TextField tfArrivalPoint;
 	@FXML private TextField tfStartTime;
 	@FXML private TextField tfArrivalTime;
+	@FXML private Button btCheckStart;
+	@FXML private Button btCheckEnd;
+	@FXML private Button btConfirm;
 	
 	
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Book.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Offer.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
@@ -78,6 +81,18 @@ public class BookView extends Application  {
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}
 	
-	//TODO: implementare Find
-
+	@FXML
+	public void checkStartAddressController() throws Exception {
+		AddressListView list = new AddressListView();
+		list.start((Stage) btCheckStart.getScene().getWindow());
+	}
+	
+	@FXML
+	public void checkEndAddressController() throws Exception {
+		AddressListView list = new AddressListView();
+		list.start((Stage) btCheckEnd.getScene().getWindow());
+	}
+	
+		
 }
+	

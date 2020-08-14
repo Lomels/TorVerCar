@@ -1,19 +1,28 @@
 package logic.view.fxml;
 
 import java.io.IOException;
-
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Cell;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.scene.Node;
 
-public class BookView extends Application  {
+public class AddressListView extends Application implements Initializable {
 	@FXML private Button btHome;
 	@FXML private Button btBook;
 	@FXML private Button btMyCar;
@@ -24,12 +33,17 @@ public class BookView extends Application  {
 	@FXML private TextField tfArrivalPoint;
 	@FXML private TextField tfStartTime;
 	@FXML private TextField tfArrivalTime;
+	@FXML private Button btCheckStart;
+	@FXML private Button btCheckEnd;
+	@FXML private Button btConfirm;
+	@FXML private ListView<Row> addressList;
 	
 	
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Book.fxml"));
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("address_list.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
@@ -77,7 +91,46 @@ public class BookView extends Application  {
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}
-	
-	//TODO: implementare Find
 
+
+    @Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+    	addressList.setCellFactory(lv -> new ListCell<Row>() {
+    	    private Node graphic ;
+    	    private RowList controller ;
+
+    	    {
+    	        try {
+    	            FXMLLoader loader = new FXMLLoader(getClass().getResource("list_cell.fxml"));
+    	            graphic = loader.load();
+    	            controller = loader.getController();
+    	        } catch (IOException exc) {
+    	            throw new RuntimeException(exc);
+    	        }
+    	    }
+
+    	    @Override
+    	    protected void updateItem(Row row, boolean empty) {
+    	        super.updateItem(row, empty);
+    	        if (empty) {
+    	            setGraphic(null);
+    	        } else {
+    	        	controller.setAddress(row.getAddress());
+    	        	controller.setMap(row.getURL());
+    	        
+    	           
+    	            setGraphic(graphic);
+    	        }
+		
+    	    }
+    	});
+    }
 }
+	
+	
+	//TODO implements confirm
+
+
+
+

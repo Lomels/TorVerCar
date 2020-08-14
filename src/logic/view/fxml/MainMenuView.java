@@ -77,8 +77,9 @@ public class MainMenuView extends Application implements Initializable{
 		home.start((Stage) btLogout.getScene().getWindow());
 	}
 	
-	public void offerButtonController() throws IOException {
-		//TODO: implementare
+	public void offerButtonController() throws Exception {
+		OfferView offer = new OfferView();
+		offer.start((Stage) btOffer.getScene().getWindow());
 	}
 	
 	public void bookButtonController() throws Exception {		
