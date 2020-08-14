@@ -2,6 +2,8 @@ package logic.view.fxml;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
@@ -26,6 +28,8 @@ public class MainMenuView extends Application implements Initializable{
 	@FXML private Button btBook;
 	
 	UserSingleton sg = UserSingleton.getInstance();
+	private String userID;
+	private List<String> notifications = new ArrayList<String>();
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -40,7 +44,6 @@ public class MainMenuView extends Application implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		String string = "Hi, %s!";
 		String welcome = null;
-		String userID = null;
 		switch(sg.getRole()) {
 			case DRIVER:
 				welcome = String.format(string, sg.getStudentCar().getName().toString());
@@ -57,7 +60,9 @@ public class MainMenuView extends Application implements Initializable{
 		tvWelcome.setText(welcome);
 		
 		LiftController liftContr = new LiftController();
-		liftContr.loadNotifications(userID);
+		if(!(notifications = liftContr.loadNotifications(userID)).isEmpty()) {
+			//TODO: stampare a schermo le notifiche
+		}
 	}
 	
 	public static void main(String[] args) {
