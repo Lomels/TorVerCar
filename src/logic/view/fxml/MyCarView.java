@@ -125,12 +125,12 @@ public class MyCarView extends Application implements Initializable{
 	
 	@FXML
 	public void offerButtonController() throws Exception {
-<<<<<<< HEAD
+
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
-=======
+
 		//TODO: Implementare
->>>>>>> 12fe720df1ba68e1b4168e1829cb339be487c7d1
+
 	}
 	
 	public boolean checkCar() {
