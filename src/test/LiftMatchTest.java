@@ -3,15 +3,12 @@ package test;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.json.JSONObject;
 import org.junit.Test;
 
 import logic.controller.LiftController;
+import logic.controller.LiftMatchListener;
 import logic.controller.PassengerController;
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.DatabaseException;
@@ -27,7 +24,7 @@ import logic.model.StudentCar;
 import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
-public class LiftMatchTest {
+public class LiftMatchTest implements LiftMatchListener {
 
 	MySqlDAO dao = new MySqlDAO();
 	MapsApi maps = AdapterMapsApi.getInstance();
@@ -116,39 +113,7 @@ public class LiftMatchTest {
 
 		if (!RECOMPUTE) {
 			LiftController liftController = new LiftController();
-			List<Lift> matchedLifts;
-			// Short route, no passengers on Lift
-//			matchedLifts = liftController.matchLiftStartingAfter(startDateTime, routeShort.getStops(), 0);
-
-			// Long route, no passengers
-
-//			matchedLifts = liftController.matchLiftStartingAfter(startDateTime, routeLong.getStops(), 0);
-
-			ExecutorService executor = Executors.newCachedThreadPool();
-			
-			// Short route
-			Future<List<Lift>> futureCall = executor
-					.submit(liftController.new LiftThread(startDateTime, routeShort.getStops(), 0));
-
-			// Long Route
-//			Future<List<Lift>> futureCall = executor
-//					.submit(liftController.new LiftThread(startDateTime, routeLong.getStops(), 0));
-
-			while (!futureCall.isDone()) {
-				MyLogger.info("Waiting for computation");
-			}
-
-			try {
-				matchedLifts = futureCall.get();
-				this.logLifts(matchedLifts);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			liftController.matchLiftStartingAfter(startDateTime, routeShort.getStops(), 0, this);
 		}
 
 	}
@@ -206,6 +171,22 @@ public class LiftMatchTest {
 
 			}
 		}
+	}
+
+	@Override
+	public void onThreadEnd(List<Lift> matchedLifts) {
+		this.logLifts(matchedLifts);
+	}
+
+	@Override
+	public void onThreadRunning(List<Lift> matchedLifts) {
+		MyLogger.info("Running method");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

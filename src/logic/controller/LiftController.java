@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import logic.controller.email.SendEmail;
 import logic.controller.exception.InvalidInputException;
@@ -21,19 +25,17 @@ public class LiftController {
 
 	private final static Integer MINUTES_OF_MARGIN = 10;
 	private final static Integer MAX_LIFTS_LISTED = 100;
+
 	private MySqlDAO ourDb = new MySqlDAO();
-	private Integer autoID = 0;
 
 	private class UnorderedLift implements Comparable<UnorderedLift> {
 
 		protected Lift lift;
-		protected Integer deltaDuration;
 		protected Integer comparator;
 
-		public UnorderedLift(Lift lift, Integer deltaDuration) {
+		public UnorderedLift(Lift lift, Integer deltaDuration, Integer ID) {
 			this.lift = lift;
-			this.deltaDuration = deltaDuration;
-			this.comparator = this.deltaDuration * MAX_LIFTS_LISTED + autoID++;
+			this.comparator = deltaDuration * MAX_LIFTS_LISTED + ID;
 		}
 
 		@Override
@@ -71,34 +73,60 @@ public class LiftController {
 		return ourDb.loadNotificationsByUserID(userID);
 	}
 
-	public class LiftThread implements Callable<List<Lift>> {
+	public void matchLiftStartingAfter(LocalDateTime startDateTime, List<Position> stops, Integer initIndex,
+			LiftMatchListener listener) {
+		// Get all the lifts starting after startDateTime with a margin
+		List<Lift> possibleLifts = this.ourDb
+				.listAvailableLiftStartingAfterDateTime(startDateTime.minusMinutes(MINUTES_OF_MARGIN));
 
-		private LocalDateTime startDateTime;
+		// Launch thread for computing
+		this.launchThread(possibleLifts, stops, initIndex, listener);
+	}
+
+	private void launchThread(List<Lift> possibleLifts, List<Position> stops, Integer initIndex,
+			LiftMatchListener listener) {
+		List<Lift> matchedLifts = null;
+
+		ExecutorService executorService = Executors.newCachedThreadPool();
+
+		Future<List<Lift>> futureCall = executorService.submit(new LiftThread(possibleLifts, stops, initIndex));
+
+		while (!futureCall.isDone()) {
+			listener.onThreadRunning(matchedLifts);
+		}
+		
+		try {
+			matchedLifts = futureCall.get();
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		listener.onThreadEnd(matchedLifts);
+	}
+
+	protected class LiftThread implements Callable<List<Lift>> {
+
+		private List<Lift> possibleLifts;
 		private List<Position> stops;
 		private Integer initIndex;
 
-		public LiftThread(LocalDateTime startDateTime, List<Position> stops, Integer initIndex) {
-			this.startDateTime = startDateTime;
+		public LiftThread(List<Lift> possibleLifts, List<Position> stops, Integer initIndex) {
+			this.possibleLifts = possibleLifts;
 			this.stops = stops;
 			this.initIndex = initIndex;
 		}
 
 		@Override
-		public List<Lift> call() throws Exception {
-			List<Lift> matchedLifts = matchLiftStartingAfter();
+		public List<Lift> call() {
+			List<Lift> matchedLifts = matchLifts();
 			return matchedLifts;
 		}
 
-		public List<Lift> matchLiftStartingAfter() {
+		public List<Lift> matchLifts() {
 			List<Lift> matchedLifts = new ArrayList<Lift>();
 
 			Set<UnorderedLift> unorderedLifts = new TreeSet<>();
-			MySqlDAO dao = new MySqlDAO();
 			MapsApi maps = AdapterMapsApi.getInstance();
-
-			// Get all the lifts starting after startDateTime
-			List<Lift> possibleLifts = dao
-					.listAvailableLiftStartingAfterDateTime(startDateTime.minusMinutes(MINUTES_OF_MARGIN));
 
 			// For cycle that stops once it reaches the end of possibileLifts or after
 			// MAX_LIFTS_LISTED iterations
@@ -108,7 +136,7 @@ public class LiftController {
 				Route currentRoute = possibileLift.getRoute();
 				Integer currentDuration = currentRoute.getDuration();
 
-				// Add all the possibile routes and order them
+				// Add all the possible routes and order them
 				try {
 					// Compute the route passing for the positions given in stops
 					Route newRoute = maps.addInternalRoute(currentRoute, stops);
@@ -117,7 +145,8 @@ public class LiftController {
 					if (newRoute.getDuration() <= currentMaxDuration) {
 						possibileLift.setRoute(newRoute);
 						Integer deltaDuration = newRoute.getDuration() - currentDuration;
-						unorderedLifts.add(new UnorderedLift(possibileLift, deltaDuration));
+						Integer ID = index - initIndex;
+						unorderedLifts.add(new UnorderedLift(possibileLift, deltaDuration, ID));
 					}
 				} catch (InvalidInputException e) {
 					// TODO Auto-generated catch block
@@ -131,8 +160,6 @@ public class LiftController {
 			}
 
 			return matchedLifts;
-
-			// TODO: test
 		}
 	}
 }
