@@ -12,21 +12,37 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import logic.controller.email.SendEmail;
+import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
+import logic.controller.maps.RoutingApi;
+import logic.controller.maps.RoutingHereAPI;
 import logic.model.Lift;
 import logic.model.Position;
 import logic.model.Route;
 import logic.model.Student;
+import logic.model.StudentCar;
 import logic.view.mysql.MySqlDAO;
 
 public class LiftController {
 
 	private static final Integer MINUTES_OF_MARGIN = 10;
 	private static final Integer MAX_LIFTS_LISTED = 100;
-
 	private MySqlDAO ourDb = new MySqlDAO();
+
+	RoutingApi routingApi = RoutingHereAPI.getInstance();
+
+	public Lift createLift(Integer liftID, String startDateTimeString, Integer maxDuration, String note,
+			StudentCar driver, List<Student> passengers, Position pickUp, Position dropOff)
+			throws InvalidInputException, DatabaseException {
+		LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString);
+		Route route = routingApi.startToStop(pickUp, dropOff);
+		Lift lift = new Lift(null, startDateTime, maxDuration, note, driver, null, route);
+		ourDb.saveLift(lift);
+
+		return lift;
+	}
 
 	private class UnorderedLift implements Comparable<UnorderedLift> {
 
@@ -48,7 +64,6 @@ public class LiftController {
 		}
 
 	}
-
 	public void deleteLift(Lift lift) {
 		if (!lift.getPassengers().isEmpty())
 			notifyPassengers(lift);

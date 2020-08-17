@@ -15,10 +15,10 @@ import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
 
-	private String SMTP_HOST = "smtp.gmail.com";
-	private String FROM_ADDRESS = "torvercar2020@gmail.com";
-	private String PASSWORD = "ispw2020";
-	private String FROM_NAME = "TorVerCar";
+	private static final String SMTP_HOST = "smtp.gmail.com";
+	private static final String FROM_ADDRESS = "torvercar2020@gmail.com";
+	private static final String PASSWORD = "ispw2020";
+	private static final String FROM_NAME = "TorVerCar";
 
 	public boolean send(String[] recipients, String[] bccRecipients, String subject, String message) {
 		try {
@@ -52,11 +52,7 @@ public class SendEmail {
 			Transport.send(msg);
 			
 			return true;
-		} catch (UnsupportedEncodingException ex) {
-			Logger.getLogger(SendEmail.class.getName()).log(Level.SEVERE, null, ex);
-			return false;
-
-		} catch (MessagingException ex) {
+		} catch (UnsupportedEncodingException | MessagingException ex) {
 			Logger.getLogger(SendEmail.class.getName()).log(Level.SEVERE, null, ex);
 			return false;
 		}

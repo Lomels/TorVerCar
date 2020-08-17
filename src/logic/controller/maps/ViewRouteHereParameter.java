@@ -7,7 +7,8 @@ public enum ViewRouteHereParameter {
 	HEIGHT("h","512"),
 	;
 	
-	private String name, value;
+	private String name;
+	private String value;
 	
 	private ViewRouteHereParameter(String name, String value){
 		this.name = name;

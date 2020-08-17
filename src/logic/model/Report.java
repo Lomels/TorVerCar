@@ -18,6 +18,7 @@ public class Report {
 		this.setTarget(target);
 		this.setFrom(from);
 		this.setResolved(resolved);
+		this.setHandler(handler);
 	}
 
 	public String getMessage() {

@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.httpclient.MyHttpClient;
 import logic.model.Position;
-import logic.utilities.MyLogger;
 
 public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 
@@ -19,8 +18,8 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 	private static GeodecodeTomTomApi instance = null;
 
 	// API
-	private final String path = "/search/2/geocode";
-	private final String ext = ".json";
+	private static final String path = "/search/2/geocode";
+	private static final String ext = ".json";
 
 	// Costruttore
 	private GeodecodeTomTomApi() {
@@ -36,7 +35,7 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 	// override the interface
 	@Override
 	public List<Position> addrToPos(String address) throws InvalidInputException {
-		List<Position> positions = new ArrayList<Position>();
+		List<Position> positions = new ArrayList<>();
 		// TODO find where to handle errors
 
 		StringBuilder builder = new StringBuilder();
@@ -52,7 +51,6 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 		try {
 			uri = new URI(builder.toString());
 			String json = MyHttpClient.getStringFromUrl(uri);
-//			Logger.getGlobal().info("URL:\n" + uri + "\nJSON:\n" + json);
 
 			JSONObject jsonObject = new JSONObject(json);
 			JSONArray jsonResults = jsonObject.getJSONArray("results");

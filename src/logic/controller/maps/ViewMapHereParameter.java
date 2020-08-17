@@ -1,4 +1,4 @@
-package logic.controller.maps;
+	package logic.controller.maps;
 
 public enum ViewMapHereParameter {
 
@@ -9,7 +9,8 @@ public enum ViewMapHereParameter {
 	PICTURE_IN_PICTURE("pip","13")
 	;
 
-	private String name, value;
+	private String name;
+	private String value;
 
 	private ViewMapHereParameter(String name, String value) {
 		this.name = name;
