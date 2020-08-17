@@ -23,8 +23,8 @@ import logic.view.mysql.MySqlDAO;
 
 public class LiftController {
 
-	private final static Integer MINUTES_OF_MARGIN = 10;
-	private final static Integer MAX_LIFTS_LISTED = 100;
+	private static final Integer MINUTES_OF_MARGIN = 10;
+	private static final Integer MAX_LIFTS_LISTED = 100;
 
 	private MySqlDAO ourDb = new MySqlDAO();
 
@@ -76,25 +76,37 @@ public class LiftController {
 	public void matchLiftStartingAfter(LocalDateTime startDateTime, List<Position> stops, Integer initIndex,
 			LiftMatchListener listener) {
 		// Get all the lifts starting after startDateTime with a margin
-		List<Lift> possibleLifts = this.ourDb
-				.listAvailableLiftStartingAfterDateTime(startDateTime.minusMinutes(MINUTES_OF_MARGIN));
+		LocalDateTime marginStartDateTime = startDateTime.minusMinutes(MINUTES_OF_MARGIN);
+		List<Lift> possibleLifts = this.ourDb.listAvailableLiftStartingAfterDateTime(marginStartDateTime);
 
 		// Launch thread for computing
-		this.launchThread(possibleLifts, stops, initIndex, listener);
+		LiftThread thread = new LiftThread(possibleLifts, stops, initIndex);
+		this.launchThread(thread, listener);
 	}
 
-	private void launchThread(List<Lift> possibleLifts, List<Position> stops, Integer initIndex,
+	public void matchLiftStoppingBefore(LocalDateTime stopDateTime, List<Position> stops, Integer initIndex,
 			LiftMatchListener listener) {
+		// Get all the lifts starting after startDateTime with a margin
+		LocalDateTime marginStopDateTime = stopDateTime.plusMinutes(MINUTES_OF_MARGIN);
+		List<Lift> possibleLifts = this.ourDb.listAvailableLiftStoppingBeforeDateTime(marginStopDateTime);
+		
+		// Launch thread for computing
+		LiftThread thread = new LiftThread(possibleLifts, stops, initIndex);
+		thread.setStopDateTime(marginStopDateTime);
+		this.launchThread(thread, listener);
+	}
+
+	private void launchThread(LiftThread thread, LiftMatchListener listener) {
 		List<Lift> matchedLifts = null;
 
 		ExecutorService executorService = Executors.newCachedThreadPool();
 
-		Future<List<Lift>> futureCall = executorService.submit(new LiftThread(possibleLifts, stops, initIndex));
+		Future<List<Lift>> futureCall = executorService.submit(thread);
 
 		while (!futureCall.isDone()) {
 			listener.onThreadRunning(matchedLifts);
 		}
-		
+
 		try {
 			matchedLifts = futureCall.get();
 		} catch (InterruptedException | ExecutionException e) {
@@ -109,11 +121,16 @@ public class LiftController {
 		private List<Lift> possibleLifts;
 		private List<Position> stops;
 		private Integer initIndex;
+		private LocalDateTime stopDateTime;
 
 		public LiftThread(List<Lift> possibleLifts, List<Position> stops, Integer initIndex) {
 			this.possibleLifts = possibleLifts;
 			this.stops = stops;
 			this.initIndex = initIndex;
+		}
+
+		public void setStopDateTime(LocalDateTime stopDateTime) {
+			this.stopDateTime = stopDateTime;
 		}
 
 		@Override
@@ -144,9 +161,11 @@ public class LiftController {
 					// match
 					if (newRoute.getDuration() <= currentMaxDuration) {
 						possibileLift.setRoute(newRoute);
-						Integer deltaDuration = newRoute.getDuration() - currentDuration;
-						Integer ID = index - initIndex;
-						unorderedLifts.add(new UnorderedLift(possibileLift, deltaDuration, ID));
+						if (this.stopDateTime == null || possibileLift.getStopDateTime().isBefore(this.stopDateTime)) {
+							Integer deltaDuration = newRoute.getDuration() - currentDuration;
+							Integer ID = index - initIndex;
+							unorderedLifts.add(new UnorderedLift(possibileLift, deltaDuration, ID));
+						}
 					}
 				} catch (InvalidInputException e) {
 					// TODO Auto-generated catch block

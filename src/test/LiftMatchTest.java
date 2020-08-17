@@ -36,7 +36,8 @@ public class LiftMatchTest implements LiftMatchListener {
 	private static final Boolean RECOMPUTE = false;
 	private static final Boolean INSERT = false;
 	private static final boolean LIST = false;
-	private static final boolean ADD_PASSENGERS = true;
+
+	private static final boolean ADD_PASSENGERS = false;
 
 	private static final boolean LOG_FINE = true;
 	private static final MyLogger logger = new MyLogger(LOG_FINE);
@@ -47,6 +48,7 @@ public class LiftMatchTest implements LiftMatchListener {
 
 		Integer liftID = null;
 		LocalDateTime startDateTime = LocalDateTime.parse("2020-08-13T19:00:00");
+		LocalDateTime stopDateTime = LocalDateTime.parse("2020-08-13T21:00:00");
 		Integer maxDuration;
 		String note = "Test Lift for liftMatchTest #";
 		StudentCar driver = dao.loadStudentCarByUserID(GIULIA_ID);
@@ -113,7 +115,8 @@ public class LiftMatchTest implements LiftMatchListener {
 
 		if (!RECOMPUTE) {
 			LiftController liftController = new LiftController();
-			liftController.matchLiftStartingAfter(startDateTime, routeShort.getStops(), 0, this);
+//			liftController.matchLiftStartingAfter(startDateTime, routeShort.getStops(), 0, this);
+			liftController.matchLiftStoppingBefore(stopDateTime, routeShort.getStops(), 0, this);
 		}
 
 	}
@@ -122,6 +125,7 @@ public class LiftMatchTest implements LiftMatchListener {
 		int i = 0;
 		for (Lift lift : lifts) {
 			MyLogger.info("Lift #" + i++, lift);
+//			MyLogger.info("Lift Stops at", lift.getStopDateTime());
 		}
 	}
 
