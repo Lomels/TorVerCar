@@ -24,6 +24,7 @@ public class ListCombiner {
 			this.lastAddition = lastAddition;
 		}
 
+		//TODO: a sonarcloud da fastidio l'utilizzo di List<?> come tipo di ritorno
 		protected List<?> getActualList() {
 			return actualList;
 		}
@@ -38,6 +39,8 @@ public class ListCombiner {
 
 	}
 	
+	//TODO: a sonarcloud da fastidio l'utilizzo di List<?> come tipo di ritorno
+
 	public List<List<?>> combine(List<?> startList, List<?> addList) {
 
 		UnfinishedList first = new UnfinishedList(startList, 0);
@@ -47,7 +50,7 @@ public class ListCombiner {
 			this.singleCombine(stopToAdd);
 		}
 
-		List<List<?>> result = new ArrayList<List<?>>();
+		List<List<?>> result = new ArrayList<>();
 		for (UnfinishedList unfinished : this.lastCompletedIteration) {
 			result.add(unfinished.getActualList());
 		}
@@ -61,8 +64,8 @@ public class ListCombiner {
 				workingIteration.add(new UnfinishedList(unfinished.getActualList(), index, elementToAdd));
 			}
 		}
-		this.lastCompletedIteration = new ArrayList<UnfinishedList>(workingIteration);
-		this.workingIteration = new ArrayList<UnfinishedList>();
+		this.lastCompletedIteration = new ArrayList<>(workingIteration);
+		this.workingIteration = new ArrayList<>();
 	}
 
 }

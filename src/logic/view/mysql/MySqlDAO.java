@@ -96,7 +96,7 @@ public class MySqlDAO implements OurStudentDatabase {
 		List<Student> passengers = this.listPassengersByLiftID(liftIDFromDB);
 		// route
 		String routeJson = rs.getString("route");
-		Route route = Route.JSONdecode(new JSONObject(routeJson));
+		Route route = Route.jsonDecode(new JSONObject(routeJson));
 
 		return new Lift(liftIDFromDB, startDateTime, maxDuration, note, driver, passengers, route);
 	}
@@ -344,7 +344,7 @@ public class MySqlDAO implements OurStudentDatabase {
 				MyLogger.info("First time insert of Lift in DB");
 				MyQueries.saveLiftWithoutID(stmt, lift.getStartDateTime(), lift.getStopDateTime(),
 						lift.getMaxDuration(), lift.getNote(), driver.getUserID(),
-						lift.getRoute().JSONencode().toString(), lift.getFreeSeats());
+						lift.getRoute().jsonEncode().toString(), lift.getFreeSeats());
 			} else {
 				// TODO: salvataggio nel caso il lift già esista
 				// fare prima il delete e poi il reinsert
@@ -353,7 +353,7 @@ public class MySqlDAO implements OurStudentDatabase {
 
 				MyQueries.saveLiftWithID(stmt, lift.getLiftID(), lift.getStartDateTime(), lift.getStopDateTime(),
 						lift.getMaxDuration(), lift.getNote(), driver.getUserID(),
-						lift.getRoute().JSONencode().toString(), lift.getFreeSeats());
+						lift.getRoute().jsonEncode().toString(), lift.getFreeSeats());
 
 				// TODO: qui salva i passeggeri
 			}

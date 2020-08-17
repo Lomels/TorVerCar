@@ -4,6 +4,7 @@ import logic.bean.CarInfoBean;
 import logic.bean.UserBeanSingleton;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
+import logic.controller.exception.InvalidStateException;
 import logic.model.CarInfo;
 import logic.model.Student;
 import logic.model.StudentCar;
@@ -29,20 +30,22 @@ public class SetCarInfoController {
 		return builder.build();
 	}
 
-	public void editCar(CarInfoBean newCarInfo) throws InvalidInputException, DatabaseException {
+	public void editCar(CarInfoBean newCarInfo) throws InvalidInputException, DatabaseException, InvalidStateException {
 		CarInfo carInfo = new CarInfo(newCarInfo.getPlate(), newCarInfo.getSeats(), newCarInfo.getModel(),
 				newCarInfo.getColour());
 		switch (sg.getRole()) {
-			case DRIVER:
-				sg.getStudentCar().setCarInfo(carInfo);
-				ourDb.editCarInfoByUserID(sg.getStudentCar().getUserID(), newCarInfo);
-				break;
-			case STUDENT:
-				StudentCar sCar = new StudentCarBuilder(sg.getStudent())
-					.carInfo(carInfo)
-					.build();
-				ourDb.addCar(sCar);
-				break;
+		default:
+			throw new InvalidStateException("Role not defined.");
+		case DRIVER:
+			sg.getStudentCar().setCarInfo(carInfo);
+			ourDb.editCarInfoByUserID(sg.getStudentCar().getUserID(), newCarInfo);
+			break;
+		case STUDENT:
+			StudentCar sCar = new StudentCarBuilder(sg.getStudent()).carInfo(carInfo).build();
+			ourDb.addCar(sCar);
+			break;
+		case ADMIN:
+			break;
 		}
 
 	}

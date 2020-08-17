@@ -86,17 +86,17 @@ public class LiftMatchTest {
 
 			logger.infoB("recomputed route", route);
 			logger.infoB("Route image:\n" + maps.viewFromRoute(route));
-			logger.infoB("JSON:\n" + route.JSONencode().toString());
+			logger.infoB("JSON:\n" + route.jsonEncode().toString());
 
 		} else {
 			String jsonRoute = "{\"duration\":37,\"distance\":26762,\"stops\":[{\"score\":8.1408014297,\"address\":\"Via Folcarotonda, 19, 00036 Palestrina\",\"lon\":12.85975,\"lat\":41.83976},{\"score\":8.6688928604,\"address\":\"Via del Politecnico, 00133 Roma\",\"lon\":12.62165,\"lat\":41.85573}]}";
-			route = Route.JSONdecode(new JSONObject(jsonRoute));
+			route = Route.jsonDecode(new JSONObject(jsonRoute));
 
 			String jsonShort = "{\"duration\":13,\"distance\":6566,\"stops\":[{\"score\":10.2996511459,\"address\":\"Via Prenestina Nuova, 51, 00036 Palestrina\",\"lon\":12.88611,\"lat\":41.83322},{\"score\":2.3917956352,\"address\":\"Zagarolo\",\"lon\":12.82922,\"lat\":41.83991}]}";
-			routeShort = Route.JSONdecode(new JSONObject(jsonShort));
+			routeShort = Route.jsonDecode(new JSONObject(jsonShort));
 
 			String jsonLong = "{\"duration\":44,\"distance\":26111,\"stops\":[{\"score\":10.2996511459,\"address\":\"Via Prenestina Nuova, 51, 00036 Palestrina\",\"lon\":12.88611,\"lat\":41.83322},{\"score\":2.4017963409,\"address\":\"Tivoli\",\"lon\":12.79827,\"lat\":41.96358}]}";
-			routeLong = Route.JSONdecode(new JSONObject(jsonLong));
+			routeLong = Route.jsonDecode(new JSONObject(jsonLong));
 		}
 		maxDuration = (int) (route.getDuration() * 3);
 

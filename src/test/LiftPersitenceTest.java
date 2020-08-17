@@ -52,7 +52,7 @@ public class LiftPersitenceTest {
 		String note = "Ma non so cosa ce nella mia pelle bianca";
 		StudentCar driver = dao.loadStudentCarByUserID(MARCO_ID);
 		List<Student> passengers = null;
-		Route route = Route.JSONdecode(new JSONObject(fromData));
+		Route route = Route.jsonDecode(new JSONObject(fromData));
 
 		Lift lift = new Lift(liftID, startDateTime, maxDuration, note, driver, passengers, route);
 

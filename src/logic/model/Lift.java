@@ -82,7 +82,7 @@ public class Lift {
 
 	public void setPassengers(List<Student> passengers) {
 		if (passengers == null)
-			this.passengers = new ArrayList<Student>();
+			this.passengers = new ArrayList<>();
 		else
 			this.passengers = passengers;
 	}

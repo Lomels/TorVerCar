@@ -22,15 +22,16 @@ import logic.view.mysql.MySqlDAO;
 
 public class LiftController {
 
-	private final static Integer MINUTES_OF_MARGIN = 10;
-	private final static Integer MAX_LIFTS_LISTED = 100;
+	private static final Integer MINUTES_OF_MARGIN = 10;
+	private static final Integer MAX_LIFTS_LISTED = 100;
 	private MySqlDAO ourDb = new MySqlDAO();
 	private Integer autoID = 0;
 
 	RoutingApi routingApi = RoutingHereAPI.getInstance();
-	
-	public Lift createLift(Integer liftID, String startDateTimeString, Integer maxDuration, String note, StudentCar driver,
-			List<Student> passengers, Position pickUp, Position dropOff) throws InvalidInputException, DatabaseException {
+
+	public Lift createLift(Integer liftID, String startDateTimeString, Integer maxDuration, String note,
+			StudentCar driver, List<Student> passengers, Position pickUp, Position dropOff)
+			throws InvalidInputException, DatabaseException {
 		LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString);
 		Route route = routingApi.startToStop(pickUp, dropOff);
 		Lift lift = new Lift(null, startDateTime, maxDuration, note, driver, null, route);
@@ -63,7 +64,7 @@ public class LiftController {
 	}
 
 	public List<Lift> matchLiftStartingAfter(LocalDateTime startDateTime, List<Position> stops, Integer initIndex) {
-		List<Lift> matchedLifts = new ArrayList<Lift>();
+		List<Lift> matchedLifts = new ArrayList<>();
 
 		Set<UnorderedLift> unorderedLifts = new TreeSet<>();
 		MySqlDAO dao = new MySqlDAO();

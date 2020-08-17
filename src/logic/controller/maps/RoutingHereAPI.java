@@ -17,7 +17,7 @@ import logic.utilities.PositionListCombiner;
 public class RoutingHereAPI extends HereApi implements RoutingApi {
 
 	private static RoutingHereAPI instance = null;
-	private final String path = "/v8/routes";
+	private static final String path = "/v8/routes";
 	
 	private Route bestRoute = null;
 
@@ -29,7 +29,7 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 
 	@Override
 	public Route startToStop(Position pickup, Position dropoff) throws InvalidInputException {
-		List<Position> stops = new ArrayList<Position>();
+		List<Position> stops = new ArrayList<>();
 		stops.add(pickup);
 		stops.add(dropoff);
 		return this.startToStop(stops);
@@ -37,7 +37,8 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 
 	@Override
 	public Route startToStop(List<Position> stops) throws InvalidInputException {
-		Integer duration = null, distance = null;
+		Integer duration = null;
+		Integer distance = null;
 
 		// Build the URL for the request
 		StringBuilder builder = new StringBuilder();
@@ -56,7 +57,6 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 		try {
 			URI uri = new URI(builder.toString());
 			String json = MyHttpClient.getStringFromUrl(uri);
-//			Logger.getGlobal().info("URL:\n" + uri + "\nJSON:\n" + json);
 			JSONObject jsonObject = new JSONObject(json);
 			JSONObject jsonRoute = jsonObject.getJSONArray("routes").getJSONObject(0);
 			JSONArray sections = jsonRoute.getJSONArray("sections");

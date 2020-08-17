@@ -14,7 +14,7 @@ public class SameValuesChecker {
 		throw new IllegalStateException("Utility class");
 	}
 
-	public static <T> boolean haveSamePropertyValues(Class<T> type, T t1, T t2) throws IntrospectionException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+	public static <T> boolean haveSamePropertyValues(Class<T> type, T t1, T t2) throws IntrospectionException, IllegalAccessException, InvocationTargetException{
 		BeanInfo beanInfo = Introspector.getBeanInfo(type);
 		
 		for(PropertyDescriptor pd: beanInfo.getPropertyDescriptors()) {

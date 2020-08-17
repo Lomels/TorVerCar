@@ -13,7 +13,6 @@ public class Student {
 	protected String email;
 	protected String phone;
 
-	protected Boolean state;
 
 	// Generated
 	public Student(String userID, String password, String email, String name, String surname, String phone)
@@ -86,20 +85,6 @@ public class Student {
 	public void setPhone(String phone) throws InvalidInputException {
 		InputChecker.checkPhone(phone);
 		this.phone = phone;
-	}
-
-	public Boolean getState() {
-		return state;
-	}
-
-	public void setState(Boolean newState) throws InvalidStateException {
-		if (this.state.equals(newState) && newState.equals(true)) {
-			throw new InvalidStateException("User already logged in.");
-		} else if (this.state.equals(newState) && !newState.equals(true)) {
-			throw new InvalidStateException("User already logged out.");
-		} else {
-			this.state = newState;
-		}
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class Route {
 
 	public Route(Position pickupPosition, Position dropoffPosition, Integer duration, Integer distance)
 			throws InvalidInputException {
-		this.stops = new ArrayList<Position>();
+		this.stops = new ArrayList<>();
 		this.stops.add(pickupPosition);
 		this.stops.add(dropoffPosition);
 		this.setDistance(distance);
@@ -92,25 +92,25 @@ public class Route {
 		return "Route [stops=" + stops.size() + ", duration=" + duration + " minutes, distance=" + distance + "m]";
 	}
 	
-	public JSONObject JSONencode() {
+	public JSONObject jsonEncode() {
 		JSONObject result = new JSONObject();
 		result.put("duration", this.getDuration());
 		result.put("distance", this.getDistance());
-		JSONArray JSONstops = new JSONArray();
+		JSONArray jsonStops = new JSONArray();
 		for(Position stop : this.stops) {
-			JSONstops.put(stop.JSONencode());
+			jsonStops.put(stop.jsonEncode());
 		}
-		result.put("stops", JSONstops);
+		result.put("stops", jsonStops);
 		return result;
 	}
 	
-	public static Route JSONdecode(JSONObject json) throws JSONException, InvalidInputException {
+	public static Route jsonDecode(JSONObject json) throws JSONException, InvalidInputException {
 		Route result = new Route(null, json.getInt("duration"), json.getInt("distance"));
-		List<Position> stops = new ArrayList<Position>();
+		List<Position> stops = new ArrayList<>();
 		JSONArray jsonStops = json.getJSONArray("stops");
 		for(int i = 0; i < jsonStops.length(); i++) {
 			JSONObject jsonStop = jsonStops.getJSONObject(i);
-			stops.add(Position.JSONdecode(jsonStop));
+			stops.add(Position.jsonDecode(jsonStop));
 		}
 		result.setStops(stops);
 		return result;
