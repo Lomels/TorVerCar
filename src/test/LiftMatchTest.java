@@ -3,6 +3,10 @@ package test;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.json.JSONObject;
 import org.junit.Test;
@@ -35,7 +39,7 @@ public class LiftMatchTest {
 	private static final Boolean RECOMPUTE = false;
 	private static final Boolean INSERT = false;
 	private static final boolean LIST = false;
-	private static final boolean ADD_PASSENGERS = false;
+	private static final boolean ADD_PASSENGERS = true;
 
 	private static final boolean LOG_FINE = true;
 	private static final MyLogger logger = new MyLogger(LOG_FINE);
@@ -77,10 +81,10 @@ public class LiftMatchTest {
 			Position posMedShort = maps.addrToPos(addrMedShort).get(0);
 			logger.infoB("posStop", posMedShort);
 
-//			stops.add(posStart);
+			stops.add(posStart);
 			stops.add(posMedStart);
 			stops.add(posMedShort);
-//			stops.add(posStop);
+			stops.add(posStop);
 
 			route = maps.startToStop(stops);
 
@@ -117,9 +121,34 @@ public class LiftMatchTest {
 //			matchedLifts = liftController.matchLiftStartingAfter(startDateTime, routeShort.getStops(), 0);
 
 			// Long route, no passengers
-			matchedLifts = liftController.matchLiftStartingAfter(startDateTime, routeLong.getStops(), 0);
 
-			this.logLifts(matchedLifts);
+//			matchedLifts = liftController.matchLiftStartingAfter(startDateTime, routeLong.getStops(), 0);
+
+			ExecutorService executor = Executors.newCachedThreadPool();
+			
+			// Short route
+			Future<List<Lift>> futureCall = executor
+					.submit(liftController.new LiftThread(startDateTime, routeShort.getStops(), 0));
+
+			// Long Route
+//			Future<List<Lift>> futureCall = executor
+//					.submit(liftController.new LiftThread(startDateTime, routeLong.getStops(), 0));
+
+			while (!futureCall.isDone()) {
+				MyLogger.info("Waiting for computation");
+			}
+
+			try {
+				matchedLifts = futureCall.get();
+				this.logLifts(matchedLifts);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 
 	}
