@@ -1,5 +1,7 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +12,14 @@ import org.junit.Test;
 
 import logic.controller.LiftController;
 import logic.controller.PassengerController;
+import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
+import logic.controller.maps.AdapterMapsApi;
+import logic.controller.maps.MapsApi;
 import logic.model.Lift;
+import logic.model.Position;
 import logic.model.Route;
 import logic.model.Student;
 import logic.model.StudentCar;
@@ -23,10 +29,17 @@ import logic.view.mysql.MySqlDAO;
 public class LiftPersitenceTest {
 
 	private MySqlDAO dao = new MySqlDAO();
+	private LiftController liftController = new LiftController();
 
 	private static final String MARCO_ID = "0241118";
 	private static final String GIULIA_ID = "0245061";
 	private static final String GIUSEPPE_ID = "0252379";
+
+	private static final MapsApi MAPS_API = AdapterMapsApi.getInstance();
+
+	private static final String ADDRESS_1 = "Via Prenestina Nuova 51, Palestrina";
+	private static final String ADDRESS_2 = "Via Folcarotonda 19, Palestrina";
+	private static final String ADDRESS_3 = "Via Adua 10, Rocca Priora";
 
 //	@Test
 	public void saveLiftWithoutPassengers() throws InvalidInputException, DatabaseException {
@@ -46,6 +59,21 @@ public class LiftPersitenceTest {
 		MyLogger.info("Lift to save for the first time", lift);
 
 		dao.saveLift(lift);
+	}
+	
+	@Test
+	public void createLift() throws InvalidInputException, DatabaseException, ApiNotReachableException {
+		String startDateTimeString = LocalDateTime.now().toString();
+		Integer maxDuration = 200;
+		String note = "createLift test";
+		StudentCar driver = dao.loadStudentCarByUserID(MARCO_ID);
+		
+		Position pickup = MAPS_API.addrToPos(ADDRESS_2).get(0);
+		Position dropoff = MAPS_API.addrToPos(ADDRESS_1).get(0);
+		
+		Lift lift = liftController.createLift(null, startDateTimeString, maxDuration, note, driver, null, pickup, dropoff);
+		MyLogger.info("Created Lift: ", lift);
+			
 	}
 
 //	@Test
