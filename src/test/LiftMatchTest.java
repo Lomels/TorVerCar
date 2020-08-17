@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import org.junit.Test;
 
 import logic.controller.LiftController;
+import logic.controller.LiftMatchListener;
 import logic.controller.PassengerController;
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.DatabaseException;
@@ -23,7 +24,7 @@ import logic.model.StudentCar;
 import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
-public class LiftMatchTest {
+public class LiftMatchTest implements LiftMatchListener {
 
 	MySqlDAO dao = new MySqlDAO();
 	MapsApi maps = AdapterMapsApi.getInstance();
@@ -35,6 +36,7 @@ public class LiftMatchTest {
 	private static final Boolean RECOMPUTE = false;
 	private static final Boolean INSERT = false;
 	private static final boolean LIST = false;
+
 	private static final boolean ADD_PASSENGERS = false;
 
 	private static final boolean LOG_FINE = true;
@@ -46,6 +48,7 @@ public class LiftMatchTest {
 
 		Integer liftID = null;
 		LocalDateTime startDateTime = LocalDateTime.parse("2020-08-13T19:00:00");
+		LocalDateTime stopDateTime = LocalDateTime.parse("2020-08-13T21:00:00");
 		Integer maxDuration;
 		String note = "Test Lift for liftMatchTest #";
 		StudentCar driver = dao.loadStudentCarByUserID(GIULIA_ID);
@@ -77,10 +80,10 @@ public class LiftMatchTest {
 			Position posMedShort = maps.addrToPos(addrMedShort).get(0);
 			logger.infoB("posStop", posMedShort);
 
-//			stops.add(posStart);
+			stops.add(posStart);
 			stops.add(posMedStart);
 			stops.add(posMedShort);
-//			stops.add(posStop);
+			stops.add(posStop);
 
 			route = maps.startToStop(stops);
 
@@ -112,14 +115,8 @@ public class LiftMatchTest {
 
 		if (!RECOMPUTE) {
 			LiftController liftController = new LiftController();
-			List<Lift> matchedLifts;
-			// Short route, no passengers on Lift
-//			matchedLifts = liftController.matchLiftStartingAfter(startDateTime, routeShort.getStops(), 0);
-
-			// Long route, no passengers
-			matchedLifts = liftController.matchLiftStartingAfter(startDateTime, routeLong.getStops(), 0);
-
-			this.logLifts(matchedLifts);
+//			liftController.matchLiftStartingAfter(startDateTime, routeShort.getStops(), 0, this);
+			liftController.matchLiftStoppingBefore(stopDateTime, routeShort.getStops(), 0, this);
 		}
 
 	}
@@ -128,6 +125,7 @@ public class LiftMatchTest {
 		int i = 0;
 		for (Lift lift : lifts) {
 			MyLogger.info("Lift #" + i++, lift);
+//			MyLogger.info("Lift Stops at", lift.getStopDateTime());
 		}
 	}
 
@@ -177,6 +175,22 @@ public class LiftMatchTest {
 
 			}
 		}
+	}
+
+	@Override
+	public void onThreadEnd(List<Lift> matchedLifts) {
+		this.logLifts(matchedLifts);
+	}
+
+	@Override
+	public void onThreadRunning(List<Lift> matchedLifts) {
+		MyLogger.info("Running method");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }
