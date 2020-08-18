@@ -6,6 +6,7 @@ import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
 import logic.model.CarInfo;
+import logic.model.Role;
 import logic.model.Student;
 import logic.model.StudentCar;
 import logic.model.UserSingleton;
@@ -43,6 +44,8 @@ public class SetCarInfoController {
 		case STUDENT:
 			StudentCar sCar = new StudentCarBuilder(sg.getStudent()).carInfo(carInfo).build();
 			ourDb.addCar(sCar);
+			sg.setRole(Role.DRIVER);
+			sg.setStudent(null);
 			break;
 		case ADMIN:
 			break;
@@ -50,7 +53,10 @@ public class SetCarInfoController {
 
 	}
 
-	public void removeCar(StudentCar studentCar) {
-		// TODO Implementare removeCar
+	public void removeCar(StudentCar studentCar) throws DatabaseException, InvalidInputException {
+		ourDb.removeCarByUserID(studentCar.getUserID());
+		sg.setStudent(new Student(studentCar));
+		sg.setRole(Role.STUDENT);
+		sg.setStudentCar(null);		
 	}
 }

@@ -64,6 +64,7 @@ public class LiftController {
 		}
 
 	}
+	
 	public void deleteLift(Lift lift) {
 		if (!lift.getPassengers().isEmpty())
 			notifyPassengers(lift);

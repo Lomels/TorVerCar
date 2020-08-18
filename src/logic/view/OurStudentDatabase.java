@@ -77,4 +77,6 @@ public interface OurStudentDatabase {
 
 	public void addNotificationByUserID(String userID, String message);
 
+	public void removeCarByUserID(String userID) throws DatabaseException;
+
 }
