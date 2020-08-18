@@ -1,5 +1,6 @@
 package logic.controller;
 
+import logic.controller.email.SendEmail;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidStateException;
 import logic.model.Lift;
@@ -7,6 +8,8 @@ import logic.model.Student;
 import logic.view.mysql.MySqlDAO;
 
 public class PassengerController {
+	private MySqlDAO dao = new MySqlDAO();
+
 
 	public void addPassenger(Lift lift, Student passenger) throws InvalidStateException, DatabaseException {
 		// Add the student only if was not already added and it's not the driver and
@@ -30,10 +33,32 @@ public class PassengerController {
 			// Add the passenger at the application level
 			lift.getPassengers().add(passenger);
 			// Add the passenger to the persistence and update the lift
-			MySqlDAO dao = new MySqlDAO();
 			dao.addPassengerByLiftIDAndUserID(lift.getLiftID(), passenger.getUserID());
 			dao.saveLift(lift);
 		}
+	}
+	
+	public void removePassenger(Lift lift, Student student) {
+		for(Student s : lift.getPassengers()) {
+			if(student.getUserID().contentEquals(s.getUserID())) {
+				lift.getPassengers().remove(s);
+				break;
+			}
+		}
+		
+		dao.removePassengerByLiftIDAndUserID(lift.getLiftID(), student.getUserID());
+		
+
+		String subject = "Your lift has changed!";
+		String format = "The student %s has deleted his booking for the lift departing at: %s.";
+		String message = String.format(format, student.getUserID(), lift.getStartDateTime());
+
+		String[] recipients = new String[] { lift.getDriver().getEmail() };
+		new SendEmail().send(recipients, recipients, subject, message);
+		
+		dao.addNotificationByUserID(lift.getDriver().getUserID(), message);
+
+		//TODO: test
 	}
 
 }

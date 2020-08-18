@@ -116,6 +116,18 @@ public class MyQueries {
 		stmt.executeUpdate(sql);
 	}
 
+	public static void removeCarByUserID(Statement stmt, String userID) throws SQLException {
+		String format = "DELETE FROM Cars WHERE userID = '%s';";
+		String sql = String.format(format, userID);
+		
+		stmt.executeUpdate(sql);
+		
+		format = "UPDATE Students SET role='%s';";
+		sql = String.format(format, "STUDENT");
+		
+		stmt.executeUpdate(sql);
+	}
+	
 	public static void saveLiftWithoutID(Statement stmt, LocalDateTime startDateTime, LocalDateTime stopDateTime,
 			Integer maxDuration, String note, String driverID, String route, Integer freeSeats) throws SQLException {
 		String format = "INSERT INTO Lifts (startDateTime, stopDateTime, maxDuration, note, driverID, route, freeSeats) VALUES "
