@@ -172,7 +172,7 @@ public class MyQueries {
 
 	public static ResultSet listFreeLiftStartingAfterDateTime(Statement stmt, LocalDateTime startDateTime)
 			throws SQLException {
-		String format = "SELECT * FROM Lifts WHERE startDateTime > '%s' && freeSeats > 0;";
+		String format = "SELECT * FROM Lifts WHERE startDateTime > '%s' && freeSeats > 0 ORDER BY startDateTime;";
 		String sql = String.format(format, startDateTime);
 
 		return stmt.executeQuery(sql);
@@ -180,7 +180,7 @@ public class MyQueries {
 
 	public static ResultSet listFreeLiftStartingBeforeDateTime(Statement stmt, LocalDateTime startDateTime)
 			throws SQLException {
-		String format = "SELECT * FROM Lifts WHERE startDateTime < '%s' && freeSeats > 0;";
+		String format = "SELECT * FROM Lifts WHERE startDateTime < '%s' && freeSeats > 0 ORDER BY startDateTime DESC;";
 		String sql = String.format(format, startDateTime);
 
 		return stmt.executeQuery(sql);
@@ -258,6 +258,22 @@ public class MyQueries {
 		String sql = String.format(format, userID);
 
 		return stmt.executeQuery(sql);
+	}
+
+	public static void emptyDB(Statement stmt, String tableName) throws SQLException {
+		String format = "DELETE FROM %s;";
+		String sql = String.format(format, tableName);
+
+		stmt.executeUpdate(sql);
+
+	}
+
+	public static void resetTableID(Statement stmt, String tableName) throws SQLException {
+		String format = "ALTER TABLE %s AUTO_INCREMENT = 1;";
+		String sql = String.format(format, tableName);
+
+		stmt.executeUpdate(sql);
+
 	}
 
 }

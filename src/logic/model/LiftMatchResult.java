@@ -38,4 +38,12 @@ public class LiftMatchResult {
 		this.relativeStopDateTime = relativeStopDateTime;
 	}
 
+	@Override
+	public String toString() {
+		return "LiftMatchResult [lift=" + lift + ",\nrelativeStartDateTime=" + relativeStartDateTime
+				+ ", relativeStopDateTime=" + relativeStopDateTime + "]";
+	}
+	
+	
+
 }

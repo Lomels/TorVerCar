@@ -1,7 +1,5 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +37,6 @@ public class LiftPersitenceTest {
 
 	private static final String ADDRESS_1 = "Via Prenestina Nuova 51, Palestrina";
 	private static final String ADDRESS_2 = "Via Folcarotonda 19, Palestrina";
-	private static final String ADDRESS_3 = "Via Adua 10, Rocca Priora";
 
 //	@Test
 	public void saveLiftWithoutPassengers() throws InvalidInputException, DatabaseException {

@@ -2,7 +2,6 @@ package logic.controller;
 
 import java.util.List;
 
-import logic.model.Lift;
 import logic.model.LiftMatchResult;
 
 public abstract interface LiftMatchListener {

@@ -60,13 +60,11 @@ public class LiftController {
 
 		@Override
 		public boolean equals(Object obj) {
-			// TODO Auto-generated method stub
 			return super.equals(obj);
 		}
 
 		@Override
 		public int hashCode() {
-			// TODO Auto-generated method stub
 			return super.hashCode();
 		}
 
@@ -156,6 +154,7 @@ public class LiftController {
 		private List<Position> stops;
 		private Integer initIndex;
 		private LocalDateTime stopDateTime;
+		private List<LiftMatchResult> results = new ArrayList<>();
 
 		MapsApi maps = AdapterMapsApi.getInstance();
 
@@ -176,8 +175,6 @@ public class LiftController {
 		}
 
 		public List<LiftMatchResult> matchLifts() {
-			List<LiftMatchResult> results = new ArrayList<>();
-
 			Set<UnorderedLift> unorderedLifts = new TreeSet<>();
 
 			// For cycle that stops once it reaches the end of possibileLifts or after
@@ -209,6 +206,7 @@ public class LiftController {
 						possibleLift.setRoute(newRoute);
 						if (this.isBeforeStopDateTime(possibleLift)) {
 							Integer deltaDuration = newRoute.getDuration() - currentDuration;
+							// id is sequential number in order of recieving by the DB
 							Integer id = index - initIndex;
 							unorderedLifts.add(new UnorderedLift(possibleLift, deltaDuration, id));
 						}
@@ -222,20 +220,13 @@ public class LiftController {
 			// Ordered list of routes by smaller variation of duration
 			for (UnorderedLift ur : unorderedLifts) {
 				Lift lift = ur.getLift();
-				Integer deltaStartDateTime = lift.getRoute().getDurationUntilPosition(stops.get(0));
-				Integer deltaStopDateTime = lift.getRoute().getDurationUntilPosition(stops.get(stops.size() - 1));
-				LocalDateTime relativeStartDateTime = lift.getStartDateTime().plusMinutes(deltaStartDateTime);
-				LocalDateTime relativeStopDateTime = lift.getStartDateTime().plusMinutes(deltaStopDateTime);
-				LiftMatchResult result = new LiftMatchResult(lift, relativeStartDateTime, relativeStopDateTime);
-				results.add(result);
+				this.addLiftToLiftMatch(lift);
 			}
 
 			return results;
 		}
 
 		private boolean isBeforeStopDateTime(Lift possibleLift) {
-
-			MyLogger.info("possibleLift" + possibleLift);
 			// If stopDateTime is not set, then always return true
 			if (this.stopDateTime == null)
 				return true;
@@ -244,27 +235,20 @@ public class LiftController {
 			// Get the last stop of the passenger
 			Position lastStop = this.stops.get(this.stops.size() - 1);
 
-			// Remove all the stops after the last stop of the passenger, from a copy
-			List<Position> stopsUntilLast = new ArrayList<>(possibleLift.getRoute().getStops());
-			do {
-				stopsUntilLast.remove(stopsUntilLast.size() - 1);
-			} while (!stopsUntilLast.get(stopsUntilLast.size() - 1).equals(lastStop));
+			// Get the duration until the last stop, then add it to stopDateTime
+			Route route = possibleLift.getRoute();
+			Integer deltaDeltaStopDateTime = route.getDurationUntilPosition(lastStop);
+			LocalDateTime stopDateTimeOnLastStop = possibleLift.getStartDateTime().plusMinutes(deltaDeltaStopDateTime);
+			return stopDateTimeOnLastStop.isBefore(this.stopDateTime);
+		}
 
-			// Compute the route between this new set of stops
-			try {
-				Route routeUntilLast = this.maps.startToStop(stopsUntilLast);
-				MyLogger.info("routeUntilLast", routeUntilLast);
-				// Use the duration to compute the possible stopDateTime on the last stop
-				LocalDateTime stopDateTimeOnLast = possibleLift.getStartDateTime()
-						.plusMinutes(routeUntilLast.getDuration());
-				MyLogger.info("stops at: " + stopDateTimeOnLast.toString() + "\n\n\n");
-				return stopDateTimeOnLast.isBefore(this.stopDateTime);
-			} catch (InvalidInputException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return false;
-			}
-
+		private void addLiftToLiftMatch(Lift lift) {
+			Integer deltaStartDateTime = lift.getRoute().getDurationUntilPosition(stops.get(0));
+			Integer deltaStopDateTime = lift.getRoute().getDurationUntilPosition(stops.get(stops.size() - 1));
+			LocalDateTime relativeStartDateTime = lift.getStartDateTime().plusMinutes(deltaStartDateTime);
+			LocalDateTime relativeStopDateTime = lift.getStartDateTime().plusMinutes(deltaStopDateTime);
+			LiftMatchResult result = new LiftMatchResult(lift, relativeStartDateTime, relativeStopDateTime);
+			this.results.add(result);
 		}
 	}
 }

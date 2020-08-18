@@ -93,10 +93,7 @@ public class Route {
 	}
 
 	public Integer getDuration() {
-		Integer totalDuration = 0;
-		for (Integer duration : this.durations)
-			totalDuration += duration;
-		return totalDuration;
+		return this.durations.get(this.durations.size() - 1);
 	}
 
 	// Distances method
@@ -123,8 +120,8 @@ public class Route {
 
 	@Override
 	public String toString() {
-		return "Route [stops=" + stops.size() + ", duration=" + this.getDuration() + " minutes, distance="
-				+ this.getDistance() + "m]";
+		return "Route [stops=" + stops.size() + ", duration=" + this.getDurations() + " minutes, distance="
+				+ this.getDistances() + "]";
 	}
 
 	public JSONObject jsonEncode() {

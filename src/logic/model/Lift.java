@@ -120,7 +120,7 @@ public class Lift {
 	@Override
 	public String toString() {
 		return "Lift [liftID=" + liftID + ",\nstartDateTime=" + startDateTime + ", stopDateTime*="+ this.getStopDateTime() + ",\nmaxDuration=" + maxDuration
-				+ ", note=" + note + ",\ndriver=" + driver + ",\npassengers=" + passengers + ",\nroute=" + route + "\n]";
+				+ ", note=" + note + ",\ndriver=" + driver + ",\npassengers=" + passengers + ",\nroute=" + route.toString() + "\n]";
 	}
 
 }

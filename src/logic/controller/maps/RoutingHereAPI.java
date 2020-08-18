@@ -12,7 +12,6 @@ import logic.controller.exception.InvalidInputException;
 import logic.controller.httpclient.MyHttpClient;
 import logic.model.Position;
 import logic.model.Route;
-import logic.utilities.MyLogger;
 
 public class RoutingHereAPI extends HereApi implements RoutingApi {
 
@@ -56,7 +55,6 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 
 		try {
 			URI uri = new URI(builder.toString());
-			MyLogger.info("Routing URI:\n" + uri);
 			String json = MyHttpClient.getStringFromUrl(uri);
 			JSONObject jsonObject = new JSONObject(json);
 			JSONObject jsonRoute = jsonObject.getJSONArray("routes").getJSONObject(0);
