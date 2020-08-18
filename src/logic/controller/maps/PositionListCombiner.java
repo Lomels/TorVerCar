@@ -1,7 +1,10 @@
-package logic.utilities;
+package logic.controller.maps;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import logic.model.Position;
-import java.util.*;
+import logic.utilities.ListCombiner;
 
 public class PositionListCombiner extends ListCombiner {
 

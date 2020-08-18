@@ -24,8 +24,7 @@ DROP TABLE IF EXISTS `Banned`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Banned` (
   `userID` varchar(10) DEFAULT NULL,
-  UNIQUE KEY `userID` (`userID`),
-  CONSTRAINT `Banned_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`)
+  PRIMARY KEY `userID` (`userID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -46,12 +45,13 @@ DROP TABLE IF EXISTS `Cars`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Cars` (
-  `model` varchar(20) DEFAULT NULL,
+  `model` varchar(20) NOT NULL,
   `plate` varchar(10) NOT NULL,
-  `seats` int(11) DEFAULT NULL,
-  `color` varchar(10) DEFAULT NULL,
-  `userID` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`plate`)
+  `seats` int(11) NOT NULL,
+  `color` varchar(10) NOT NULL,
+  `userID` varchar(10) NOT NULL,
+  PRIMARY KEY (`plate`),
+  CONSTRAINT `Cars_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -74,16 +74,16 @@ DROP TABLE IF EXISTS `Lifts`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Lifts` (
   `liftID` int(11) NOT NULL AUTO_INCREMENT,
-  `startDateTime` datetime DEFAULT NULL,
-  `stopDateTime` datetime DEFAULT NULL,
-  `maxDuration` int(11) DEFAULT NULL,
-  `note` text,
+  `startDateTime` datetime NOT NULL,
+  `stopDateTime` datetime NOT NULL,
+  `maxDuration` int(11) NOT NULL,
+  `note` text DEFAULT NULL,
   `driverID` varchar(10) NOT NULL,
   `route` text NOT NULL,
-  `freeSeats` int(11) DEFAULT NULL,
+  `freeSeats` int(11) NOT NULL,
   PRIMARY KEY (`liftID`),
   KEY `driverID` (`driverID`),
-  CONSTRAINT `Lifts_ibfk_1` FOREIGN KEY (`driverID`) REFERENCES `Users` (`userID`)
+  CONSTRAINT `Lifts_ibfk_1` FOREIGN KEY (`driverID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -106,7 +106,7 @@ DROP TABLE IF EXISTS `Notifications`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Notifications` (
   `notificationsID` int(11) NOT NULL AUTO_INCREMENT,
-  `userID` varchar(10) DEFAULT NULL,
+  `userID` varchar(10) NOT NULL,
   `message` text,
   PRIMARY KEY (`notificationsID`),
   KEY `userID_idx` (`userID`),
@@ -137,7 +137,7 @@ CREATE TABLE `Passengers` (
   PRIMARY KEY (`liftID`,`passengerID`),
   KEY `passengerID` (`passengerID`),
   CONSTRAINT `Passengers_ibfk_1` FOREIGN KEY (`liftID`) REFERENCES `Lifts` (`liftID`) ON DELETE CASCADE,
-  CONSTRAINT `Passengers_ibfk_2` FOREIGN KEY (`passengerID`) REFERENCES `Users` (`userID`)
+  CONSTRAINT `Passengers_ibfk_2` FOREIGN KEY (`passengerID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -158,14 +158,14 @@ DROP TABLE IF EXISTS `Students`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Students` (
-  `userID` varchar(10) DEFAULT NULL,
+  `userID` varchar(10) NOT NULL,
   `name` varchar(20) NOT NULL,
   `surname` varchar(20) NOT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `phone` varchar(10) DEFAULT NULL,
-  `rating` int(11) DEFAULT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone` varchar(10) NOT NULL,
+  `rating` int(11) NOT NULL,
   UNIQUE KEY `userID` (`userID`),
-  CONSTRAINT `Students_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`)
+  CONSTRAINT `Students_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
