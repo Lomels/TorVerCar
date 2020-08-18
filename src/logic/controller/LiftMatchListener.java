@@ -3,11 +3,13 @@ package logic.controller;
 import java.util.List;
 
 import logic.model.Lift;
+import logic.model.LiftMatchResult;
 
 public abstract interface LiftMatchListener {
 
-	public void onThreadEnd(List<Lift> matchedLifts);
+	// TODO: modifica result type con LiftMatchResult
+	public void onThreadEnd(List<LiftMatchResult> results);
 	
-	public void onThreadRunning(List<Lift> matchedLifts);
+	public void onThreadRunning();
 
 }

@@ -508,6 +508,30 @@ public class MySqlDAO implements OurStudentDatabase {
 		}
 		return result;
 	}
+	
+	@Override
+	public List<Lift> listAvailableLiftStartingBeforeDateTime(LocalDateTime startDateTime) {
+		List<Lift> result = null;
+		try {
+			this.connect();
+			
+			ResultSet rs = MyQueries.listFreeLiftStartingBeforeDateTime(stmt, startDateTime);
+			
+			if (!rs.first())
+				throw new DatabaseException("No lift found startinh before" + startDateTime.toString());
+			
+			result = new ArrayList<Lift>();
+			
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return result;
+	}
 
 	@Override
 	public String getDriverIDByLiftID(Integer liftID) {

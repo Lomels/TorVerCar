@@ -78,4 +78,14 @@ public class Position {
 				json.getString("address"));
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			Position other = (Position) obj;
+			return this.lat == other.lat && this.lon == other.lon;
+		}catch (Exception e) {
+			return super.equals(obj);
+		}
+	}
+
 }

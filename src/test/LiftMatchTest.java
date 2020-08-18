@@ -17,6 +17,7 @@ import logic.controller.exception.InvalidStateException;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.Lift;
+import logic.model.LiftMatchResult;
 import logic.model.Position;
 import logic.model.Route;
 import logic.model.Student;
@@ -44,11 +45,10 @@ public class LiftMatchTest implements LiftMatchListener {
 
 	@Test
 	public void liftMatch() throws DatabaseException, InvalidInputException, ApiNotReachableException {
-		MySqlDAO dao = new MySqlDAO();
 
 		Integer liftID = null;
 		LocalDateTime startDateTime = LocalDateTime.parse("2020-08-13T19:00:00");
-		LocalDateTime stopDateTime = LocalDateTime.parse("2020-08-13T21:00:00");
+		LocalDateTime stopDateTime = LocalDateTime.parse("2020-08-13T20:00:00");
 		Integer maxDuration;
 		String note = "Test Lift for liftMatchTest #";
 		StudentCar driver = dao.loadStudentCarByUserID(GIULIA_ID);
@@ -121,14 +121,6 @@ public class LiftMatchTest implements LiftMatchListener {
 
 	}
 
-	private void logLifts(List<Lift> lifts) {
-		int i = 0;
-		for (Lift lift : lifts) {
-			MyLogger.info("Lift #" + i++, lift);
-//			MyLogger.info("Lift Stops at", lift.getStopDateTime());
-		}
-	}
-
 //	@Test
 	public void insertStudents() throws InvalidInputException, DatabaseException {
 
@@ -177,19 +169,41 @@ public class LiftMatchTest implements LiftMatchListener {
 		}
 	}
 
-	@Override
-	public void onThreadEnd(List<Lift> matchedLifts) {
-		this.logLifts(matchedLifts);
+	private void logLifts(List<Lift> lifts) {
+		int i = 0;
+		boolean fine = true;
+		for (Lift lift : lifts) {
+			if (fine) {
+				MyLogger.info("Lift #" + i++, lift);
+			} else {
+				MyLogger.info("Lift #" + lift.getLiftID());
+			}
+		}
+	}
+
+	private void logLiftMatchResults(List<LiftMatchResult> results) {
+		int i = 0;
+		boolean fine = true;
+		for (LiftMatchResult result : results) {
+			if (fine) {
+				MyLogger.info("Lift #" + i++, result.getLift());
+				MyLogger.info("relativeStartDateTime: " + result.getRelativeStartDateTime()
+						+ ", relative stopDateTime: " + result.getRelativeStopDateTime());
+			} else {
+				MyLogger.info("Lift #" + result.getLift().getLiftID() + ", start at: "
+						+ result.getRelativeStartDateTime() + ", stop at: " + result.getRelativeStopDateTime());
+			}
+		}
 	}
 
 	@Override
-	public void onThreadRunning(List<Lift> matchedLifts) {
-		MyLogger.info("Running method");
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+	public void onThreadEnd(List<LiftMatchResult> results) {
+		this.logLiftMatchResults(results);
+	}
+
+	@Override
+	public void onThreadRunning() {
+		// TODO Auto-generated method stub
 
 	}
 

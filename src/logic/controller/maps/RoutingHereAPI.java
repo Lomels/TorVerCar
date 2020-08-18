@@ -12,13 +12,13 @@ import logic.controller.exception.InvalidInputException;
 import logic.controller.httpclient.MyHttpClient;
 import logic.model.Position;
 import logic.model.Route;
-import logic.utilities.PositionListCombiner;
+import logic.utilities.MyLogger;
 
 public class RoutingHereAPI extends HereApi implements RoutingApi {
 
 	private static RoutingHereAPI instance = null;
 	private static final String path = "/v8/routes";
-	
+
 	private Route bestRoute = null;
 
 	public static RoutingApi getInstance() {
@@ -56,24 +56,32 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 
 		try {
 			URI uri = new URI(builder.toString());
+			MyLogger.info("Routing URI:\n" + uri);
 			String json = MyHttpClient.getStringFromUrl(uri);
 			JSONObject jsonObject = new JSONObject(json);
 			JSONObject jsonRoute = jsonObject.getJSONArray("routes").getJSONObject(0);
 			JSONArray sections = jsonRoute.getJSONArray("sections");
 
+			List<Integer> durations = new ArrayList<>();
+			List<Integer> distances = new ArrayList<>();
 			distance = 0;
 			duration = 0;
 			for (int i = 0; i < sections.length(); i++) {
 				JSONObject summary = sections.getJSONObject(i).getJSONObject("summary");
 				duration += summary.getInt("duration") / 60;
+				durations.add(duration);
 				distance += summary.getInt("length");
+				distances.add(distance);
 			}
+
+			return new Route(stops, durations, distances);
+
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 
-		return new Route(stops, duration, distance);
 	}
 
 	private void setStopsParameter(StringBuilder builder, List<Position> stops) {
@@ -106,13 +114,13 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 			this.keepBetter(tempRoute);
 		}
 
-	return this.bestRoute;
+		return this.bestRoute;
 
 	}
 
 	private void keepBetter(Route tempRoute) {
 		if (this.bestRoute == null || tempRoute.getDuration() < this.bestRoute.getDuration()
-				|| (tempRoute.getDuration() == this.bestRoute.getDuration()
+				|| (tempRoute.getDuration().equals(this.bestRoute.getDuration())
 						&& tempRoute.getDistance() < this.bestRoute.getDistance())) {
 			this.bestRoute = tempRoute;
 		}
