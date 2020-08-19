@@ -9,6 +9,8 @@
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="191.0" stroke="#d3b2b2" strokeType="INSIDE" width="691.0" />
       <ImageView fx:id="ivMap" fitHeight="180.0" fitWidth="256.0" layoutX="408.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" />
-      <Text fx:id="tvSet" layoutX="27.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Via folcarotonda 19 Palestrina 00030" />
+      <Text fx:id="tvAddress" layoutX="27.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Via folcarotonda 19 Palestrina 00030" />
+      <Text fx:id="tvPlace" layoutX="27.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Via folcarotonda 19 Palestrina 00030" />
+      <Text fx:id="tvCap" layoutX="27.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Via folcarotonda 19 Palestrina 00030" />
    </children>
 </AnchorPane>

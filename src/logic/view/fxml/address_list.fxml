@@ -17,8 +17,8 @@
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#046104" height="40.0" layoutX="8.0" layoutY="10.0" stroke="#046104" strokeType="INSIDE" width="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <Button fx:id="btHome" layoutX="23.0" layoutY="7.0" mnemonicParsing="false" onAction="#homeButtonController" style="-fx-background-color: #046104;" text="Home" />
-            <Button fx:id="btBook" layoutX="89.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Book" />
-            <Button fx:id="btOffer" layoutX="147.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Offer" underline="true" />
+            <Button fx:id="btBook" layoutX="89.0" layoutY="7.0" mnemonicParsing="false" onAction="#bookButtonController" style="-fx-background-color: #046104;" text="Book" />
+            <Button fx:id="btOffer" layoutX="147.0" layoutY="7.0" mnemonicParsing="false" onAction="#offerButtonController" style="-fx-background-color: green;" text="Offer" underline="true" />
             <Button fx:id="btLogout" layoutX="557.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonController" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: #046104;">
                <graphic>
                   <ImageView fitHeight="29.0" fitWidth="33.0">
@@ -44,7 +44,7 @@
                   <VBox prefHeight="360.0" prefWidth="600.0">
                      <children>
                         <ListView fx:id="addressList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="359.0" prefWidth="600.0" />
-                        <Button mnemonicParsing="false" text="Confirm" translateX="500.0" />
+                        <Button mnemonicParsing="false" onAction="#confirmButtonController" text="Confirm" translateX="500.0" />
                      </children>
                   </VBox>
                </content>

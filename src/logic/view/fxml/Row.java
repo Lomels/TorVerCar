@@ -1,8 +1,16 @@
 package logic.view.fxml;
 
 public class Row {
+	
 	private String address;
 	private String URL;
+	
+	public Row(String address, String uRL) {
+		super();
+		this.address = address;
+		this.URL = uRL;
+	}
+	
 	public String getAddress() {
 		return address;
 	}
