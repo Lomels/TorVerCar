@@ -5,16 +5,28 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Cell;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import logic.controller.maps.ViewMapHereApi;
+import logic.model.LiftSingleton;
+import logic.model.LiftSingleton;
+
 import javafx.scene.Node;
 
 public class AddressListView extends Application implements Initializable {
@@ -33,7 +45,9 @@ public class AddressListView extends Application implements Initializable {
 	@FXML private Button btConfirm;
 	@FXML private ListView<Row> addressList;
 	
-	
+	LiftSingleton lift = LiftSingleton.getInstance();
+	ViewMapHereApi map = ViewMapHereApi.getInstance();
+	Row item;
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -41,7 +55,9 @@ public class AddressListView extends Application implements Initializable {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("address_list.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
+		
 		stage.setScene(scene);
+		
 		stage.show();		
 	}
 	
@@ -87,13 +103,31 @@ public class AddressListView extends Application implements Initializable {
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}
 
+	@FXML
+	public void confirmButtonController() throws Exception {
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Offer.fxml"));
+		
+		Stage stage = new Stage();
+		stage.setScene(new Scene((Parent) loader.load()));
+		stage.show();
+		/*OfferView offer = new OfferView();
+		offer.start((Stage) btConfirm.getScene().getWindow());*/
+	}
+	
 
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		
+    	for (int i = 1 ; i <= lift.getListPos().size()-1; i++) {
+            addressList.getItems().add(new Row(lift.getListPos().get(i).getAddress().toString() , map.viewFromPos(lift.getListPos().get(i))));
+        }
+    	
+    	
     	addressList.setCellFactory(lv -> new ListCell<Row>() {
+    		
     	    private Node graphic ;
-    	    private RowList controller ;
+    	    private RowList controller;
 
     	    {
     	        try {
@@ -119,12 +153,43 @@ public class AddressListView extends Application implements Initializable {
     	        }
 		
     	    }
+    	    
+
+    	    
+    	       
     	});
+    	
+    	addressList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+    	item = addressList.getSelectionModel().getSelectedItem();
+	    int index = addressList.getSelectionModel().getSelectedIndex();
+	       
+	
+	    addressList.getFocusModel().focus(index);
+	    //lift.setStartPoint(item.getAddress());
+	   
+	    /*
+	    if(lift.getAddress() == 1) {
+	    	lift.setStartPoint(item.getAddress());
+	    }else {
+	    	lift.setEndPoint(item.getAddress());
+	    }
+    	*/
+
+	  /*  addressList.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends Row> ov, Row old_val, Row new_val) -> {
+	       Row selectedItem = addressList.getSelectionModel().getSelectedItem();
+	       int index = addressList.getSelectionModel().getSelectedIndex();
+	       
+    	
+	       addressList.getFocusModel().focus(index);
+	       lift.setStartPoint(selectedItem.getAddress());
+	    });*/
+	    
+	    
     }
 }
 	
 	
-	//TODO implements confirm
+	
 
 
 

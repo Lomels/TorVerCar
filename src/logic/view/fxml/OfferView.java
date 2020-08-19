@@ -1,19 +1,23 @@
 package logic.view.fxml;
 
 import java.io.IOException;
-
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import logic.controller.maps.AdapterMapsApi;
+import logic.controller.maps.MapsApi;
+import logic.model.LiftSingleton;
 
-public class OfferView extends Application  {
+public class OfferView extends Application implements Initializable{
 	@FXML private Button btHome;
 	@FXML private Button btBook;
 	@FXML private Button btMyCar;
@@ -28,7 +32,8 @@ public class OfferView extends Application  {
 	@FXML private Button btCheckEnd;
 	@FXML private Button btConfirm;
 	
-	
+	MapsApi mapsApi = AdapterMapsApi.getInstance();
+	LiftSingleton lp = LiftSingleton.getInstance();
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -36,6 +41,7 @@ public class OfferView extends Application  {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
+		
 		stage.show();		
 	}
 	
@@ -83,15 +89,51 @@ public class OfferView extends Application  {
 	
 	@FXML
 	public void checkStartAddressController() throws Exception {
+		lp.setAddress(1);
+		lp.setListPos(mapsApi.addrToPos(tfStartPoint.getText()));
 		AddressListView list = new AddressListView();
 		list.start((Stage) btCheckStart.getScene().getWindow());
 	}
 	
 	@FXML
 	public void checkEndAddressController() throws Exception {
+		lp.setAddress(2);
+		lp.setListPos(mapsApi.addrToPos(tfArrivalPoint.getText()));
 		AddressListView list = new AddressListView();
 		list.start((Stage) btCheckEnd.getScene().getWindow());
 	}
+
+	@FXML
+	public void confirmButtonController() throws Exception {
+		lp.setDepartureTime(tfStartTime.getText());
+		lp.setArrivalTime(tfArrivalTime.getText());
+		//TO DO implements lift creation
+		MainMenuView home = new MainMenuView();
+		home.start((Stage) btConfirm.getScene().getWindow());
+	}
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		if(lp.getStartPoint().isEmpty()) {
+			tfStartPoint.setText(" ");
+		}else {
+			tfStartPoint.setText(lp.getStartPoint());
+			tfStartPoint.setDisable(true);
+		}
+		
+		if(lp.getEndPoint().isEmpty()) {
+			tfArrivalPoint.setText(" ");
+		}else {
+			tfArrivalPoint.setText(lp.getEndPoint());
+			tfArrivalPoint.setDisable(true);
+		}
+		
+		
+		
+		
+	}
+	
+	
 	
 		
 }
