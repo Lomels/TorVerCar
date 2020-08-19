@@ -64,7 +64,7 @@ public class Position {
 		return "Position [lat=" + lat + ", lon=" + lon + ",\nscore=" + score + ",\nlongAddress=" + address + "]";
 	}
 
-	public JSONObject JSONencode() {
+	public JSONObject jsonEncode() {
 		JSONObject result = new JSONObject();
 		result.put("lat", this.getLat());
 		result.put("lon", this.getLon());
@@ -73,9 +73,19 @@ public class Position {
 		return result;
 	}
 
-	public static Position JSONdecode(JSONObject json) throws JSONException, InvalidInputException {
+	public static Position jsonDecode(JSONObject json) throws JSONException, InvalidInputException {
 		return new Position(json.getDouble("lat"), json.getDouble("lon"), json.getDouble("score"),
 				json.getString("address"));
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		try {
+			Position other = (Position) obj;
+			return this.lat == other.lat && this.lon == other.lon;
+		}catch (Exception e) {
+			return super.equals(obj);
+		}
 	}
 
 }

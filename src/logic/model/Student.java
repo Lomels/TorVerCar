@@ -1,7 +1,6 @@
 package logic.model;
 
 import logic.controller.exception.InvalidInputException;
-import logic.controller.exception.InvalidStateException;
 import logic.utilities.InputChecker;
 
 public class Student {
@@ -12,8 +11,6 @@ public class Student {
 	protected String surname;
 	protected String email;
 	protected String phone;
-
-	protected Boolean state;
 
 	// Generated
 	public Student(String userID, String password, String email, String name, String surname, String phone)
@@ -26,7 +23,7 @@ public class Student {
 		this.setEmail(email);
 	}
 
-	// Costruttore che parte dello studentCar
+	// Constructor from StudentCar
 	public Student(StudentCar studentCar) throws InvalidInputException {
 		this(studentCar.userID, studentCar.password, studentCar.email, studentCar.name, studentCar.surname,
 				studentCar.phone);
@@ -86,20 +83,6 @@ public class Student {
 	public void setPhone(String phone) throws InvalidInputException {
 		InputChecker.checkPhone(phone);
 		this.phone = phone;
-	}
-
-	public Boolean getState() {
-		return state;
-	}
-
-	public void setState(Boolean newState) throws InvalidStateException {
-		if (this.state.equals(newState) && newState.equals(true)) {
-			throw new InvalidStateException("User already logged in.");
-		} else if (this.state.equals(newState) && !newState.equals(true)) {
-			throw new InvalidStateException("User already logged out.");
-		} else {
-			this.state = newState;
-		}
 	}
 
 	@Override

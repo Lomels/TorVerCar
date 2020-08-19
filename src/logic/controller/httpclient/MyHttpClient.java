@@ -38,10 +38,7 @@ public class MyHttpClient {
 			body = EntityUtils.toString(entity);
 			response.close();
 			client.close();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (ParseException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

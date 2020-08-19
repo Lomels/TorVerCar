@@ -10,23 +10,34 @@ import org.junit.Test;
 
 import logic.controller.LiftController;
 import logic.controller.PassengerController;
+import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
+import logic.controller.maps.AdapterMapsApi;
+import logic.controller.maps.MapsApi;
 import logic.model.Lift;
+import logic.model.Position;
 import logic.model.Route;
 import logic.model.Student;
 import logic.model.StudentCar;
 import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
-public class LiftPersitenceTest {
+public class LiftPersitenceTest extends TestUtilities{
 
 	private MySqlDAO dao = new MySqlDAO();
+	private LiftController liftController = new LiftController();
+	private PassengerController passController = new PassengerController();
 
 	private static final String MARCO_ID = "0241118";
 	private static final String GIULIA_ID = "0245061";
 	private static final String GIUSEPPE_ID = "0252379";
+
+	private static final MapsApi MAPS_API = AdapterMapsApi.getInstance();
+
+	private static final String ADDRESS_1 = "Via Prenestina Nuova 51, Palestrina";
+	private static final String ADDRESS_2 = "Via Folcarotonda 19, Palestrina";
 
 //	@Test
 	public void saveLiftWithoutPassengers() throws InvalidInputException, DatabaseException {
@@ -39,13 +50,28 @@ public class LiftPersitenceTest {
 		String note = "Ma non so cosa ce nella mia pelle bianca";
 		StudentCar driver = dao.loadStudentCarByUserID(MARCO_ID);
 		List<Student> passengers = null;
-		Route route = Route.JSONdecode(new JSONObject(fromData));
+		Route route = Route.jsonDecode(new JSONObject(fromData));
 
 		Lift lift = new Lift(liftID, startDateTime, maxDuration, note, driver, passengers, route);
 
 		MyLogger.info("Lift to save for the first time", lift);
 
 		dao.saveLift(lift);
+	}
+	
+//	@Test
+	public void createLift() throws InvalidInputException, DatabaseException, ApiNotReachableException {
+		String startDateTimeString = LocalDateTime.now().toString();
+		Integer maxDuration = 200;
+		String note = "createLift test";
+		StudentCar driver = dao.loadStudentCarByUserID(MARCO_ID);
+		
+		Position pickup = MAPS_API.addrToPos(ADDRESS_2).get(0);
+		Position dropoff = MAPS_API.addrToPos(ADDRESS_1).get(0);
+		
+		Lift lift = liftController.createLift(null, startDateTimeString, maxDuration, note, driver, null, pickup, dropoff);
+		MyLogger.info("Created Lift: ", lift);
+			
 	}
 
 //	@Test
@@ -113,12 +139,12 @@ public class LiftPersitenceTest {
 		}
 	}
 
-//	@Test
-	public void addPassenger() throws DatabaseException, InvalidInputException {
-		Integer liftID = 5;
+	@Test
+	public void addPassenger() throws DatabaseException, InvalidInputException, InvalidStateException, InterruptedException {
+		Integer liftID = 2;
 
-		Student passenger1 = dao.loadStudentByUserID(GIUSEPPE_ID);
-		Student passenger2 = dao.loadStudentByUserID(GIULIA_ID);
+		Student passenger1 = dao.loadStudentByUserID("0000005");
+//		Student passenger2 = dao.loadStudentByUserID(GIULIA_ID);
 
 		Lift lift = dao.loadLiftByID(liftID);
 		MyLogger.info("lift", lift);
@@ -127,12 +153,13 @@ public class LiftPersitenceTest {
 
 		try {
 			pc.addPassenger(lift, passenger1);
-			pc.addPassenger(lift, passenger2);
+//			pc.addPassenger(lift, passenger2);
 
 		} catch (InvalidStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 
 	}
 
@@ -149,7 +176,7 @@ public class LiftPersitenceTest {
 
 //	@Test
 	public void removePassenger() throws DatabaseException, InvalidInputException {
-		Integer liftID = 7;
+		Integer liftID = 2;
 
 		List<Student> passengers = new ArrayList<Student>();
 		try {
@@ -159,8 +186,8 @@ public class LiftPersitenceTest {
 			}
 			Student first = passengers.get(0);
 
-			dao.removePassengerByLiftIDAndUserID(liftID, first.getUserID());
-
+			passController.removePassenger(dao.loadLiftByID(liftID), first);
+			
 			MyLogger.info("Removed: " + first.getUserID());
 
 			passengers = dao.listPassengersByLiftID(liftID);

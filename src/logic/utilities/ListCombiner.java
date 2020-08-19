@@ -24,7 +24,7 @@ public class ListCombiner {
 			this.lastAddition = lastAddition;
 		}
 
-		protected List<?> getActualList() {
+		protected List<Object> getActualList() {
 			return actualList;
 		}
 
@@ -38,7 +38,7 @@ public class ListCombiner {
 
 	}
 	
-	public List<List<?>> combine(List<?> startList, List<?> addList) {
+	public List<List<Object>> combine(List<?> startList, List<?> addList) {
 
 		UnfinishedList first = new UnfinishedList(startList, 0);
 		lastCompletedIteration.add(first);
@@ -47,7 +47,7 @@ public class ListCombiner {
 			this.singleCombine(stopToAdd);
 		}
 
-		List<List<?>> result = new ArrayList<List<?>>();
+		List<List<Object>> result = new ArrayList<>();
 		for (UnfinishedList unfinished : this.lastCompletedIteration) {
 			result.add(unfinished.getActualList());
 		}
@@ -61,8 +61,8 @@ public class ListCombiner {
 				workingIteration.add(new UnfinishedList(unfinished.getActualList(), index, elementToAdd));
 			}
 		}
-		this.lastCompletedIteration = new ArrayList<UnfinishedList>(workingIteration);
-		this.workingIteration = new ArrayList<UnfinishedList>();
+		this.lastCompletedIteration = new ArrayList<>(workingIteration);
+		this.workingIteration = new ArrayList<>();
 	}
 
 }

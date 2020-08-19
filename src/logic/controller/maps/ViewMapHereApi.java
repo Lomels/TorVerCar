@@ -3,7 +3,6 @@ package logic.controller.maps;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -15,8 +14,8 @@ public class ViewMapHereApi extends HereApi implements ViewMapApi {
 	private static ViewMapHereApi instance = null;
 
 	// TODO: implement class for better build the url
-	private final  String path = "/mia/1.6/mapview";
-	private final int zoom = 15;
+	private static final  String path = "/mia/1.6/mapview";
+	private static final int zoom = 15;
 	private final String pathname = "src/logic/controller/maps/" + ViewMapHereApi.class.getCanonicalName() + ".jpg";
 
 	private ViewMapHereApi() {
@@ -58,13 +57,10 @@ public class ViewMapHereApi extends HereApi implements ViewMapApi {
 			URL url = new URL(this.viewFromPos(p));
 			BufferedImage image = ImageIO.read(url);
 			ImageIO.write(image, "jpg", file);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 
 	}
 

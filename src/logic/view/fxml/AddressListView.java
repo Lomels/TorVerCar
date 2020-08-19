@@ -2,7 +2,6 @@ package logic.view.fxml;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
@@ -27,6 +26,7 @@ import javafx.util.Callback;
 import logic.controller.maps.ViewMapHereApi;
 import logic.model.LiftSingleton;
 import logic.model.LiftSingleton;
+
 import javafx.scene.Node;
 
 public class AddressListView extends Application implements Initializable {

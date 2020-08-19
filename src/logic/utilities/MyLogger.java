@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 public class MyLogger {
 
 	private Boolean logPermission;
+	private static final String FORMAT = "%s is: %s\n";
 
 	public MyLogger() {
 		this.logPermission = true;
@@ -23,17 +24,17 @@ public class MyLogger {
 	}
 
 	public void infoB(String name, Object object) {
-		if (this.logPermission)
-			Logger.getGlobal().info(String.format("%s is: %s\n", name, object.toString()));
+		if (Boolean.TRUE.equals(this.logPermission))
+			Logger.getGlobal().info(String.format(FORMAT, name, object.toString()));
 	}
 
 	public void infoB(String message) {
-		if (this.logPermission)
+		if (Boolean.TRUE.equals(this.logPermission))
 			Logger.getGlobal().info(message + "\n");
 	}
 
 	public static void info(String name, Object object) {
-		Logger.getGlobal().info(String.format("%s is: %s\n", name, object.toString()));
+		Logger.getGlobal().info(String.format(FORMAT, name, object.toString()));
 	}
 
 	public static void info(String message) {
@@ -41,7 +42,7 @@ public class MyLogger {
 	}
 
 	public static void severe(String name, Object object) {
-		Logger.getGlobal().severe(String.format("%s is: %s\n", name, object.toString()));
+		Logger.getGlobal().severe(String.format(FORMAT, name, object.toString()));
 	}
 
 	public static void severe(String message) {

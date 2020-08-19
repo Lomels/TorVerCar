@@ -44,7 +44,7 @@ public interface OurStudentDatabase {
 	public void addCar(StudentCar studentCar) throws DatabaseException;
 
 	public Role loadRoleByUserID(String userID) throws DatabaseException;
-	
+
 	// Lift queries
 
 	public void saveLift(Lift lift) throws DatabaseException;
@@ -52,29 +52,33 @@ public interface OurStudentDatabase {
 	public Lift loadLiftByID(Integer liftID) throws DatabaseException, JSONException, InvalidInputException;
 
 	public void deleteLiftByID(Integer liftID);
-	
+
 	public List<Lift> listLiftStartingAfterDateTime(LocalDateTime startDateTime);
-	
+
 	public List<Lift> listLiftStoppingBeforeDateTime(LocalDateTime stopDateTime);
-	
+
 	public List<Lift> listLiftsByDriverID(String driverID);
-	
+
 	public List<Lift> listLiftsByPassengerID(String passengerID);
-	
+
 	public String getDriverIDByLiftID(Integer liftID);
-	
+
 	// Passenger queries
-	
+
 	public void addPassengerByLiftIDAndUserID(Integer liftID, String passengerID);
-	
+
 	public List<Student> listPassengersByLiftID(Integer liftID) throws DatabaseException, InvalidInputException;
-	
+
 	public void removePassengerByLiftIDAndUserID(Integer liftID, String passengerID);
 
 	public List<Lift> listAvailableLiftStartingAfterDateTime(LocalDateTime startDateTime);
 
+	List<Lift> listAvailableLiftStartingBeforeDateTime(LocalDateTime startDateTime);
+
 	public List<Lift> listAvailableLiftStoppingBeforeDateTime(LocalDateTime stopDateTime);
 
 	public void addNotificationByUserID(String userID, String message);
+
+	public void removeCarByUserID(String userID) throws DatabaseException;
 
 }

@@ -61,19 +61,18 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	private void disconnect() {
+		try {
+			if (stmt != null)
+				stmt.close();
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
+		}
 
 		try {
-			if (this.stmt != null)
-				this.stmt.close();
-		} catch (SQLException se) {
-			try {
-				if (this.conn != null)
-					this.conn.close();
-
-			} catch (SQLException se2) {
-				// TODO handle exception
-				se2.printStackTrace();
-			}
+			if (conn != null)
+				conn.close();
+		} catch (SQLException sqlEx) {
+			sqlEx.printStackTrace();
 		}
 
 	}
@@ -96,7 +95,7 @@ public class MySqlDAO implements OurStudentDatabase {
 		List<Student> passengers = this.listPassengersByLiftID(liftIDFromDB);
 		// route
 		String routeJson = rs.getString("route");
-		Route route = Route.JSONdecode(new JSONObject(routeJson));
+		Route route = Route.jsonDecode(new JSONObject(routeJson));
 
 		return new Lift(liftIDFromDB, startDateTime, maxDuration, note, driver, passengers, route);
 	}
@@ -295,6 +294,19 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	@Override
+	public void removeCarByUserID(String userID) throws DatabaseException {
+		try {
+			this.connect();
+			MyQueries.removeCarByUserID(stmt, userID);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DatabaseException(e.getMessage());
+		} finally {
+			this.disconnect();
+		}
+	}
+
+	@Override
 	public void editCarInfoByUserID(String userID, CarInfoBean carInfo) throws DatabaseException {
 		try {
 			this.connect();
@@ -341,21 +353,24 @@ public class MySqlDAO implements OurStudentDatabase {
 
 			if (lift.getLiftID() == null) {
 				// this is the insert
-				MyLogger.info("First time insert of Lift in DB");
+//				MyLogger.info("First time insert of Lift in DB");
 				MyQueries.saveLiftWithoutID(stmt, lift.getStartDateTime(), lift.getStopDateTime(),
 						lift.getMaxDuration(), lift.getNote(), driver.getUserID(),
-						lift.getRoute().JSONencode().toString(), lift.getFreeSeats());
+						lift.getRoute().jsonEncode().toString(), lift.getFreeSeats());
 			} else {
 				// TODO: salvataggio nel caso il lift già esista
 				// fare prima il delete e poi il reinsert
-				MyLogger.info("Update of Lift in DB");
+//				MyLogger.info("Update of Lift in DB");
 				MyQueries.deleteLiftByID(stmt, lift.getLiftID());
 
 				MyQueries.saveLiftWithID(stmt, lift.getLiftID(), lift.getStartDateTime(), lift.getStopDateTime(),
 						lift.getMaxDuration(), lift.getNote(), driver.getUserID(),
-						lift.getRoute().JSONencode().toString(), lift.getFreeSeats());
+						lift.getRoute().jsonEncode().toString(), lift.getFreeSeats());
 
 				// TODO: qui salva i passeggeri
+				for (Student passenger : lift.getPassengers()) {
+					MyQueries.addPassengerByLiftIDAndUserID(stmt, lift.getLiftID(), passenger.getUserID());
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -424,6 +439,8 @@ public class MySqlDAO implements OurStudentDatabase {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		} finally {
+			this.disconnect();
 		}
 		return result;
 	}
@@ -446,6 +463,8 @@ public class MySqlDAO implements OurStudentDatabase {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		} finally {
+			this.disconnect();
 		}
 		return result;
 	}
@@ -468,6 +487,8 @@ public class MySqlDAO implements OurStudentDatabase {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		} finally {
+			this.disconnect();
 		}
 		return result;
 	}
@@ -492,6 +513,34 @@ public class MySqlDAO implements OurStudentDatabase {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+		return result;
+	}
+
+	@Override
+	public List<Lift> listAvailableLiftStartingBeforeDateTime(LocalDateTime startDateTime) {
+		List<Lift> result = null;
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.listFreeLiftStartingBeforeDateTime(stmt, startDateTime);
+
+			if (!rs.first())
+				throw new DatabaseException("No lift found starting before" + startDateTime.toString());
+
+			result = new ArrayList<Lift>();
+
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
 		}
 		return result;
 	}
@@ -514,6 +563,8 @@ public class MySqlDAO implements OurStudentDatabase {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		} finally {
+			this.disconnect();
 		}
 		return result;
 	}
@@ -594,6 +645,8 @@ public class MySqlDAO implements OurStudentDatabase {
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		} finally {
+			this.disconnect();
 		}
 		return result;
 	}
@@ -663,5 +716,25 @@ public class MySqlDAO implements OurStudentDatabase {
 		}
 
 		return notifications;
+	}
+
+	// Used only in test
+	public void emptyDB() {
+		this.connect();
+		try {
+			String[] tables = { "Users", "Banned", "Cars", "Lifts", "Notifications", "Passengers", "Students", "Cars" };
+			for (String tableName : tables) {
+				MyQueries.emptyDB(stmt, tableName);
+			}
+			String[] tablesToReset = { "Lifts", "Notifications" };
+			for (String tableName : tablesToReset) {
+				MyQueries.resetTableID(stmt, tableName);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
 	}
 }
