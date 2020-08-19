@@ -21,6 +21,7 @@ public class Position {
 		this.address = address;
 	}
 
+
 	public Double getLat() {
 		return lat;
 	}

@@ -128,7 +128,7 @@ public class AddressListView extends Application implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		for (Position pos : lift.getListPos()) {
-			addressList.getItems().add(new Row(pos.getAddress().toString(), map.viewFromPos(pos)));
+			addressList.getItems().add(new Row(pos.getAddress(), map.viewFromPos(pos), pos));
 		}
 
 		addressList.setCellFactory(lv -> new ListCell<Row>() {
@@ -168,10 +168,14 @@ public class AddressListView extends Application implements Initializable {
 					int index = addressList.getSelectionModel().getSelectedIndex();
 
 					addressList.getFocusModel().focus(index);
-					if(lift.getAddress().equals(1))
-						lift.setStartPoint(selectedItem.getAddress());
-					else
-						lift.setEndPoint(selectedItem.getAddress());
+					if(lift.getAddress().equals(1)) {
+						lift.setStartPoint(selectedItem.getPosition());
+						lift.status = LiftSingleton.STOP;
+					}
+					else {
+						lift.setEndPoint(selectedItem.getPosition());
+						lift.status = LiftSingleton.BOTH;
+					}
 				});
 
 	}
