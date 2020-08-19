@@ -82,7 +82,7 @@ public class Lift {
 
 	public void setPassengers(List<Student> passengers) {
 		if (passengers == null)
-			this.passengers = new ArrayList<Student>();
+			this.passengers = new ArrayList<>();
 		else
 			this.passengers = passengers;
 	}
@@ -119,8 +119,8 @@ public class Lift {
 
 	@Override
 	public String toString() {
-		return "Lift [liftID=" + liftID + ", startDateTime=" + startDateTime + ", maxDuration=" + maxDuration
-				+ ", note=" + note + ", driver=" + driver + ", passengers=" + passengers + ", route=" + route + "]";
+		return "Lift [liftID=" + liftID + ",\nstartDateTime=" + startDateTime + ", stopDateTime*="+ this.getStopDateTime() + ",\nmaxDuration=" + maxDuration
+				+ ", note=" + note + ",\ndriver=" + driver + ",\npassengers=" + passengers + ",\nroute=" + route.toString() + "\n]";
 	}
 
 }
