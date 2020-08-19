@@ -45,9 +45,9 @@ public class AddressListView extends Application implements Initializable {
 	@FXML private Button btConfirm;
 	@FXML private ListView<Row> addressList;
 	
-	LiftSingleton lift = LiftSingleton.getInstance();
-	ViewMapHereApi map = ViewMapHereApi.getInstance();
-	Row item;
+	private LiftSingleton lift = LiftSingleton.getInstance();
+	private ViewMapHereApi map = ViewMapHereApi.getInstance();
+	
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -105,14 +105,8 @@ public class AddressListView extends Application implements Initializable {
 
 	@FXML
 	public void confirmButtonController() throws Exception {
-		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("Offer.fxml"));
-		
-		Stage stage = new Stage();
-		stage.setScene(new Scene((Parent) loader.load()));
-		stage.show();
-		/*OfferView offer = new OfferView();
-		offer.start((Stage) btConfirm.getScene().getWindow());*/
+		OfferView offer = new OfferView();
+		offer.start((Stage) btConfirm.getScene().getWindow());
 	}
 	
 
@@ -160,29 +154,22 @@ public class AddressListView extends Application implements Initializable {
     	});
     	
     	addressList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-    	item = addressList.getSelectionModel().getSelectedItem();
-	    int index = addressList.getSelectionModel().getSelectedIndex();
-	       
-	
-	    addressList.getFocusModel().focus(index);
-	    //lift.setStartPoint(item.getAddress());
-	   
-	    /*
-	    if(lift.getAddress() == 1) {
-	    	lift.setStartPoint(item.getAddress());
-	    }else {
-	    	lift.setEndPoint(item.getAddress());
-	    }
-    	*/
-
-	  /*  addressList.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends Row> ov, Row old_val, Row new_val) -> {
+    	addressList.getSelectionModel().selectedItemProperty().addListener((ObservableValue<? extends Row> ov, Row old_val, Row new_val) -> {
 	       Row selectedItem = addressList.getSelectionModel().getSelectedItem();
 	       int index = addressList.getSelectionModel().getSelectedIndex();
 	       
     	
 	       addressList.getFocusModel().focus(index);
-	       lift.setStartPoint(selectedItem.getAddress());
-	    });*/
+
+		    if(lift.getAddress().equals(1)) {
+		    	lift.setStartPoint(selectedItem.getAddress());
+		    }else {
+		    	lift.setEndPoint(selectedItem.getAddress());
+		    }
+	     //  lift.setStartPoint(selectedItem.getAddress());
+	    });
+    	
+
 	    
 	    
     }

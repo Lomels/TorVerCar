@@ -44,7 +44,7 @@
             <TextField fx:id="tfStartPoint" layoutX="262.0" layoutY="77.0" />
             <TextField fx:id="tfArrivalPoint" layoutX="262.0" layoutY="134.0" />
             <TextField fx:id="tfStartTime" layoutX="262.0" layoutY="195.0" />
-            <TextField fx:id="tfArrivalPoint" layoutX="262.0" layoutY="262.0" />
+            <TextField fx:id="tfArrivalTime" layoutX="262.0" layoutY="262.0" />
             <Button fx:id="btCheckStart" layoutX="434.0" layoutY="76.0" mnemonicParsing="false" onAction="#checkStartAddressController" />
             <Button fx:id="btCheckEnd" layoutX="434.0" layoutY="133.0" mnemonicParsing="false" onAction="#checkEndAddressController" />
             <Button fx:id="btConfirm" layoutX="511.0" layoutY="360.0" mnemonicParsing="false" text="Confirm" onAction="#confirmButtonController" />

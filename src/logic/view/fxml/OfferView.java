@@ -32,8 +32,8 @@ public class OfferView extends Application implements Initializable{
 	@FXML private Button btCheckEnd;
 	@FXML private Button btConfirm;
 	
-	MapsApi mapsApi = AdapterMapsApi.getInstance();
-	LiftSingleton lp = LiftSingleton.getInstance();
+	private MapsApi mapsApi = AdapterMapsApi.getInstance();
+	private LiftSingleton lp = LiftSingleton.getInstance();
 	
 	@Override
 	public void start(Stage stage) throws Exception {
