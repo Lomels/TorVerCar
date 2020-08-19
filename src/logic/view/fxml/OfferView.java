@@ -13,9 +13,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import logic.controller.LiftController;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.LiftSingleton;
+import logic.model.UserSingleton;
 
 public class OfferView extends Application implements Initializable{
 	@FXML private Button btHome;
@@ -35,6 +37,8 @@ public class OfferView extends Application implements Initializable{
 	
 	private MapsApi mapsApi = AdapterMapsApi.getInstance();
 	private LiftSingleton lp = LiftSingleton.getInstance();
+	private UserSingleton driver = UserSingleton.getInstance();
+	private LiftController controller = new LiftController();
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -108,7 +112,13 @@ public class OfferView extends Application implements Initializable{
 	public void confirmButtonController() throws Exception {
 		lp.setDepartureTime(tfStartTime.getText());
 		lp.setMaxDuration(tfMaxDuration.getText());
-
+		lp.setNotes(tfNotes.getText());
+		controller.createLift(lp.getDepartureTime(),
+				Integer.parseInt(lp.getMaxDuration()),
+				lp.getNotes(),
+				driver.getStudentCar(),
+				lp.getStartPoint(), lp.getEndPoint());
+		
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btConfirm.getScene().getWindow());
 	}

@@ -85,7 +85,7 @@ public class LiftPersitenceTest extends TestUtilities{
 		Position pickup = MAPS_API.addrToPos(ADDRESS_2).get(0);
 		Position dropoff = MAPS_API.addrToPos(ADDRESS_1).get(0);
 		
-		Lift lift = liftController.createLift(null, startDateTimeString, maxDuration, note, driver, null, pickup, dropoff);
+		Lift lift = liftController.createLift(startDateTimeString, maxDuration, note, driver, pickup, dropoff);
 		MyLogger.info("Created Lift: ", lift);
 			
 	}

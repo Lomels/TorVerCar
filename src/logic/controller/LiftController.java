@@ -70,8 +70,8 @@ public class LiftController {
 
 	}
 
-	public Lift createLift(Integer liftID, String startDateTimeString, Integer maxDuration, String note,
-			StudentCar driver, List<Student> passengers, Position pickUp, Position dropOff)
+	public Lift createLift(String startDateTimeString, Integer maxDuration, String note,
+			StudentCar driver, Position pickUp, Position dropOff)
 			throws InvalidInputException, DatabaseException {
 		LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString);
 		Route route = routingApi.startToStop(pickUp, dropOff);
