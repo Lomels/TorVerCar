@@ -27,7 +27,8 @@ public class OfferView extends Application implements Initializable{
 	@FXML private TextField tfStartPoint;
 	@FXML private TextField tfArrivalPoint;
 	@FXML private TextField tfStartTime;
-	@FXML private TextField tfArrivalTime;
+	@FXML private TextField tfMaxDuration;
+	@FXML private TextField tfNotes;
 	@FXML private Button btCheckStart;
 	@FXML private Button btCheckEnd;
 	@FXML private Button btConfirm;
@@ -106,7 +107,8 @@ public class OfferView extends Application implements Initializable{
 	@FXML
 	public void confirmButtonController() throws Exception {
 		lp.setDepartureTime(tfStartTime.getText());
-		lp.setArrivalTime(tfArrivalTime.getText());
+		lp.setMaxDuration(tfMaxDuration.getText());
+		
 		//TO DO implements lift creation
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btConfirm.getScene().getWindow());
