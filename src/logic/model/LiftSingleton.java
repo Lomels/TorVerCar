@@ -8,8 +8,18 @@ public class LiftSingleton {
 	private Position startPoint;
 	private Position endPoint;
 	private String departureTime;
-	private String arrivalTime;
+	private String maxDuration;
 	private Integer address;
+	private String notes;
+	
+
+public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
 
 	public String status = START;
 
@@ -60,12 +70,12 @@ public class LiftSingleton {
 		this.departureTime = departureTime;
 	}
 
-	public String getArrivalTime() {
-		return arrivalTime;
+	public String getMaxDuration() {
+		return maxDuration;
 	}
 
-	public void setArrivalTime(String arrivalTime) {
-		this.arrivalTime = arrivalTime;
+	public void setMaxDuration(String arrivalTime) {
+		this.maxDuration = arrivalTime;
 	}
 
 	public Integer getAddress() {

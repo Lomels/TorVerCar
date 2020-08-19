@@ -40,14 +40,16 @@
             <Text layoutX="23.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Starting point:" />
             <Text layoutX="23.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destination:" />
             <Text layoutX="23.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Depart at:" />
-            <Text layoutX="23.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrive up:" />
+            <Text layoutX="23.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max duration:" />
             <TextField fx:id="tfStartPoint" layoutX="262.0" layoutY="77.0" />
             <TextField fx:id="tfArrivalPoint" layoutX="262.0" layoutY="134.0" />
             <TextField fx:id="tfStartTime" layoutX="262.0" layoutY="195.0" />
-            <TextField fx:id="tfArrivalTime" layoutX="262.0" layoutY="262.0" />
+            <TextField fx:id="tfMaxDuration" layoutX="262.0" layoutY="262.0" />
             <Button fx:id="btCheckStart" layoutX="434.0" layoutY="76.0" mnemonicParsing="false" onAction="#checkStartAddressController" />
             <Button fx:id="btCheckEnd" layoutX="434.0" layoutY="133.0" mnemonicParsing="false" onAction="#checkEndAddressController" />
-            <Button fx:id="btConfirm" layoutX="511.0" layoutY="360.0" mnemonicParsing="false" text="Confirm" onAction="#confirmButtonController" />
+            <Button fx:id="btConfirm" layoutX="511.0" layoutY="360.0" mnemonicParsing="false" onAction="#confirmButtonController" text="Confirm" />
+            <Text layoutX="23.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add notes:" />
+            <TextField fx:id="tfNotes" layoutX="262.0" layoutY="316.0" prefHeight="62.0" prefWidth="171.0" />
          </children>
       </AnchorPane>
    </children>

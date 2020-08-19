@@ -32,6 +32,7 @@ import logic.model.LiftSingleton;
 import javafx.scene.Node;
 
 public class AddressListView extends Application implements Initializable {
+
 	@FXML
 	private Button btHome;
 	@FXML
@@ -126,8 +127,7 @@ public class AddressListView extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
-		for (Position pos : lift.getListPos()) {
+for (Position pos : lift.getListPos()) {
 			addressList.getItems().add(new Row(pos.getAddress(), map.viewFromPos(pos), pos));
 		}
 
@@ -180,3 +180,4 @@ public class AddressListView extends Application implements Initializable {
 
 	}
 }
+
