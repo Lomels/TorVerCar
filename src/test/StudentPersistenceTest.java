@@ -15,7 +15,7 @@ public class StudentPersistenceTest extends TestUtilities{
 	private MySqlDAO dao = new MySqlDAO();
 
 	
-//	@Test
+	@Test
 	public void removeCar() throws DatabaseException, InvalidInputException {
 		String userID = USER_ID+"2";
 		MyLogger.info("Old user role", dao.loadRoleByUserID(userID));
@@ -26,21 +26,4 @@ public class StudentPersistenceTest extends TestUtilities{
 		MyLogger.info("New user role", dao.loadRoleByUserID(userID));
 	}
 	
-	@Test
-	public void addCar() throws InvalidInputException, DatabaseException {
-		String userID = USER_ID+"0";
-		String plate = PLATE_FORMAT+"000";
-		
-		CarInfoBean carInfo = new CarInfoBean();
-		carInfo.setPlate(plate);
-		carInfo.setColour(COLOR);
-		carInfo.setModel(MODEL);
-		carInfo.setSeats(SEATS);
-		
-		carController.addCar(carInfo);
-		
-		MyLogger.info("Expected Car", carInfo);
-		MyLogger.info("Inserted Car", dao.loadStudentCarByUserID(userID).getCarInfo());
-		
-	}
 }
