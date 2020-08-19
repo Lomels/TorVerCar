@@ -1,11 +1,12 @@
 package logic.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LiftSingleton {
 	private List<Position> listPos;
-	private String startPoint = new String();
-	private String endPoint = new String();
+	private Position startPoint;
+	private Position endPoint;
 	private String departureTime;
 	private String maxDuration;
 	private Integer address;
@@ -20,12 +21,19 @@ public String getNotes() {
 		this.notes = notes;
 	}
 
-private static LiftSingleton instance = null;
-	
-	private LiftSingleton() {}
-	
+	public String status = START;
+
+	public static final String START = "START";
+	public static final String STOP = "STOP";
+	public static final String BOTH = "BOTH";
+
+	private static LiftSingleton instance = null;
+
+	private LiftSingleton() {
+	}
+
 	public static LiftSingleton getInstance() {
-		if(instance == null) 
+		if (instance == null)
 			instance = new LiftSingleton();
 		return instance;
 	}
@@ -37,21 +45,20 @@ private static LiftSingleton instance = null;
 	public void setListPos(List<Position> listPos) {
 		this.listPos = listPos;
 	}
-	
-	
-	public String getStartPoint() {
+
+	public Position getStartPoint() {
 		return startPoint;
 	}
 
-	public void setStartPoint(String startPoint) {
+	public void setStartPoint(Position startPoint) {
 		this.startPoint = startPoint;
 	}
 
-	public String getEndPoint() {
+	public Position getEndPoint() {
 		return endPoint;
 	}
 
-	public void setEndPoint(String endPoint) {
+	public void setEndPoint(Position endPoint) {
 		this.endPoint = endPoint;
 	}
 
@@ -78,6 +85,5 @@ private static LiftSingleton instance = null;
 	public void setAddress(Integer address) {
 		this.address = address;
 	}
-
 
 }

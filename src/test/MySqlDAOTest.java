@@ -13,8 +13,9 @@ import logic.view.mysql.MySqlDAO;
 
 public class MySqlDAOTest {
 
-	private static final String USERID = "12345";
-	private static final String PASSWORD = "aaaaa1@";
+	private static final String USERID = "0000000";
+	private static final String BANNED = "1234567";
+	private static final String PASSWORD = "aaaAAA123@";
 	private static final String NOT_EX_USERID = "1000";
 
 	@Test
@@ -31,9 +32,8 @@ public class MySqlDAOTest {
 
 	@Test
 	public void banned() throws InvalidInputException, DatabaseException {
-		String userID = "123456";
 		MySqlDAO my = new MySqlDAO();
-		assertTrue(my.wasBannedByUserID(userID));
+		assertTrue(my.wasBannedByUserID(BANNED));
 	}
 
 	@Test

@@ -108,25 +108,24 @@ public class OfferView extends Application implements Initializable{
 	public void confirmButtonController() throws Exception {
 		lp.setDepartureTime(tfStartTime.getText());
 		lp.setMaxDuration(tfMaxDuration.getText());
-		
-		//TO DO implements lift creation
+
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btConfirm.getScene().getWindow());
 	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		if(lp.getStartPoint().isEmpty()) {
+		if(lp.status.equals(LiftSingleton.START)) {
 			tfStartPoint.setText(" ");
 		}else {
-			tfStartPoint.setText(lp.getStartPoint());
+			tfStartPoint.setText(lp.getStartPoint().getAddress());
 			tfStartPoint.setDisable(true);
 		}
 		
-		if(lp.getEndPoint().isEmpty()) {
+		if(lp.status.equals(LiftSingleton.STOP) | lp.status.equals(LiftSingleton.START)) {
 			tfArrivalPoint.setText(" ");
 		}else {
-			tfArrivalPoint.setText(lp.getEndPoint());
+			tfArrivalPoint.setText(lp.getEndPoint().getAddress());
 			tfArrivalPoint.setDisable(true);
 		}
 		

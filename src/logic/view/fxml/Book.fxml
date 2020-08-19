@@ -43,6 +43,8 @@
       <TextField fx:id="tfArrivalPoint" layoutX="262.0" layoutY="134.0" />
       <TextField fx:id="tfStartTime" layoutX="262.0" layoutY="195.0" />
       <TextField fx:id="tfArrivalPoint" layoutX="262.0" layoutY="262.0" />
-      <Button fx:id="btFind" layoutX="534.0" layoutY="350.0" mnemonicParsing="false" text="Find" />
+      <Button fx:id="btFind" layoutX="534.0" layoutY="350.0" mnemonicParsing="false" text="Find" onAction="#findButtonController" />
+      <Button fx:id="btStart" layoutX="447.0" layoutY="78.0" mnemonicParsing="false" onAction="#startButtonController" text="Button" />
+      <Button fx:id="btDestination" layoutX="447.0" layoutY="134.0" mnemonicParsing="false" onAction="#destButtonController" text="Button" />
    </children>
 </AnchorPane>
