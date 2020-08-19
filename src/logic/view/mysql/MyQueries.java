@@ -122,8 +122,8 @@ public class MyQueries {
 
 		stmt.executeUpdate(sql);
 
-		format = "UPDATE Students SET role='%s';";
-		sql = String.format(format, "STUDENT");
+		format = "UPDATE Users SET role='%s' WHERE userID = '%s';";
+		sql = String.format(format, "STUDENT", userID);
 
 		stmt.executeUpdate(sql);
 	}
@@ -251,6 +251,7 @@ public class MyQueries {
 		String sql = String.format(format, userID, message);
 
 		stmt.executeUpdate(sql);
+	
 	}
 
 	public static ResultSet loadNotificationsByUserID(Statement stmt, String userID) throws SQLException {

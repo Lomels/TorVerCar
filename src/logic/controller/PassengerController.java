@@ -35,7 +35,7 @@ public class PassengerController {
 		}
 	}
 
-	public void removePassenger(Lift lift, Student student) {
+	public void removePassenger(Lift lift, Student student) throws DatabaseException {
 		for (Student s : lift.getPassengers()) {
 			if (student.getUserID().contentEquals(s.getUserID())) {
 				lift.getPassengers().remove(s);
@@ -44,7 +44,8 @@ public class PassengerController {
 		}
 
 		dao.removePassengerByLiftIDAndUserID(lift.getLiftID(), student.getUserID());
-
+		dao.saveLift(lift);
+		
 		String subject = "Your lift has changed!";
 		String format = "The student %s has deleted his booking for the lift departing at: %s.";
 		String message = String.format(format, student.getUserID(), lift.getStartDateTime());

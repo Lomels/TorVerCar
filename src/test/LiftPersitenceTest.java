@@ -24,10 +24,11 @@ import logic.model.StudentCar;
 import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
-public class LiftPersitenceTest {
+public class LiftPersitenceTest extends TestUtilities{
 
 	private MySqlDAO dao = new MySqlDAO();
 	private LiftController liftController = new LiftController();
+	private PassengerController passController = new PassengerController();
 
 	private static final String MARCO_ID = "0241118";
 	private static final String GIULIA_ID = "0245061";
@@ -58,7 +59,7 @@ public class LiftPersitenceTest {
 		dao.saveLift(lift);
 	}
 	
-	@Test
+//	@Test
 	public void createLift() throws InvalidInputException, DatabaseException, ApiNotReachableException {
 		String startDateTimeString = LocalDateTime.now().toString();
 		Integer maxDuration = 200;
@@ -138,12 +139,12 @@ public class LiftPersitenceTest {
 		}
 	}
 
-//	@Test
-	public void addPassenger() throws DatabaseException, InvalidInputException {
-		Integer liftID = 5;
+	@Test
+	public void addPassenger() throws DatabaseException, InvalidInputException, InvalidStateException, InterruptedException {
+		Integer liftID = 2;
 
-		Student passenger1 = dao.loadStudentByUserID(GIUSEPPE_ID);
-		Student passenger2 = dao.loadStudentByUserID(GIULIA_ID);
+		Student passenger1 = dao.loadStudentByUserID("0000005");
+//		Student passenger2 = dao.loadStudentByUserID(GIULIA_ID);
 
 		Lift lift = dao.loadLiftByID(liftID);
 		MyLogger.info("lift", lift);
@@ -152,12 +153,13 @@ public class LiftPersitenceTest {
 
 		try {
 			pc.addPassenger(lift, passenger1);
-			pc.addPassenger(lift, passenger2);
+//			pc.addPassenger(lift, passenger2);
 
 		} catch (InvalidStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 
 	}
 
@@ -174,7 +176,7 @@ public class LiftPersitenceTest {
 
 //	@Test
 	public void removePassenger() throws DatabaseException, InvalidInputException {
-		Integer liftID = 7;
+		Integer liftID = 2;
 
 		List<Student> passengers = new ArrayList<Student>();
 		try {
@@ -184,8 +186,8 @@ public class LiftPersitenceTest {
 			}
 			Student first = passengers.get(0);
 
-			dao.removePassengerByLiftIDAndUserID(liftID, first.getUserID());
-
+			passController.removePassenger(dao.loadLiftByID(liftID), first);
+			
 			MyLogger.info("Removed: " + first.getUserID());
 
 			passengers = dao.listPassengersByLiftID(liftID);

@@ -27,13 +27,13 @@ public class RegistrationController {
 	public RegistrationController() {
 		this.uniDb = new UniDAO();
 		this.ourDb = new MySqlDAO();
-
 	}
 
 	public boolean alreadyExist(String userID) throws DatabaseException, InvalidInputException {
 		return ourDb.existByUserID(userID);
 	}
 
+	// TODO: rimuovere
 	public void createStudent(String userID, String password) throws Exception {
 		// check is userID and password are valid
 		InputChecker.checkUserID(userID);
@@ -58,6 +58,7 @@ public class RegistrationController {
 	public void addStudent(UserBean user) throws InvalidInputException, DatabaseException {
 		Student student = StudentBuilder.newBuilder(user.getUserID()).password(user.getPassword())
 				.fullname(user.getName(), user.getSurname()).email(user.getEmail()).phone(user.getPhone()).build();
+
 		ourDb.addStudent(student);
 	}
 

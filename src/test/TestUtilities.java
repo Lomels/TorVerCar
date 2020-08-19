@@ -134,7 +134,7 @@ public class TestUtilities {
 		}
 	}
 
-	private static void addPassengerToLift(Integer liftID, Integer passengerToAdd)
+	protected static void addPassengerToLift(Integer liftID, Integer passengerToAdd)
 			throws DatabaseException, InvalidInputException, InvalidStateException, InterruptedException {
 		Lift liftFromDB = dao.loadLiftByID(liftID);
 		for (int passengerIndex = 0; passengerIndex < passengerToAdd; passengerIndex++) {
