@@ -11,6 +11,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -24,6 +26,9 @@ public class ProfileView extends Application implements Initializable {
 	@FXML private TextField tfEmail;
 	@FXML private TextField tfPass;
 	@FXML private TextField tfPhone;
+	@FXML private PasswordField pfHidden;
+	
+	@FXML private CheckBox cbShow;
 	
 	@FXML private Button btHome;
 	@FXML private Button btBack;
@@ -130,6 +135,17 @@ public class ProfileView extends Application implements Initializable {
 		tfPhone.setDisable(false);
 		tfEmail.setDisable(false);
 		tfPass.setDisable(false);
+		
+		tfPass.setManaged(false);
+		tfPass.setVisible(false);
+		
+		tfPass.managedProperty().bind(cbShow.selectedProperty());
+		tfPass.visibleProperty().bind(cbShow.selectedProperty());
+		
+		pfHidden.managedProperty().bind(cbShow.selectedProperty().not());
+		pfHidden.visibleProperty().bind(cbShow.selectedProperty().not());
+
+		tfPass.textProperty().bindBidirectional(pfHidden.textProperty());
 	}
 
 	@FXML

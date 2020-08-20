@@ -18,6 +18,7 @@ import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.LiftSingleton;
 import logic.model.UserSingleton;
+import logic.model.Role;
 
 public class OfferView extends Application implements Initializable{
 	@FXML private Button btHome;
@@ -31,13 +32,15 @@ public class OfferView extends Application implements Initializable{
 	@FXML private TextField tfStartTime;
 	@FXML private TextField tfMaxDuration;
 	@FXML private TextField tfNotes;
+	@FXML private TextField tfDay;
 	@FXML private Button btCheckStart;
 	@FXML private Button btCheckEnd;
 	@FXML private Button btConfirm;
+	@FXML private Button btAddCar;
 	
 	private MapsApi mapsApi = AdapterMapsApi.getInstance();
 	private LiftSingleton lp = LiftSingleton.getInstance();
-	private UserSingleton driver = UserSingleton.getInstance();
+	private UserSingleton userSg = UserSingleton.getInstance();
 	private LiftController controller = new LiftController();
 	
 	@Override
@@ -107,16 +110,24 @@ public class OfferView extends Application implements Initializable{
 		AddressListView list = new AddressListView();
 		list.start((Stage) btCheckEnd.getScene().getWindow());
 	}
+	
+	@FXML
+	public void addCarButtonController() throws Exception {
+		MyCarView car = new MyCarView();
+		car.start((Stage) btAddCar.getScene().getWindow());
+		
+	}
 
 	@FXML
 	public void confirmButtonController() throws Exception {
-		lp.setDepartureTime(tfStartTime.getText());
+		String time = tfDay.getText() + "T" + tfStartTime.getText();
+		lp.setDepartureTime(time);
 		lp.setMaxDuration(tfMaxDuration.getText());
 		lp.setNotes(tfNotes.getText());
 		controller.createLift(lp.getDepartureTime(),
 				Integer.parseInt(lp.getMaxDuration()),
 				lp.getNotes(),
-				driver.getStudentCar(),
+				userSg.getStudentCar(),
 				lp.getStartPoint(), lp.getEndPoint());
 		
 		MainMenuView home = new MainMenuView();
@@ -125,6 +136,23 @@ public class OfferView extends Application implements Initializable{
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		if(userSg.getRole().equals(Role.STUDENT)) {
+			tfStartPoint.setDisable(true);
+			tfArrivalPoint.setDisable(true);
+			tfStartTime.setDisable(true);
+			tfMaxDuration.setDisable(true);
+			tfNotes.setDisable(true);
+			tfDay.setDisable(true);
+			btCheckStart.setDisable(true);
+			btCheckEnd.setDisable(true);
+			btConfirm.setDisable(true);
+			
+			btAddCar.setVisible(true);
+			
+			}else {
+				btAddCar.setVisible(false);
+			}
+		
 		if(lp.status.equals(LiftSingleton.START)) {
 			tfStartPoint.setText(" ");
 		}else {

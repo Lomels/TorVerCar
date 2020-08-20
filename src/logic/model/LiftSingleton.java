@@ -11,6 +11,7 @@ public class LiftSingleton {
 	private String maxDuration;
 	private Integer address;
 	private String notes;
+	private String arrivalTime;
 	
 
 
@@ -86,5 +87,13 @@ public class LiftSingleton {
 
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+
+	public String getArrivalTime() {
+		return arrivalTime;
+	}
+
+	public void setArrivalTime(String arrivalTime) {
+		this.arrivalTime = arrivalTime;
 	}
 }
