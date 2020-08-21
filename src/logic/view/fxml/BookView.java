@@ -1,52 +1,53 @@
 package logic.view.fxml;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.controller.LiftController;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.LiftSingleton;
+import javafx.event.EventHandler;
+import logic.controller.LiftMatchListener;
 
-public class BookView extends Application {
-	@FXML
-	private Button btHome;
-	@FXML
-	private Button btBook;
-	@FXML
-	private Button btMyCar;
-	@FXML
-	private Button btProfile;
-	@FXML
-	private Button btLogout;
-	@FXML
-	private Button btFind;
-	@FXML
-	private Button btOffer;
-	@FXML
-	private Button btStart;
-	@FXML
-	private Button btDestination;
-	@FXML
-	private TextField tfStartPoint;
-	@FXML
-	private TextField tfArrivalPoint;
-	@FXML
-	private TextField tfStartTime;
-	@FXML
-	private TextField tfArrivalTime;
+public class BookView extends Application implements Initializable{
+	@FXML private Button btHome;
+	@FXML private Button btBook;
+	@FXML private Button btMyCar;
+	@FXML private Button btProfile;
+	@FXML private Button btLogout;
+	@FXML private Button btFind;
+	@FXML private Button btOffer;
+	@FXML private Button btCheckStart;
+	@FXML private Button btCheckEnd;
+	@FXML private TextField tfStartPoint;
+	@FXML private TextField tfArrivalPoint;
+	@FXML private TextField tfStartTime;
+	@FXML private TextField tfArrivalTime;
+	@FXML private TextField tfDay;
+	@FXML private CheckBox cbGoing;
+	@FXML private CheckBox cbReturn;
 
 	private LiftSingleton liftSg = LiftSingleton.getInstance();
 	private MapsApi mapsApi = AdapterMapsApi.getInstance();
 	private LiftController liftController = new LiftController();
+	private String time;
+	private LiftMatchListener listener;
 	
 	
 	@Override
@@ -86,7 +87,7 @@ public class BookView extends Application {
 		liftSg.setAddress(1);
 		liftSg.setListPos(mapsApi.addrToPos(tfStartPoint.getText()));
 		AddressListView list = new AddressListView();
-		list.start((Stage) btStart.getScene().getWindow());
+		list.start((Stage) btCheckStart.getScene().getWindow());
 	}
 
 	@FXML
@@ -94,7 +95,7 @@ public class BookView extends Application {
 		liftSg.setAddress(2);
 		liftSg.setListPos(mapsApi.addrToPos(tfArrivalPoint.getText()));
 		AddressListView list = new AddressListView();
-		list.start((Stage) btDestination.getScene().getWindow());
+		list.start((Stage) btCheckEnd.getScene().getWindow());
 	}
 
 	@FXML
@@ -116,10 +117,71 @@ public class BookView extends Application {
 	}
 	
 	@FXML
-	public void findButtonController() {
+	public void findButtonController() throws Exception {
+		if(cbGoing.isPressed()) {
+			time = tfDay.getText() + "T" + tfArrivalTime.getText();
+			liftSg.setArrivalTime(time);
+			liftController.matchLiftStoppingBefore(liftSg.getArrivalTime(), null, initIndex, listener);
+		}else {
+			time = tfDay.getText() + "T" + tfStartTime.getText();
+			liftSg.setDepartureTime(time);
+			liftController.matchLiftStartingAfter(liftSg.getDepartureTime(), null, initIndex, listener);
+		}
+		
+		
+		AddressListView list = new AddressListView();
+		list.start((Stage) btFind.getScene().getWindow());
+		
+		//TO DO create new controller list
+	
 		
 	}
 
-	// TODO: implementare Find
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		EventHandler<ActionEvent> eventGoing = new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent e) {
+				if(cbGoing.isPressed()) {
+					cbGoing.setSelected(false);
+					tfStartTime.setDisable(false);
+					tfArrivalTime.setDisable(true);
+					cbReturn.setSelected(true);
+					
+				}else {
+					cbReturn.setSelected(false);
+					tfArrivalTime.setDisable(false);
+					tfStartTime.setDisable(true);
+					cbGoing.setSelected(true);
+				}
+			}
+		};
+		
+		EventHandler<ActionEvent> eventReturn = new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent e) {
+				if(cbReturn.isPressed()) {
+					cbReturn.setSelected(false);
+					tfStartTime.setDisable(true);
+					tfArrivalTime.setDisable(false);
+					cbGoing.setSelected(true);
+					
+				}else {
+					cbGoing.setSelected(false);
+					tfArrivalTime.setDisable(true);
+					tfStartTime.setDisable(false);
+					cbReturn.setSelected(true);
+				}
+			}
+		};
+		
+		cbGoing.setOnAction(eventGoing);
+		cbReturn.setOnAction(eventReturn);
+		
+			
+		
+		
+		
+	}
+
+
 
 }

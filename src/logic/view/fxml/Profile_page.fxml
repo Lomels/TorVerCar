@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,10 +15,10 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.fxml.ProfileView">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#046104" height="40.0" layoutX="8.0" layoutY="4.0" stroke="#046104" strokeType="INSIDE" width="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Button fx:id="btHome" onAction="#homeButtonController" layoutX="24.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Home" />
-      <Button fx:id="btBook" onAction="#bookButtonController" layoutX="88.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Book" />
-      <Button fx:id="btOffer" onAction="#offerButtonController" layoutX="145.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Offer" />
-      <Button fx:id="btLogout" onAction="#logoutButtonController" layoutX="556.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: #046104;">
+      <Button fx:id="btHome" layoutX="24.0" layoutY="7.0" mnemonicParsing="false" onAction="#homeButtonController" style="-fx-background-color: #046104;" text="Home" />
+      <Button fx:id="btBook" layoutX="88.0" layoutY="7.0" mnemonicParsing="false" onAction="#bookButtonController" style="-fx-background-color: #046104;" text="Book" />
+      <Button fx:id="btOffer" layoutX="145.0" layoutY="7.0" mnemonicParsing="false" onAction="#offerButtonController" style="-fx-background-color: #046104;" text="Offer" />
+      <Button fx:id="btLogout" layoutX="556.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonController" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: #046104;">
          <graphic>
             <ImageView fitHeight="29.0" fitWidth="33.0">
                <image>
@@ -47,14 +49,16 @@
       <Text layoutX="24.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone number:" />
       <Text layoutX="24.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
       <Text layoutX="24.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:" />
-      <Text fx:id="txName" layoutX="250.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
-      <Text fx:id="txSurname" layoutX="250.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
-      <Text fx:id="txMatNum" layoutX="250.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
-      <Button fx:id="btSave" onAction="#saveButtonController" layoutX="516.0" layoutY="352.0" mnemonicParsing="false" text="Save" />
-      <Button fx:id="btBack" onAction="#backButtonController" layoutX="22.0" layoutY="352.0" mnemonicParsing="false" text="Back" />
-      <Button fx:id="btEdit" onAction="#editButtonController" layoutX="448.0" layoutY="352.0" mnemonicParsing="false" text="Edit" />
+      <Text fx:id="txName" layoutX="250.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="txSurname" layoutX="250.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="txMatNum" layoutX="250.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Button fx:id="btSave" layoutX="516.0" layoutY="352.0" mnemonicParsing="false" onAction="#saveButtonController" text="Save" />
+      <Button fx:id="btBack" layoutX="22.0" layoutY="352.0" mnemonicParsing="false" onAction="#backButtonController" text="Back" />
+      <Button fx:id="btEdit" layoutX="448.0" layoutY="352.0" mnemonicParsing="false" onAction="#editButtonController" text="Edit" />
       <TextField fx:id="tfPhone" layoutX="250.0" layoutY="224.0" />
       <TextField fx:id="tfEmail" layoutX="250.0" layoutY="264.0" />
+      <CheckBox fx:id="cbShow" layoutX="435.0" layoutY="306.0" mnemonicParsing="false" text="Show it" />
+      <PasswordField fx:id="pfHidden" layoutX="250.0" layoutY="302.0" />
       <TextField fx:id="tfPass" layoutX="250.0" layoutY="302.0" />
    </children>
 </AnchorPane>
