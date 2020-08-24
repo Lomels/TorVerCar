@@ -21,7 +21,7 @@ public class StudentBuilder {
 	protected List<Lift> lifts;
 
 	// Costruttore del builder
-	public StudentBuilder(String userID) throws InvalidInputException {
+	private StudentBuilder(String userID) throws InvalidInputException {
 		InputChecker.checkUserID(userID);
 		this.userID = userID;
 	}
@@ -51,11 +51,6 @@ public class StudentBuilder {
 
 	public StudentBuilder phone(String phone) {
 		this.phone = phone;
-		return this;
-	}
-
-	public StudentBuilder lifts(List<Lift> lifts) {
-		this.lifts = lifts;
 		return this;
 	}
 

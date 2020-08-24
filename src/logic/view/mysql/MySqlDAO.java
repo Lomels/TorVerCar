@@ -14,8 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import logic.bean.CarInfoBean;
-import logic.controller.StudentBuilder;
-import logic.controller.StudentCarBuilder;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.CarInfo;
@@ -44,7 +42,7 @@ public class MySqlDAO implements OurStudentDatabase {
 		try {
 			Class.forName(DRIVER_CLASS_NAME);
 		} catch (ClassNotFoundException e) {
-			// TODO: gestione errore
+			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
@@ -52,7 +50,6 @@ public class MySqlDAO implements OurStudentDatabase {
 	private void connect() {
 		try {
 			this.conn = DriverManager.getConnection(URL, USER, PASS);
-			// TODO: informati su parametri
 			this.stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -91,7 +88,6 @@ public class MySqlDAO implements OurStudentDatabase {
 		// driver
 		String driverID = rs.getString("driverID");
 		StudentCar driver = this.loadStudentCarByUserID(driverID);
-		// TODO: implement retrieve of passengers
 		List<Student> passengers = this.listPassengersByLiftID(liftIDFromDB);
 		// route
 		String routeJson = rs.getString("route");
@@ -108,8 +104,31 @@ public class MySqlDAO implements OurStudentDatabase {
 		String email = rs.getString("email");
 		String phone = rs.getString("phone");
 
-		Student result = new StudentBuilder(userID).email(email).fullname(name, surname).password(password).phone(phone)
-				.build();
+		Student result = new Student(userID, password, email, name, surname, phone);
+
+		return result;
+	}
+
+	private StudentCar studentCarFromResult(ResultSet rs) throws SQLException, InvalidInputException {
+		String userID = rs.getString("userID");
+		String password = rs.getString("password");
+		String name = rs.getString("name");
+		String surname = rs.getString("surname");
+		String email = rs.getString("email");
+		String phone = rs.getString("phone");
+
+		Student student = new Student(userID, password, email, name, surname, phone);
+
+		int rating = rs.getInt("rating");
+
+		String plate = rs.getString("plate");
+		int seats = rs.getInt("seats");
+		String model = rs.getString("model");
+		String color = rs.getString("color");
+
+		CarInfo carInfo = new CarInfo(plate, seats, model, color);
+
+		StudentCar result = new StudentCar(student, rating, carInfo);
 
 		return result;
 	}
@@ -221,7 +240,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	@Override
 	public StudentCar loadStudentCarByUserID(String userID) throws DatabaseException {
 		StudentCar sCar = null;
-		CarInfo carInfo;
+
 		try {
 			this.connect();
 			ResultSet rs = MyQueries.loadStudentCarByUserID(this.stmt, userID);
@@ -231,17 +250,21 @@ public class MySqlDAO implements OurStudentDatabase {
 
 			rs.first();
 
-			String password = rs.getString("password");
-			String name = rs.getString("name");
-			String surname = rs.getString("surname");
-			String email = rs.getString("email");
-			String phone = rs.getString("phone");
-			Integer rating = rs.getInt("rating");
-			carInfo = new CarInfo(rs.getString("plate"), rs.getInt("seats"), rs.getString("model"),
-					rs.getString("color"));
+//			String password = rs.getString("password");
+//			String name = rs.getString("name");
+//			String surname = rs.getString("surname");
+//			String email = rs.getString("email");
+//			String phone = rs.getString("phone");
+//			Integer rating = rs.getInt("rating");
+//			CarInfo carInfo = new CarInfo(rs.getString("plate"), rs.getInt("seats"), rs.getString("model"),
+//					rs.getString("color"));
+//			
+//			Student student = this.studentFromResult(rs);
+//
+//			sCar = new StudentCarBuilder(new StudentBuilder(userID).email(email).fullname(name, surname)
+//					.password(password).phone(phone).build()).carInfo(carInfo).rating(rating).build();
 
-			sCar = new StudentCarBuilder(new StudentBuilder(userID).email(email).fullname(name, surname)
-					.password(password).phone(phone).build()).carInfo(carInfo).rating(rating).build();
+			sCar = this.studentCarFromResult(rs);
 
 			rs.close();
 		} catch (Exception e) {
@@ -358,7 +381,6 @@ public class MySqlDAO implements OurStudentDatabase {
 						lift.getMaxDuration(), lift.getNote(), driver.getUserID(),
 						lift.getRoute().jsonEncode().toString(), lift.getFreeSeats());
 			} else {
-				// TODO: salvataggio nel caso il lift già esista
 				// fare prima il delete e poi il reinsert
 //				MyLogger.info("Update of Lift in DB");
 				MyQueries.deleteLiftByID(stmt, lift.getLiftID());
@@ -367,7 +389,6 @@ public class MySqlDAO implements OurStudentDatabase {
 						lift.getMaxDuration(), lift.getNote(), driver.getUserID(),
 						lift.getRoute().jsonEncode().toString(), lift.getFreeSeats());
 
-				// TODO: qui salva i passeggeri
 				for (Student passenger : lift.getPassengers()) {
 					MyQueries.addPassengerByLiftIDAndUserID(stmt, lift.getLiftID(), passenger.getUserID());
 				}

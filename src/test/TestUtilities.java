@@ -27,7 +27,7 @@ public class TestUtilities {
 	private static final PassengerController PASSENGER_CONTROLLER = new PassengerController();
 
 	public static final Integer DRIVER_NUMBER = 5;
-	public static final Integer PASSENGER_NUMBER = 5;
+	public static final Integer PASSENGER_NUMBER = 25;
 
 	// Student Attributes
 	public static final String USER_ID = "000000";
@@ -67,6 +67,8 @@ public class TestUtilities {
 	protected static final Integer[] PASSENGERS_NUM = { 0, 4 };
 
 	public static final String NOTE = "Ciao Mamma";
+
+	private static int passengerIdIndex = DRIVER_NUMBER;
 
 	protected TestUtilities() {
 
@@ -137,8 +139,9 @@ public class TestUtilities {
 	protected static void addPassengerToLift(Integer liftID, Integer passengerToAdd)
 			throws DatabaseException, InvalidInputException, InvalidStateException, InterruptedException {
 		Lift liftFromDB = dao.loadLiftByID(liftID);
-		for (int passengerIndex = 0; passengerIndex < passengerToAdd; passengerIndex++) {
-			Student passenger = dao.loadStudentByUserID(USER_ID + (passengerIndex + DRIVER_NUMBER));
+		int finalIdIndex = passengerIdIndex + passengerToAdd;
+		for (; passengerIdIndex < finalIdIndex; passengerIdIndex++) {
+			Student passenger = dao.loadStudentByUserID(USER_ID + (passengerIdIndex + DRIVER_NUMBER));
 			PASSENGER_CONTROLLER.addPassenger(liftFromDB, passenger);
 		}
 	}

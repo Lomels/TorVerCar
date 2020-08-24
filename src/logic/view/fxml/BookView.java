@@ -121,11 +121,11 @@ public class BookView extends Application implements Initializable{
 		if(cbGoing.isPressed()) {
 			time = tfDay.getText() + "T" + tfArrivalTime.getText();
 			liftSg.setArrivalTime(time);
-			liftController.matchLiftStoppingBefore(liftSg.getArrivalTime(), null, initIndex, listener);
+			liftController.matchLiftStoppingBefore(liftSg.getArrivalTime(), null, 0, listener);
 		}else {
 			time = tfDay.getText() + "T" + tfStartTime.getText();
 			liftSg.setDepartureTime(time);
-			liftController.matchLiftStartingAfter(liftSg.getDepartureTime(), null, initIndex, listener);
+			liftController.matchLiftStartingAfter(liftSg.getDepartureTime(), null, 0, listener);
 		}
 		
 		

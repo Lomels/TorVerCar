@@ -25,7 +25,7 @@ public class SetCarInfoController {
 				.email(sgBean.getUserBean().getEmail()).password(sgBean.getUserBean().getPassword())
 				.phone(sgBean.getUserBean().getPhone()).build();
 
-		StudentCarBuilder builder = new StudentCarBuilder(student);
+		StudentCarBuilder builder = StudentCarBuilder.newCarBuilder(student);
 		builder.carInfo(car);
 
 		return builder.build();
@@ -42,7 +42,7 @@ public class SetCarInfoController {
 			ourDb.editCarInfoByUserID(sg.getStudentCar().getUserID(), newCarInfo);
 			break;
 		case STUDENT:
-			StudentCar sCar = new StudentCarBuilder(sg.getStudent()).carInfo(carInfo).build();
+			StudentCar sCar = StudentCarBuilder.newCarBuilder(sg.getStudent()).carInfo(carInfo).build();
 			ourDb.addCar(sCar);
 			sg.setRole(Role.DRIVER);
 			sg.setStudent(null);
@@ -57,6 +57,6 @@ public class SetCarInfoController {
 		ourDb.removeCarByUserID(studentCar.getUserID());
 		sg.setStudent(new Student(studentCar));
 		sg.setRole(Role.STUDENT);
-		sg.setStudentCar(null);		
+		sg.setStudentCar(null);
 	}
 }

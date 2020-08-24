@@ -24,13 +24,12 @@ import logic.model.StudentCar;
 import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
-public class LiftPersitenceTest extends TestUtilities{
+public class LiftPersitenceTest extends TestUtilities {
 
 	private MySqlDAO dao = new MySqlDAO();
 	private LiftController liftController = new LiftController();
 	private PassengerController passController = new PassengerController();
 	private Route route;
-
 
 	private static final String MARCO_ID = "0241118";
 	private static final String GIULIA_ID = "0245061";
@@ -54,8 +53,8 @@ public class LiftPersitenceTest extends TestUtilities{
 		this.route = maps.startToStop(stops);
 		MyLogger.info("Route of the passenger: " + this.route.toStringLong());
 	}
-	
-	@Test
+
+//	@Test
 	public void saveLiftWithoutPassengers() throws InvalidInputException, DatabaseException {
 
 		String fromData = "{\"duration\":33,\"distance\":27083,\"stops\":[{\"score\":10.2996511459,\"address\":\"Via Prenestina Nuova, 51, 00036 Palestrina\",\"lon\":12.88611,\"lat\":41.83322},{\"score\":8.6688928604,\"address\":\"Via del Politecnico, 00133 Roma\",\"lon\":12.62165,\"lat\":41.85573}]}";
@@ -74,30 +73,30 @@ public class LiftPersitenceTest extends TestUtilities{
 
 		dao.saveLift(lift);
 	}
-	
-	@Test
+
+//	@Test
 	public void createLift() throws InvalidInputException, DatabaseException, ApiNotReachableException {
 		String startDateTimeString = LocalDateTime.now().toString();
 		Integer maxDuration = 200;
 		String note = "createLift test";
 		StudentCar driver = dao.loadStudentCarByUserID("0000000");
-		
+
 		Position pickup = MAPS_API.addrToPos(ADDRESS_2).get(0);
 		Position dropoff = MAPS_API.addrToPos(ADDRESS_1).get(0);
-		
+
 		Lift lift = liftController.createLift(startDateTimeString, maxDuration, note, driver, pickup, dropoff);
 		MyLogger.info("Created Lift: ", lift);
-			
+
 	}
 
-	@Test
+//	@Test
 	public void loadLift() throws JSONException, DatabaseException, InvalidInputException {
 		Integer liftIDtoRetrieve = 5;
 		Lift lift = dao.loadLiftByID(liftIDtoRetrieve);
 		MyLogger.info("lift", lift);
 	}
 
-	@Test
+//	@Test
 	public void deleteLiftByID() throws JSONException, DatabaseException, InvalidInputException {
 		LiftController controller = new LiftController();
 		Integer liftIDToRemove = 5;
@@ -105,7 +104,7 @@ public class LiftPersitenceTest extends TestUtilities{
 		controller.deleteLift(lift);
 	}
 
-	@Test
+//	@Test
 	public void updateLift() throws JSONException, DatabaseException, InvalidInputException {
 		Integer liftIDToRetrieve = 5;
 		Lift lift = dao.loadLiftByID(liftIDToRetrieve);
@@ -119,7 +118,7 @@ public class LiftPersitenceTest extends TestUtilities{
 		MyLogger.info("lift second retrieve", secondLift);
 	}
 
-	@Test
+//	@Test
 	public void listLiftAfter() {
 		LocalDateTime startDateTime = LocalDateTime.parse("2020-08-10T14:00:00");
 		List<Lift> results = dao.listLiftStartingAfterDateTime(startDateTime);
@@ -128,7 +127,7 @@ public class LiftPersitenceTest extends TestUtilities{
 		}
 	}
 
-	@Test
+//	@Test
 	public void listAvailableListAfter() {
 		LocalDateTime startDateTime = LocalDateTime.parse("2020-08-10T15:00:00");
 		List<Lift> results = dao.listAvailableLiftStartingAfterDateTime(startDateTime);
@@ -137,7 +136,7 @@ public class LiftPersitenceTest extends TestUtilities{
 		}
 	}
 
-	@Test
+//	@Test
 	public void listLiftBefore() {
 		LocalDateTime stopDateTime = LocalDateTime.parse("2020-08-10T16:00:00");
 		List<Lift> results = dao.listLiftStoppingBeforeDateTime(stopDateTime);
@@ -146,7 +145,7 @@ public class LiftPersitenceTest extends TestUtilities{
 		}
 	}
 
-	@Test
+//	@Test
 	public void listAvailableLiftBefore() {
 		LocalDateTime stopDateTime = LocalDateTime.parse("2020-08-10T16:00:00");
 		List<Lift> results = dao.listAvailableLiftStoppingBeforeDateTime(stopDateTime);
@@ -155,42 +154,35 @@ public class LiftPersitenceTest extends TestUtilities{
 		}
 	}
 
-	@Test
-	public void addPassenger() throws DatabaseException, InvalidInputException, InvalidStateException, InterruptedException {
+//	@Test
+	public void addPassenger()
+			throws DatabaseException, InvalidInputException, InvalidStateException, InterruptedException {
 		Integer liftID = 2;
 
 		Student passenger1 = dao.loadStudentByUserID("0000005");
-//		Student passenger2 = dao.loadStudentByUserID(GIULIA_ID);
 
 		Lift lift = dao.loadLiftByID(liftID);
 		MyLogger.info("lift", lift);
 
 		PassengerController pc = new PassengerController();
 
-		try {
-			pc.addPassenger(lift, passenger1);
-//			pc.addPassenger(lift, passenger2);
-
-		} catch (InvalidStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		pc.addPassenger(lift, passenger1);
 
 	}
 
 	@Test
 	public void listPassenger() throws DatabaseException, InvalidInputException {
-		Integer liftID = 5;
-
-		List<Student> passengers = dao.listPassengersByLiftID(liftID);
-
-		for (Student p : passengers) {
-			MyLogger.info("One of the passenger", p);
-		}
+		populateDB();
+//		Integer liftID = 5;
+//
+//		List<Student> passengers = dao.listPassengersByLiftID(liftID);
+//
+//		for (Student p : passengers) {
+//			MyLogger.info("One of the passenger", p);
+//		}
 	}
 
-	@Test
+//	@Test
 	public void removePassenger() throws DatabaseException, InvalidInputException {
 		Integer liftID = 2;
 
@@ -203,7 +195,7 @@ public class LiftPersitenceTest extends TestUtilities{
 			Student first = passengers.get(0);
 
 			passController.removePassenger(dao.loadLiftByID(liftID), first);
-			
+
 			MyLogger.info("Removed: " + first.getUserID());
 
 			passengers = dao.listPassengersByLiftID(liftID);
@@ -216,7 +208,7 @@ public class LiftPersitenceTest extends TestUtilities{
 		}
 	}
 
-	@Test
+//	@Test
 	public void listByDriver() {
 
 		List<Lift> driverLifts = dao.listLiftsByDriverID(MARCO_ID);
@@ -224,7 +216,7 @@ public class LiftPersitenceTest extends TestUtilities{
 		MyLogger.info("driverLifts", driverLifts.size());
 	}
 
-	@Test
+//	@Test
 	public void listByPassenger() {
 
 		List<Lift> passengerLifts = dao.listLiftsByPassengerID(GIUSEPPE_ID);

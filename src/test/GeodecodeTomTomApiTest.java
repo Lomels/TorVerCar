@@ -16,7 +16,6 @@ import java.util.logging.*;
 
 public class GeodecodeTomTomApiTest {
 
-	// TODO: implement test
 	private static final Logger LOGGER = Logger.getLogger(TomTomApi.class.getName());
 	private static final GeodecodeApi geoApi = GeodecodeTomTomApi.getInstance();
 

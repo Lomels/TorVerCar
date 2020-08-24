@@ -1,6 +1,6 @@
 package logic.controller.maps;
 
-public class HereApi {
+public abstract class HereApi {
 	
 	protected static final String KEY = "JB1x92IV3wywdCVXejt2bDvpnRsK14Y9vBoLUONVBLE";
 	protected static final String SCHEME = "https:/";
@@ -8,7 +8,7 @@ public class HereApi {
 	protected static final String ROUTE_HOST = "/router.hereapi.com";
 	
 	protected HereApi() {
-		
+		// Do nothing
 	}
 
 }

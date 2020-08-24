@@ -105,7 +105,7 @@ public class Lift {
 		return carSeats - this.getPassengers().size();
 	}
 
-	public Boolean isPassenger(Student student) {
+	public boolean isPassenger(Student student) {
 		if (this.getPassengers() == null)
 			return false;
 		else {

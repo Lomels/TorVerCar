@@ -49,7 +49,7 @@ public class ViewMapHereApi extends HereApi implements ViewMapApi {
 		return builder.toString();
 	}
 
-	// TODO: better the file position
+	// TODO: better the file position or remove
 	@Override
 	public void saveImage(Position p) {
 		try {

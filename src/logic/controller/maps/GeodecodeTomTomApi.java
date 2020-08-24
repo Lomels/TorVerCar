@@ -36,7 +36,6 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 	@Override
 	public List<Position> addrToPos(String address) throws InvalidInputException {
 		List<Position> positions = new ArrayList<>();
-		// TODO find where to handle errors
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(SCHEME);
