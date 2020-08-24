@@ -51,6 +51,7 @@ public class TestUtilities {
 	public static final String ADDR_GIU = "Via Prenestina Nuova 51, Palestrina";
 	public static final String ADDR_ZAGA = "Zagarolo";
 	public static final String ADDR_TIVOLI = "Tivoli";
+	public static final String ADDR_UNI = "Via del Politecnico 1, Roma";
 
 	// Lift JSONs
 	public static final String R_MARCO_UNI = "{\"distances\":[26762],\"durations\":[36],\"stops\":[{\"score\":8.1408014297,\"address\":\"Via Folcarotonda, 19, 00036 Palestrina\",\"lon\":12.85975,\"lat\":41.83976},{\"score\":8.6688928604,\"address\":\"Via del Politecnico, 00133 Roma\",\"lon\":12.62165,\"lat\":41.85573}]}";
@@ -69,6 +70,8 @@ public class TestUtilities {
 	public static final String NOTE = "Ciao Mamma";
 
 	private static int passengerIdIndex = DRIVER_NUMBER;
+	
+	private static boolean modified = true;
 
 	protected TestUtilities() {
 
@@ -85,6 +88,7 @@ public class TestUtilities {
 
 	public static void emptyDB() {
 		dao.emptyDB();
+		dbModified();
 		MyLogger.info("DB emptied!");
 	}
 
@@ -103,6 +107,7 @@ public class TestUtilities {
 					dao.addCar(studentCar);
 				}
 			}
+			dbModified();
 			MyLogger.info("PopulateUsers completed.");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -130,13 +135,14 @@ public class TestUtilities {
 					}
 				}
 			}
+			dbModified();
 			MyLogger.info("PopulateLifts completed.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	protected static void addPassengerToLift(Integer liftID, Integer passengerToAdd)
+	private static void addPassengerToLift(Integer liftID, Integer passengerToAdd)
 			throws DatabaseException, InvalidInputException, InvalidStateException, InterruptedException {
 		Lift liftFromDB = dao.loadLiftByID(liftID);
 		int finalIdIndex = passengerIdIndex + passengerToAdd;
@@ -145,11 +151,20 @@ public class TestUtilities {
 			PASSENGER_CONTROLLER.addPassenger(liftFromDB, passenger);
 		}
 	}
+	
+	protected static void dbModified() {
+		modified = true;
+	}
 
 	public static void populateDB() {
-		emptyDB();
-		populateUsers();
-		populateLifts();
-		MyLogger.info("PopulateDB completed.");
+		if(modified) {		
+			emptyDB();
+			populateUsers();
+			populateLifts();
+			modified = false;
+			MyLogger.info("PopulateDB completed.");
+		} else {
+			MyLogger.info("DB was not modified from last populateDB().");
+		}
 	}
 }
