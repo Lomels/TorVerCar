@@ -1,6 +1,7 @@
 package logic.controller;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -73,7 +74,7 @@ public class LiftController {
 	public Lift createLift(String startDateTimeString, Integer maxDuration, String note,
 			StudentCar driver, Position pickUp, Position dropOff)
 			throws InvalidInputException, DatabaseException {
-		LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString);
+		LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ISO_DATE_TIME);
 		Route route = routingApi.startToStop(pickUp, dropOff);
 		Lift lift = new Lift(null, startDateTime, maxDuration, note, driver, null, route);
 		ourDb.saveLift(lift);
@@ -180,6 +181,7 @@ public class LiftController {
 			// For cycle that stops once it reaches the end of possibileLifts or after
 			// MAX_LIFTS_LISTED iterations
 			for (Integer index = initIndex; (index < possibleLifts.size()) && (index < MAX_LIFTS_LISTED); index++) {
+				
 				Lift possibleLift = possibleLifts.get(index);
 
 				// Check if the lift starts before now, which means that is old
@@ -206,7 +208,7 @@ public class LiftController {
 						possibleLift.setRoute(newRoute);
 						if (this.isBeforeStopDateTime(possibleLift)) {
 							Integer deltaDuration = newRoute.getDuration() - currentDuration;
-							// id is sequential number in order of recieving by the DB
+							// id is sequential number in order of receiving by the DB
 							Integer id = index - initIndex;
 							unorderedLifts.add(new UnorderedLift(possibleLift, deltaDuration, id));
 						}

@@ -1,11 +1,16 @@
 package logic.model;
 
+import logic.controller.exception.InvalidInputException;
+import logic.utilities.Status;
+
 public class UserSingleton {
 
 	private Student student = null;
 	private StudentCar studentCar = null;
+	
 	private Role role;
-
+	private Status status;
+	
 	private String code;
 	
 	private static UserSingleton instance = null;
@@ -48,6 +53,17 @@ public class UserSingleton {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) throws Exception {
+		if(status.equals(Status.OFFER) | status.equals(Status.BOOK))
+			this.status = status;
+		else
+			throw new Exception("Wrong status");
 	}
 	
 }

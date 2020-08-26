@@ -40,15 +40,15 @@
       <Text layoutX="22.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destination:" />
       <Text layoutX="20.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Depart from:" />
       <Text layoutX="20.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrive up:" />
-      <TextField fx:id="tfStartPoint" layoutX="262.0" layoutY="147.0" text="Street, CAP, Place" />
-      <TextField fx:id="tfArrivalPoint" layoutX="262.0" layoutY="187.0" text="Street, CAP, Place" />
-      <TextField fx:id="tfStartTime" layoutX="262.0" layoutY="282.0" text="HH:MM" />
-      <TextField fx:id="tfArrivalTime" layoutX="262.0" layoutY="317.0" text="HH:MM" />
+      <TextField fx:id="tfStartPoint" layoutX="262.0" layoutY="147.0" promptText="Street, CAP, Place" />
+      <TextField fx:id="tfArrivalPoint" layoutX="262.0" layoutY="187.0" promptText="Street, CAP, Place" />
+      <TextField fx:id="tfStartTime" layoutX="262.0" layoutY="282.0" promptText="HH:MM" />
+      <TextField fx:id="tfArrivalTime" layoutX="262.0" layoutY="317.0" promptText="HH:MM" />
       <Button fx:id="btFind" layoutX="511.0" layoutY="352.0" mnemonicParsing="false" onAction="#findButtonController" text="Find Lift" />
       <Button fx:id="btCheckStart" layoutX="439.0" layoutY="147.0" mnemonicParsing="false" onAction="#startButtonController" text="Find" />
       <Button fx:id="btCheckEnd" layoutX="439.0" layoutY="187.0" mnemonicParsing="false" onAction="#destButtonController" text="Find" />
       <Text layoutX="23.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Day:" />
-      <TextField fx:id="tfDay" layoutX="262.0" layoutY="244.0" text="DD-MM-YYYY" />
+      <TextField fx:id="tfDay" layoutX="262.0" layoutY="244.0" promptText="DD-MM-YYYY" />
       <CheckBox fx:id="cbGoing" layoutX="205.0" layoutY="76.0" mnemonicParsing="false" text="Going" />
       <CheckBox fx:id="cbReturn" layoutX="332.0" layoutY="76.0" mnemonicParsing="false" text="Return" />
    </children>
