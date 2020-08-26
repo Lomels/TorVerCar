@@ -26,7 +26,9 @@ import javafx.util.Callback;
 import logic.controller.maps.ViewMapHereApi;
 import logic.model.LiftSingleton;
 import logic.model.Position;
+import logic.model.UserSingleton;
 import logic.utilities.MyLogger;
+import logic.utilities.Status;
 import logic.model.LiftSingleton;
 
 import javafx.scene.Node;
@@ -63,6 +65,7 @@ public class AddressListView extends Application implements Initializable {
 	private ListView<Row> addressList;
 
 	LiftSingleton lift = LiftSingleton.getInstance();
+	UserSingleton sg = UserSingleton.getInstance();
 	ViewMapHereApi map = ViewMapHereApi.getInstance();
 
 	@Override
@@ -121,13 +124,23 @@ public class AddressListView extends Application implements Initializable {
 	@FXML
 	public void confirmButtonController() throws Exception {
 		MyLogger.info("Position selected", lift.getStartPoint());
-		OfferView offer = new OfferView();
-		offer.start((Stage) btConfirm.getScene().getWindow());
+		switch (sg.getStatus()) {
+		default:
+			throw new Exception("Invalid status");
+		case OFFER:
+			OfferView offer = new OfferView();
+			offer.start((Stage) btConfirm.getScene().getWindow());
+			break;
+		case BOOK:
+			BookView book = new BookView();
+			book.start((Stage) btConfirm.getScene().getWindow());
+			break;
+		}
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-for (Position pos : lift.getListPos()) {
+		for (Position pos : lift.getListPos()) {
 			addressList.getItems().add(new Row(pos.getAddress(), map.viewFromPos(pos), pos));
 		}
 
@@ -168,16 +181,24 @@ for (Position pos : lift.getListPos()) {
 					int index = addressList.getSelectionModel().getSelectedIndex();
 
 					addressList.getFocusModel().focus(index);
-					if(lift.getAddress().equals(1)) {
+					if (lift.getAddress().equals(1)) {
 						lift.setStartPoint(selectedItem.getPosition());
-						lift.status = LiftSingleton.STOP;
-					}
-					else {
+						try {
+							lift.setStatus(Status.STOP);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} else {
 						lift.setEndPoint(selectedItem.getPosition());
-						lift.status = LiftSingleton.BOTH;
+						try {
+							lift.setStatus(Status.BOTH);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				});
 
 	}
 }
-

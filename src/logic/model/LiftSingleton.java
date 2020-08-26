@@ -2,6 +2,8 @@ package logic.model;
 
 import java.util.List;
 
+import logic.utilities.Status;
+
 public class LiftSingleton {
 	private List<Position> listPos;
 	private Position startPoint;
@@ -11,15 +13,8 @@ public class LiftSingleton {
 	private Integer address;
 	private String notes;
 	private String arrivalTime;
-	
 
-
-
-	public String status = START;
-
-	public static final String START = "START";
-	public static final String STOP = "STOP";
-	public static final String BOTH = "BOTH";
+	private Status status = Status.START;
 
 	private static LiftSingleton instance = null;
 
@@ -30,6 +25,19 @@ public class LiftSingleton {
 		if (instance == null)
 			instance = new LiftSingleton();
 		return instance;
+	}
+	
+	//TODO: usare setter
+	public void clearState() throws Exception {
+		this.listPos.clear();
+		this.startPoint = null;
+		this.endPoint = null;
+		this.arrivalTime = null;
+		this.departureTime = null;
+		this.maxDuration = null;
+		this.notes = null;
+		this.arrivalTime = null;
+		this.setStatus(Status.START);
 	}
 
 	public List<Position> getListPos() {
@@ -94,5 +102,16 @@ public class LiftSingleton {
 
 	public void setArrivalTime(String arrivalTime) {
 		this.arrivalTime = arrivalTime;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) throws Exception {
+		if(status.equals(Status.OFFER) | status.equals(Status.BOOK))			
+			throw new Exception("Wrong status");
+		else
+			this.status = status;
 	}
 }

@@ -2,6 +2,10 @@ package logic.view.fxml;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
@@ -21,35 +25,60 @@ import javafx.stage.Stage;
 import logic.controller.LiftController;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
+import logic.model.LiftMatchResult;
 import logic.model.LiftSingleton;
+import logic.model.Position;
+import logic.model.UserSingleton;
+import logic.utilities.MyLogger;
+import logic.utilities.Status;
 import javafx.event.EventHandler;
 import logic.controller.LiftMatchListener;
 
-public class BookView extends Application implements Initializable{
-	@FXML private Button btHome;
-	@FXML private Button btBook;
-	@FXML private Button btMyCar;
-	@FXML private Button btProfile;
-	@FXML private Button btLogout;
-	@FXML private Button btFind;
-	@FXML private Button btOffer;
-	@FXML private Button btCheckStart;
-	@FXML private Button btCheckEnd;
-	@FXML private TextField tfStartPoint;
-	@FXML private TextField tfArrivalPoint;
-	@FXML private TextField tfStartTime;
-	@FXML private TextField tfArrivalTime;
-	@FXML private TextField tfDay;
-	@FXML private CheckBox cbGoing;
-	@FXML private CheckBox cbReturn;
+public class BookView extends Application implements Initializable, LiftMatchListener {
+	@FXML
+	private Button btHome;
+	@FXML
+	private Button btBook;
+	@FXML
+	private Button btMyCar;
+	@FXML
+	private Button btProfile;
+	@FXML
+	private Button btLogout;
+	@FXML
+	private Button btFind;
+	@FXML
+	private Button btOffer;
+	@FXML
+	private Button btCheckStart;
+	@FXML
+	private Button btCheckEnd;
+	@FXML
+	private TextField tfStartPoint;
+	@FXML
+	private TextField tfArrivalPoint;
+	@FXML
+	private TextField tfStartTime;
+	@FXML
+	private TextField tfArrivalTime;
+	@FXML
+	private TextField tfDay;
+	@FXML
+	private CheckBox cbGoing;
+	@FXML
+	private CheckBox cbReturn;
 
 	private LiftSingleton liftSg = LiftSingleton.getInstance();
+	private UserSingleton userSg = UserSingleton.getInstance();
 	private MapsApi mapsApi = AdapterMapsApi.getInstance();
 	private LiftController liftController = new LiftController();
 	private String time;
 	private LiftMatchListener listener;
-	
-	
+
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+	private boolean firstLog = true;
+
 	@Override
 	public void start(Stage stage) throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Book.fxml"));
@@ -115,39 +144,50 @@ public class BookView extends Application implements Initializable{
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}
-	
+
 	@FXML
 	public void findButtonController() throws Exception {
-		if(cbGoing.isPressed()) {
-			time = tfDay.getText() + "T" + tfArrivalTime.getText();
+		List<Position> stops = new ArrayList<>();
+		stops.add(liftSg.getStartPoint());
+		stops.add(liftSg.getEndPoint());
+
+		if (cbGoing.isPressed()) {
+			time = tfDay.getText() + tfArrivalTime.getText().toString();
 			liftSg.setArrivalTime(time);
-			liftController.matchLiftStoppingBefore(liftSg.getArrivalTime(), null, 0, listener);
-		}else {
-			time = tfDay.getText() + "T" + tfStartTime.getText();
+			MyLogger.info("LocalDateTime", LocalDateTime.parse(liftSg.getArrivalTime(), FORMATTER));
+			MyLogger.info("Stops", stops);
+			// TODO spostare in un controller
+
+			liftController.matchLiftStoppingBefore(LocalDateTime.parse(liftSg.getArrivalTime(), FORMATTER), stops, 0,
+					this);
+		} else {
+			time = tfDay.getText().toString() + tfStartTime.getText().toString();
 			liftSg.setDepartureTime(time);
-			liftController.matchLiftStartingAfter(liftSg.getDepartureTime(), null, 0, listener);
+			MyLogger.info("LocalDateTime", LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER));
+			MyLogger.info("Stops", stops);
+
+			liftController.matchLiftStartingAfter(LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER), stops, 0,
+					this);
 		}
-		
-		
-		AddressListView list = new AddressListView();
-		list.start((Stage) btFind.getScene().getWindow());
-		
-		//TO DO create new controller list
-	
-		
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		try {
+			userSg.setStatus(Status.BOOK);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		EventHandler<ActionEvent> eventGoing = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				if(cbGoing.isPressed()) {
+				if (cbGoing.isPressed()) {
 					cbGoing.setSelected(false);
 					tfStartTime.setDisable(false);
 					tfArrivalTime.setDisable(true);
 					cbReturn.setSelected(true);
-					
-				}else {
+
+				} else {
 					cbReturn.setSelected(false);
 					tfArrivalTime.setDisable(false);
 					tfStartTime.setDisable(true);
@@ -155,16 +195,16 @@ public class BookView extends Application implements Initializable{
 				}
 			}
 		};
-		
+
 		EventHandler<ActionEvent> eventReturn = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
-				if(cbReturn.isPressed()) {
+				if (cbReturn.isPressed()) {
 					cbReturn.setSelected(false);
 					tfStartTime.setDisable(true);
 					tfArrivalTime.setDisable(false);
 					cbGoing.setSelected(true);
-					
-				}else {
+
+				} else {
 					cbGoing.setSelected(false);
 					tfArrivalTime.setDisable(true);
 					tfStartTime.setDisable(false);
@@ -172,16 +212,40 @@ public class BookView extends Application implements Initializable{
 				}
 			}
 		};
-		
+
 		cbGoing.setOnAction(eventGoing);
 		cbReturn.setOnAction(eventReturn);
-		
-			
-		
-		
-		
+
+		if (!liftSg.getStatus().equals(Status.START)) {
+			tfStartPoint.setText(liftSg.getStartPoint().getAddress());
+			tfStartPoint.setDisable(true);
+		}
+
+		if (!(liftSg.getStatus().equals(Status.STOP) | liftSg.getStatus().equals(Status.START))) {
+			tfArrivalPoint.setText(liftSg.getEndPoint().getAddress());
+			tfArrivalPoint.setDisable(true);
+		}
+
 	}
 
+	@Override
+	public void onThreadEnd(List<LiftMatchResult> results) {
+		// TODO Auto-generated method stub
+		for (LiftMatchResult result : results) {
+			MyLogger.info("Result", result);
+		}
 
+		// TODO creare lista di passaggi matched e far partire nuova lista di roba
+	}
+
+	@Override
+	public void onThreadRunning() {
+
+		if (firstLog) {
+			firstLog = !firstLog;
+			MyLogger.info("Thread started running.");
+		}
+		// TODO implementare schermata di wait
+	}
 
 }
