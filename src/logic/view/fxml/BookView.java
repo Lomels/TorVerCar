@@ -168,9 +168,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 
 			liftController.matchLiftStartingAfter(LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER), stops, 0,
 					this);
-
 		}
-
 	}
 
 	@Override

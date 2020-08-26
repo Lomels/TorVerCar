@@ -2,7 +2,6 @@ package test;
 
 import org.junit.Test;
 
-import logic.bean.CarInfoBean;
 import logic.controller.SetCarInfoController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;

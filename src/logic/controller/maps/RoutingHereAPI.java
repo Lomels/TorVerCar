@@ -16,7 +16,8 @@ import logic.model.Route;
 public class RoutingHereAPI extends HereApi implements RoutingApi {
 
 	private static RoutingHereAPI instance = null;
-	private static final String path = "/v8/routes";
+	private static final String VERSION = "/v8";
+	private static final String PATH = VERSION + "/routes";
 
 	private Route bestRoute = null;
 
@@ -43,7 +44,7 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 		StringBuilder builder = new StringBuilder();
 		builder.append(SCHEME);
 		builder.append(ROUTE_HOST);
-		builder.append(path);
+		builder.append(PATH);
 		builder.append("?apiKey=" + KEY);
 
 		for (RoutingHereParameter param : RoutingHereParameter.values()) {

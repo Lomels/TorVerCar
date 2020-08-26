@@ -24,13 +24,13 @@ public class MyHttpClient {
 	public static String getStringFromUrl(URI requestUrl, String accept) {
 		String body = null;
 
-		// opening the client
+		// Opening the client
 		CloseableHttpClient client = HttpClients.createDefault();
 		HttpGet request = new HttpGet(requestUrl);
 		if (accept != null)
 			request.addHeader("accept", accept);
 
-		// generazione response
+		// Generate response
 		CloseableHttpResponse response;
 		try {
 			response = client.execute(request);

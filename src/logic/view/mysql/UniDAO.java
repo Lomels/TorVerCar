@@ -24,7 +24,7 @@ public class UniDAO implements DatabaseBoundary{
 		try {
 			Class.forName(DRIVER_CLASS_NAME);
 		}catch(ClassNotFoundException e) {
-			//TODO: gestione
+			//TODO: handle exception
 			e.printStackTrace();
 		}
 	}
@@ -84,7 +84,7 @@ public class UniDAO implements DatabaseBoundary{
 			this.conn = DriverManager.getConnection(URL, USER, PASS);
 			this.stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		}catch(Exception e) {
-			//TODO: gestione
+			//TODO: handle exception
 			e.printStackTrace();
 		}
 	}
@@ -98,7 +98,7 @@ public class UniDAO implements DatabaseBoundary{
 				if(this.conn != null) 
 					this.conn.close();	
 			}catch(SQLException se2) {
-				//TODO handle
+				//TODO: handle exception
 				se2.printStackTrace();
 			}
 		}

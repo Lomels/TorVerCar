@@ -1,7 +1,7 @@
 package logic.controller.maps;
 
 //TODO: maybe abstract
-public class TomTomApi {
+public abstract class TomTomApi {
 
 	// using TomTomApi
 	protected static final String KEY = "8xAoG57mmkjCxim04niX0NYPXAZMuAyV";

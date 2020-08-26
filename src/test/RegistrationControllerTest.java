@@ -9,7 +9,7 @@ import logic.controller.exception.InvalidInputException;
 
 public class RegistrationControllerTest {
 
-	//TODO: redo without dummy
+	//TODO: Test, redo without dummy
 //	@Test
 //	public void validInput() {
 //		try {
@@ -21,21 +21,21 @@ public class RegistrationControllerTest {
 //		assertEquals(1, DummyOurStudentDatabase.getCounter());
 //	}
 
-	//TODO: redo without dummy
+	//TODO: Test, redo without dummy
 	@Test
 	public void invalidInput() {
 		RegistrationController rc = new RegistrationController();
 		assertThrows(InvalidInputException.class, () -> rc.createStudent("aaa", "aaa"));
 	}
 	
-	//TODO: redo without dummy
+	//TODO: Test, redo without dummy
 	@Test
 	public void alreadyExistingUser() {
 		RegistrationController rc = new RegistrationController();
 		assertThrows(DatabaseException.class, () -> rc.createStudent("00000", "aaA123@"));
 	}
 	
-	//TODO: redo without dummy
+	//TODO: Test, redo without dummy
 	@Test
 	public void previouslyBannedUser() {
 		RegistrationController rc = new RegistrationController();

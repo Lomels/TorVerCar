@@ -25,8 +25,14 @@ public class PassengerController {
 			// If lift has no free seats.
 			String errorMessage = "Lift has no more free seats";
 			throw new InvalidStateException(errorMessage);
-		} // TODO: If passenger has already a passage in the same time
-		else {
+		} else {
+			for(Lift passengerLift : dao.listLiftsByPassengerID(passenger.getUserID())) {
+				// If passenger has already a passage in the same time
+				if(!this.liftInteresct(lift, passengerLift)) {
+					String errorMessage = "Passenger has already a lift booked for this time.";
+					throw new InvalidStateException(errorMessage);
+				}
+			}
 			// Add the passenger at the application level
 			lift.getPassengers().add(passenger);
 			// Add the passenger to the persistence and update the lift
@@ -45,7 +51,7 @@ public class PassengerController {
 
 		dao.removePassengerByLiftIDAndUserID(lift.getLiftID(), student.getUserID());
 		dao.saveLift(lift);
-		
+
 		String subject = "Your lift has changed!";
 		String format = "The student %s has deleted his booking for the lift departing at: %s.";
 		String message = String.format(format, student.getUserID(), lift.getStartDateTime());
@@ -54,8 +60,12 @@ public class PassengerController {
 		new SendEmail().send(recipients, recipients, subject, message);
 
 		dao.addNotificationByUserID(lift.getDriver().getUserID(), message);
+	}
 
-		// TODO: test
+	private boolean liftInteresct(Lift newLift, Lift passengerLift) {
+		boolean stopsBefore = passengerLift.getStopDateTime().isBefore(newLift.getStartDateTime());
+		boolean startAfter = passengerLift.getStartDateTime().isAfter(newLift.getStopDateTime());
+		return stopsBefore || startAfter;
 	}
 
 }

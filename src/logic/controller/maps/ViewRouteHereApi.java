@@ -7,7 +7,8 @@ public class ViewRouteHereApi extends HereApi implements ViewRouteApi {
 
 	private static ViewRouteHereApi instance = null;
 
-	private String path = "/mia/1.6/routing";
+	private static final String VERSION = "/mia" + "/1.6";
+	private static final String PATH = VERSION + "/routing";
 
 	public static ViewRouteHereApi getInstance() {
 		if (ViewRouteHereApi.instance == null) {
@@ -21,7 +22,7 @@ public class ViewRouteHereApi extends HereApi implements ViewRouteApi {
 		StringBuilder builder = new StringBuilder();
 		builder.append(SCHEME);
 		builder.append(IMAGE_HOST);
-		builder.append(path);
+		builder.append(PATH);
 		builder.append("?apiKey=" + KEY);
 
 		for (ViewRouteHereParameter parameter : ViewRouteHereParameter.values()) {
