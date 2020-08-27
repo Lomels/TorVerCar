@@ -1,0 +1,25 @@
+.button-active {
+	  -fx-background-color: #5f976a; /* Green */
+	  -fx-background-radius: 0;
+	  -fx-text-fill: #39393a;
+	  padding: 15px 32px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 18px;
+	  margin: 4px 2px;
+	  cursor: pointer;
+}
+
+.button-unactive{
+	  -fx-background-color: null;
+	  -fx-background-radius: 0;
+	  -fx-text-fill: #5f976a;
+	  padding: 15px 32px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 18px;
+	  margin: 4px 2px;
+	  cursor: pointer;
+}
