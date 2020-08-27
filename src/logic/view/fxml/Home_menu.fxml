@@ -1,49 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.effect.MotionBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.fxml.MainMenuView">
-   <children>
-      <Text fx:id="tvWelcome" layoutX="14.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hi" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="50.0">
-         <font>
-            <Font size="36.0" />
-         </font>
-      </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#046104" height="40.0" layoutX="5.0" layoutY="10.0" stroke="#046104" strokeType="INSIDE" width="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Button fx:id="btHome" onAction="#homeButtonController" layoutX="23.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Home" underline="true" />
-      <Button fx:id="btBook" onAction="#bookButtonController" layoutX="86.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Book" />
-      <Button fx:id="btOffer" onAction="#offerButtonController" layoutX="145.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="Offer" />
-      <Button fx:id="btLogout" onAction="#logoutButtonController" layoutX="553.0" layoutY="7.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="43.0" style="-fx-background-color: #046104;">
-         <graphic>
-            <ImageView fitHeight="29.0" fitWidth="33.0">
-               <image>
-                  <Image url="@logic/view/fxml/images/logout.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Button fx:id="btProfile" onAction="#profileButtonController" layoutX="507.0" layoutY="7.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="46.0" style="-fx-background-color: #046104;" text="Profile">
-         <graphic>
-            <ImageView fitHeight="30.0" fitWidth="28.0">
-               <image>
-                  <Image url="@logic/view/fxml/images/user.png" />
-               </image>
-            </ImageView>
-          </graphic>
-      </Button>
-      <Button fx:id="btMyCar" onAction="#myCarButtonController" layoutX="206.0" layoutY="7.0" mnemonicParsing="false" style="-fx-background-color: #046104;" text="My Car " />
-      <ComboBox layoutX="288.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="103.0" promptText="My Lift" style="-fx-background-color: #046104; -fx-border-color: #046104;" />
-      <ImageView fitHeight="202.0" fitWidth="537.0" layoutX="32.0" layoutY="112.0">
-         <image>
-            <Image url="@../../../../../Immagini/rettorato.jpg" />
-         </image>
-      </ImageView>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+	prefHeight="514.0" prefWidth="771.0"
+	xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="logic.view.fxml.MainMenuView"
+	stylesheets="@../fxml/TorVerCar.css">
+	<children>
+		<ImageView fitHeight="514.0" fitWidth="771.0"
+			pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@../../../../images/background.jpg" />
+			</image>
+		</ImageView>
+		<Rectangle arcHeight="5.0" arcWidth="5.0" height="256.0"
+			layoutX="-19.0" layoutY="258.0" stroke="BLACK" strokeType="INSIDE"
+			strokeWidth="0.0" width="790.0">
+			<effect>
+				<MotionBlur />
+			</effect>
+			<fill>
+				<LinearGradient endX="0.5333333333333333"
+					endY="0.6238095238095238" startX="0.5333333333333333">
+					<stops>
+						<Stop color="#ffffff00" />
+						<Stop color="WHITE" offset="1.0" />
+					</stops>
+				</LinearGradient>
+			</fill>
+		</Rectangle>
+		<Text fx:id="tvWelcome" fill="#39393a" layoutX="34.0"
+			layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hi,"
+			AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="353.146484375">
+			<font>
+				<Font size="74.0" />
+			</font>
+			<effect>
+				<InnerShadow radius="5.0" width="1.0" />
+			</effect>
+		</Text>
+		<HBox layoutX="-9.0" layoutY="-9.0" AnchorPane.leftAnchor="0.0"
+			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<children>
+				<ButtonBar nodeOrientation="RIGHT_TO_LEFT"
+					prefHeight="46.0" prefWidth="771.0"
+					style="-fx-background-color: #39393a;">
+					<buttons>
+						<Button fx:id="btMyCar" mnemonicParsing="false"
+							onAction="#myCarButtonController" styleClass="button-unactive"
+							text="MyCAR">
+							<font>
+								<Font size="18.0" />
+							</font>
+						</Button>
+						<Button fx:id="btOffer" mnemonicParsing="false"
+							onAction="#offerButtonController" styleClass="button-unactive"
+							text="OFFER">
+							<font>
+								<Font size="18.0" />
+							</font>
+						</Button>
+						<Button fx:id="btBook" mnemonicParsing="false"
+							onAction="#bookButtonController" styleClass="button-unactive"
+							text="BOOK">
+							<font>
+								<Font size="18.0" />
+							</font>
+						</Button>
+						<Button fx:id="btHome" mnemonicParsing="false"
+							onAction="#homeButtonController" prefHeight="46.0"
+							prefWidth="83.0" styleClass="button-active" text="HOME"
+							textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+							<font>
+								<Font size="18.0" />
+							</font>
+						</Button>
+					</buttons>
+					<effect>
+						<DropShadow radius="4.75" width="0.0" />
+					</effect>
+				</ButtonBar>
+				<ButtonBar nodeOrientation="LEFT_TO_RIGHT"
+					prefHeight="46.0" prefWidth="771.0"
+					style="-fx-background-color: #39393a;">
+					<buttons>
+						<Button fx:id="btLogout" maxHeight="-Infinity"
+							maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+							mnemonicParsing="false" onAction="#logoutButtonController"
+							prefHeight="26.0" prefWidth="43.0" styleClass="button-unactive">
+							<graphic>
+								<ImageView fitHeight="29.0" fitWidth="33.0">
+									<image>
+										<Image url="@../../../../images/logout.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</Button>
+						<Button fx:id="btProfile" minHeight="-Infinity"
+							minWidth="-Infinity" mnemonicParsing="false"
+							onAction="#profileButtonController" prefHeight="26.0"
+							prefWidth="46.0" styleClass="button-unactive" text="Profile">
+							<graphic>
+								<ImageView fitHeight="30.0" fitWidth="28.0">
+									<image>
+										<Image url="@../../../../images/user.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</Button>
+					</buttons>
+					<effect>
+						<DropShadow radius="4.75" width="0.0" />
+					</effect>
+				</ButtonBar>
+			</children>
+		</HBox>
+		<ComboBox layoutX="456.0" layoutY="270.0"
+			minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0"
+			prefWidth="103.0" promptText="My Lift" visible="false"
+			style="-fx-background-color: #046104; -fx-border-color: #046104;" />
+		<Text fx:id="tvName" fill="#5f976a" layoutX="121.0"
+			layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marco">
+			<font>
+				<Font size="74.0" />
+			</font>
+			<effect>
+				<DropShadow height="5.0" offsetY="1.5" radius="2.0"
+					width="5.0" />
+			</effect>
+		</Text>
+	</children>
 </AnchorPane>
+
+

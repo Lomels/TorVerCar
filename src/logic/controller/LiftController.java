@@ -71,9 +71,8 @@ public class LiftController {
 
 	}
 
-	public Lift createLift(String startDateTimeString, Integer maxDuration, String note,
-			StudentCar driver, Position pickUp, Position dropOff)
-			throws InvalidInputException, DatabaseException {
+	public Lift createLift(String startDateTimeString, Integer maxDuration, String note, StudentCar driver,
+			Position pickUp, Position dropOff) throws InvalidInputException, DatabaseException {
 		LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ISO_DATE_TIME);
 		Route route = routingApi.startToStop(pickUp, dropOff);
 		Lift lift = new Lift(null, startDateTime, maxDuration, note, driver, null, route);
@@ -100,6 +99,20 @@ public class LiftController {
 			String[] recipients = new String[] { student.getEmail() };
 			new SendEmail().send(recipients, recipients, subject, message);
 		}
+	}
+
+	public List<Lift> checkCompletedLift(String userID) {
+		List<Lift> fullList = ourDb.listLiftsByPassengerID(userID);
+		List<Lift> completed = new ArrayList<>();
+		for (Lift l : fullList) {
+			if (l.getStopDateTime().isBefore(LocalDateTime.now()))
+				completed.add(l);
+		}
+
+		// TODO: aggiornare lift nel DB per non farli ricomparire nella lista una volta
+		// dato il rating
+		
+		return completed;
 	}
 
 	public List<String> loadNotifications(String userID) {
@@ -181,7 +194,7 @@ public class LiftController {
 			// For cycle that stops once it reaches the end of possibileLifts or after
 			// MAX_LIFTS_LISTED iterations
 			for (Integer index = initIndex; (index < possibleLifts.size()) && (index < MAX_LIFTS_LISTED); index++) {
-				
+
 				Lift possibleLift = possibleLifts.get(index);
 
 				// Check if the lift starts before now, which means that is old

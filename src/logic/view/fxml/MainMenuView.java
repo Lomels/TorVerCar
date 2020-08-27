@@ -16,10 +16,12 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import logic.controller.LiftController;
+import logic.model.Lift;
 import logic.model.UserSingleton;
 
 public class MainMenuView extends Application implements Initializable{
 	@FXML private Text tvWelcome;
+	@FXML private Text tvName;
 	@FXML private Button btHome;
 	@FXML private Button btMyCar;
 	@FXML private Button btProfile;
@@ -30,6 +32,7 @@ public class MainMenuView extends Application implements Initializable{
 	UserSingleton sg = UserSingleton.getInstance();
 	private String userID;
 	private List<String> notifications = new ArrayList<String>();
+	private List<Lift> completedLifts = new ArrayList<>();
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -42,27 +45,31 @@ public class MainMenuView extends Application implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		String string = "Hi, %s!";
 		String welcome = null;
 		switch(sg.getRole()) {
 			case DRIVER:
-				welcome = String.format(string, sg.getStudentCar().getName().toString());
+				welcome = sg.getStudentCar().getName().toString() + "!";
 				userID = sg.getStudentCar().getUserID();
 				break;
 			case STUDENT:
-				welcome = String.format(string, sg.getStudent().getName().toString());
+				welcome = sg.getStudent().getName().toString() + "!";
 				userID = sg.getStudent().getUserID();
 				break;
 			case ADMIN:
 				//TODO: implementare
 				break;
 		}
-		tvWelcome.setText(welcome);
+		tvName.setText(welcome);
 		
 		LiftController liftContr = new LiftController();
 		if(!(notifications = liftContr.loadNotifications(userID)).isEmpty()) {
 			//TODO: stampare a schermo le notifiche
 		}
+		
+		if(!(completedLifts = liftContr.checkCompletedLift(userID)).isEmpty()) {
+			//TODO: check lift completati
+		}
+		
 	}
 	
 	public static void main(String[] args) {
