@@ -9,9 +9,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
-import javafx.beans.property.Property;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
