@@ -6,6 +6,7 @@ import logic.utilities.Status;
 
 public class LiftSingleton {
 	private List<Position> listPos;
+	private List<LiftMatchResult> listLifts;
 	private Position startPoint;
 	private Position endPoint;
 	private String departureTime;
@@ -113,5 +114,13 @@ public class LiftSingleton {
 			throw new Exception("Wrong status");
 		else
 			this.status = status;
+	}
+
+	public List<LiftMatchResult> getListLifts() {
+		return listLifts;
+	}
+
+	public void addLiftMatchResult(LiftMatchResult lift) {
+		this.listLifts.add(lift);
 	}
 }

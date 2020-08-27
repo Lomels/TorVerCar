@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
+import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -151,7 +152,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 		stops.add(liftSg.getStartPoint());
 		stops.add(liftSg.getEndPoint());
 
-		if (cbGoing.isPressed()) {
+		if (cbGoing.isSelected()) {
 			time = tfDay.getText() + tfArrivalTime.getText().toString();
 			liftSg.setArrivalTime(time);
 			MyLogger.info("LocalDateTime", LocalDateTime.parse(liftSg.getArrivalTime(), FORMATTER));
@@ -160,7 +161,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 
 			liftController.matchLiftStoppingBefore(LocalDateTime.parse(liftSg.getArrivalTime(), FORMATTER), stops, 0,
 					this);
-		} else {
+		} else if (cbReturn.isSelected()){
 			time = tfDay.getText().toString() + tfStartTime.getText().toString();
 			liftSg.setDepartureTime(time);
 			MyLogger.info("LocalDateTime", LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER));
@@ -168,6 +169,8 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 
 			liftController.matchLiftStartingAfter(LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER), stops, 0,
 					this);
+		} else {
+			MyLogger.info("You must choose a lift option");
 		}
 	}
 
@@ -179,6 +182,8 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		
 		EventHandler<ActionEvent> eventGoing = new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
 				if (cbGoing.isPressed()) {
@@ -233,6 +238,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 		// TODO Auto-generated method stub
 		for (LiftMatchResult result : results) {
 			MyLogger.info("Result", result);
+			liftSg.addLiftMatchResult(result);
 		}
 
 		// TODO creare lista di passaggi matched e far partire nuova lista di roba
