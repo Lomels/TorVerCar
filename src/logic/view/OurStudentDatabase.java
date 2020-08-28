@@ -81,4 +81,14 @@ public interface OurStudentDatabase {
 
 	public void removeCarByUserID(String userID) throws DatabaseException;
 
+	public List<String> loadNotificationsByUserID(String userID);
+
+	public void removeNotificationsByUserID(String userID);
+
+	public void upvoteRating(String userID, Integer liftID, String driverID);
+	
+	public void downvoteRating(String userID, Integer liftID, String driverID);
+
+	public List<Lift> listUnratedLiftsByPassengerID(String passengerID);
+
 }

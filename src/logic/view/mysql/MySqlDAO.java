@@ -696,6 +696,31 @@ public class MySqlDAO implements OurStudentDatabase {
 		}
 		return result;
 	}
+	
+	@Override
+	public List<Lift> listUnratedLiftsByPassengerID(String passengerID) {
+		List<Lift> result = new ArrayList<Lift>();
+
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.listUnratedLiftsByPassengerID(stmt, passengerID);
+
+			if (!rs.first())
+				return result;
+
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+		return result;
+	}
 
 	@Override
 	public void addNotificationByUserID(String userID, String message) {
@@ -712,6 +737,7 @@ public class MySqlDAO implements OurStudentDatabase {
 		}
 	}
 
+	@Override
 	public List<String> loadNotificationsByUserID(String userID) {
 		List<String> notifications = new ArrayList<String>();
 		try {
@@ -758,4 +784,44 @@ public class MySqlDAO implements OurStudentDatabase {
 			this.disconnect();
 		}
 	}
+
+	@Override
+	public void removeNotificationsByUserID(String userID) {
+		try {
+			this.connect();
+			MyQueries.removeNotificationsByUserID(stmt, userID);
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+	}
+	
+	@Override
+	public void upvoteRating(String userID, Integer liftID, String driverID) {
+		try {
+			this.connect();
+			MyQueries.upvoteRating(stmt, userID, liftID, driverID);
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+	}
+	
+	@Override
+	public void downvoteRating(String userID, Integer liftID, String driverID) {
+		try {
+			this.connect();
+			MyQueries.downvoteRating(stmt, userID, liftID, driverID);
+		} catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+	}
+	
 }

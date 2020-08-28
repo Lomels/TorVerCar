@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
@@ -15,9 +16,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import logic.controller.LiftController;
+import logic.controller.RatingController;
 import logic.model.Lift;
 import logic.model.UserSingleton;
 import logic.utilities.MyLogger;
@@ -46,7 +53,6 @@ public class MainMenuView extends Application implements Initializable {
 	private List<Lift> completedLifts;
 	private LiftController liftContr = new LiftController();
 
-
 	@Override
 	public void start(Stage stage) throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Home_menu.fxml"));
@@ -55,19 +61,97 @@ public class MainMenuView extends Application implements Initializable {
 		stage.setScene(scene);
 		stage.show();
 
-//		if (!(notifications = sg.getNotifications()).isEmpty()) {
-			for(String s : notifications) {
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Notification");
-				alert.setHeaderText("Look, an Information Dialog");
-				alert.setContentText(s);
-				alert.showAndWait();
-			}
-//		}
-
-		if (!(completedLifts.isEmpty())) {
-			// TODO: check lift completati
+		if (!(notifications = sg.getNotifications()).isEmpty()) {
+			showNotifications(notifications.size());
 		}
+
+		if (!(completedLifts = sg.getCompletedLift()).isEmpty()) {
+			MyLogger.info("completed lifts", completedLifts);
+			showCompletedLifts(completedLifts.size());
+		}
+	}
+
+	private void showCompletedLifts(int size) {
+		int i = 0;
+		
+		String format = new String("Please tell us if you enjoyed the ride, click on Show Details for further infos about the Lift");
+		
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Completed lift");
+		alert.setHeaderText("Did you enjoyed the ride?");
+		alert.setContentText(format);
+		
+		ButtonType btYes = new ButtonType("YES", ButtonData.YES);
+		ButtonType btNo = new ButtonType("NO", ButtonData.NO);
+
+		alert.getButtonTypes().setAll(btYes, btNo);
+
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("TorVerCar.css").toExternalForm());
+		dialogPane.getStyleClass().add("myDialog");
+				
+		format = new String("Lift arrived to %s.\nDeparted at %s.\nOffered by %s.");
+		
+		Text textArea = new Text();
+		GridPane content = new GridPane();
+	    content.setMaxWidth(Double.MAX_VALUE);
+	    content.add(textArea, 0, 0);
+
+	    alert.getDialogPane().setExpandableContent(content);
+		
+		do {
+			Lift lift = completedLifts.get(i);
+			MyLogger.info("Driver id", lift.getDriver().getUserID());
+			
+			String message = String.format(format, lift.getRoute().getDropoffPosition().getAddress(), lift.getStopDateTime().toString(),
+					lift.getDriver().getName() + " " + lift.getDriver().getSurname());
+			textArea.setText(message);
+			MyLogger.info("message", message);
+
+			Optional<ButtonType> result = alert.showAndWait(); 
+			if (result.get() == btYes) {
+				RatingController.upvote(sg.getUserID(), lift.getLiftID(), lift.getDriver().getUserID());
+				MyLogger.info("yes");
+			} else if (result.get() == btNo) {
+				RatingController.downvote(sg.getUserID(), lift.getLiftID(), lift.getDriver().getUserID());
+				MyLogger.info("no");
+			} 
+			i++;
+		}while(i < size && i >= 0);
+	}
+
+	public void showNotifications(int index) {
+		int i = 0;
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Notification");
+		alert.setHeaderText("Look, an Information Dialog");
+		alert.setContentText(notifications.get(i));
+		ButtonType btNext = new ButtonType("NEXT", ButtonData.NEXT_FORWARD);
+		ButtonType btBack = new ButtonType("BACK", ButtonData.BACK_PREVIOUS);
+		ButtonType btClose = new ButtonType("CLOSE", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(btNext, btBack, btClose);
+
+		DialogPane dialogPane = alert.getDialogPane();
+		dialogPane.getStylesheets().add(getClass().getResource("TorVerCar.css").toExternalForm());
+		dialogPane.getStyleClass().add("myDialog");
+
+		do {
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == btNext) {
+				i++;
+				alert.setContentText(notifications.get(i));
+			} else if (result.get() == btBack) {
+				i--;
+				alert.setContentText(notifications.get(i));
+			} else {
+				break;
+			}
+		} while ((i < index && i >= 0));
+
+//		alert.close();
+		liftContr.flushNotification(sg.getUserID());
+
 	}
 
 	@Override
@@ -76,11 +160,11 @@ public class MainMenuView extends Application implements Initializable {
 		switch (sg.getRole()) {
 		case DRIVER:
 			welcome = sg.getStudentCar().getName().toString() + "!";
-			userID = sg.getStudentCar().getUserID();
+			userID = sg.getUserID();
 			break;
 		case STUDENT:
 			welcome = sg.getStudent().getName().toString() + "!";
-			userID = sg.getStudent().getUserID();
+			userID = sg.getUserID();
 			break;
 		case ADMIN:
 			// TODO: implementare
@@ -89,7 +173,7 @@ public class MainMenuView extends Application implements Initializable {
 		tvName.setText(welcome);
 		sg.setNotifications(liftContr.loadNotifications(userID));
 
-		completedLifts = liftContr.checkCompletedLift(userID);
+		sg.setCompletedLift(liftContr.checkCompletedLift(userID));
 	}
 
 	public static void main(String[] args) {

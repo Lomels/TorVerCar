@@ -1,25 +1,53 @@
 .button-active {
 	  -fx-background-color: #5f976a; /* Green */
-	  -fx-background-radius: 0;
-	  -fx-text-fill: #39393a;
-	  padding: 15px 32px;
+	  -fx-background-radius: 0.0;
+	  -fx-text-fill: #39393a;	/* Gray */
+	  padding: 15.0px 32.0px;
 	  text-align: center;
 	  text-decoration: none;
 	  display: inline-block;
-	  font-size: 18px;
-	  margin: 4px 2px;
+	  font-size: 18.0px;
+	  margin: 4.0px 2.0px;
 	  cursor: pointer;
 }
 
 .button-unactive{
 	  -fx-background-color: null;
-	  -fx-background-radius: 0;
+	  -fx-background-radius: 0.0;
 	  -fx-text-fill: #5f976a;
-	  padding: 15px 32px;
+	  padding: 15.0px 32.0px;
 	  text-align: center;
 	  text-decoration: none;
 	  display: inline-block;
-	  font-size: 18px;
-	  margin: 4px 2px;
+	  font-size: 18.0px;
+	  margin: 4.0px 2.0px;
 	  cursor: pointer;
+}
+
+.dialog-pane {
+    -fx-background-color: white;
+}
+
+.dialog-pane:label {
+    -fx-text-fill: #39393a;
+}
+
+.dialog-pane:header  .header-panel {
+    -fx-background-color: #39393a;
+}
+
+.dialog-pane:header .header-panel .label {
+    -fx-font-style: italic;
+    -fx-font-size: 2.0em;    
+    -fx-text-fill: #5f976a;
+    
+}
+
+.dialog-pane > .button-bar > .container > .button{
+  -fx-alignment: center;
+  -fx-focus-traversable: false;
+  -fx-padding: 0.416em; /* 5px */
+  -fx-background-color: #5f976a; /* Green */
+  -fx-background-radius: 0.0;
+  -fx-text-fill: #39393a;
 }

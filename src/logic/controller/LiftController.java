@@ -102,7 +102,7 @@ public class LiftController {
 	}
 
 	public List<Lift> checkCompletedLift(String userID) {
-		List<Lift> fullList = ourDb.listLiftsByPassengerID(userID);
+		List<Lift> fullList = ourDb.listUnratedLiftsByPassengerID(userID);
 		List<Lift> completed = new ArrayList<>();
 		for (Lift l : fullList) {
 			if (l.getStopDateTime().isBefore(LocalDateTime.now()))
@@ -265,5 +265,9 @@ public class LiftController {
 			LiftMatchResult result = new LiftMatchResult(lift, relativeStartDateTime, relativeStopDateTime);
 			this.results.add(result);
 		}
+	}
+
+	public void flushNotification(String userID) {
+		ourDb.removeNotificationsByUserID(userID);
 	}
 }
