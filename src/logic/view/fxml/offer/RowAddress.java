@@ -1,14 +1,14 @@
-package logic.view.fxml;
+package logic.view.fxml.offer;
 
 import logic.model.Position;
 
-public class Row {
+public class RowAddress {
 	
 	private String address;
 	private String URL;
 	private Position position;
 	
-	public Row(String address, String uRL, Position position) {
+	public RowAddress(String address, String uRL, Position position) {
 		super();
 		this.address = address;
 		this.URL = uRL;

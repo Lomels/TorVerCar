@@ -1,12 +1,13 @@
 package logic.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import logic.utilities.Status;
 
 public class LiftSingleton {
 	private List<Position> listPos;
-	private List<LiftMatchResult> listLifts;
+	private List<LiftMatchResult> listLifts = new ArrayList<>();
 	private Position startPoint;
 	private Position endPoint;
 	private String departureTime;
@@ -14,6 +15,15 @@ public class LiftSingleton {
 	private Integer address;
 	private String notes;
 	private String arrivalTime;
+	private String purpose = new String();
+
+	public String getPurpose() {
+		return purpose;
+	}
+
+	public void setPurpose(String purpose) {
+		this.purpose = purpose;
+	}
 
 	private Status status = Status.START;
 

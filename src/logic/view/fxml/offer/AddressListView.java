@@ -1,4 +1,4 @@
-package logic.view.fxml;
+package logic.view.fxml.offer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,6 +29,11 @@ import logic.model.Position;
 import logic.model.UserSingleton;
 import logic.utilities.MyLogger;
 import logic.utilities.Status;
+import logic.view.fxml.HomeView;
+import logic.view.fxml.MainMenuView;
+import logic.view.fxml.MyCarView;
+import logic.view.fxml.ProfileView;
+import logic.view.fxml.booking.BookView;
 import logic.model.LiftSingleton;
 
 import javafx.scene.Node;
@@ -62,7 +67,7 @@ public class AddressListView extends Application implements Initializable {
 	@FXML
 	private Button btConfirm;
 	@FXML
-	private ListView<Row> addressList;
+	private ListView<RowAddress> addressList;
 
 	LiftSingleton lift = LiftSingleton.getInstance();
 	UserSingleton sg = UserSingleton.getInstance();
@@ -72,10 +77,13 @@ public class AddressListView extends Application implements Initializable {
 	public void start(Stage stage) throws Exception {
 
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("address_list.fxml"));
+		
+		
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
-
+		
 		stage.setScene(scene);
+		
 
 		stage.show();
 	}
@@ -140,13 +148,14 @@ public class AddressListView extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
 		for (Position pos : lift.getListPos()) {
-			addressList.getItems().add(new Row(pos.getAddress(), map.viewFromPos(pos), pos));
+			addressList.getItems().add(new RowAddress(pos.getAddress(), map.viewFromPos(pos), pos));
 		}
 
-		addressList.setCellFactory(lv -> new ListCell<Row>() {
+		addressList.setCellFactory(lv -> new ListCell<RowAddress>() {
 			private Node graphic;
-			private RowList controller;
+			private RowAddressController controller;
 			{
 				try {
 					FXMLLoader loader = new FXMLLoader(getClass().getResource("list_cell.fxml"));
@@ -158,7 +167,7 @@ public class AddressListView extends Application implements Initializable {
 			}
 
 			@Override
-			protected void updateItem(Row row, boolean empty) {
+			protected void updateItem(RowAddress row, boolean empty) {
 				super.updateItem(row, empty);
 				if (empty) {
 					setGraphic(null);
@@ -176,8 +185,8 @@ public class AddressListView extends Application implements Initializable {
 		addressList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
 		addressList.getSelectionModel().selectedItemProperty()
-				.addListener((ObservableValue<? extends Row> ov, Row old_val, Row new_val) -> {
-					Row selectedItem = addressList.getSelectionModel().getSelectedItem();
+				.addListener((ObservableValue<? extends RowAddress> ov, RowAddress old_val, RowAddress new_val) -> {
+					RowAddress selectedItem = addressList.getSelectionModel().getSelectedItem();
 					int index = addressList.getSelectionModel().getSelectedIndex();
 
 					addressList.getFocusModel().focus(index);

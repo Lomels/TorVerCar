@@ -1,4 +1,4 @@
-package logic.view.fxml;
+package logic.view.fxml.offer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,6 +19,11 @@ import logic.controller.maps.MapsApi;
 import logic.model.LiftSingleton;
 import logic.model.UserSingleton;
 import logic.utilities.Status;
+import logic.view.fxml.HomeView;
+import logic.view.fxml.MainMenuView;
+import logic.view.fxml.MyCarView;
+import logic.view.fxml.ProfileView;
+import logic.view.fxml.booking.BookView;
 import logic.model.Role;
 
 public class OfferView extends Application implements Initializable {
@@ -150,6 +155,7 @@ public class OfferView extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		lp.setPurpose("offer");
 		try {
 			userSg.setStatus(Status.OFFER);
 		} catch (Exception e) {

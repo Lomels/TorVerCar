@@ -1,7 +1,8 @@
-package logic.view.fxml;
+package logic.view.fxml.booking;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.controller.LiftController;
@@ -32,6 +34,12 @@ import logic.model.Position;
 import logic.model.UserSingleton;
 import logic.utilities.MyLogger;
 import logic.utilities.Status;
+import logic.view.fxml.HomeView;
+import logic.view.fxml.MainMenuView;
+import logic.view.fxml.MyCarView;
+import logic.view.fxml.ProfileView;
+import logic.view.fxml.offer.AddressListView;
+import logic.view.fxml.offer.OfferView;
 import javafx.event.EventHandler;
 import logic.controller.LiftMatchListener;
 
@@ -75,14 +83,18 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	private LiftController liftController = new LiftController();
 	private String time;
 	private LiftMatchListener listener;
+	
 
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
 	private boolean firstLog = true;
-
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Book.fxml"));
+		
+		
+		
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
@@ -116,6 +128,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	public void startButtonController() throws Exception {
 		liftSg.setAddress(1);
 		liftSg.setListPos(mapsApi.addrToPos(tfStartPoint.getText()));
+		
 		AddressListView list = new AddressListView();
 		list.start((Stage) btCheckStart.getScene().getWindow());
 	}
@@ -145,6 +158,9 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}
+	
+		
+		
 
 	@FXML
 	public void findButtonController() throws Exception {
@@ -153,6 +169,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 		stops.add(liftSg.getEndPoint());
 
 		if (cbGoing.isSelected()) {
+			liftSg.setPurpose("cbGoing");
 			time = tfDay.getText() + tfArrivalTime.getText().toString();
 			liftSg.setArrivalTime(time);
 			MyLogger.info("LocalDateTime", LocalDateTime.parse(liftSg.getArrivalTime(), FORMATTER));
@@ -162,6 +179,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 			liftController.matchLiftStoppingBefore(LocalDateTime.parse(liftSg.getArrivalTime(), FORMATTER), stops, 0,
 					this);
 		} else if (cbReturn.isSelected()){
+			liftSg.setPurpose("cbReturn");
 			time = tfDay.getText().toString() + tfStartTime.getText().toString();
 			liftSg.setDepartureTime(time);
 			MyLogger.info("LocalDateTime", LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER));
@@ -176,6 +194,14 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		//TODO sistemare spunta
+		if(liftSg.getPurpose().equals("cbGoing")) {
+			cbGoing.setSelected(true);
+		}
+		if(liftSg.getPurpose().equals("cbReturn")) {
+			cbReturn.setSelected(false);
+		}
+		
 		try {
 			userSg.setStatus(Status.BOOK);
 		} catch (Exception e1) {
@@ -236,11 +262,25 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	@Override
 	public void onThreadEnd(List<LiftMatchResult> results) {
 		// TODO Auto-generated method stub
-		for (LiftMatchResult result : results) {
-			MyLogger.info("Result", result);
-			liftSg.addLiftMatchResult(result);
+		if(!results.isEmpty()) {
+			for (LiftMatchResult result : results) {
+				MyLogger.info("Result", result);
+				liftSg.addLiftMatchResult(result);
+
+				LiftListView list = new LiftListView();
+				try {
+					list.start((Stage) btFind.getScene().getWindow());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}else {
+			MyLogger.info("No lifts found");
+			// TODO: toast di avviso
 		}
 
+		
 		// TODO creare lista di passaggi matched e far partire nuova lista di roba
 	}
 

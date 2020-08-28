@@ -17,6 +17,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import logic.controller.LiftController;
 import logic.model.UserSingleton;
+import logic.view.fxml.booking.BookView;
+import logic.view.fxml.offer.OfferView;
 
 public class MainMenuView extends Application implements Initializable{
 	@FXML private Text tvWelcome;

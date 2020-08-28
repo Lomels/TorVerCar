@@ -16,6 +16,8 @@ import logic.bean.CarInfoBean;
 import logic.controller.SetCarInfoController;
 import logic.model.Role;
 import logic.model.UserSingleton;
+import logic.view.fxml.booking.BookView;
+import logic.view.fxml.offer.OfferView;
 
 public class MyCarView extends Application implements Initializable{
 	@FXML private Button btBack;

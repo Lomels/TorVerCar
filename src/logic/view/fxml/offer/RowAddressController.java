@@ -1,10 +1,10 @@
-package logic.view.fxml;
+package logic.view.fxml.offer;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
-public class RowList {
+public class RowAddressController {
 	@FXML private Text tvAddress;
 	@FXML private ImageView ivMap;
 	
