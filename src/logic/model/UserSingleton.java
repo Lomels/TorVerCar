@@ -1,5 +1,7 @@
 package logic.model;
 
+import java.util.List;
+
 import logic.controller.exception.InvalidInputException;
 import logic.utilities.Status;
 
@@ -7,6 +9,7 @@ public class UserSingleton {
 
 	private Student student = null;
 	private StudentCar studentCar = null;
+	private List<String> notifications;
 	
 	private Role role;
 	private Status status;
@@ -64,6 +67,14 @@ public class UserSingleton {
 			this.status = status;
 		else
 			throw new Exception("Wrong status");
+	}
+
+	public List<String> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(List<String> notifications) {
+		this.notifications = notifications;
 	}
 	
 }
