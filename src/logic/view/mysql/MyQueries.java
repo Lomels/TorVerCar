@@ -251,7 +251,7 @@ public class MyQueries {
 		String sql = String.format(format, userID, message);
 
 		stmt.executeUpdate(sql);
-	
+
 	}
 
 	public static ResultSet loadNotificationsByUserID(Statement stmt, String userID) throws SQLException {
@@ -277,4 +277,42 @@ public class MyQueries {
 
 	}
 
+	public static void removeNotificationsByUserID(Statement stmt, String userID) throws SQLException {
+		String format = "DELETE FROM Notifications WHERE userID = '%s';";
+		String sql = String.format(format, userID);
+
+		stmt.executeUpdate(sql);
+	}
+
+	public static void upvoteRating(Statement stmt, String userID, Integer liftID, String driverID) throws SQLException {
+		String format = "UPDATE Students SET rating = rating + 1 WHERE userID = '%s';";
+		String sql = String.format(format, driverID);
+
+		stmt.executeUpdate(sql);
+
+		format = "UPDATE Passengers SET rated = 1 WHERE liftID = %d && passengerID = '%s';";
+		sql = String.format(format, liftID, userID);
+
+		stmt.executeUpdate(sql);
+
+	}
+
+	public static void downvoteRating(Statement stmt, String userID, Integer liftID, String driverID) throws SQLException {
+		String format = "UPDATE Students SET rating = rating - 1 WHERE userID = '%s';";
+		String sql = String.format(format, driverID);
+
+		stmt.executeUpdate(sql);
+		
+		format = "UPDATE Passengers SET rated = 1 WHERE liftID = %d && passengerID = '%s';";
+		sql = String.format(format, liftID, userID);
+
+		stmt.executeUpdate(sql);
+	}
+
+	public static ResultSet listUnratedLiftsByPassengerID(Statement stmt, String passengerID) throws SQLException {
+		String format = "SELECT L.* FROM Passengers as P, Lifts as L WHERE P.liftID = L.liftID && P.passengerID = '%s' && P.rated = 0;";
+		String sql = String.format(format, passengerID);
+
+		return stmt.executeQuery(sql);
+	}
 }

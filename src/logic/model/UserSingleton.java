@@ -1,5 +1,7 @@
 package logic.model;
 
+import java.util.List;
+
 import logic.controller.exception.InvalidInputException;
 import logic.utilities.Status;
 
@@ -7,42 +9,54 @@ public class UserSingleton {
 
 	private Student student = null;
 	private StudentCar studentCar = null;
-	
+	private List<String> notifications;
+	private List<Lift> completedLift;
+
 	private Role role;
 	private Status status;
-	
+
 	private String code;
-	
+
 	private static UserSingleton instance = null;
-	
-	private UserSingleton() {}
-	
+
+	private UserSingleton() {
+	}
+
 	public static UserSingleton getInstance() {
-		if(instance == null) 
+		if (instance == null)
 			instance = new UserSingleton();
 		return instance;
 	}
-	
+
+	public String getUserID() {
+		if(role.equals(Role.STUDENT))
+			return this.student.getUserID();
+		if(role.equals(Role.DRIVER))
+			return this.studentCar.getUserID();
+		else
+			return null;	
+	}
+
 	public void setStudent(Student user) {
 		this.student = user;
 	}
-	
+
 	public Student getStudent() {
 		return this.student;
 	}
-	
+
 	public void setStudentCar(StudentCar user) {
 		this.studentCar = user;
 	}
-	
+
 	public StudentCar getStudentCar() {
 		return this.studentCar;
 	}
-	
+
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
+
 	public String getCode() {
 		return this.code;
 	}
@@ -60,10 +74,26 @@ public class UserSingleton {
 	}
 
 	public void setStatus(Status status) throws Exception {
-		if(status.equals(Status.OFFER) | status.equals(Status.BOOK))
+		if (status.equals(Status.OFFER) | status.equals(Status.BOOK))
 			this.status = status;
 		else
 			throw new Exception("Wrong status");
 	}
-	
+
+	public List<String> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(List<String> notifications) {
+		this.notifications = notifications;
+	}
+
+	public List<Lift> getCompletedLift() {
+		return completedLift;
+	}
+
+	public void setCompletedLift(List<Lift> completedLift) {
+		this.completedLift = completedLift;
+	}
+
 }
