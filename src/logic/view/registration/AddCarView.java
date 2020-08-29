@@ -24,7 +24,7 @@ public class AddCarView extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("fxml/Add_car_info.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("../fxml/Add_car_info.fxml"));
 		this.stage = primaryStage;
 		Scene scene = new Scene(root);
 		stage.setTitle("Add Car Infos");

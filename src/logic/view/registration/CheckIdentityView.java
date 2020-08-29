@@ -22,7 +22,7 @@ public class CheckIdentityView extends Application{
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Check_Registration.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Check_Registration.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);

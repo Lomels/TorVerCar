@@ -26,7 +26,7 @@ public class RecapView extends Application implements Initializable{
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Recap_database_info.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Recap_database_info.fxml"));
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setTitle("Recap");

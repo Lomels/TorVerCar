@@ -28,7 +28,7 @@
 	prefHeight="514.0" prefWidth="771.0"
 	xmlns="http://javafx.com/javafx/8.0.171"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="logic.view.AddressListView"
+	fx:controller="logic.view.offer.AddressListView"
 	stylesheets="@../fxml/TorVerCar.css">
 	<children>
 		<HBox layoutX="-9.0" layoutY="-9.0" AnchorPane.leftAnchor="0.0"

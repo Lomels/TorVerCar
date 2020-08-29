@@ -68,16 +68,10 @@ public class AddressListView extends Application implements Initializable {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/address_list.fxml"));
-		
-		
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
-		
 		stage.setScene(scene);
-		
-
 		stage.show();
 	}
 
@@ -141,7 +135,7 @@ public class AddressListView extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+
 		for (Position pos : lift.getListPos()) {
 			addressList.getItems().add(new RowAddress(pos.getAddress(), map.viewFromPos(pos), pos));
 		}

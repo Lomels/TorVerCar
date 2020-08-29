@@ -46,6 +46,7 @@ public class SetCarInfoController {
 			ourDb.addCar(sCar);
 			sg.setRole(Role.DRIVER);
 			sg.setStudent(null);
+			sg.setStudentCar(sCar);
 			break;
 		case ADMIN:
 			break;
