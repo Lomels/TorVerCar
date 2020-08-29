@@ -94,4 +94,8 @@ public interface OurStudentDatabase {
 	public List<Lift> listAvailableLiftStartingWithinIntervalDateTime(LocalDateTime intervalStartDateTime,
 			LocalDateTime intervalStopDateTime);
 
+	public Lift getLastInsertedLift() throws DatabaseException, JSONException, InvalidInputException;
+
+	public Integer getLastInsertedLiftID() throws DatabaseException, JSONException, InvalidInputException;
+
 }

@@ -60,16 +60,6 @@ public class LiftController {
 			return this.lift;
 		}
 
-		@Override
-		public boolean equals(Object obj) {
-			return super.equals(obj);
-		}
-
-		@Override
-		public int hashCode() {
-			return super.hashCode();
-		}
-
 	}
 
 	public Lift createLift(String startDateTimeString, Integer maxDuration, String note, StudentCar driver,

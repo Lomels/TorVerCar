@@ -20,7 +20,7 @@ public class StudentBuilder {
 	// Collection of active lifts
 	protected List<Lift> lifts;
 
-	// Costruttore del builder
+	// Builder Costructor
 	private StudentBuilder(String userID) throws InvalidInputException {
 		InputChecker.checkUserID(userID);
 		this.userID = userID;
@@ -30,13 +30,12 @@ public class StudentBuilder {
 		return new StudentBuilder(userID);
 	}
 
-	// Metodo che chiama correttamente il costruttore di Student
 	public Student build() throws InvalidInputException {
 		return new Student(this.userID, this.password, this.email, this.name, this.surname, this.phone);
 	}
 
 	/*
-	 * Tutti i metodi necessari per l'utilizzo del pattern
+	 * All method to use the pattern
 	 */
 	public StudentBuilder password(String password) {
 		this.password = password;

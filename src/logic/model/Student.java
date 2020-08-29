@@ -62,7 +62,7 @@ public class Student {
 
 	// Name must not be null
 	public void setName(String name) throws InvalidInputException {
-		InputChecker.checkGeneric(name);
+		InputChecker.checkGenericString(name);
 		this.name = name;
 	}
 
@@ -72,7 +72,7 @@ public class Student {
 
 	// Surname must not be null
 	public void setSurname(String surname) throws InvalidInputException {
-		InputChecker.checkGeneric(surname);
+		InputChecker.checkGenericString(surname);
 		this.surname = surname;
 	}
 
@@ -89,6 +89,16 @@ public class Student {
 	public String toString() {
 		return "Student [userID=" + userID + ", password=" + password + ", name=" + name + ", surname=" + surname
 				+ ", email=" + email + ", phone=" + phone + "]";
+	}
+	
+	public boolean compare(Student other) {
+		boolean sameUserID = this.getUserID().equals(other.getUserID());
+		boolean samePassword = this.getPassword().equals(other.getPassword());
+		boolean sameName = this.getName().equals(other.getName());
+		boolean sameSurname = this.getSurname().equals(other.getSurname());
+		boolean sameEmail = this.getEmail().equals(other.getEmail());
+		boolean samePhone = this.getPhone().equals(other.getPhone());
+		return sameUserID && samePassword && sameName && sameSurname && sameEmail && samePhone;
 	}
 
 }

@@ -70,7 +70,7 @@ public class MySqlDAOTest {
 		assertEquals(PASSWORD, actualP);
 	}
 	
-	@Test
+//	@Test
 	public void updateRating() throws DatabaseException {
 		MySqlDAO my = new MySqlDAO();
 		StudentCar test = my.loadStudentCarByUserID("0000000");

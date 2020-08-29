@@ -12,6 +12,8 @@ import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Position;
 import logic.model.Route;
+import test.utilities.TestLogger;
+import test.utilities.TestUtilities;
 
 public class AdapterMapsApiTest extends TestUtilities {
 
@@ -70,14 +72,6 @@ public class AdapterMapsApiTest extends TestUtilities {
 		String result = maps.viewFromPos(p, zoom);
 		logger.info("Image URL", result);
 		assertNotNull(result);
-	}
-
-	// TODO: Test
-//	@Test
-	public void saveImageTest() throws ApiNotReachableException, InvalidInputException {
-		Position p = maps.addrToPos(ADDR_UNI).get(0);
-		maps.saveImage(p);
-		logger.info("Image saved succesfully.");
 	}
 
 	@Test
