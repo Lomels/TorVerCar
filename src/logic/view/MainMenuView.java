@@ -24,6 +24,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import logic.controller.LiftController;
+import logic.controller.LoginController;
 import logic.controller.RatingController;
 import logic.model.Lift;
 import logic.model.UserSingleton;
@@ -198,6 +199,12 @@ public class MainMenuView extends Application implements Initializable {
 	}
 
 	public void logoutButtonController() throws IOException {
+		try {
+			LoginController.logout();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HomeView home = new HomeView();
 		home.start((Stage) btLogout.getScene().getWindow());
 	}

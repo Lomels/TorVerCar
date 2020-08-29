@@ -11,9 +11,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.controller.LiftController;
+import logic.controller.LoginController;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.LiftSingleton;
@@ -50,7 +52,7 @@ public class OfferView extends Application implements Initializable {
 	@FXML
 	private TextField tfNotes;
 	@FXML
-	private TextField tfDay;
+	private DatePicker dpDate;
 	@FXML
 	private Button btCheckStart;
 	@FXML
@@ -106,6 +108,12 @@ public class OfferView extends Application implements Initializable {
 
 	@FXML
 	public void logoutButtonController() throws IOException {
+		try {
+			LoginController.logout();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HomeView home = new HomeView();
 		home.start((Stage) btLogout.getScene().getWindow());
 	}
@@ -141,7 +149,7 @@ public class OfferView extends Application implements Initializable {
 
 	@FXML
 	public void confirmButtonController() throws Exception {
-		String time = tfDay.getText() + "T" + tfStartTime.getText();
+		String time = dpDate.getValue().toString() + "T" + tfStartTime.getText();
 		lp.setDepartureTime(time);
 		lp.setMaxDuration(tfMaxDuration.getText());
 		lp.setNotes(tfNotes.getText());
@@ -168,7 +176,7 @@ public class OfferView extends Application implements Initializable {
 			tfStartTime.setDisable(true);
 			tfMaxDuration.setDisable(true);
 			tfNotes.setDisable(true);
-			tfDay.setDisable(true);
+			dpDate.setDisable(true);
 			btCheckStart.setDisable(true);
 			btCheckEnd.setDisable(true);
 			btConfirm.setDisable(true);

@@ -1,16 +1,23 @@
 package logic.view.booking;
 
+import logic.model.Lift;
+
 public class RowLift {
+	private Lift lift;
 	private String from;
 	private String to;
 	private String timeFrom;
 	private String timeTo;
 	
-	public RowLift(String from, String to, String timeFrom, String timeTo) {
-		this.from = from;
-		this.to = to;
-		this.timeFrom = timeFrom;
-		this.timeTo = timeTo;
+//	public RowLift(String from, String to, String timeFrom, String timeTo, Lift lift) {
+//		this.from = from;
+//		this.to = to;
+//		this.timeFrom = timeFrom;
+//		this.timeTo = timeTo;
+//	}
+	
+	public RowLift(Lift lift) {
+		this.lift = lift;
 	}
 	
 	public String getFrom() {
@@ -36,5 +43,9 @@ public class RowLift {
 	}
 	public void setTimeTo(String timeTo) {
 		this.timeTo = timeTo;
+	}
+
+	public Lift getLift() {
+		return this.lift;
 	}
 }

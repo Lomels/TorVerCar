@@ -15,6 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import logic.controller.LoginController;
 import logic.controller.ProfileController;
 import logic.model.UserSingleton;
 import logic.view.booking.BookView;
@@ -121,6 +122,12 @@ public class ProfileView extends Application implements Initializable {
 
 	@FXML
 	public void logoutButtonController() throws Exception {
+		try {
+			LoginController.logout();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		LoginView login = new LoginView();
 		login.start((Stage) btLogout.getScene().getWindow());
 	}

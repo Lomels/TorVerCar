@@ -17,10 +17,13 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.stage.Stage;
+import logic.controller.LoginController;
 import logic.controller.PassengerController;
 import logic.controller.maps.ViewMapHereApi;
+import logic.model.Lift;
 import logic.model.LiftMatchResult;
 import logic.model.LiftSingleton;
+import logic.model.Role;
 import logic.model.UserSingleton;
 import logic.utilities.MyLogger;
 import logic.view.HomeView;
@@ -48,10 +51,10 @@ public class LiftListView extends Application implements Initializable {
 	@FXML
 	private ListView<RowLift> liftList;
 
-	LiftSingleton lift = LiftSingleton.getInstance();
-	UserSingleton sg = UserSingleton.getInstance();
-	ViewMapHereApi map = ViewMapHereApi.getInstance();
-	PassengerController controller = new PassengerController();
+	private LiftSingleton lift = LiftSingleton.getInstance();
+	private UserSingleton sg = UserSingleton.getInstance();
+	private ViewMapHereApi map = ViewMapHereApi.getInstance();
+	private PassengerController controller = new PassengerController();
 	private Integer index;
 	
 	@Override
@@ -91,6 +94,12 @@ public class LiftListView extends Application implements Initializable {
 
 	@FXML
 	public void logoutButtonController() throws IOException {
+		try {
+			LoginController.logout();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HomeView home = new HomeView();
 		home.start((Stage) btLogout.getScene().getWindow());
 	}
@@ -103,8 +112,13 @@ public class LiftListView extends Application implements Initializable {
 	
 	@FXML 
 	public void confirmButtonController() throws Exception {
+		MyLogger.info("lift", lift.getSelectedLift());
+		if(sg.getRole().equals(Role.STUDENT))
+			controller.addPassenger(lift.getSelectedLift(), sg.getStudent());
+		else
+			controller.addPassenger(lift.getSelectedLift(), sg.getStudentCar());
 		
-		controller.addPassenger(lift.getListLifts().get(index).getLift(), sg.getStudent());
+		lift.clearState();
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btConfirm.getScene().getWindow());
 	}
@@ -112,19 +126,16 @@ public class LiftListView extends Application implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		for (LiftMatchResult result : lift.getListLifts()) {
-			MyLogger.info("result", lift.getListLifts());
-
+			MyLogger.info("result ID", result.getLift().getLiftID());
 			liftList.getItems()
-					.add(new RowLift(result.getLift().getRoute().getPickupPosition().getAddress().toString(),
-							result.getLift().getRoute().getDropoffPosition().getAddress().toString(),
-							result.getRelativeStartDateTime().toString(), result.getRelativeStopDateTime().toString()));
+					.add(new RowLift(result.getLift()));
 		}
 		liftList.setCellFactory(lv -> new ListCell<RowLift>() {
 			private Node graphic;
 			private RowLiftController controller;
 			{
 				try {
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("lift_row.fxml"));
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/lift_row.fxml"));
 					graphic = loader.load();
 					controller = loader.getController();
 				} catch (IOException exc) {
@@ -138,10 +149,10 @@ public class LiftListView extends Application implements Initializable {
 				if (empty) {
 					setGraphic(null);
 				} else {
-					controller.setFrom(row.getFrom());
-					controller.setTo(row.getTo());
-					controller.setTimeFrom(row.getTimeFrom());
-					controller.setTimeTo(row.getTimeTo());
+					controller.setFrom(row.getLift().getRoute().getPickupPosition().getAddress());
+					controller.setTo(row.getLift().getRoute().getDropoffPosition().getAddress());
+					controller.setTimeFrom(row.getLift().getStartDateTime().toString());
+					controller.setTimeTo(row.getLift().getStopDateTime().toString());
 
 					setGraphic(graphic);
 				}
@@ -158,7 +169,7 @@ public class LiftListView extends Application implements Initializable {
 					int index = liftList.getSelectionModel().getSelectedIndex();
 
 					liftList.getFocusModel().focus(index);
-					
+					lift.setSelectedLift(selectedItem.getLift());
 				});
 
 	}

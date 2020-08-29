@@ -154,10 +154,10 @@ public class LiftPersitenceTest extends TestUtilities {
 		}
 	}
 
-//	@Test
+	@Test
 	public void addPassenger()
 			throws DatabaseException, InvalidInputException, InvalidStateException, InterruptedException {
-		Integer liftID = 2;
+		Integer liftID = 3;
 
 		Student passenger1 = dao.loadStudentByUserID("0000005");
 
@@ -170,7 +170,7 @@ public class LiftPersitenceTest extends TestUtilities {
 
 	}
 
-	@Test
+//	@Test
 	public void listPassenger() throws DatabaseException, InvalidInputException {
 		populateDB();
 //		Integer liftID = 5;

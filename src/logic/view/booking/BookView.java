@@ -38,6 +38,7 @@ import logic.view.ProfileView;
 import logic.view.offer.AddressListView;
 import logic.view.offer.OfferView;
 import logic.controller.LiftMatchListener;
+import logic.controller.LoginController;
 
 public class BookView extends Application implements Initializable, LiftMatchListener {
 	@FXML
@@ -72,6 +73,8 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	private CheckBox cbGoing;
 	@FXML
 	private CheckBox cbReturn;
+	@FXML
+	private DatePicker dpDate;
 
 	private LiftSingleton liftSg = LiftSingleton.getInstance();
 	private UserSingleton userSg = UserSingleton.getInstance();
@@ -80,7 +83,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	private String time;
 	private LiftMatchListener listener;
 
-	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyy-MM-ddHH:mm");
 
 	private boolean firstLog = true;
 
@@ -142,6 +145,12 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 
 	@FXML
 	public void logoutButtonController() throws IOException {
+		try {
+			LoginController.logout();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HomeView home = new HomeView();
 		home.start((Stage) btLogout.getScene().getWindow());
 	}
@@ -160,20 +169,15 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 
 		if (cbGoing.isSelected()) {
 			liftSg.setPurpose("cbGoing");
-			time = tfDay.getText() + tfArrivalTime.getText().toString();
+			time = dpDate.getValue().toString() + tfArrivalTime.getText();
 			liftSg.setArrivalTime(time);
-			MyLogger.info("LocalDateTime", LocalDateTime.parse(liftSg.getArrivalTime(), FORMATTER));
-			MyLogger.info("Stops", stops);
 			// TODO spostare in un controller
-
 			liftController.matchLiftStoppingBefore(LocalDateTime.parse(liftSg.getArrivalTime(), FORMATTER), stops, 0,
 					this);
 		} else if (cbReturn.isSelected()) {
 			liftSg.setPurpose("cbReturn");
-			time = tfDay.getText().toString() + tfStartTime.getText().toString();
+			time = dpDate.getValue().toString() + tfStartTime.getText();
 			liftSg.setDepartureTime(time);
-			MyLogger.info("LocalDateTime", LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER));
-			MyLogger.info("Stops", stops);
 
 			liftController.matchLiftStartingAfter(LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER), stops, 0,
 					this);
@@ -250,31 +254,27 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 
 	@Override
 	public void onThreadEnd(List<LiftMatchResult> results) {
-		// TODO Auto-generated method stub
 		if (!results.isEmpty()) {
 			for (LiftMatchResult result : results) {
-				MyLogger.info("Result", result);
+				MyLogger.info("thread result", result.getLift().getLiftID());
 				liftSg.addLiftMatchResult(result);
-
-				LiftListView list = new LiftListView();
-				try {
-					list.start((Stage) btFind.getScene().getWindow());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			}
+			LiftListView list = new LiftListView();
+			try {
+				list.start((Stage) btFind.getScene().getWindow());
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		} else {
 			MyLogger.info("No lifts found");
 			// TODO: toast di avviso
 		}
 
-		// TODO creare lista di passaggi matched e far partire nuova lista di roba
 	}
 
 	@Override
 	public void onThreadRunning() {
-
 		if (firstLog) {
 			firstLog = !firstLog;
 			MyLogger.info("Thread started running.");

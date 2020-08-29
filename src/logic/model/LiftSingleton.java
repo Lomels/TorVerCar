@@ -8,6 +8,7 @@ import logic.utilities.Status;
 public class LiftSingleton {
 	private List<Position> listPos;
 	private List<LiftMatchResult> listLifts = new ArrayList<>();
+	private Lift selectedLift;
 	private Position startPoint;
 	private Position endPoint;
 	private String departureTime;
@@ -41,6 +42,7 @@ public class LiftSingleton {
 	//TODO: usare setter
 	public void clearState() throws Exception {
 		this.listPos.clear();
+		this.listLifts.clear();
 		this.startPoint = null;
 		this.endPoint = null;
 		this.arrivalTime = null;
@@ -49,6 +51,7 @@ public class LiftSingleton {
 		this.notes = null;
 		this.arrivalTime = null;
 		this.setStatus(Status.START);
+		this.setSelectedLift(null);
 	}
 
 	public List<Position> getListPos() {
@@ -132,5 +135,13 @@ public class LiftSingleton {
 
 	public void addLiftMatchResult(LiftMatchResult lift) {
 		this.listLifts.add(lift);
+	}
+
+	public Lift getSelectedLift() {
+		return selectedLift;
+	}
+
+	public void setSelectedLift(Lift selectedLift) {
+		this.selectedLift = selectedLift;
 	}
 }

@@ -17,6 +17,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import logic.controller.LoginController;
 import logic.controller.maps.ViewMapHereApi;
 import logic.model.LiftSingleton;
 import logic.model.Position;
@@ -106,6 +107,12 @@ public class AddressListView extends Application implements Initializable {
 
 	@FXML
 	public void logoutButtonController() throws IOException {
+		try {
+			LoginController.logout();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HomeView home = new HomeView();
 		home.start((Stage) btLogout.getScene().getWindow());
 	}

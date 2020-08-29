@@ -96,4 +96,13 @@ public class UserSingleton {
 		this.completedLift = completedLift;
 	}
 
+	public void clearState() throws Exception {
+		this.setCode(null);
+		this.completedLift.clear();
+		this.setRole(null);
+		this.setStatus(null);
+		this.setStudent(null);
+		this.setStudentCar(null);
+		this.notifications.clear();
+	}
 }

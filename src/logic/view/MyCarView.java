@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.bean.CarInfoBean;
+import logic.controller.LoginController;
 import logic.controller.SetCarInfoController;
 import logic.model.Role;
 import logic.model.UserSingleton;
@@ -115,6 +116,12 @@ public class MyCarView extends Application implements Initializable{
 	
 	@FXML
 	public void logoutButtonController() throws Exception {
+		try {
+			LoginController.logout();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HomeView home = new HomeView();
 		home.start((Stage) btLogout.getScene().getWindow());
 	}
