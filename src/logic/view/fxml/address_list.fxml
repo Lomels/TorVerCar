@@ -4,6 +4,8 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
@@ -22,7 +24,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.PasswordField?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
 	prefHeight="514.0" prefWidth="771.0"
@@ -46,8 +47,8 @@
 							</font>
 						</Button>
 						<Button fx:id="btOffer" mnemonicParsing="false"
-							onAction="#offerButtonController" styleClass="button-unactive"
-							prefHeight="46.0" prefWidth="83.0" text="OFFER">
+							onAction="#offerButtonController" styleClass="button-active"
+							text="OFFER" prefHeight="46.0" prefWidth="83.0">
 							<font>
 								<Font size="18.0" />
 							</font>
@@ -107,84 +108,22 @@
 				</ButtonBar>
 			</children>
 		</HBox>
-
-		<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-			prefHeight="400.0" prefWidth="600.0"
-			xmlns:fx="http://javafx.com/fxml/1"
-			xmlns="http://javafx.com/javafx/8.0.171"
-			fx:controller="logic.view.fxml.offer.AddressListView">
-			<children>
-				<AnchorPane layoutX="1.0" layoutY="1.0"
-					maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0"
-					prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
-					AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-					AnchorPane.topAnchor="0.0">
+		<ScrollPane layoutY="40.0" prefHeight="360.0"
+			prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
+			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+			AnchorPane.topAnchor="40.0">
+			<content>
+				<VBox prefHeight="360.0" prefWidth="600.0">
 					<children>
-						<Rectangle arcHeight="5.0" arcWidth="5.0" fill="#046104"
-							height="40.0" layoutX="8.0" layoutY="10.0" stroke="#046104"
-							strokeType="INSIDE" width="600.0" AnchorPane.leftAnchor="0.0"
-							AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-						<Button fx:id="btHome" layoutX="23.0" layoutY="7.0"
-							mnemonicParsing="false" onAction="#homeButtonController"
-							style="-fx-background-color: #046104;" text="Home" />
-						<Button fx:id="btBook" layoutX="89.0" layoutY="7.0"
-							mnemonicParsing="false" onAction="#bookButtonController"
-							style="-fx-background-color: #046104;" text="Book" />
-						<Button fx:id="btOffer" layoutX="147.0" layoutY="7.0"
-							mnemonicParsing="false" onAction="#offerButtonController"
-							style="-fx-background-color: green;" text="Offer"
-							underline="true" />
-						<Button fx:id="btLogout" layoutX="557.0" layoutY="7.0"
-							maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-							minWidth="-Infinity" mnemonicParsing="false"
-							onAction="#logoutButtonController" prefHeight="26.0"
-							prefWidth="43.0" style="-fx-background-color: #046104;">
-							<graphic>
-								<ImageView fitHeight="29.0" fitWidth="33.0">
-									<image>
-										<Image url="@../../../../Scaricati/logout.png" />
-									</image>
-								</ImageView>
-							</graphic>
-						</Button>
-						<Button fx:id="btProfile" layoutX="511.0" layoutY="7.0"
-							minHeight="-Infinity" minWidth="-Infinity"
-							mnemonicParsing="false" onAction="#profileButtonController"
-							prefHeight="26.0" prefWidth="46.0"
-							style="-fx-background-color: #046104;">
-							<graphic>
-								<ImageView fitHeight="30.0" fitWidth="28.0">
-									<image>
-										<Image url="@../../../../Scaricati/user.png" />
-									</image>
-								</ImageView>
-							</graphic>
-						</Button>
-						<Button fx:id="btMyCar" layoutX="205.0" layoutY="7.0"
-							mnemonicParsing="false" onAction="#myCarButtonController"
-							style="-fx-background-color: #046104;" text="My Car " />
-						<ComboBox fx:id="btMyLift" layoutX="273.0" layoutY="6.0"
-							minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0"
-							prefWidth="103.0" promptText="My Lift"
-							style="-fx-background-color: #046104; -fx-border-color: #046104;" />
-						<ScrollPane layoutY="40.0" prefHeight="360.0"
-							prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
-							AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-							AnchorPane.topAnchor="40.0">
-							<content>
-								<VBox prefHeight="360.0" prefWidth="600.0">
-									<children>
-										<ListView fx:id="addressList" maxHeight="-Infinity"
-											maxWidth="-Infinity" minHeight="-Infinity"
-											minWidth="-Infinity" prefHeight="359.0" prefWidth="600.0" />
-										<Button fx:id="btConfirm" mnemonicParsing="false"
-											onAction="#confirmButtonController" text="Confirm"
-											translateX="500.0" />
-									</children>
-								</VBox>
-							</content>
-						</ScrollPane>
+						<ListView fx:id="addressList" maxHeight="-Infinity"
+							maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+							prefHeight="359.0" prefWidth="600.0" />
+						<Button fx:id="btConfirm" mnemonicParsing="false"
+							onAction="#confirmButtonController" text="Confirm"
+							translateX="500.0" />
 					</children>
-				</AnchorPane>
-			</children>
-		</AnchorPane>
+				</VBox>
+			</content>
+		</ScrollPane>
+	</children>
+</AnchorPane>

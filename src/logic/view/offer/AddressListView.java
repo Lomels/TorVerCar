@@ -145,7 +145,7 @@ public class AddressListView extends Application implements Initializable {
 			private RowAddressController controller;
 			{
 				try {
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("list_cell.fxml"));
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/list_cell.fxml"));
 					graphic = loader.load();
 					controller = loader.getController();
 				} catch (IOException exc) {
