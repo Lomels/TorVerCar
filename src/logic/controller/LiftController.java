@@ -31,6 +31,7 @@ import logic.view.mysql.MySqlDAO;
 public class LiftController {
 
 	private static final Integer MINUTES_OF_MARGIN = 10;
+	private static final Integer HOURS_OF_MARGIN = 6;
 	private static final Integer MAX_LIFTS_LISTED = 100;
 
 	private static final boolean LOG_OLD = false;
@@ -111,7 +112,7 @@ public class LiftController {
 
 		// TODO: aggiornare lift nel DB per non farli ricomparire nella lista una volta
 		// dato il rating
-		
+
 		return completed;
 	}
 
@@ -121,9 +122,12 @@ public class LiftController {
 
 	public void matchLiftStartingAfter(LocalDateTime startDateTime, List<Position> stops, Integer initIndex,
 			LiftMatchListener listener) {
-		// Get all the lifts starting after startDateTime with a margin
-		LocalDateTime marginStartDateTime = startDateTime.minusMinutes(MINUTES_OF_MARGIN);
-		List<Lift> possibleLifts = this.ourDb.listAvailableLiftStartingAfterDateTime(marginStartDateTime);
+		// Get all the lifts starting in
+		// [startDateTime - MINUTES_OF_MARGIN, startDateTime + HOURS_OF_MARGIN]
+		LocalDateTime intervalStartDateTime = startDateTime.minusMinutes(MINUTES_OF_MARGIN);
+		LocalDateTime intervalStopDateTime = startDateTime.plusHours(HOURS_OF_MARGIN);
+		List<Lift> possibleLifts = this.ourDb.listAvailableLiftStartingWithinIntervalDateTime(intervalStartDateTime,
+				intervalStopDateTime);
 
 		// Launch thread for computing
 		LiftThread thread = new LiftThread(possibleLifts, stops, initIndex);
@@ -132,13 +136,16 @@ public class LiftController {
 
 	public void matchLiftStoppingBefore(LocalDateTime stopDateTime, List<Position> stops, Integer initIndex,
 			LiftMatchListener listener) {
-		// Get all the lifts starting after startDateTime with a margin
-		LocalDateTime marginStopDateTime = stopDateTime.plusMinutes(MINUTES_OF_MARGIN);
-		List<Lift> possibleLifts = this.ourDb.listAvailableLiftStartingBeforeDateTime(marginStopDateTime);
+		// Get all the lifts starting in
+		// [stopDateTime - HOURS_OF_MARGIN, stopDateTime + MINUTES_OF_MARGIN]
+		LocalDateTime intervalStopDateTime = stopDateTime.plusMinutes(MINUTES_OF_MARGIN);
+		LocalDateTime intervalStartDateTime = stopDateTime.minusHours(HOURS_OF_MARGIN);
+		List<Lift> possibleLifts = this.ourDb.listAvailableLiftStartingWithinIntervalDateTime(intervalStartDateTime,
+				intervalStopDateTime);
 
 		// Launch thread for computing
 		LiftThread thread = new LiftThread(possibleLifts, stops, initIndex);
-		thread.setStopDateTime(marginStopDateTime);
+		thread.setStopDateTime(intervalStopDateTime);
 		this.launchThread(thread, listener);
 	}
 

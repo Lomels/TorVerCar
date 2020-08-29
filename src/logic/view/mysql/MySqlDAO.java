@@ -489,6 +489,30 @@ public class MySqlDAO implements OurStudentDatabase {
 		}
 		return result;
 	}
+	
+	@Override
+	public List<Lift> listAvailableLiftStartingWithinIntervalDateTime(LocalDateTime intervalStartDateTime, LocalDateTime intervalStopDateTime) {
+		List<Lift> result = new ArrayList<Lift>();
+		try {
+			this.connect();
+			
+			ResultSet rs = MyQueries.listFreeLiftStartingWithinIntervalDateTime(stmt, intervalStartDateTime, intervalStopDateTime);
+			
+			if (!rs.first())
+				return result;
+			
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+		return result;
+	}
 
 	@Override
 	public List<Lift> listLiftStoppingBeforeDateTime(LocalDateTime stopDateTime) {

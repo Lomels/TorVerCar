@@ -177,6 +177,14 @@ public class MyQueries {
 
 		return stmt.executeQuery(sql);
 	}
+	
+	public static ResultSet listFreeLiftStartingWithinIntervalDateTime(Statement stmt, LocalDateTime intervalStartDateTime, LocalDateTime intervalStopDateTime)
+			throws SQLException {
+		String format = "SELECT * FROM Lifts WHERE startDateTime > '%s' && startDateTime < '%s' && freeSeats > 0 ORDER BY startDateTime;";
+		String sql = String.format(format, intervalStartDateTime, intervalStopDateTime);
+		
+		return stmt.executeQuery(sql);
+	}
 
 	public static ResultSet listFreeLiftStartingBeforeDateTime(Statement stmt, LocalDateTime startDateTime)
 			throws SQLException {
