@@ -24,7 +24,7 @@
 	prefHeight="514.0" prefWidth="771.0"
 	xmlns="http://javafx.com/javafx/8.0.171"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="logic.view.fxml.MyCarView"
+	fx:controller="logic.view.MyCarView"
 	stylesheets="@../fxml/TorVerCar.css">
 	<children>
 		<HBox layoutX="-9.0" layoutY="-9.0" AnchorPane.leftAnchor="0.0"
@@ -121,14 +121,16 @@
 			strokeWidth="0.0" text="Plate:" />
 		<Text layoutX="28.0" layoutY="301.0" strokeType="OUTSIDE"
 			strokeWidth="0.0" text="Seats availables:" />
-		<Button fx:id="btEdit" layoutX="453.0" layoutY="353.0" styleClass="button-active"
-			mnemonicParsing="false" onAction="#editButtonController" text="Edit" />
+		<Button fx:id="btEdit" layoutX="453.0" layoutY="353.0"
+			styleClass="button-active" mnemonicParsing="false"
+			onAction="#editButtonController" text="Edit" />
 		<TextField fx:id="tfModel" layoutX="186.0" layoutY="131.0" />
 		<TextField fx:id="tfColour" layoutX="186.0" layoutY="179.0" />
 		<TextField fx:id="tfPlate" layoutX="186.0" layoutY="231.0" />
 		<TextField fx:id="tfSeats" layoutX="186.0" layoutY="283.0" />
-		<Button fx:id="btSave" layoutX="520.0" layoutY="353.0" styleClass="button-active"
-			mnemonicParsing="false" onAction="#saveButtonController" text="Save" />
+		<Button fx:id="btSave" layoutX="520.0" layoutY="353.0"
+			styleClass="button-active" mnemonicParsing="false"
+			onAction="#saveButtonController" text="Save" />
 
 
 	</children>

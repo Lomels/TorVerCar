@@ -19,13 +19,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.PasswordField?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
 	prefHeight="514.0" prefWidth="771.0"
 	xmlns="http://javafx.com/javafx/8.0.171"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="logic.view.ProfileView"
+	fx:controller="logic.view.offer.OfferView"
 	stylesheets="@../fxml/TorVerCar.css">
 	<children>
 		<HBox layoutX="-9.0" layoutY="-9.0" AnchorPane.leftAnchor="0.0"
@@ -104,48 +103,45 @@
 				</ButtonBar>
 			</children>
 		</HBox>
-			
-			
-		<ComboBox layoutX="264.0" layoutY="6.0" minHeight="-Infinity"
-			minWidth="-Infinity" prefHeight="28.0" prefWidth="103.0"
-			promptText="My Lift" visible="false"
-			style="-fx-background-color: #046104; -fx-border-color: #046104;" />
-		<Text layoutX="19.0" layoutY="86.0" strokeType="OUTSIDE"
-			strokeWidth="0.0" text="My Profile:">
-			<font>
-				<Font size="36.0" />
-			</font>
-		</Text>
-		<Text layoutX="24.0" layoutY="137.0" strokeType="OUTSIDE"
-			strokeWidth="0.0" text="Name:" />
-		<Text layoutX="24.0" layoutY="170.0" strokeType="OUTSIDE"
-			strokeWidth="0.0" text="Surname:" />
-		<Text layoutX="24.0" layoutY="205.0" strokeType="OUTSIDE"
-			strokeWidth="0.0" text="Matriculation number:" />
-		<Text layoutX="24.0" layoutY="242.0" strokeType="OUTSIDE"
-			strokeWidth="0.0" text="Phone number:" />
-		<Text layoutX="24.0" layoutY="320.0" strokeType="OUTSIDE"
-			strokeWidth="0.0" text="Password:" />
-		<Text layoutX="24.0" layoutY="282.0" strokeType="OUTSIDE"
-			strokeWidth="0.0" text="E-mail:" />
-		<Text fx:id="txName" layoutX="250.0" layoutY="137.0"
-			strokeType="OUTSIDE" strokeWidth="0.0" />
-		<Text fx:id="txSurname" layoutX="250.0" layoutY="170.0"
-			strokeType="OUTSIDE" strokeWidth="0.0" />
-		<Text fx:id="txMatNum" layoutX="250.0" layoutY="205.0"
-			strokeType="OUTSIDE" strokeWidth="0.0" />
-		<Button fx:id="btSave" layoutX="516.0" layoutY="352.0" styleClass="button-active"
-			mnemonicParsing="false" onAction="#saveButtonController" text="Save" />
-		<Button fx:id="btBack" layoutX="22.0" layoutY="352.0" styleClass="button-active"
-			mnemonicParsing="false" onAction="#backButtonController" text="Back" />
-		<Button fx:id="btEdit" layoutX="448.0" layoutY="352.0" styleClass="button-active"
-			mnemonicParsing="false" onAction="#editButtonController" text="Edit" />
-		<TextField fx:id="tfPhone" layoutX="250.0" layoutY="224.0" />
-		<TextField fx:id="tfEmail" layoutX="250.0" layoutY="264.0" />
-		<CheckBox fx:id="cbShow" layoutX="435.0" layoutY="306.0"
-			mnemonicParsing="false" text="Show it" />
-		<PasswordField fx:id="pfHidden" layoutX="250.0"
-			layoutY="302.0" />
-		<TextField fx:id="tfPass" layoutX="250.0" layoutY="302.0" />
+		<ComboBox fx:id="btMyLift" layoutX="273.0" layoutY="6.0"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0"
+	prefWidth="103.0" promptText="My Lift" visible="false"
+	style="-fx-background-color: #046104; -fx-border-color: #046104;" />
+		<Text layoutX="23.0" layoutY="95.0" strokeType="OUTSIDE"
+			strokeWidth="0.0" text="Starting point:" />
+		<Text layoutX="23.0" layoutY="152.0" strokeType="OUTSIDE"
+			strokeWidth="0.0" text="Destination:" />
+		<Text layoutX="23.0" layoutY="213.0" strokeType="OUTSIDE"
+			strokeWidth="0.0" text="Depart at:" />
+		<Text layoutX="23.0" layoutY="280.0" strokeType="OUTSIDE"
+			strokeWidth="0.0" text="Max duration:" />
+		<TextField fx:id="tfStartPoint" layoutX="262.0"
+			layoutY="77.0" text="Street, CAP, Place" />
+		<TextField fx:id="tfArrivalPoint" layoutX="262.0"
+			layoutY="134.0" text="Street, CAP, Place" />
+		<TextField fx:id="tfStartTime" layoutX="262.0"
+			layoutY="195.0" text="HH:MM" />
+		<TextField fx:id="tfMaxDuration" layoutX="262.0"
+			layoutY="262.0" text="MM" />
+		<Button fx:id="btCheckStart" layoutX="434.0" layoutY="76.0"
+			mnemonicParsing="false" onAction="#checkStartAddressController"
+			text="Find" styleClass="button-active"/>
+		<Button fx:id="btCheckEnd" layoutX="434.0" layoutY="133.0"
+			mnemonicParsing="false" onAction="#checkEndAddressController"
+			text="Find" styleClass="button-active"/>
+		<Button fx:id="btConfirm" layoutX="511.0" layoutY="360.0"
+			mnemonicParsing="false" onAction="#confirmButtonController"
+			text="Confirm" styleClass="button-active"/>
+		<Text layoutX="23.0" layoutY="334.0" strokeType="OUTSIDE"
+			strokeWidth="0.0" text="Add notes:" />
+		<TextField fx:id="tfNotes" layoutX="262.0" layoutY="316.0"
+			prefHeight="62.0" prefWidth="171.0" />
+		<Text layoutX="23.0" layoutY="247.0" strokeType="OUTSIDE"
+			strokeWidth="0.0" text="Day:" />
+		<TextField fx:id="tfDay" layoutX="262.0" layoutY="229.0"
+			text="DD-MM-YYYY" />
+		<Button fx:id="btAddCar" layoutX="441.0" layoutY="360.0"
+			mnemonicParsing="false" onAction="#addCarButtonController"
+			text="Add Car" styleClass="button-active"/>
 	</children>
 </AnchorPane>
