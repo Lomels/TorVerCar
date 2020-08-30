@@ -153,17 +153,27 @@ public class InputCheckerTest {
 		String generic = null;
 		assertThrows(InvalidInputException.class, () -> InputChecker.checkGenericString(generic));
 	}
-	
+
 	@Test
-	public void NotNull() {
+	public void notNull() {
 		String generic = "Ciao mamma.";
 		assertDoesNotThrow(() -> InputChecker.checkNotNull(generic, "Not null Object"));
 	}
-	
+
 	@Test
-	public void NotNullNull() {
+	public void notNullNull() {
 		Object object = null;
 		assertThrows(InvalidInputException.class, () -> InputChecker.checkNotNull(object, "Null object"));
+	}
+
+	@Test
+	public void moreThanCorrect() {
+		assertDoesNotThrow(() -> InputChecker.checkIntegerMoreThan("Value", 1, 0));
+	}
+
+	@Test
+	public void moreThanIncorrect() {
+		assertThrows(InvalidInputException.class, () -> InputChecker.checkIntegerMoreThan("Value", -1, 0));
 	}
 
 }

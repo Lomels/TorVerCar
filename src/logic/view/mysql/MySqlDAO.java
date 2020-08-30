@@ -75,7 +75,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	private Lift liftFromResult(ResultSet rs)
-			throws SQLException, DatabaseException, JSONException, InvalidInputException {
+			throws SQLException, DatabaseException, InvalidInputException {
 		// liftID
 		Integer liftIDFromDB = rs.getInt("liftID");
 		// startTime
@@ -401,7 +401,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	@Override
-	public Lift loadLiftByID(Integer liftID) throws DatabaseException, JSONException, InvalidInputException {
+	public Lift loadLiftByID(Integer liftID) throws DatabaseException, InvalidInputException {
 
 		Lift lift = null;
 		try {

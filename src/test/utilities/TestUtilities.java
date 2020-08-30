@@ -186,10 +186,14 @@ public class TestUtilities {
 	}
 
 	public static StudentCar getDummyDriver() throws DatabaseException {
-		return dao.loadStudentCarByUserID(USER_ID + "1");
+		return dao.loadStudentCarByUserID(generateUserID(1));
+	}
+	
+	public static Student getDummyStudent() throws DatabaseException, InvalidInputException {
+		return dao.loadStudentByUserID(generateUserID(DRIVER_NUMBER + 1));
 	}
 
-	public static Lift getDummyLift() throws JSONException, InvalidInputException, DatabaseException {
+	public static Lift getDummyLift() throws InvalidInputException, DatabaseException {
 		Integer liftID = null;
 		LocalDateTime startDateTime = LocalDateTime.parse(START_DATE_TIME_EARLY);
 		Route route = Route.jsonDecode(new JSONObject(R_MARCO_UNI));
