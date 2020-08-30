@@ -2,7 +2,6 @@ package logic.model;
 
 import java.util.List;
 
-import logic.controller.exception.InvalidInputException;
 import logic.utilities.Status;
 
 public class UserSingleton {

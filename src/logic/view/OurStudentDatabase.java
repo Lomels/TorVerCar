@@ -73,7 +73,7 @@ public interface OurStudentDatabase {
 
 	public List<Lift> listAvailableLiftStartingAfterDateTime(LocalDateTime startDateTime);
 
-	List<Lift> listAvailableLiftStartingBeforeDateTime(LocalDateTime startDateTime);
+	public List<Lift> listAvailableLiftStartingBeforeDateTime(LocalDateTime startDateTime);
 
 	public List<Lift> listAvailableLiftStoppingBeforeDateTime(LocalDateTime stopDateTime);
 
@@ -86,9 +86,16 @@ public interface OurStudentDatabase {
 	public void removeNotificationsByUserID(String userID);
 
 	public void upvoteRating(String userID, Integer liftID, String driverID);
-	
+
 	public void downvoteRating(String userID, Integer liftID, String driverID);
 
 	public List<Lift> listUnratedLiftsByPassengerID(String passengerID);
+
+	public List<Lift> listAvailableLiftStartingWithinIntervalDateTime(LocalDateTime intervalStartDateTime,
+			LocalDateTime intervalStopDateTime);
+
+	public Lift getLastInsertedLift() throws DatabaseException, JSONException, InvalidInputException;
+
+	public Integer getLastInsertedLiftID() throws DatabaseException, JSONException, InvalidInputException;
 
 }

@@ -175,12 +175,12 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	@Override
-	public void addStudent(Student student) throws DatabaseException, InvalidInputException {
+	public void addStudent(Student student) throws InvalidInputException {
 		try {
 			this.connect();
 			MyQueries.addStudent(this.stmt, student, Role.STUDENT.name());
 		} catch (SQLException e) {
-			throw new DatabaseException(e.getMessage());
+			e.printStackTrace();
 		} finally {
 			this.disconnect();
 		}
@@ -220,8 +220,10 @@ public class MySqlDAO implements OurStudentDatabase {
 			this.connect();
 			ResultSet rs = MyQueries.loadStudentByUserID(this.stmt, userID);
 
-			if (!rs.first())
-				throw new DatabaseException("Student not found");
+			if (!rs.first()) {
+				String message = String.format("Student with userID: %s was not found.", userID);
+				throw new DatabaseException(message);
+			}
 
 			rs.first();
 			s = this.studentFromResult(rs);
@@ -491,6 +493,32 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	@Override
+	public List<Lift> listAvailableLiftStartingWithinIntervalDateTime(LocalDateTime intervalStartDateTime,
+			LocalDateTime intervalStopDateTime) {
+		List<Lift> result = new ArrayList<Lift>();
+		try {
+			this.connect();
+
+			ResultSet rs = MyQueries.listFreeLiftStartingWithinIntervalDateTime(stmt, intervalStartDateTime,
+					intervalStopDateTime);
+
+			if (!rs.first())
+				return result;
+
+			do {
+				result.add(this.liftFromResult(rs));
+			} while (rs.next());
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+		return result;
+	}
+
+	@Override
 	public List<Lift> listLiftStoppingBeforeDateTime(LocalDateTime stopDateTime) {
 		List<Lift> result = new ArrayList<Lift>();
 		try {
@@ -696,7 +724,7 @@ public class MySqlDAO implements OurStudentDatabase {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public List<Lift> listUnratedLiftsByPassengerID(String passengerID) {
 		List<Lift> result = new ArrayList<Lift>();
@@ -797,7 +825,7 @@ public class MySqlDAO implements OurStudentDatabase {
 			this.disconnect();
 		}
 	}
-	
+
 	@Override
 	public void upvoteRating(String userID, Integer liftID, String driverID) {
 		try {
@@ -810,7 +838,7 @@ public class MySqlDAO implements OurStudentDatabase {
 			this.disconnect();
 		}
 	}
-	
+
 	@Override
 	public void downvoteRating(String userID, Integer liftID, String driverID) {
 		try {
@@ -823,5 +851,43 @@ public class MySqlDAO implements OurStudentDatabase {
 			this.disconnect();
 		}
 	}
+
+	@Override
+	public Lift getLastInsertedLift() throws DatabaseException, JSONException, InvalidInputException {
+		this.connect();
+		try {
+			ResultSet rs = MyQueries.getLastInsertedLift(stmt);
+			if (!rs.first())
+				throw new DatabaseException("No lift found.");
+			rs.first();
+			return this.liftFromResult(rs);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+		return null;
+
+	}
 	
+	@Override
+	public Integer getLastInsertedLiftID() throws DatabaseException, InvalidInputException {
+		this.connect();
+		try {
+			ResultSet rs = MyQueries.getLastInsertedLift(stmt);
+			if (!rs.first())
+				throw new DatabaseException("No lift found.");
+			rs.first();
+			return rs.getInt("liftID");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+		return null;
+		
+	}
+
 }

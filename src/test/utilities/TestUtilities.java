@@ -1,9 +1,10 @@
-package test;
+package test.utilities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import logic.controller.PassengerController;
@@ -27,7 +28,7 @@ public class TestUtilities {
 	private static final PassengerController PASSENGER_CONTROLLER = new PassengerController();
 
 	public static final Integer DRIVER_NUMBER = 5;
-	public static final Integer PASSENGER_NUMBER = 25;
+	public static final Integer PASSENGER_NUMBER = 30;
 
 	// Student Attributes
 	public static final String USER_ID = "000000";
@@ -69,12 +70,22 @@ public class TestUtilities {
 
 	public static final String NOTE = "Ciao Mamma";
 
-	private static int passengerIdIndex = DRIVER_NUMBER;
-	
+	private static int lastPassengerID = DRIVER_NUMBER + 1;
+
 	private static boolean modified = true;
 
 	protected TestUtilities() {
+		// Do nothing
+	}
 
+	public static String generateUserID(Integer finalUserID) {
+		int zeros = USER_ID.length() + 1 - finalUserID.toString().length();
+		StringBuilder builder = new StringBuilder("");
+		while (builder.toString().length() < zeros) {
+			builder.append("0");
+		}
+		builder.append(finalUserID.toString());
+		return builder.toString();
 	}
 
 	private static String generatePlate(Integer index) {
@@ -97,7 +108,7 @@ public class TestUtilities {
 		try {
 			// Add Student and StudentCar
 			for (; indexID < PASSENGER_NUMBER + DRIVER_NUMBER; indexID++) {
-				String userID = USER_ID + indexID;
+				String userID = generateUserID(indexID);
 				Student student = new Student(userID, PASSWORD, EMAIL, NAME, SURNAME, PHONE);
 				dao.addStudent(student);
 				if (indexID < DRIVER_NUMBER) {
@@ -116,7 +127,7 @@ public class TestUtilities {
 
 	public static void populateLifts() {
 		try {
-			StudentCar driver = dao.loadStudentCarByUserID(USER_ID + "0");
+			StudentCar driver = dao.loadStudentCarByUserID(generateUserID(0));
 			// Add Lifts
 			Integer liftID = 1;
 			for (String routeJson : ROUTES) {
@@ -124,7 +135,7 @@ public class TestUtilities {
 					for (Double durationMultiplier : MAX_DURATIONS_MULTI) {
 						for (Integer passengerToAdd : PASSENGERS_NUM) {
 							Route route = Route.jsonDecode(new JSONObject(routeJson));
-							Integer maxDuration = (int) (route.getDuration() * durationMultiplier);
+							Integer maxDuration = (int) (route.getTotalDuration() * durationMultiplier);
 							LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString);
 							List<Student> passengers = new ArrayList<>();
 							Lift lift = new Lift(null, startDateTime, maxDuration, NOTE, driver, passengers, route);
@@ -143,21 +154,27 @@ public class TestUtilities {
 	}
 
 	private static void addPassengerToLift(Integer liftID, Integer passengerToAdd)
-			throws DatabaseException, InvalidInputException, InvalidStateException, InterruptedException {
+			throws InvalidInputException, JSONException, DatabaseException, InvalidStateException {
 		Lift liftFromDB = dao.loadLiftByID(liftID);
-		int finalIdIndex = passengerIdIndex + passengerToAdd;
-		for (; passengerIdIndex < finalIdIndex; passengerIdIndex++) {
-			Student passenger = dao.loadStudentByUserID(USER_ID + (passengerIdIndex + DRIVER_NUMBER));
+		for (int added = 0; added < passengerToAdd; added++) {
+
+			Student passenger;
+			try {
+				passenger = dao.loadStudentByUserID(generateUserID(lastPassengerID++));
+			} catch (DatabaseException e) {
+				passenger = addStudentToDB();
+			}
+
 			PASSENGER_CONTROLLER.addPassenger(liftFromDB, passenger);
 		}
 	}
-	
+
 	protected static void dbModified() {
 		modified = true;
 	}
 
 	public static void populateDB() {
-		if(modified) {		
+		if (modified) {
 			emptyDB();
 			populateUsers();
 			populateLifts();
@@ -166,5 +183,27 @@ public class TestUtilities {
 		} else {
 			MyLogger.info("DB was not modified from last populateDB().");
 		}
+	}
+
+	public static StudentCar getDummyDriver() throws DatabaseException {
+		return dao.loadStudentCarByUserID(USER_ID + "1");
+	}
+
+	public static Lift getDummyLift() throws JSONException, InvalidInputException, DatabaseException {
+		Integer liftID = null;
+		LocalDateTime startDateTime = LocalDateTime.parse(START_DATE_TIME_EARLY);
+		Route route = Route.jsonDecode(new JSONObject(R_MARCO_UNI));
+		int maxDuration = (int) (route.getTotalDuration() * 1.5);
+		List<Student> passengers = null;
+		StudentCar driver = getDummyDriver();
+
+		return new Lift(liftID, startDateTime, maxDuration, NOTE, driver, passengers, route);
+	}
+
+	public static Student addStudentToDB() throws InvalidInputException {
+		Student student = new Student(generateUserID(lastPassengerID++), PASSWORD, EMAIL, NAME, SURNAME, PHONE);
+		dao.addStudent(student);
+		dbModified();
+		return student;
 	}
 }

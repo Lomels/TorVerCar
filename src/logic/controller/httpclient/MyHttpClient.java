@@ -18,17 +18,11 @@ public class MyHttpClient {
 	}
 
 	public static String getStringFromUrl(URI requestUrl) {
-		return MyHttpClient.getStringFromUrl(requestUrl, null);
-	}
-
-	public static String getStringFromUrl(URI requestUrl, String accept) {
 		String body = null;
 
 		// Opening the client
 		CloseableHttpClient client = HttpClients.createDefault();
 		HttpGet request = new HttpGet(requestUrl);
-		if (accept != null)
-			request.addHeader("accept", accept);
 
 		// Generate response
 		CloseableHttpResponse response;

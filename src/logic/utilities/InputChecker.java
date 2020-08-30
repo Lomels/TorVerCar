@@ -69,7 +69,7 @@ public class InputChecker {
 		}
 	}
 	
-	public static void checkGeneric(String generic) throws InvalidInputException{
+	public static void checkGenericString(String generic) throws InvalidInputException{
 		try {
 			if(!generic.matches(InputChecker.genericPattern)) {
 				throw new InvalidInputException("Given generic string is empty");

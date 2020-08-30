@@ -43,8 +43,7 @@ public class Lift {
 	}
 
 	public void setStartDateTime(LocalDateTime startDateTime) throws InvalidInputException {
-		if (startDateTime == null)
-			throw new InvalidInputException("startTime must be not null.");
+		InputChecker.checkNotNull(startDateTime, "startDateTime");
 		this.startDateTime = startDateTime;
 	}
 
@@ -97,7 +96,7 @@ public class Lift {
 	}
 
 	public LocalDateTime getStopDateTime() {
-		return this.getStartDateTime().plusMinutes(this.getRoute().getDuration());
+		return this.getStartDateTime().plusMinutes(this.getRoute().getTotalDuration());
 	}
 
 	public Integer getFreeSeats() {
@@ -119,8 +118,45 @@ public class Lift {
 
 	@Override
 	public String toString() {
-		return "Lift [liftID=" + liftID + ",\nstartDateTime=" + startDateTime + ", stopDateTime*="+ this.getStopDateTime() + ",\nmaxDuration=" + maxDuration
-				+ ", note=" + note + ",\ndriver=" + driver + ",\npassengers=" + passengers + ",\nroute=" + route.toString() + "\n]";
+		return "Lift [liftID=" + liftID + ",\nstartDateTime=" + startDateTime + ", stopDateTime*="
+				+ this.getStopDateTime() + ",\nmaxDuration=" + maxDuration + ", note=" + note + ",\ndriver=" + driver
+				+ ",\npassengers=" + passengers + ",\nroute=" + route.toString() + "\n]";
+	}
+
+	// Returns true if two lift are the same expect for the liftID
+	public boolean compare(Lift other) {
+		boolean sameStartDateTime = this.getStartDateTime().equals(other.getStartDateTime());
+		boolean sameMaxDuration = this.getMaxDuration() == other.getMaxDuration();
+		boolean sameNote = this.getNote().equals(other.getNote());
+		boolean sameDriver = this.getDriver().getUserID().equals(other.getDriver().getUserID());
+		boolean samePassengers = true;
+		try {
+			for (int index = 0; index < this.getPassengers().size(); index++) {
+				Student thisPassenger = this.getPassengers().get(index);
+				Student otherPassenger = other.getPassengers().get(index);
+				if (!thisPassenger.getUserID().equals(otherPassenger.userID)) {
+					samePassengers = false;
+					break;
+				}
+			}
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
+			return false;
+		}
+		boolean sameRoute = this.getRoute().compare(other.getRoute());
+		return sameStartDateTime && sameMaxDuration && sameNote && sameDriver && samePassengers && sameRoute;
+	}
+
+	public boolean compareWithID(Lift other) {
+		boolean sameLiftID;
+		if (this.getLiftID() == null && other.getLiftID() == null) {
+			sameLiftID = true;
+		} else if (this.getLiftID() == null && other.getLiftID() != null) {
+			sameLiftID = false;
+		} else {
+			sameLiftID = this.getLiftID().equals(other.getLiftID());
+		}
+		return sameLiftID && this.compare(other);
 	}
 
 }

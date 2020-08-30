@@ -49,7 +49,7 @@ public class Route {
 		Position result = null;
 		try {
 			result = this.stops.get(index);
-		} catch (Exception e) {
+		} catch (IndexOutOfBoundsException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
@@ -57,13 +57,13 @@ public class Route {
 	}
 
 	public Integer getStopIndex(Position position) throws InvalidStateException {
-		for(Integer i = 0; i < this.getStopsSize(); i++) {
-			if(this.getStop(i).equals(position))
+		for (Integer i = 0; i < this.getStopsSize(); i++) {
+			if (this.getStop(i).equals(position))
 				return i;
 		}
 		throw new InvalidStateException("Position not found");
 	}
-	
+
 	public Integer getStopsSize() {
 		return this.stops.size();
 	}
@@ -76,7 +76,7 @@ public class Route {
 	public Integer getDurationUntilPosition(Position position) {
 		try {
 			Integer posIndex = this.getStopIndex(position);
-			if(posIndex == 0)
+			if (posIndex == 0)
 				return 0;
 			else
 				return this.getDurations().get(posIndex - 1);
@@ -86,13 +86,13 @@ public class Route {
 		}
 		return null;
 	}
-	
+
 	public void setDurations(List<Integer> durations) throws InvalidInputException {
 		InputChecker.checkNotNull(durations, "Durations");
 		this.durations = durations;
 	}
 
-	public Integer getDuration() {
+	public Integer getTotalDuration() {
 		return this.durations.get(this.durations.size() - 1);
 	}
 
@@ -101,11 +101,8 @@ public class Route {
 		return distances;
 	}
 
-	public Integer getDistance() {
-		Integer totalDistance = 0;
-		for (Integer distance : this.distances)
-			totalDistance += distance;
-		return totalDistance;
+	public Integer getTotalDistance() {
+		return this.getDistances().get(this.getDistances().size() - 1);
 	}
 
 	public void setDistances(List<Integer> distances) throws InvalidInputException {
@@ -151,21 +148,27 @@ public class Route {
 			JSONObject jsonStop = jsonStops.getJSONObject(i);
 			stops.add(Position.jsonDecode(jsonStop));
 		}
-		
+
 		List<Integer> durations = new ArrayList<>();
 		JSONArray jsonDurations = json.getJSONArray("durations");
-		for( int i = 0; i < jsonDurations.length(); i++) {
+		for (int i = 0; i < jsonDurations.length(); i++) {
 			durations.add(jsonDurations.getInt(i));
 		}
-		
+
 		List<Integer> distances = new ArrayList<>();
 		JSONArray jsonDistances = json.getJSONArray("distances");
-		for( int i = 0; i < jsonDistances.length(); i++) {
+		for (int i = 0; i < jsonDistances.length(); i++) {
 			distances.add(jsonDistances.getInt(i));
 		}
-		
+
 		return new Route(stops, durations, distances);
 
+	}
+
+	public boolean compare(Route other) {
+		String jsonThis = this.jsonEncode().toString();
+		String jsonOther = other.jsonEncode().toString();
+		return jsonThis.equals(jsonOther);
 	}
 
 }

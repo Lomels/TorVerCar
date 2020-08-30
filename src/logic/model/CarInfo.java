@@ -42,7 +42,7 @@ public class CarInfo {
 	}
 
 	public void setModel(String model) throws InvalidInputException {
-		InputChecker.checkGeneric(model);
+		InputChecker.checkGenericString(model);
 		this.model = model;
 
 	}
@@ -52,7 +52,7 @@ public class CarInfo {
 	}
 
 	public void setColour(String colour) throws InvalidInputException {
-		InputChecker.checkGeneric(colour);
+		InputChecker.checkGenericString(colour);
 		this.colour = colour;
 	}
 

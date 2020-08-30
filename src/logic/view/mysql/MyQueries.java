@@ -178,6 +178,14 @@ public class MyQueries {
 		return stmt.executeQuery(sql);
 	}
 
+	public static ResultSet listFreeLiftStartingWithinIntervalDateTime(Statement stmt,
+			LocalDateTime intervalStartDateTime, LocalDateTime intervalStopDateTime) throws SQLException {
+		String format = "SELECT * FROM Lifts WHERE startDateTime > '%s' && startDateTime < '%s' && freeSeats > 0 ORDER BY startDateTime;";
+		String sql = String.format(format, intervalStartDateTime, intervalStopDateTime);
+
+		return stmt.executeQuery(sql);
+	}
+
 	public static ResultSet listFreeLiftStartingBeforeDateTime(Statement stmt, LocalDateTime startDateTime)
 			throws SQLException {
 		String format = "SELECT * FROM Lifts WHERE startDateTime < '%s' && freeSeats > 0 ORDER BY startDateTime DESC;";
@@ -284,7 +292,8 @@ public class MyQueries {
 		stmt.executeUpdate(sql);
 	}
 
-	public static void upvoteRating(Statement stmt, String userID, Integer liftID, String driverID) throws SQLException {
+	public static void upvoteRating(Statement stmt, String userID, Integer liftID, String driverID)
+			throws SQLException {
 		String format = "UPDATE Students SET rating = rating + 1 WHERE userID = '%s';";
 		String sql = String.format(format, driverID);
 
@@ -297,12 +306,13 @@ public class MyQueries {
 
 	}
 
-	public static void downvoteRating(Statement stmt, String userID, Integer liftID, String driverID) throws SQLException {
+	public static void downvoteRating(Statement stmt, String userID, Integer liftID, String driverID)
+			throws SQLException {
 		String format = "UPDATE Students SET rating = rating - 1 WHERE userID = '%s';";
 		String sql = String.format(format, driverID);
 
 		stmt.executeUpdate(sql);
-		
+
 		format = "UPDATE Passengers SET rated = 1 WHERE liftID = %d && passengerID = '%s';";
 		sql = String.format(format, liftID, userID);
 
@@ -313,6 +323,18 @@ public class MyQueries {
 		String format = "SELECT L.* FROM Passengers as P, Lifts as L WHERE P.liftID = L.liftID && P.passengerID = '%s' && P.rated = 0;";
 		String sql = String.format(format, passengerID);
 
+		return stmt.executeQuery(sql);
+	}
+
+	public static ResultSet getLastInsertedLift(Statement stmt) throws SQLException {
+		String sql = "SELECT * FROM Lifts ORDER BY liftID DESC LIMIT 1;";
+
+		return stmt.executeQuery(sql);
+	}
+	
+	public static ResultSet getLastInsertedLiftID(Statement stmt) throws SQLException {
+		String sql = "SELECT (liftID) FROM Lifts ORDER BY liftID DESC LIMIT 1;";
+		
 		return stmt.executeQuery(sql);
 	}
 }

@@ -11,14 +11,6 @@ public enum RoutingHereParameter {
 		this.name = name;
 		this.value = value;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getValue() {
-		return value;
-	}
 	
 	public String getParameter() {
 		return "&" + this.name + "=" + this.value;

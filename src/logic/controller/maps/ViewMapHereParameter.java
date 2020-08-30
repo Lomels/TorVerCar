@@ -17,14 +17,6 @@ public enum ViewMapHereParameter {
 		this.value = value;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
 	public String getParameter() {
 		return "&" + this.name + "=" + this.value;
 	}

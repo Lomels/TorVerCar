@@ -58,11 +58,6 @@ public class AdapterMapsApi implements MapsApi {
 	}
 
 	@Override
-	public void saveImage(Position p) {
-		this.viewmap.saveImage(p);
-	}
-
-	@Override
 	public String viewFromRoute(Route route) {
 		return this.viewroute.viewFromRoute(route);
 	}

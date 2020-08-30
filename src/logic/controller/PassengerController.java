@@ -11,8 +11,12 @@ public class PassengerController {
 	private MySqlDAO dao = new MySqlDAO();
 
 	public void addPassenger(Lift lift, Student passenger) throws InvalidStateException, DatabaseException {
-		// Add the student only if was not already added and it's not the driver and
-		// there are available seats
+		// The operation is blocked
+		if(lift.getLiftID() == null) {
+			// If the lift is not saved on the DB
+			String errorMessage = "Lift has null liftID, save on DB before adding a passenger.";
+			throw new InvalidStateException(errorMessage);
+		}
 		if (lift.isPassenger(passenger)) {
 			// If student is already a passenger
 			String errorMessage = "Passenger: " + passenger.getUserID() + " was already added.";
@@ -26,9 +30,9 @@ public class PassengerController {
 			String errorMessage = "Lift has no more free seats";
 			throw new InvalidStateException(errorMessage);
 		} else {
-			for(Lift passengerLift : dao.listLiftsByPassengerID(passenger.getUserID())) {
+			for (Lift passengerLift : dao.listLiftsByPassengerID(passenger.getUserID())) {
 				// If passenger has already a passage in the same time
-				if(!this.liftInteresct(lift, passengerLift)) {
+				if (this.liftInteresct(lift, passengerLift)) {
 					String errorMessage = "Passenger has already a lift booked for this time.";
 					throw new InvalidStateException(errorMessage);
 				}
@@ -41,12 +45,21 @@ public class PassengerController {
 		}
 	}
 
-	public void removePassenger(Lift lift, Student student) throws DatabaseException {
+	public void removePassenger(Lift lift, Student student) throws DatabaseException, InvalidStateException {
+		boolean removed = false;
+		
 		for (Student s : lift.getPassengers()) {
 			if (student.getUserID().contentEquals(s.getUserID())) {
 				lift.getPassengers().remove(s);
+				removed = true;
 				break;
 			}
+		}
+
+		if (!removed) {
+			String message = String.format("Student with userID: %s, is not a passenger of lift: %d.",
+					student.getUserID(), lift.getLiftID());
+			throw new InvalidStateException(message);
 		}
 
 		dao.removePassengerByLiftIDAndUserID(lift.getLiftID(), student.getUserID());
@@ -65,7 +78,7 @@ public class PassengerController {
 	private boolean liftInteresct(Lift newLift, Lift passengerLift) {
 		boolean stopsBefore = passengerLift.getStopDateTime().isBefore(newLift.getStartDateTime());
 		boolean startAfter = passengerLift.getStartDateTime().isAfter(newLift.getStopDateTime());
-		return stopsBefore || startAfter;
+		return !(stopsBefore || startAfter);
 	}
 
 }
