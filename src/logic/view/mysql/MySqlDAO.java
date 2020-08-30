@@ -315,6 +315,20 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	@Override
+	public void removeStudentByUserID(String userID) throws DatabaseException {
+		try {
+			this.connect();
+			MyQueries.removeStudent(stmt, userID);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new DatabaseException(e.getMessage());
+		} finally {
+			this.disconnect();
+		}
+		
+	}
+	
+	@Override
 	public void removeCarByUserID(String userID) throws DatabaseException {
 		try {
 			this.connect();

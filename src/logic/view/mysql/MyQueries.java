@@ -62,6 +62,12 @@ public class MyQueries {
 		stmt.executeUpdate(sql);
 
 	}
+	
+	public static void removeStudent(Statement stmt, String userID) throws SQLException {
+		String format = "DELETE FROM Users WHERE userID = '%s';";
+		String sql = String.format(format, userID);
+		stmt.executeUpdate(sql);
+	}
 
 	public static ResultSet loadStudentByUserID(Statement stmt, String userID) throws SQLException {
 		String format = "SELECT * FROM Users as U, Students as S WHERE U.userID = S.userID && U.userID = '%s';";

@@ -98,6 +98,8 @@ public interface OurStudentDatabase {
 
 	public Integer getLastInsertedLiftID() throws DatabaseException, JSONException, InvalidInputException;
 
+	void removeStudentByUserID(String userID) throws DatabaseException;
+  
 	boolean isRatedFromAllPassengers(Lift lift);
 
 	Lift getEarliestPassengerLift(Student passenger) throws DatabaseException, InvalidInputException;
