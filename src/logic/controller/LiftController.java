@@ -26,6 +26,7 @@ import logic.model.Position;
 import logic.model.Route;
 import logic.model.Student;
 import logic.model.StudentCar;
+import logic.model.UnorderedLift;
 import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
@@ -40,27 +41,6 @@ public class LiftController {
 	private MySqlDAO ourDb = new MySqlDAO();
 
 	RoutingApi routingApi = RoutingHereAPI.getInstance();
-
-	private class UnorderedLift implements Comparable<UnorderedLift> {
-
-		protected Lift lift;
-		protected Integer comparator;
-
-		public UnorderedLift(Lift lift, Integer deltaDuration, Integer ID) {
-			this.lift = lift;
-			this.comparator = deltaDuration * MAX_LIFTS_LISTED + ID;
-		}
-
-		@Override
-		public int compareTo(UnorderedLift o) {
-			return this.comparator - o.comparator;
-		}
-
-		public Lift getLift() {
-			return this.lift;
-		}
-
-	}
 
 	public Lift createLift(String startDateTimeString, Integer maxDuration, String note, StudentCar driver,
 			Position pickUp, Position dropOff) throws InvalidInputException, DatabaseException, InvalidStateException {
@@ -87,10 +67,23 @@ public class LiftController {
 		return lift;
 	}
 
+	// A lift is concluded if is rated from all the passengers and its stopDateTime
+	// is before now
+	public boolean isConclued(Lift lift) {
+		boolean allRated = ourDb.isRatedFromAllPassengers(lift);
+		return allRated && lift.getStopDateTime().isBefore(LocalDateTime.now());
+	}
+
 	public void deleteLift(Lift lift) {
 		if (!lift.getPassengers().isEmpty())
 			notifyPassengers(lift);
 		ourDb.deleteLiftByID(lift.getLiftID());
+	}
+
+	public void deleteLiftIfConcluded(Lift lift) {
+		if (this.isConclued(lift)) {
+			ourDb.deleteLiftByID(lift.getLiftID());
+		}
 	}
 
 	public void notifyPassengers(Lift lift) {
@@ -233,7 +226,7 @@ public class LiftController {
 							Integer deltaDuration = newRoute.getTotalDuration() - currentDuration;
 							// id is sequential number in order of receiving by the DB
 							Integer id = index - initIndex;
-							unorderedLifts.add(new UnorderedLift(possibleLift, deltaDuration, id));
+							unorderedLifts.add(new UnorderedLift(possibleLift, deltaDuration, id, MAX_LIFTS_LISTED));
 						}
 					}
 				} catch (InvalidInputException e) {

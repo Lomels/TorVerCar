@@ -24,6 +24,8 @@ import javafx.stage.Stage;
 import logic.controller.LiftController;
 import logic.controller.LoginController;
 import logic.controller.RatingController;
+import logic.controller.exception.DatabaseException;
+import logic.controller.exception.InvalidInputException;
 import logic.model.Lift;
 import logic.model.UserSingleton;
 import logic.utilities.MyLogger;
@@ -73,7 +75,8 @@ public class MainMenuView extends Application implements Initializable {
 		}
 	}
 
-	private void showCompletedLifts(int size) {
+	// TODO: assolutamente mostrare a schermo queste eccezioni
+	private void showCompletedLifts(int size) throws InvalidInputException, DatabaseException {
 		int i = 0;
 		
 		String format = new String("Please tell us if you enjoyed the ride, click on Show Details for further infos about the Lift");
@@ -111,11 +114,12 @@ public class MainMenuView extends Application implements Initializable {
 			MyLogger.info("message", message);
 
 			Optional<ButtonType> result = alert.showAndWait(); 
+			RatingController ratingController = new RatingController();
 			if (result.get() == btYes) {
-				RatingController.upvote(sg.getUserID(), lift.getLiftID(), lift.getDriver().getUserID());
+				ratingController.upvoteLift(sg.getUserID(), lift.getLiftID(), lift.getDriver());
 				MyLogger.info("yes");
 			} else if (result.get() == btNo) {
-				RatingController.downvote(sg.getUserID(), lift.getLiftID(), lift.getDriver().getUserID());
+				ratingController.downvote(sg.getUserID(), lift.getLiftID(), lift.getDriver());
 				MyLogger.info("no");
 			} 
 			i++;
@@ -168,7 +172,7 @@ public class MainMenuView extends Application implements Initializable {
 			userID = sg.getUserID();
 			break;
 		default:
-			//TODO: visualizza errore poiché non esiste il Role
+			//TODO: visualizza errore poiché non esiste il Role richiesto
 			break;
 		}
 		tvName.setText(welcome);

@@ -331,10 +331,31 @@ public class MyQueries {
 
 		return stmt.executeQuery(sql);
 	}
-	
+
 	public static ResultSet getLastInsertedLiftID(Statement stmt) throws SQLException {
 		String sql = "SELECT (liftID) FROM Lifts ORDER BY liftID DESC LIMIT 1;";
-		
+
+		return stmt.executeQuery(sql);
+	}
+
+	public static ResultSet listPassengerWaitingToRate(Statement stmt, Integer liftID) throws SQLException {
+		String format = "SELECT * FROM Passengers WHERE liftID = %d && rated = 0";
+		String sql = String.format(format, liftID);
+
+		return stmt.executeQuery(sql);
+	}
+
+	public static ResultSet getEarliestPassengerLift(Statement stmt, String studentID) throws SQLException {
+		String format = "SELECT * FROM Lifts as L, Passengers as P WHERE L.liftID = P.liftID AND P.passengerID = %s ORDER BY L.startDateTime LIMIT 1;";
+		String sql = String.format(format, studentID);
+
+		return stmt.executeQuery(sql);
+	}
+
+	public static ResultSet getEarliestDriverLift(Statement stmt, String driverID) throws SQLException {
+		String format = "SELECT * FROM Lifts WHERE driverID = %s ORDER BY startDateTime LIMIT 1;";
+		String sql = String.format(format, driverID);
+
 		return stmt.executeQuery(sql);
 	}
 }
