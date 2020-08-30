@@ -30,11 +30,8 @@ public class CarInfo {
 	}
 
 	public void setSeats(Integer seats) throws InvalidInputException {
-		if (seats <= 1) {
-			throw new InvalidInputException("Number os seats must be greater than 1");
-		} else {
-			this.seats = seats;
-		}
+		InputChecker.checkIntegerMoreThan("Seats", seats, 0);
+		this.seats = seats;
 	}
 
 	public String getModel() {

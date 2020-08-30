@@ -13,8 +13,6 @@ public class ProfileController {
 	public void edit(String userID, String email, String phone, String password)
 			throws InvalidInputException, DatabaseException, InvalidStateException {
 		switch (sg.getRole()) {
-			default:
-				throw new InvalidStateException("Role not defined.");
 			case STUDENT:
 				sg.getStudent().setEmail(email);
 				sg.getStudent().setPassword(password);
@@ -25,8 +23,8 @@ public class ProfileController {
 				sg.getStudentCar().setPassword(password);
 				sg.getStudentCar().setPhone(phone);
 				break;
-			case ADMIN:
-				break;
+			default:
+				throw new InvalidStateException("Role not defined.");
 		}
 		ourDb.editInfoByUserID(userID, password, email, phone);
 

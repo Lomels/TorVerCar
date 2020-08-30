@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import logic.controller.exception.InvalidInputException;
@@ -46,19 +45,12 @@ public class Route {
 	}
 
 	public Position getStop(Integer index) {
-		Position result = null;
-		try {
-			result = this.stops.get(index);
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return result;
+		return this.stops.get(index);
 	}
 
 	public Integer getStopIndex(Position position) throws InvalidStateException {
 		for (Integer i = 0; i < this.getStopsSize(); i++) {
-			if (this.getStop(i).equals(position))
+			if (this.getStop(i).compare(position))
 				return i;
 		}
 		throw new InvalidStateException("Position not found");
@@ -92,7 +84,7 @@ public class Route {
 		this.durations = durations;
 	}
 
-	public Integer getDuration() {
+	public Integer getTotalDuration() {
 		return this.durations.get(this.durations.size() - 1);
 	}
 
@@ -101,11 +93,8 @@ public class Route {
 		return distances;
 	}
 
-	public Integer getDistance() {
-		Integer totalDistance = 0;
-		for (Integer distance : this.distances)
-			totalDistance += distance;
-		return totalDistance;
+	public Integer getTotalDistance() {
+		return this.getDistances().get(this.getDistances().size() - 1);
 	}
 
 	public void setDistances(List<Integer> distances) throws InvalidInputException {
@@ -144,7 +133,7 @@ public class Route {
 		return result;
 	}
 
-	public static Route jsonDecode(JSONObject json) throws JSONException, InvalidInputException {
+	public static Route jsonDecode(JSONObject json) throws InvalidInputException {
 		List<Position> stops = new ArrayList<>();
 		JSONArray jsonStops = json.getJSONArray("stops");
 		for (int i = 0; i < jsonStops.length(); i++) {

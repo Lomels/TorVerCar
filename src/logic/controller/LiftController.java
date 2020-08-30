@@ -15,6 +15,7 @@ import java.util.concurrent.Future;
 import logic.controller.email.SendEmail;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
+import logic.controller.exception.InvalidStateException;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.controller.maps.RoutingApi;
@@ -25,6 +26,7 @@ import logic.model.Position;
 import logic.model.Route;
 import logic.model.Student;
 import logic.model.StudentCar;
+import logic.model.UnorderedLift;
 import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
@@ -35,47 +37,53 @@ public class LiftController {
 	private static final Integer MAX_LIFTS_LISTED = 100;
 
 	private static final boolean LOG_OLD = false;
-	private static final boolean DELETE_OLD = false;
 
 	private MySqlDAO ourDb = new MySqlDAO();
 
 	RoutingApi routingApi = RoutingHereAPI.getInstance();
 
-	private class UnorderedLift implements Comparable<UnorderedLift> {
-
-		protected Lift lift;
-		protected Integer comparator;
-
-		public UnorderedLift(Lift lift, Integer deltaDuration, Integer ID) {
-			this.lift = lift;
-			this.comparator = deltaDuration * MAX_LIFTS_LISTED + ID;
-		}
-
-		@Override
-		public int compareTo(UnorderedLift o) {
-			return this.comparator - o.comparator;
-		}
-
-		public Lift getLift() {
-			return this.lift;
-		}
-
-	}
-
 	public Lift createLift(String startDateTimeString, Integer maxDuration, String note, StudentCar driver,
-			Position pickUp, Position dropOff) throws InvalidInputException, DatabaseException {
+			Position pickUp, Position dropOff) throws InvalidInputException, DatabaseException, InvalidStateException {
 		LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ISO_DATE_TIME);
 		Route route = routingApi.startToStop(pickUp, dropOff);
+		if (maxDuration < route.getTotalDuration()) {
+			// If maxDuration is less than route Duration
+			String message = String.format("maxDuration: %d is less than route total duration: %d.", maxDuration,
+					route.getTotalDuration());
+			throw new InvalidStateException(message);
+		}
+		List<Lift> driverLifts = ourDb.listLiftsByDriverID(driver.getUserID());
+		// If driver already has offered a Lift in the same time
+		for (Lift lift : driverLifts) {
+			if (liftInteresct(lift, route, startDateTime)) {
+				String message = String.format("Lift: %d collision with new one starting: %s and duration: %d.",
+						lift.getLiftID(), startDateTime, route.getTotalDuration());
+				throw new InvalidStateException(message);
+			}
+		}
 		Lift lift = new Lift(null, startDateTime, maxDuration, note, driver, null, route);
 		ourDb.saveLift(lift);
 
 		return lift;
 	}
 
+	// A lift is concluded if is rated from all the passengers and its stopDateTime
+	// is before now
+	public boolean isConclued(Lift lift) {
+		boolean allRated = ourDb.isRatedFromAllPassengers(lift);
+		return allRated && lift.getStopDateTime().isBefore(LocalDateTime.now());
+	}
+
 	public void deleteLift(Lift lift) {
 		if (!lift.getPassengers().isEmpty())
 			notifyPassengers(lift);
 		ourDb.deleteLiftByID(lift.getLiftID());
+	}
+
+	public void deleteLiftIfConcluded(Lift lift) {
+		if (this.isConclued(lift)) {
+			ourDb.deleteLiftByID(lift.getLiftID());
+		}
 	}
 
 	public void notifyPassengers(Lift lift) {
@@ -195,18 +203,16 @@ public class LiftController {
 				Lift possibleLift = possibleLifts.get(index);
 
 				// Check if the lift starts before now, which means that is old
+				// TODO: gestire nella release finale
 				if (possibleLift.getStartDateTime().isBefore(LocalDateTime.now())) {
 					if (LOG_OLD) {
 						MyLogger.info("Lift #" + possibleLift.getLiftID() + " is old.");
-						if (DELETE_OLD)
-							ourDb.deleteLiftByID(possibleLift.getLiftID());
-						continue;
 					}
 				}
 
 				Integer currentMaxDuration = possibleLift.getMaxDuration();
 				Route currentRoute = possibleLift.getRoute();
-				Integer currentDuration = currentRoute.getDuration();
+				Integer currentDuration = currentRoute.getTotalDuration();
 
 				// Add all the possible routes and order them
 				try {
@@ -214,13 +220,13 @@ public class LiftController {
 					Route newRoute = this.maps.addInternalRoute(currentRoute, stops);
 					// If the newRoute has a duration less than the maxDuration, it is considered a
 					// match
-					if (newRoute.getDuration() <= currentMaxDuration) {
+					if (newRoute.getTotalDuration() <= currentMaxDuration) {
 						possibleLift.setRoute(newRoute);
 						if (this.isBeforeStopDateTime(possibleLift)) {
-							Integer deltaDuration = newRoute.getDuration() - currentDuration;
+							Integer deltaDuration = newRoute.getTotalDuration() - currentDuration;
 							// id is sequential number in order of receiving by the DB
 							Integer id = index - initIndex;
-							unorderedLifts.add(new UnorderedLift(possibleLift, deltaDuration, id));
+							unorderedLifts.add(new UnorderedLift(possibleLift, deltaDuration, id, MAX_LIFTS_LISTED));
 						}
 					}
 				} catch (InvalidInputException e) {
@@ -259,12 +265,25 @@ public class LiftController {
 			Integer deltaStopDateTime = lift.getRoute().getDurationUntilPosition(stops.get(stops.size() - 1));
 			LocalDateTime relativeStartDateTime = lift.getStartDateTime().plusMinutes(deltaStartDateTime);
 			LocalDateTime relativeStopDateTime = lift.getStartDateTime().plusMinutes(deltaStopDateTime);
-			LiftMatchResult result = new LiftMatchResult(lift, relativeStartDateTime, relativeStopDateTime);
+			LiftMatchResult result = null;
+			try {
+				result = new LiftMatchResult(lift, relativeStartDateTime, relativeStopDateTime);
+			} catch (InvalidInputException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			this.results.add(result);
 		}
 	}
 
 	public void flushNotification(String userID) {
 		ourDb.removeNotificationsByUserID(userID);
+	}
+
+	private boolean liftInteresct(Lift alreadyLift, Route newRoute, LocalDateTime newStartDateTime) {
+		boolean stopsBefore = alreadyLift.getStopDateTime().isBefore(newStartDateTime);
+		boolean startAfter = alreadyLift.getStartDateTime()
+				.isAfter(newStartDateTime.plusMinutes(newRoute.getTotalDuration()));
+		return !(stopsBefore || startAfter);
 	}
 }

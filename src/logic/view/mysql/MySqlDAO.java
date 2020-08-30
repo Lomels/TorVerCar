@@ -75,7 +75,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	private Lift liftFromResult(ResultSet rs)
-			throws SQLException, DatabaseException, JSONException, InvalidInputException {
+			throws SQLException, DatabaseException, InvalidInputException {
 		// liftID
 		Integer liftIDFromDB = rs.getInt("liftID");
 		// startTime
@@ -104,9 +104,7 @@ public class MySqlDAO implements OurStudentDatabase {
 		String email = rs.getString("email");
 		String phone = rs.getString("phone");
 
-		Student result = new Student(userID, password, email, name, surname, phone);
-
-		return result;
+		return new Student(userID, password, email, name, surname, phone);
 	}
 
 	private StudentCar studentCarFromResult(ResultSet rs) throws SQLException, InvalidInputException {
@@ -128,9 +126,7 @@ public class MySqlDAO implements OurStudentDatabase {
 
 		CarInfo carInfo = new CarInfo(plate, seats, model, color);
 
-		StudentCar result = new StudentCar(student, rating, carInfo);
-
-		return result;
+		return new StudentCar(student, rating, carInfo);
 	}
 
 	@Override
@@ -419,7 +415,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	@Override
-	public Lift loadLiftByID(Integer liftID) throws DatabaseException, JSONException, InvalidInputException {
+	public Lift loadLiftByID(Integer liftID) throws DatabaseException, InvalidInputException {
 
 		Lift lift = null;
 		try {
@@ -867,7 +863,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	@Override
-	public Lift getLastInsertedLift() throws DatabaseException, JSONException, InvalidInputException {
+	public Lift getLastInsertedLift() throws DatabaseException, InvalidInputException {
 		this.connect();
 		try {
 			ResultSet rs = MyQueries.getLastInsertedLift(stmt);
@@ -884,7 +880,7 @@ public class MySqlDAO implements OurStudentDatabase {
 		return null;
 
 	}
-	
+
 	@Override
 	public Integer getLastInsertedLiftID() throws DatabaseException, InvalidInputException {
 		this.connect();
@@ -901,7 +897,66 @@ public class MySqlDAO implements OurStudentDatabase {
 			this.disconnect();
 		}
 		return null;
-		
+	}
+
+	@Override
+	public boolean isRatedFromAllPassengers(Lift lift) {
+		this.connect();
+		boolean result = false;
+		try {
+			ResultSet rs = MyQueries.listPassengerWaitingToRate(stmt, lift.getLiftID());
+			result = !rs.first();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+		return result;
+	}
+
+	@Override
+	public Lift getEarliestPassengerLift(Student passenger) throws DatabaseException, InvalidInputException {
+		this.connect();
+		ResultSet rs;
+		try {
+			rs = MyQueries.getEarliestPassengerLift(stmt, passenger.getUserID());
+			if (!rs.first()) {
+				String message = String.format("Student: %s is not registered or has no booked lift.",
+						passenger.getUserID());
+				throw new DatabaseException(message);
+			}
+			rs.first();
+			return this.liftFromResult(rs);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+		return null;
+	}
+
+	@Override
+	public Lift getEarliestDriverLift(StudentCar driver) throws DatabaseException, InvalidInputException {
+		this.connect();
+		ResultSet rs;
+		try {
+			rs = MyQueries.getEarliestDriverLift(stmt, driver.getUserID());
+			if (!rs.first()) {
+				String message = String.format("StudentCar: %s is not registered or has no offered lift.",
+						driver.getUserID());
+				throw new DatabaseException(message);
+			}
+			rs.first();
+			return this.liftFromResult(rs);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			this.disconnect();
+		}
+		return null;
 	}
 
 }

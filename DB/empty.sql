@@ -132,6 +132,7 @@ DROP TABLE IF EXISTS `Passengers`;
 CREATE TABLE `Passengers` (
   `liftID` int(11) NOT NULL,
   `passengerID` varchar(10) NOT NULL,
+  `rated` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`liftID`,`passengerID`),
   KEY `passengerID` (`passengerID`),
   CONSTRAINT `Passengers_ibfk_1` FOREIGN KEY (`liftID`) REFERENCES `Lifts` (`liftID`) ON DELETE CASCADE,

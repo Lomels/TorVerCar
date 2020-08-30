@@ -70,20 +70,20 @@ public class MySqlDAOTest {
 		assertEquals(PASSWORD, actualP);
 	}
 	
-//	@Test
-	public void updateRating() throws DatabaseException {
-		MySqlDAO my = new MySqlDAO();
-		StudentCar test = my.loadStudentCarByUserID("0000000");
-		MyLogger.info("Before test rating", test.getRating());
-		
-		RatingController.upvote("0000001", 1, "0000000");
-		test = my.loadStudentCarByUserID("0000000");
-		MyLogger.info("After upvote test", test.getRating());
-		
-		RatingController.downvote("00000010", 2, "0000000");
-		test = my.loadStudentCarByUserID("0000000");
-		MyLogger.info("After downvote test", test.getRating());
-
-	}
+////	@Test
+//	public void updateRating() throws DatabaseException {
+//		MySqlDAO my = new MySqlDAO();
+//		StudentCar test = my.loadStudentCarByUserID("0000000");
+//		MyLogger.info("Before test rating", test.getRating());
+//		
+//		RatingController.upvote("0000001", 1, "0000000");
+//		test = my.loadStudentCarByUserID("0000000");
+//		MyLogger.info("After upvote test", test.getRating());
+//		
+//		RatingController.downvote("00000010", 2, "0000000");
+//		test = my.loadStudentCarByUserID("0000000");
+//		MyLogger.info("After downvote test", test.getRating());
+//
+//	}
 
 }

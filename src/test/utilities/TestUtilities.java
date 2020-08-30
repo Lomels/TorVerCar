@@ -127,7 +127,7 @@ public class TestUtilities {
 
 	public static void populateLifts() {
 		try {
-			StudentCar driver = dao.loadStudentCarByUserID(USER_ID + "0");
+			StudentCar driver = dao.loadStudentCarByUserID(generateUserID(0));
 			// Add Lifts
 			Integer liftID = 1;
 			for (String routeJson : ROUTES) {
@@ -135,7 +135,7 @@ public class TestUtilities {
 					for (Double durationMultiplier : MAX_DURATIONS_MULTI) {
 						for (Integer passengerToAdd : PASSENGERS_NUM) {
 							Route route = Route.jsonDecode(new JSONObject(routeJson));
-							Integer maxDuration = (int) (route.getDuration() * durationMultiplier);
+							Integer maxDuration = (int) (route.getTotalDuration() * durationMultiplier);
 							LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString);
 							List<Student> passengers = new ArrayList<>();
 							Lift lift = new Lift(null, startDateTime, maxDuration, NOTE, driver, passengers, route);
@@ -186,14 +186,18 @@ public class TestUtilities {
 	}
 
 	public static StudentCar getDummyDriver() throws DatabaseException {
-		return dao.loadStudentCarByUserID(USER_ID + "1");
+		return dao.loadStudentCarByUserID(generateUserID(1));
+	}
+	
+	public static Student getDummyStudent() throws DatabaseException, InvalidInputException {
+		return dao.loadStudentByUserID(generateUserID(DRIVER_NUMBER + 1));
 	}
 
-	public static Lift getDummyLift() throws JSONException, InvalidInputException, DatabaseException {
+	public static Lift getDummyLift() throws InvalidInputException, DatabaseException {
 		Integer liftID = null;
 		LocalDateTime startDateTime = LocalDateTime.parse(START_DATE_TIME_EARLY);
 		Route route = Route.jsonDecode(new JSONObject(R_MARCO_UNI));
-		int maxDuration = (int) (route.getDuration() * 1.5);
+		int maxDuration = (int) (route.getTotalDuration() * 1.5);
 		List<Student> passengers = null;
 		StudentCar driver = getDummyDriver();
 

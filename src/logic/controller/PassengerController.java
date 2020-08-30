@@ -32,7 +32,7 @@ public class PassengerController {
 		} else {
 			for (Lift passengerLift : dao.listLiftsByPassengerID(passenger.getUserID())) {
 				// If passenger has already a passage in the same time
-				if (!this.liftInteresct(lift, passengerLift)) {
+				if (this.liftInteresct(lift, passengerLift)) {
 					String errorMessage = "Passenger has already a lift booked for this time.";
 					throw new InvalidStateException(errorMessage);
 				}
@@ -78,7 +78,7 @@ public class PassengerController {
 	private boolean liftInteresct(Lift newLift, Lift passengerLift) {
 		boolean stopsBefore = passengerLift.getStopDateTime().isBefore(newLift.getStartDateTime());
 		boolean startAfter = passengerLift.getStartDateTime().isAfter(newLift.getStopDateTime());
-		return stopsBefore || startAfter;
+		return !(stopsBefore || startAfter);
 	}
 
 }

@@ -1,21 +1,18 @@
 package logic.model;
 
 import logic.controller.exception.InvalidInputException;
+import logic.utilities.InputChecker;
 
 public class StudentCar extends Student {
 
 	private int rating;
 	private CarInfo carInfo;
 
-	// Costruttore che usa lo student
+	// Constructor from Student
 	public StudentCar(Student student, int rating, CarInfo carInfo) throws InvalidInputException {
 		super(student.userID, student.password, student.email, student.name, student.surname, student.phone);
 		this.rating = rating;
 		this.setCarInfo(carInfo);
-	}
-
-	public boolean isAvailable(Route route) {
-		return route == null;
 	}
 
 	public void updateRating(int vote) throws InvalidInputException {
@@ -38,9 +35,7 @@ public class StudentCar extends Student {
 	}
 
 	public void setCarInfo(CarInfo carInfo) throws InvalidInputException {
-		if (carInfo == null) {
-			throw new InvalidInputException("CarInfo must not be null");
-		}
+		InputChecker.checkNotNull(carInfo, "CarInfo");
 		this.carInfo = carInfo;
 	}
 

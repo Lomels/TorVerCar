@@ -81,7 +81,14 @@ public class InputChecker {
 	
 	public static void checkNotNull(Object object, String name) throws InvalidInputException{
 		if(object == null)
-			throw new InvalidInputException(String.format("{%s} must not be null.", name));
+			throw new InvalidInputException(String.format("%s must not be null.", name));
+	}
+	
+	public static void checkIntegerMoreThan(String name, Integer value, Integer lowerBound) throws InvalidInputException {
+		InputChecker.checkNotNull(value, name);
+		InputChecker.checkNotNull(lowerBound, "Inserted lowerBound for " + name + ".");
+		if(value <= lowerBound)
+			throw new InvalidInputException(String.format("%s: %d must be more than %d.", name, value, lowerBound));
 	}
 	
 }
