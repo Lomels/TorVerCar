@@ -82,18 +82,21 @@ public class AddressListView extends Application implements Initializable {
 
 	@FXML
 	public void homeButtonController() throws Exception {
+		lift.clearState();
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 
 	@FXML
 	public void bookButtonController() throws Exception {
+		lift.clearState();
 		BookView book = new BookView();
 		book.start((Stage) btBook.getScene().getWindow());
 	}
 
 	@FXML
 	public void myCarButtonController() throws Exception {
+		lift.clearState();
 		MyCarView car = new MyCarView();
 		car.start((Stage) btMyCar.getScene().getWindow());
 
@@ -101,6 +104,7 @@ public class AddressListView extends Application implements Initializable {
 
 	@FXML
 	public void profileButtonController() throws Exception {
+		lift.clearState();
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
 	}
@@ -119,6 +123,7 @@ public class AddressListView extends Application implements Initializable {
 
 	@FXML
 	public void offerButtonController() throws Exception {
+		lift.clearState();
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}

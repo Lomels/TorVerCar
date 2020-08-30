@@ -43,13 +43,13 @@ public class LiftSingleton {
 	public void clearState() throws Exception {
 		this.listPos.clear();
 		this.listLifts.clear();
-		this.startPoint = null;
-		this.endPoint = null;
-		this.arrivalTime = null;
-		this.departureTime = null;
-		this.maxDuration = null;
-		this.notes = null;
-		this.arrivalTime = null;
+		this.setStartPoint(null);
+		this.setEndPoint(null);
+		this.setArrivalTime(null);
+		this.setDepartureTime(null);
+		this.setMaxDuration(null);
+		this.setNotes(null);
+		
 		this.setStatus(Status.START);
 		this.setSelectedLift(null);
 	}

@@ -83,18 +83,21 @@ public class OfferView extends Application implements Initializable {
 
 	@FXML
 	public void homeButtonController() throws Exception {
+		lp.clearState();
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 
 	@FXML
 	public void bookButtonController() throws Exception {
+		lp.clearState();
 		BookView book = new BookView();
 		book.start((Stage) btBook.getScene().getWindow());
 	}
 
 	@FXML
 	public void myCarButtonController() throws Exception {
+		lp.clearState();
 		MyCarView car = new MyCarView();
 		car.start((Stage) btMyCar.getScene().getWindow());
 
@@ -102,12 +105,14 @@ public class OfferView extends Application implements Initializable {
 
 	@FXML
 	public void profileButtonController() throws Exception {
+		lp.clearState();
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
 	}
 
 	@FXML
 	public void logoutButtonController() throws IOException {
+		
 		try {
 			LoginController.logout();
 		} catch (Exception e) {
@@ -142,6 +147,7 @@ public class OfferView extends Application implements Initializable {
 
 	@FXML
 	public void addCarButtonController() throws Exception {
+		lp.clearState();
 		MyCarView car = new MyCarView();
 		car.start((Stage) btAddCar.getScene().getWindow());
 

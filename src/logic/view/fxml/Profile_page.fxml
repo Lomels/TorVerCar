@@ -1,32 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.effect.InnerShadow?>
-<?import javafx.scene.effect.MotionBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.PasswordField?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
 	prefHeight="514.0" prefWidth="771.0"
+	stylesheets="@../fxml/TorVerCar.css"
 	xmlns="http://javafx.com/javafx/8.0.171"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="logic.view.ProfileView"
-	stylesheets="@../fxml/TorVerCar.css">
+	fx:controller="logic.view.ProfileView">
 	<children>
 		<HBox layoutX="-9.0" layoutY="-9.0" AnchorPane.leftAnchor="0.0"
 			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -43,8 +36,8 @@
 							</font>
 						</Button>
 						<Button fx:id="btOffer" mnemonicParsing="false"
-							onAction="#offerButtonController" styleClass="button-active"
-							prefHeight="46.0" prefWidth="83.0" text="OFFER">
+							onAction="#offerButtonController" prefHeight="46.0"
+							prefWidth="83.0" styleClass="button-unactive" text="OFFER">
 							<font>
 								<Font size="18.0" />
 							</font>
@@ -88,7 +81,7 @@
 						<Button fx:id="btProfile" minHeight="-Infinity"
 							minWidth="-Infinity" mnemonicParsing="false"
 							onAction="#profileButtonController" prefHeight="26.0"
-							prefWidth="46.0" styleClass="button-unactive" text="Profile">
+							prefWidth="46.0" styleClass="button-active" text="Profile">
 							<graphic>
 								<ImageView fitHeight="30.0" fitWidth="28.0">
 									<image>
@@ -104,12 +97,13 @@
 				</ButtonBar>
 			</children>
 		</HBox>
-			
-			
+
+
 		<ComboBox layoutX="264.0" layoutY="6.0" minHeight="-Infinity"
 			minWidth="-Infinity" prefHeight="28.0" prefWidth="103.0"
-			promptText="My Lift" visible="false"
-			style="-fx-background-color: #046104; -fx-border-color: #046104;" />
+			promptText="My Lift"
+			style="-fx-background-color: #046104; -fx-border-color: #046104;"
+			visible="false" />
 		<Text layoutX="19.0" layoutY="86.0" strokeType="OUTSIDE"
 			strokeWidth="0.0" text="My Profile:">
 			<font>
@@ -125,7 +119,7 @@
 		<Text layoutX="24.0" layoutY="242.0" strokeType="OUTSIDE"
 			strokeWidth="0.0" text="Phone number:" />
 		<Text layoutX="24.0" layoutY="320.0" strokeType="OUTSIDE"
-			strokeWidth="0.0" text="Password:" />
+			strokeWidth="0.0" text="Password:" AnchorPane.topAnchor="308.0" />
 		<Text layoutX="24.0" layoutY="282.0" strokeType="OUTSIDE"
 			strokeWidth="0.0" text="E-mail:" />
 		<Text fx:id="txName" layoutX="250.0" layoutY="137.0"
@@ -134,12 +128,16 @@
 			strokeType="OUTSIDE" strokeWidth="0.0" />
 		<Text fx:id="txMatNum" layoutX="250.0" layoutY="205.0"
 			strokeType="OUTSIDE" strokeWidth="0.0" />
-		<Button fx:id="btSave" layoutX="516.0" layoutY="352.0" styleClass="button-active"
-			mnemonicParsing="false" onAction="#saveButtonController" text="Save" />
-		<Button fx:id="btBack" layoutX="22.0" layoutY="352.0" styleClass="button-active"
-			mnemonicParsing="false" onAction="#backButtonController" text="Back" />
-		<Button fx:id="btEdit" layoutX="448.0" layoutY="352.0" styleClass="button-active"
-			mnemonicParsing="false" onAction="#editButtonController" text="Edit" />
+		<Button fx:id="btSave" layoutX="516.0" layoutY="352.0"
+			mnemonicParsing="false" onAction="#saveButtonController"
+			styleClass="button-active" text="Save" AnchorPane.topAnchor="402.0" />
+		<Button fx:id="btBack" layoutX="22.0" layoutY="352.0"
+			mnemonicParsing="false" onAction="#backButtonController"
+			styleClass="button-active" text="Back" AnchorPane.leftAnchor="22.0"
+			AnchorPane.topAnchor="402.0" />
+		<Button fx:id="btEdit" layoutX="448.0" layoutY="352.0"
+			mnemonicParsing="false" onAction="#editButtonController"
+			styleClass="button-active" text="Edit" AnchorPane.topAnchor="402.0" />
 		<TextField fx:id="tfPhone" layoutX="250.0" layoutY="224.0" />
 		<TextField fx:id="tfEmail" layoutX="250.0" layoutY="264.0" />
 		<CheckBox fx:id="cbShow" layoutX="435.0" layoutY="306.0"
@@ -147,5 +145,8 @@
 		<PasswordField fx:id="pfHidden" layoutX="250.0"
 			layoutY="302.0" />
 		<TextField fx:id="tfPass" layoutX="250.0" layoutY="302.0" />
+		<Button fx:id="btDelete" layoutX="592.0" layoutY="402.0"
+			mnemonicParsing="false" onAction="#deleteButtonController"
+			styleClass="button-active" text="Delete Profile" />
 	</children>
 </AnchorPane>

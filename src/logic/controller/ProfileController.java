@@ -31,4 +31,8 @@ public class ProfileController {
 		ourDb.editInfoByUserID(userID, password, email, phone);
 
 	}
+	
+	public void deleteProfile(String userID) throws DatabaseException {
+		ourDb.removeStudentByUserID(userID);
+	}
 }
