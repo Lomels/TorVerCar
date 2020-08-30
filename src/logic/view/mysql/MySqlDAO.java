@@ -75,7 +75,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	private Lift liftFromResult(ResultSet rs)
-			throws SQLException, DatabaseException, JSONException, InvalidInputException {
+			throws SQLException, DatabaseException, InvalidInputException {
 		// liftID
 		Integer liftIDFromDB = rs.getInt("liftID");
 		// startTime
@@ -315,6 +315,20 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	@Override
+	public void removeStudentByUserID(String userID) throws DatabaseException {
+		try {
+			this.connect();
+			MyQueries.removeStudent(stmt, userID);
+		}catch(Exception e) {
+			e.printStackTrace();
+			throw new DatabaseException(e.getMessage());
+		} finally {
+			this.disconnect();
+		}
+		
+	}
+	
+	@Override
 	public void removeCarByUserID(String userID) throws DatabaseException {
 		try {
 			this.connect();
@@ -401,7 +415,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	@Override
-	public Lift loadLiftByID(Integer liftID) throws DatabaseException, JSONException, InvalidInputException {
+	public Lift loadLiftByID(Integer liftID) throws DatabaseException, InvalidInputException {
 
 		Lift lift = null;
 		try {

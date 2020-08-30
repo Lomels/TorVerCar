@@ -1,15 +1,16 @@
 package logic.view.booking;
 
 import logic.model.Lift;
+import logic.model.LiftMatchResult;
 
 public class RowLift {
-	private Lift lift;
+	private LiftMatchResult lift;
 	private String from;
 	private String to;
 	private String timeFrom;
 	private String timeTo;
-	
-	public RowLift(Lift lift) {
+
+	public RowLift(LiftMatchResult lift) {
 		this.lift = lift;
 	}
 	
@@ -38,7 +39,7 @@ public class RowLift {
 		this.timeTo = timeTo;
 	}
 
-	public Lift getLift() {
+	public LiftMatchResult getResult() {
 		return this.lift;
 	}
 }

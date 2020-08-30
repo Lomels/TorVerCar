@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
@@ -17,10 +18,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import logic.controller.LiftController;
 import logic.controller.maps.AdapterMapsApi;
@@ -106,6 +111,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 
 	@FXML
 	public void homeButtonController() throws Exception {
+		liftSg.clearState();
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
@@ -118,12 +124,14 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	
 	@FXML
 	public void bookButtonController() throws Exception {
+		liftSg.clearState();
 		BookView book = new BookView();
 		book.start((Stage) btBook.getScene().getWindow());
 	}
 
 	@FXML
 	public void myCarButtonController() throws Exception {
+		liftSg.clearState();
 		MyCarView car = new MyCarView();
 		car.start((Stage) btMyCar.getScene().getWindow());
 
@@ -148,6 +156,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 
 	@FXML
 	public void profileButtonController() throws Exception {
+		liftSg.clearState();
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
 	}
@@ -166,6 +175,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 
 	@FXML
 	public void offerButtonController() throws Exception {
+		liftSg.clearState();
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}
@@ -277,7 +287,18 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 			}
 		} else {
 			MyLogger.info("No lifts found");
-			// TODO: toast di avviso
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Oh no!");
+			alert.setHeaderText(":(");
+			alert.setContentText("No lift found!");
+			
+			DialogPane dialogPane = alert.getDialogPane();
+			
+			dialogPane.getStylesheets().add(getClass().getResource("../fxml/TorVerCar.css").toExternalForm());
+			dialogPane.getStyleClass().add("myDialog");
+			
+			Optional<ButtonType> result = alert.showAndWait(); 
+			
 		}
 
 	}

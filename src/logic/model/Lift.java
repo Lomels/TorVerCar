@@ -34,10 +34,6 @@ public class Lift {
 		return liftID;
 	}
 
-	public void setLiftID(Integer liftID) {
-		this.liftID = liftID;
-	}
-
 	public LocalDateTime getStartDateTime() {
 		return startDateTime;
 	}
@@ -52,18 +48,12 @@ public class Lift {
 	}
 
 	public void setMaxDuration(Integer maxDuration) throws InvalidInputException {
-		if (maxDuration == null || maxDuration <= 0) {
-			throw new InvalidInputException("maxDuration must be not null and greater than 0.");
-		}
+		InputChecker.checkIntegerMoreThan("maxDuration", maxDuration, 0);
 		this.maxDuration = maxDuration;
 	}
 
 	public String getNote() {
 		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
 	}
 
 	public StudentCar getDriver() {
@@ -140,7 +130,6 @@ public class Lift {
 				}
 			}
 		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
 			return false;
 		}
 		boolean sameRoute = this.getRoute().compare(other.getRoute());

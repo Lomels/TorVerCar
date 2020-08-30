@@ -69,15 +69,9 @@ public class Position {
 		return new Position(json.getDouble("lat"), json.getDouble("lon"), json.getDouble("score"),
 				json.getString("address"));
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		try {
-			Position other = (Position) obj;
-			return this.lat == other.lat && this.lon == other.lon;
-		}catch (Exception e) {
-			return super.equals(obj);
-		}
+	
+	public boolean compare(Position other) {
+		return this.lat.equals(other.lat) && this.lon.equals(other.lon);
 	}
 
 }
