@@ -1,9 +1,9 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import logic.bean.UserBean;
-import logic.utilities.SameValuesChecker;
 import logic.view.mysql.UniDAO;
 
 class UniDAOTest {
@@ -23,8 +23,8 @@ class UniDAOTest {
 		iToCompare.setName(NAME);
 		iToCompare.setSurname(SURNAME);
 		iToCompare.setEmail(EMAIL);
-		boolean b = SameValuesChecker.haveSamePropertyValues(UserBean.class, iByDao, iToCompare);
-		assertTrue(b);
+		//TODO: check two userBean
+		assertTrue(false);
 	}
 	
 //	@Test

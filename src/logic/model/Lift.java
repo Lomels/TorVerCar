@@ -43,8 +43,7 @@ public class Lift {
 	}
 
 	public void setStartDateTime(LocalDateTime startDateTime) throws InvalidInputException {
-		if (startDateTime == null)
-			throw new InvalidInputException("startTime must be not null.");
+		InputChecker.checkNotNull(startDateTime, "startDateTime");
 		this.startDateTime = startDateTime;
 	}
 

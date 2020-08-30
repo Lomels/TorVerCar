@@ -29,9 +29,8 @@ public class LoginController {
 						StudentCar sCar = ourDb.loadStudentCarByUserID(bean.getUserID());
 						sg.setStudentCar(sCar);
 						break;
-					case ADMIN:
-						//TODO: implementare
-						break;
+					default:
+						throw new InvalidStateException("Role not defined.");
 				}
 			}else {
 				throw new DatabaseException("Banned User");

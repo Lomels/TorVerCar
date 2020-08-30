@@ -2,7 +2,6 @@ package logic.view;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -19,7 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -28,9 +26,9 @@ import logic.controller.LoginController;
 import logic.controller.RatingController;
 import logic.model.Lift;
 import logic.model.UserSingleton;
+import logic.utilities.MyLogger;
 import logic.view.booking.BookView;
 import logic.view.offer.OfferView;
-import logic.utilities.MyLogger;
 
 public class MainMenuView extends Application implements Initializable {
 	@FXML
@@ -162,15 +160,15 @@ public class MainMenuView extends Application implements Initializable {
 		String welcome = null;
 		switch (sg.getRole()) {
 		case DRIVER:
-			welcome = sg.getStudentCar().getName().toString() + "!";
+			welcome = sg.getStudentCar().getName() + "!";
 			userID = sg.getUserID();
 			break;
 		case STUDENT:
-			welcome = sg.getStudent().getName().toString() + "!";
+			welcome = sg.getStudent().getName() + "!";
 			userID = sg.getUserID();
 			break;
-		case ADMIN:
-			// TODO: implementare
+		default:
+			//TODO: visualizza errore poiché non esiste il Role
 			break;
 		}
 		tvName.setText(welcome);

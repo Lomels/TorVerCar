@@ -1,6 +1,7 @@
 package logic.controller;
 
 import logic.bean.CarInfoBean;
+import logic.bean.UserBean;
 import logic.bean.UserBeanSingleton;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
@@ -20,36 +21,40 @@ public class SetCarInfoController {
 	public StudentCar addCar(CarInfoBean carInfo) throws InvalidInputException, DatabaseException {
 		CarInfo car = new CarInfo(carInfo.getPlate(), carInfo.getSeats(), carInfo.getModel(), carInfo.getColour());
 
-		Student student = StudentBuilder.newBuilder(sgBean.getUserBean().getUserID())
-				.fullname(sgBean.getUserBean().getName(), sgBean.getUserBean().getSurname())
-				.email(sgBean.getUserBean().getEmail()).password(sgBean.getUserBean().getPassword())
-				.phone(sgBean.getUserBean().getPhone()).build();
+		UserBean userBean = sgBean.getUserBean();
+		Student student = new Student(userBean.getUserID(), userBean.getPassword(), userBean.getEmail(),
+				userBean.getName(), userBean.getSurname(), userBean.getPhone());
 
-		StudentCarBuilder builder = StudentCarBuilder.newCarBuilder(student);
-		builder.carInfo(car);
+		// TODO: controllare l'impostazione del rating, 0 ho messo io, parte commentata
+		// era la precedente versione
+//		StudentCarBuilder builder = StudentCarBuilder.newCarBuilder(student);
+//		builder.carInfo(car);
+//		return builder.build();
 
-		return builder.build();
+		StudentCar studentCar = new StudentCar(student, 0, car);
+		return studentCar;
+
 	}
 
 	public void editCar(CarInfoBean newCarInfo) throws InvalidInputException, DatabaseException, InvalidStateException {
 		CarInfo carInfo = new CarInfo(newCarInfo.getPlate(), newCarInfo.getSeats(), newCarInfo.getModel(),
 				newCarInfo.getColour());
 		switch (sg.getRole()) {
-		default:
-			throw new InvalidStateException("Role not defined.");
 		case DRIVER:
 			sg.getStudentCar().setCarInfo(carInfo);
 			ourDb.editCarInfoByUserID(sg.getStudentCar().getUserID(), newCarInfo);
 			break;
 		case STUDENT:
-			StudentCar sCar = StudentCarBuilder.newCarBuilder(sg.getStudent()).carInfo(carInfo).build();
+			// TODO: controllare sempre il set del rating
+//			StudentCar sCar = StudentCarBuilder.newCarBuilder(sg.getStudent()).carInfo(carInfo).build();
+			StudentCar sCar = new StudentCar(sg.getStudent(), 0, carInfo);
 			ourDb.addCar(sCar);
 			sg.setRole(Role.DRIVER);
 			sg.setStudent(null);
 			sg.setStudentCar(sCar);
 			break;
-		case ADMIN:
-			break;
+		default:
+			throw new InvalidStateException("Role not defined.");
 		}
 
 	}
