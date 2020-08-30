@@ -41,6 +41,7 @@ public class ProfileView extends Application implements Initializable {
 	@FXML private Button btLogout;
 	@FXML private Button btOffer;
 	@FXML private Button btBook;
+	@FXML private Button btLifts;
 
 	UserSingleton sg = UserSingleton.getInstance();
 	ProfileController controller = new ProfileController();
@@ -93,6 +94,12 @@ public class ProfileView extends Application implements Initializable {
 	public void homeButtonController() throws Exception {
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
+	}
+	
+	@FXML
+	public void liftsButtonController() throws Exception {
+		MyLiftView myLift = new MyLiftView();
+		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
 	
 	@FXML

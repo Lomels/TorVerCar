@@ -22,7 +22,7 @@
 <?import javafx.scene.control.PasswordField?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-	prefHeight="514.0" prefWidth="771.0"
+	prefHeight="514.0" prefWidth="797.0"
 	xmlns="http://javafx.com/javafx/8.0.171"
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="logic.view.ProfileView"
@@ -35,6 +35,14 @@
 					prefHeight="46.0" prefWidth="771.0"
 					style="-fx-background-color: #39393a;">
 					<buttons>
+						<Button fx:id="btLifts" mnemonicParsing="false"
+							onAction="#liftsButtonController" styleClass="button-unactive"
+							text="MyLIFT" textAlignment="CENTER" textOverrun="CLIP"
+							wrapText="true">
+							<font>
+								<Font size="18.0" />
+							</font>
+						</Button>
 						<Button fx:id="btMyCar" mnemonicParsing="false"
 							onAction="#myCarButtonController" styleClass="button-unactive"
 							text="MyCAR">
@@ -70,13 +78,13 @@
 					</effect>
 				</ButtonBar>
 				<ButtonBar nodeOrientation="LEFT_TO_RIGHT"
-					prefHeight="46.0" prefWidth="771.0"
+					prefHeight="46.0" prefWidth="313.0"
 					style="-fx-background-color: #39393a;">
 					<buttons>
 						<Button fx:id="btLogout" maxHeight="-Infinity"
 							maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
 							mnemonicParsing="false" onAction="#logoutButtonController"
-							prefHeight="26.0" prefWidth="43.0" styleClass="button-unactive">
+							styleClass="button-unactive">
 							<graphic>
 								<ImageView fitHeight="29.0" fitWidth="33.0">
 									<image>
@@ -87,8 +95,7 @@
 						</Button>
 						<Button fx:id="btProfile" minHeight="-Infinity"
 							minWidth="-Infinity" mnemonicParsing="false"
-							onAction="#profileButtonController" prefHeight="26.0"
-							prefWidth="46.0" styleClass="button-unactive" text="Profile">
+							onAction="#profileButtonController" styleClass="button-unactive">
 							<graphic>
 								<ImageView fitHeight="30.0" fitWidth="28.0">
 									<image>
@@ -104,8 +111,8 @@
 				</ButtonBar>
 			</children>
 		</HBox>
-			
-			
+
+
 		<ComboBox layoutX="264.0" layoutY="6.0" minHeight="-Infinity"
 			minWidth="-Infinity" prefHeight="28.0" prefWidth="103.0"
 			promptText="My Lift" visible="false"
@@ -134,12 +141,15 @@
 			strokeType="OUTSIDE" strokeWidth="0.0" />
 		<Text fx:id="txMatNum" layoutX="250.0" layoutY="205.0"
 			strokeType="OUTSIDE" strokeWidth="0.0" />
-		<Button fx:id="btSave" layoutX="516.0" layoutY="352.0" styleClass="button-active"
-			mnemonicParsing="false" onAction="#saveButtonController" text="Save" />
-		<Button fx:id="btBack" layoutX="22.0" layoutY="352.0" styleClass="button-active"
-			mnemonicParsing="false" onAction="#backButtonController" text="Back" />
-		<Button fx:id="btEdit" layoutX="448.0" layoutY="352.0" styleClass="button-active"
-			mnemonicParsing="false" onAction="#editButtonController" text="Edit" />
+		<Button fx:id="btSave" layoutX="516.0" layoutY="352.0"
+			styleClass="button-active" mnemonicParsing="false"
+			onAction="#saveButtonController" text="Save" />
+		<Button fx:id="btBack" layoutX="22.0" layoutY="352.0"
+			styleClass="button-active" mnemonicParsing="false"
+			onAction="#backButtonController" text="Back" />
+		<Button fx:id="btEdit" layoutX="448.0" layoutY="352.0"
+			styleClass="button-active" mnemonicParsing="false"
+			onAction="#editButtonController" text="Edit" />
 		<TextField fx:id="tfPhone" layoutX="250.0" layoutY="224.0" />
 		<TextField fx:id="tfEmail" layoutX="250.0" layoutY="264.0" />
 		<CheckBox fx:id="cbShow" layoutX="435.0" layoutY="306.0"

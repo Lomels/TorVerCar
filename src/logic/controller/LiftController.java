@@ -286,4 +286,12 @@ public class LiftController {
 				.isAfter(newStartDateTime.plusMinutes(newRoute.getTotalDuration()));
 		return !(stopsBefore || startAfter);
 	}
+
+	public List<Lift> loadOfferedLift(String userID){
+		return ourDb.listLiftsByDriverID(userID);
+	}
+	
+	public List<Lift> loadBookedLift(String userID){
+		return ourDb.listLiftsByPassengerID(userID);
+	}
 }

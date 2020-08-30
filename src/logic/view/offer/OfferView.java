@@ -24,6 +24,7 @@ import logic.utilities.Status;
 import logic.view.HomeView;
 import logic.view.MainMenuView;
 import logic.view.MyCarView;
+import logic.view.MyLiftView;
 import logic.view.ProfileView;
 import logic.view.booking.BookView;
 import logic.model.Role;
@@ -61,6 +62,8 @@ public class OfferView extends Application implements Initializable {
 	private Button btConfirm;
 	@FXML
 	private Button btAddCar;
+	@FXML
+	private Button btLifts;
 
 	private MapsApi mapsApi = AdapterMapsApi.getInstance();
 	private LiftSingleton lp = LiftSingleton.getInstance();
@@ -104,6 +107,12 @@ public class OfferView extends Application implements Initializable {
 	public void profileButtonController() throws Exception {
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
+	}
+	
+	@FXML
+	public void liftsButtonController() throws Exception {
+		MyLiftView myLift = new MyLiftView();
+		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
 
 	@FXML

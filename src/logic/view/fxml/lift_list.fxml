@@ -20,7 +20,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-	prefHeight="514.0" prefWidth="771.0"
+	prefHeight="514.0" prefWidth="797.0"
 	stylesheets="@../fxml/TorVerCar.css"
 	xmlns="http://javafx.com/javafx/8.0.171"
 	xmlns:fx="http://javafx.com/fxml/1"
@@ -33,6 +33,14 @@
 					prefHeight="46.0" prefWidth="771.0"
 					style="-fx-background-color: #39393a;">
 					<buttons>
+						<Button fx:id="btLifts" mnemonicParsing="false"
+							onAction="#liftsButtonController" styleClass="button-unactive"
+							text="MyLIFT" textAlignment="CENTER" textOverrun="CLIP"
+							wrapText="true">
+							<font>
+								<Font size="18.0" />
+							</font>
+						</Button>
 						<Button fx:id="btMyCar" mnemonicParsing="false"
 							onAction="#myCarButtonController" styleClass="button-unactive"
 							text="MyCAR">
@@ -68,13 +76,13 @@
 					</effect>
 				</ButtonBar>
 				<ButtonBar nodeOrientation="LEFT_TO_RIGHT"
-					prefHeight="46.0" prefWidth="771.0"
+					prefHeight="46.0" prefWidth="313.0"
 					style="-fx-background-color: #39393a;">
 					<buttons>
 						<Button fx:id="btLogout" maxHeight="-Infinity"
 							maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
 							mnemonicParsing="false" onAction="#logoutButtonController"
-							prefHeight="26.0" prefWidth="43.0" styleClass="button-unactive">
+							styleClass="button-unactive">
 							<graphic>
 								<ImageView fitHeight="29.0" fitWidth="33.0">
 									<image>
@@ -85,8 +93,8 @@
 						</Button>
 						<Button fx:id="btProfile" minHeight="-Infinity"
 							minWidth="-Infinity" mnemonicParsing="false"
-							onAction="#profileButtonController" prefHeight="26.0"
-							prefWidth="46.0" styleClass="button-unactive" text="Profile">
+							onAction="#profileButtonController"
+							styleClass="button-unactive">
 							<graphic>
 								<ImageView fitHeight="30.0" fitWidth="28.0">
 									<image>

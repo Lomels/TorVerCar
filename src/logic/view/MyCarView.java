@@ -30,6 +30,7 @@ public class MyCarView extends Application implements Initializable{
 	@FXML private Button btSave;
 	@FXML private Button btBook;
 	@FXML private Button btOffer;
+	@FXML private Button btLifts;
 	
 	@FXML private TextField tfModel;
 	@FXML private TextField tfColour;
@@ -112,6 +113,12 @@ public class MyCarView extends Application implements Initializable{
 	public void myCarButtonController() throws Exception {
 		MyCarView myCar = new MyCarView();
 		myCar.start((Stage) btMyCar.getScene().getWindow());
+	}
+	
+	@FXML
+	public void liftsButtonController() throws Exception {
+		MyLiftView myLift = new MyLiftView();
+		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
 	
 	@FXML

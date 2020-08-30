@@ -27,6 +27,7 @@ import logic.utilities.Status;
 import logic.view.HomeView;
 import logic.view.MainMenuView;
 import logic.view.MyCarView;
+import logic.view.MyLiftView;
 import logic.view.ProfileView;
 import logic.view.booking.BookView;
 
@@ -60,6 +61,8 @@ public class AddressListView extends Application implements Initializable {
 	private Button btCheckEnd;
 	@FXML
 	private Button btConfirm;
+	@FXML
+	private Button btLifts;
 	@FXML
 	private ListView<RowAddress> addressList;
 
@@ -103,6 +106,12 @@ public class AddressListView extends Application implements Initializable {
 	public void profileButtonController() throws Exception {
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
+	}
+	
+	@FXML
+	public void liftsButtonController() throws Exception {
+		MyLiftView myLift = new MyLiftView();
+		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
 
 	@FXML

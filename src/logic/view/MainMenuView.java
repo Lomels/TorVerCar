@@ -49,6 +49,8 @@ public class MainMenuView extends Application implements Initializable {
 	private Button btOffer;
 	@FXML
 	private Button btBook;
+	@FXML
+	private Button btLifts;
 
 	private UserSingleton sg = UserSingleton.getInstance();
 	private String userID;
@@ -181,25 +183,36 @@ public class MainMenuView extends Application implements Initializable {
 		sg.setCompletedLift(liftContr.checkCompletedLift(userID));
 	}
 
+	@FXML
 	public static void main(String[] args) {
 		launch(args);
 	}
 
+	@FXML
 	public void homeButtonController() throws Exception {
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
+	
+	@FXML
+	public void liftsButtonController() throws Exception {
+		MyLiftView myLift = new MyLiftView();
+		myLift.start((Stage) btLifts.getScene().getWindow());
+	}
 
+	@FXML
 	public void myCarButtonController() throws Exception {
 		MyCarView car = new MyCarView();
 		car.start((Stage) btMyCar.getScene().getWindow());
 	}
 
+	@FXML
 	public void profileButtonController() throws Exception {
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
 	}
 
+	@FXML
 	public void logoutButtonController() throws IOException {
 		try {
 			LoginController.logout();
@@ -211,11 +224,13 @@ public class MainMenuView extends Application implements Initializable {
 		home.start((Stage) btLogout.getScene().getWindow());
 	}
 
+	@FXML
 	public void offerButtonController() throws Exception {
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}
 
+	@FXML
 	public void bookButtonController() throws Exception {
 		BookView book = new BookView();
 		book.start((Stage) btBook.getScene().getWindow());

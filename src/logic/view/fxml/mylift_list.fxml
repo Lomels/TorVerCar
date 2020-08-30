@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="514.0" prefWidth="797.0" stylesheets="@../fxml/TorVerCar.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.MyLiftView">
+	<children>
+		<VBox layoutX="112.0" layoutY="92.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<children>
+				<HBox>
+					<children>
+						<ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="46.0" prefWidth="490.0" style="-fx-background-color: #39393a;">
+							<buttons>
+								<Button fx:id="btLifts" mnemonicParsing="false" prefHeight="46.0" prefWidth="83.0" styleClass="button-active" text="MyLIFT" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+									<font>
+										<Font size="18.0" />
+									</font>
+								</Button>
+								<Button fx:id="btMyCar" mnemonicParsing="false" onAction="#myCarButtonController" styleClass="button-unactive" text="MyCAR">
+									<font>
+										<Font size="18.0" />
+									</font>
+								</Button>
+								<Button fx:id="btOffer" mnemonicParsing="false" onAction="#offerButtonController" styleClass="button-unactive" text="OFFER">
+									<font>
+										<Font size="18.0" />
+									</font>
+								</Button>
+								<Button fx:id="btBook" mnemonicParsing="false" onAction="#bookButtonController" styleClass="button-unactive" text="BOOK">
+									<font>
+										<Font size="18.0" />
+									</font>
+								</Button>
+								<Button fx:id="btHome" mnemonicParsing="false" onAction="#homeButtonController" styleClass="button-unactive" text="HOME" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+									<font>
+										<Font size="18.0" />
+									</font>
+								</Button>
+							</buttons>
+							<effect>
+								<DropShadow radius="4.75" width="0.0" />
+							</effect>
+						</ButtonBar>
+						<ButtonBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="313.0" style="-fx-background-color: #39393a;">
+							<buttons>
+								<Button fx:id="btLogout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonController" styleClass="button-unactive">
+									<graphic>
+										<ImageView fitHeight="29.0" fitWidth="33.0">
+											<image>
+												<Image url="@../../../../images/logout.png" />
+											</image>
+										</ImageView>
+									</graphic>
+								</Button>
+								<Button fx:id="btProfile" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#profileButtonController" styleClass="button-unactive">
+									<graphic>
+										<ImageView fitHeight="30.0" fitWidth="28.0">
+											<image>
+												<Image url="@../../../../images/user.png" />
+											</image>
+										</ImageView>
+									</graphic>
+								</Button>
+							</buttons>
+							<effect>
+								<DropShadow radius="4.75" width="0.0" />
+							</effect>
+						</ButtonBar>
+					</children>
+				</HBox>
+				<HBox alignment="CENTER" prefHeight="33.0" prefWidth="797.0" spacing="10.0">
+					<children>
+						<RadioButton fx:id="rbOffered" disable="true" graphicTextGap="5.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#rbOfferedController" selected="true" text="Offered">
+							<font>
+								<Font name="System Italic" size="12.0" />
+							</font>
+						</RadioButton>
+						<RadioButton fx:id="rbBooked" mnemonicParsing="false" onAction="#rbBookedController" text="Booked">
+							<font>
+								<Font name="System Italic" size="12.0" />
+							</font>
+						</RadioButton>
+					</children>
+				</HBox>
+				<ListView fx:id="lvLift" prefHeight="346.0" prefWidth="797.0" />
+			</children>
+		</VBox>
+	</children>
+</AnchorPane>

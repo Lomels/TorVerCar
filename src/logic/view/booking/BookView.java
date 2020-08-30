@@ -34,6 +34,7 @@ import logic.utilities.Status;
 import logic.view.HomeView;
 import logic.view.MainMenuView;
 import logic.view.MyCarView;
+import logic.view.MyLiftView;
 import logic.view.ProfileView;
 import logic.view.offer.AddressListView;
 import logic.view.offer.OfferView;
@@ -59,6 +60,8 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	private Button btCheckStart;
 	@FXML
 	private Button btCheckEnd;
+	@FXML
+	private Button btLifts;
 	@FXML
 	private TextField tfStartPoint;
 	@FXML
@@ -107,6 +110,12 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 
+	@FXML
+	public void liftsButtonController() throws Exception {
+		MyLiftView myLift = new MyLiftView();
+		myLift.start((Stage) btLifts.getScene().getWindow());
+	}
+	
 	@FXML
 	public void bookButtonController() throws Exception {
 		BookView book = new BookView();

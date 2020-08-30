@@ -9,13 +9,6 @@ public class RowLift {
 	private String timeFrom;
 	private String timeTo;
 	
-//	public RowLift(String from, String to, String timeFrom, String timeTo, Lift lift) {
-//		this.from = from;
-//		this.to = to;
-//		this.timeFrom = timeFrom;
-//		this.timeTo = timeTo;
-//	}
-	
 	public RowLift(Lift lift) {
 		this.lift = lift;
 	}

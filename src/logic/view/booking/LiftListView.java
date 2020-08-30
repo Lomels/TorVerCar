@@ -29,6 +29,7 @@ import logic.utilities.MyLogger;
 import logic.view.HomeView;
 import logic.view.MainMenuView;
 import logic.view.MyCarView;
+import logic.view.MyLiftView;
 import logic.view.ProfileView;
 import logic.view.offer.OfferView;
 
@@ -48,6 +49,8 @@ public class LiftListView extends Application implements Initializable {
 	private Button btOffer;
 	@FXML
 	private Button btConfirm;
+	@FXML
+	private Button btLifts;
 	@FXML
 	private ListView<RowLift> liftList;
 
@@ -71,6 +74,12 @@ public class LiftListView extends Application implements Initializable {
 	public void homeButtonController() throws Exception {
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
+	}
+	
+	@FXML
+	public void liftsButtonController() throws Exception {
+		MyLiftView myLift = new MyLiftView();
+		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
 
 	@FXML

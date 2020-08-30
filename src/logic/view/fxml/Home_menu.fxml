@@ -16,28 +16,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-	prefHeight="514.0" prefWidth="771.0"
-	xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="logic.view.MainMenuView"
-	stylesheets="@../fxml/TorVerCar.css">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="797.0" stylesheets="@../fxml/TorVerCar.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.MainMenuView">
 	<children>
-		<ImageView fitHeight="514.0" fitWidth="771.0"
-			pickOnBounds="true" preserveRatio="true">
+		<ImageView fitHeight="547.0" fitWidth="797.0" pickOnBounds="true" preserveRatio="true">
 			<image>
 				<Image url="@../../../../images/background.jpg" />
 			</image>
 		</ImageView>
-		<Rectangle arcHeight="5.0" arcWidth="5.0" height="256.0"
-			layoutX="-19.0" layoutY="258.0" stroke="BLACK" strokeType="INSIDE"
-			strokeWidth="0.0" width="790.0">
+		<Rectangle arcHeight="5.0" arcWidth="5.0" height="256.0" layoutX="4.0" layoutY="257.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="797.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 			<effect>
 				<MotionBlur />
 			</effect>
 			<fill>
-				<LinearGradient endX="0.5333333333333333"
-					endY="0.6238095238095238" startX="0.5333333333333333">
+				<LinearGradient endX="0.5333333333333333" endY="0.6238095238095238" startX="0.5333333333333333">
 					<stops>
 						<Stop color="#ffffff00" />
 						<Stop color="WHITE" offset="1.0" />
@@ -45,9 +36,7 @@
 				</LinearGradient>
 			</fill>
 		</Rectangle>
-		<Text fx:id="tvWelcome" fill="#39393a" layoutX="34.0"
-			layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hi,"
-			AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="353.146484375">
+		<Text fx:id="tvWelcome" fill="#39393a" layoutX="34.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hi," AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="353.146484375">
 			<font>
 				<Font size="74.0" />
 			</font>
@@ -55,38 +44,31 @@
 				<InnerShadow radius="5.0" width="1.0" />
 			</effect>
 		</Text>
-		<HBox layoutX="-9.0" layoutY="-9.0" AnchorPane.leftAnchor="0.0"
-			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+		<HBox layoutX="-9.0" layoutY="-9.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<children>
-				<ButtonBar nodeOrientation="RIGHT_TO_LEFT"
-					prefHeight="46.0" prefWidth="771.0"
-					style="-fx-background-color: #39393a;">
+				<ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="46.0" prefWidth="771.0" style="-fx-background-color: #39393a;">
 					<buttons>
-						<Button fx:id="btMyCar" mnemonicParsing="false"
-							onAction="#myCarButtonController" styleClass="button-unactive"
-							text="MyCAR">
+						<Button fx:id="btLifts" mnemonicParsing="false" onAction="#liftsButtonController" styleClass="button-unactive" text="MyLIFT" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
 							<font>
 								<Font size="18.0" />
 							</font>
 						</Button>
-						<Button fx:id="btOffer" mnemonicParsing="false"
-							onAction="#offerButtonController" styleClass="button-unactive"
-							text="OFFER">
+						<Button fx:id="btMyCar" mnemonicParsing="false" onAction="#myCarButtonController" styleClass="button-unactive" text="MyCAR">
 							<font>
 								<Font size="18.0" />
 							</font>
 						</Button>
-						<Button fx:id="btBook" mnemonicParsing="false"
-							onAction="#bookButtonController" styleClass="button-unactive"
-							text="BOOK">
+						<Button fx:id="btOffer" mnemonicParsing="false" onAction="#offerButtonController" styleClass="button-unactive" text="OFFER">
 							<font>
 								<Font size="18.0" />
 							</font>
 						</Button>
-						<Button fx:id="btHome" mnemonicParsing="false"
-							onAction="#homeButtonController" prefHeight="46.0"
-							prefWidth="83.0" styleClass="button-active" text="HOME"
-							textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+						<Button fx:id="btBook" mnemonicParsing="false" onAction="#bookButtonController" styleClass="button-unactive" text="BOOK">
+							<font>
+								<Font size="18.0" />
+							</font>
+						</Button>
+						<Button fx:id="btHome" mnemonicParsing="false" onAction="#homeButtonController" prefHeight="46.0" prefWidth="83.0" styleClass="button-active" text="HOME" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
 							<font>
 								<Font size="18.0" />
 							</font>
@@ -96,14 +78,9 @@
 						<DropShadow radius="4.75" width="0.0" />
 					</effect>
 				</ButtonBar>
-				<ButtonBar nodeOrientation="LEFT_TO_RIGHT"
-					prefHeight="46.0" prefWidth="771.0"
-					style="-fx-background-color: #39393a;">
+				<ButtonBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="313.0" style="-fx-background-color: #39393a;">
 					<buttons>
-						<Button fx:id="btLogout" maxHeight="-Infinity"
-							maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-							mnemonicParsing="false" onAction="#logoutButtonController"
-							prefHeight="26.0" prefWidth="43.0" styleClass="button-unactive">
+						<Button fx:id="btLogout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonController" styleClass="button-unactive">
 							<graphic>
 								<ImageView fitHeight="29.0" fitWidth="33.0">
 									<image>
@@ -112,10 +89,7 @@
 								</ImageView>
 							</graphic>
 						</Button>
-						<Button fx:id="btProfile" minHeight="-Infinity"
-							minWidth="-Infinity" mnemonicParsing="false"
-							onAction="#profileButtonController" prefHeight="26.0"
-							prefWidth="46.0" styleClass="button-unactive" text="Profile">
+						<Button fx:id="btProfile" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#profileButtonController" styleClass="button-unactive">
 							<graphic>
 								<ImageView fitHeight="30.0" fitWidth="28.0">
 									<image>
@@ -131,21 +105,14 @@
 				</ButtonBar>
 			</children>
 		</HBox>
-		<ComboBox layoutX="456.0" layoutY="270.0"
-			minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0"
-			prefWidth="103.0" promptText="My Lift" visible="false"
-			style="-fx-background-color: #046104; -fx-border-color: #046104;" />
-		<Text fx:id="tvName" fill="#5f976a" layoutX="121.0"
-			layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marco">
+		<ComboBox layoutX="456.0" layoutY="270.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="103.0" promptText="My Lift" style="-fx-background-color: #046104; -fx-border-color: #046104;" visible="false" />
+		<Text fx:id="tvName" fill="#5f976a" layoutX="121.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marco">
 			<font>
 				<Font size="74.0" />
 			</font>
 			<effect>
-				<DropShadow height="5.0" offsetY="1.5" radius="2.0"
-					width="5.0" />
+				<DropShadow height="5.0" offsetY="1.5" radius="2.0" width="5.0" />
 			</effect>
 		</Text>
 	</children>
 </AnchorPane>
-
-

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="187.0" prefWidth="566.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.mylift.RowMyLiftController">
+	<children>
+      <HBox alignment="CENTER" prefHeight="138.0" prefWidth="566.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+               <children>
+                  <Text fill="#5f976a" strokeType="OUTSIDE" strokeWidth="0.0" text="From:">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets right="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Text fill="#5f976a" strokeType="OUTSIDE" strokeWidth="0.0" text="To:">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets right="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Text fill="#5f976a" strokeType="OUTSIDE" strokeWidth="0.0" text="When:">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets right="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Text fill="#5f976a" strokeType="OUTSIDE" strokeWidth="0.0" text="Departure time:">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets right="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Text fill="#5f976a" strokeType="OUTSIDE" strokeWidth="0.0" text="Estimated arrival time:">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets right="5.0" />
+                     </VBox.margin>
+                  </Text>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" prefHeight="138.0" prefWidth="188.0" spacing="5.0">
+               <children>
+                  <Text fx:id="tvFrom" fill="#39393a" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Text fx:id="tvTo" fill="#39393a" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Text fx:id="tvWhen" fill="#39393a" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Text fx:id="tvStart" fill="#39393a" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Text>
+                  <Text fx:id="tvStop" fill="#39393a" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="5.0" />
+                     </VBox.margin>
+                  </Text>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+	</children>
+</AnchorPane>
