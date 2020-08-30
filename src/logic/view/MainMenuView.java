@@ -62,6 +62,7 @@ public class MainMenuView extends Application implements Initializable {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
+		stage.sizeToScene();
 		stage.show();
 
 		if (!(notifications = sg.getNotifications()).isEmpty()) {
@@ -152,7 +153,6 @@ public class MainMenuView extends Application implements Initializable {
 			}
 		} while ((i < index && i >= 0));
 
-//		alert.close();
 		liftContr.flushNotification(sg.getUserID());
 
 	}

@@ -60,7 +60,7 @@ public class Student {
 		return this.name;
 	}
 
-	// Name must not be null
+	//TODO Name must not be null
 	public void setName(String name) throws InvalidInputException {
 		InputChecker.checkGenericString(name);
 		this.name = name;
@@ -70,7 +70,7 @@ public class Student {
 		return this.surname;
 	}
 
-	// Surname must not be null
+	//TODO Surname must not be null
 	public void setSurname(String surname) throws InvalidInputException {
 		InputChecker.checkGenericString(surname);
 		this.surname = surname;
