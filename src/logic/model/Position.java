@@ -1,6 +1,5 @@
 package logic.model;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import logic.controller.exception.InvalidInputException;
@@ -48,14 +47,6 @@ public class Position {
 		this.lon = lon;
 	}
 
-	public void setScore(Double score) {
-		this.score = score;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
 	public String getLatLon() {
 		return getLat() + "," + getLon();
 	}
@@ -74,7 +65,7 @@ public class Position {
 		return result;
 	}
 
-	public static Position jsonDecode(JSONObject json) throws JSONException, InvalidInputException {
+	public static Position jsonDecode(JSONObject json) throws InvalidInputException {
 		return new Position(json.getDouble("lat"), json.getDouble("lon"), json.getDouble("score"),
 				json.getString("address"));
 	}

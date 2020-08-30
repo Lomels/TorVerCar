@@ -33,7 +33,7 @@ public class CompareTest extends TestUtilities {
 		liftID = null;
 		startDateTime = LocalDateTime.parse(START_DATE_TIME_EARLY);
 		route = Route.jsonDecode(new JSONObject(R_MARCO_UNI));
-		maxDuration = (int) (route.getDuration() * 1.5);
+		maxDuration = (int) (route.getTotalDuration() * 1.5);
 		note = NOTE;
 		driver = dao.loadStudentCarByUserID(USER_ID + "1");
 		passengers = new ArrayList<>();

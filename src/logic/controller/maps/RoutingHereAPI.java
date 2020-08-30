@@ -120,9 +120,9 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 	private void keepBetter(Route tempRoute) {
 		// Compares the duration, keeps the one with the smallest
 		// If same duration, keeps the one with the smallest distance
-		if (this.bestRoute == null || tempRoute.getDuration() < this.bestRoute.getDuration()
-				|| (tempRoute.getDuration().equals(this.bestRoute.getDuration())
-						&& tempRoute.getDistance() < this.bestRoute.getDistance())) {
+		if (this.bestRoute == null || tempRoute.getTotalDuration() < this.bestRoute.getTotalDuration()
+				|| (tempRoute.getTotalDuration().equals(this.bestRoute.getTotalDuration())
+						&& tempRoute.getTotalDistance() < this.bestRoute.getTotalDistance())) {
 			this.bestRoute = tempRoute;
 		}
 	}

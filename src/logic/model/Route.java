@@ -49,7 +49,7 @@ public class Route {
 		Position result = null;
 		try {
 			result = this.stops.get(index);
-		} catch (Exception e) {
+		} catch (IndexOutOfBoundsException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
@@ -92,7 +92,7 @@ public class Route {
 		this.durations = durations;
 	}
 
-	public Integer getDuration() {
+	public Integer getTotalDuration() {
 		return this.durations.get(this.durations.size() - 1);
 	}
 
@@ -101,11 +101,8 @@ public class Route {
 		return distances;
 	}
 
-	public Integer getDistance() {
-		Integer totalDistance = 0;
-		for (Integer distance : this.distances)
-			totalDistance += distance;
-		return totalDistance;
+	public Integer getTotalDistance() {
+		return this.getDistances().get(this.getDistances().size() - 1);
 	}
 
 	public void setDistances(List<Integer> distances) throws InvalidInputException {

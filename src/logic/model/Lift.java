@@ -96,7 +96,7 @@ public class Lift {
 	}
 
 	public LocalDateTime getStopDateTime() {
-		return this.getStartDateTime().plusMinutes(this.getRoute().getDuration());
+		return this.getStartDateTime().plusMinutes(this.getRoute().getTotalDuration());
 	}
 
 	public Integer getFreeSeats() {
