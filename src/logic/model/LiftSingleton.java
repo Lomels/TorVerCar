@@ -6,7 +6,7 @@ import java.util.List;
 import logic.utilities.Status;
 
 public class LiftSingleton {
-	private List<Position> listPos;
+	private List<Position> listPos = new ArrayList<>();
 	private List<LiftMatchResult> listLifts = new ArrayList<>();
 	private Lift selectedLift;
 	private Position startPoint;
