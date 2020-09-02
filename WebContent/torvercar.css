@@ -1,0 +1,281 @@
+body ,html{
+  margin: 0;
+  font-size: 28px;
+  /* font-family: Roboto, sans-serif; */
+  font-family: Helvetica, Cambria;
+  font-weight: bold;
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+label.graytext{
+	color: #39393a;
+}
+
+label.greentext{
+	color: #5f976a;
+}
+.header {
+  background-color: #39393a;
+  padding: 30px;
+  text-align: center;
+}
+
+#navbar {
+  overflow: hidden;
+  background-color: #39393a;
+  height: 60px;
+ filter: drop-shadow(0px 3px 12px #39393a);
+}
+
+#navbar a {
+  float: left;
+  display: block;
+  color: #5f976a;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  height: 60px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  opacity: 1;
+  transition: 0.3s;
+
+}
+
+#navbar a:hover {
+  /* background-color: #ddd;
+  color: #5f976a; */
+  background-color: #5f976a;
+  color: #39393a;
+}
+
+#navbar a.active {
+  background-color: #5f976a;
+  color: #39393a;
+}
+
+#navbar a.login{
+	border-style: solid;
+	height: 70%;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+#navbar a.login:hover{
+	border-color:#5f976a;
+	background-color: #5f976a;
+	color: #39393a;
+}
+
+
+#navbar a.right{
+  float: right;
+  }
+
+.content {
+  padding: 16px;
+}
+
+.bg-image {
+  /* The image used */
+  background-image: url("../../images/background.jpg");
+
+ /* Add the blur effect
+  filter: blur(8px);
+  -webkit-filter: blur(8px);*/
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/*---- LOGIN DIALOG ----*/
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: #5f976a;
+  color: #39393a;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 80px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+button.cancel {
+  background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #39393a; /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #39393a;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  /* border: 1px solid #888; */
+  width: 35%; /* Could be more or less, depending on screen size */
+  filter: drop-shadow(0px 5px 12px #39393a)
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+@keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+
+/*-------------------END LOGIN----------------------*/
+
+.button-active {
+	  -fx-background-color: #5f976a; /* Green */
+	  -fx-background-radius: 0.0;
+	  -fx-text-fill: #39393a;	/* Gray */
+	  padding: 15.0px 32.0px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 18.0px;
+	  margin: 4.0px 2.0px;
+	  cursor: pointer;
+}
+
+.button-unactive{
+	  -fx-background-color: null;
+	  -fx-background-radius: 0.0;
+	  -fx-text-fill: #5f976a;
+	  padding: 15.0px 32.0px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 18.0px;
+	  margin: 4.0px 2.0px;
+	  cursor: pointer;
+}
+
+/* DIALOG */
+.dialog-pane {
+    -fx-background-color: white;
+}
+
+.dialog-pane:label {
+    -fx-text-fill: #39393a;
+}
+
+.dialog-pane:header  .header-panel {
+    -fx-background-color: #39393a;
+}
+
+.dialog-pane:header .header-panel .label {
+    -fx-font-style: italic;
+    -fx-font-size: 2.0em;    
+    -fx-text-fill: #5f976a;
+    
+}
+
+.dialog-pane > .button-bar > .container > .button{
+  -fx-alignment: center;
+  -fx-focus-traversable: false;
+  -fx-padding: 0.416em; /* 5px */
+  -fx-background-color: #5f976a; /* Green */
+  -fx-background-radius: 0.0;
+  -fx-text-fill: #39393a;
+}
+
+

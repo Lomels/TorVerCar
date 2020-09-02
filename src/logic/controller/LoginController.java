@@ -16,9 +16,7 @@ public class LoginController {
 	public void login(UserBean bean) throws InvalidInputException, DatabaseException, InvalidStateException{
 		if(checkBean(bean)) {
 			if(!ourDb.wasBannedByUserID(bean.getUserID())) {
-
 				sg.setRole(ourDb.loadRoleByUserID(bean.getUserID()));
-				
 				//TODO: implementare controllo sessione attiva
 				switch(sg.getRole()) {
 					case STUDENT:
