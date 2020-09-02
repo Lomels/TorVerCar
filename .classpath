@@ -25,7 +25,7 @@
 	<classpathentry kind="lib" path="Dependencies/slf4j-api-1.7.25.jar"/>
 	<classpathentry kind="lib" path="Dependencies/slf4j-simple-1.7.30.jar"/>
 	<classpathentry kind="lib" path="Dependencies/controlsfx-8.40.11.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_221">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
