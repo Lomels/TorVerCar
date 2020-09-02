@@ -18,7 +18,6 @@ import logic.model.Lift;
 import logic.model.Route;
 import logic.model.Student;
 import logic.model.StudentCar;
-import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
 public class TestUtilities {
@@ -26,6 +25,7 @@ public class TestUtilities {
 	protected static final MySqlDAO dao = new MySqlDAO();
 	protected static final MapsApi maps = AdapterMapsApi.getInstance();
 	private static final PassengerController PASSENGER_CONTROLLER = new PassengerController();
+	private static final TestLogger LOGGER = new TestLogger(TestUtilities.class.getCanonicalName());
 
 	public static final Integer DRIVER_NUMBER = 5;
 	public static final Integer PASSENGER_NUMBER = 30;
@@ -100,7 +100,7 @@ public class TestUtilities {
 	public static void emptyDB() {
 		dao.emptyDB();
 		dbModified();
-		MyLogger.info("DB emptied!");
+		LOGGER.info("DB emptied!");
 	}
 
 	public static void populateUsers() {
@@ -119,7 +119,7 @@ public class TestUtilities {
 				}
 			}
 			dbModified();
-			MyLogger.info("PopulateUsers completed.");
+			LOGGER.info("PopulateUsers completed.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -147,7 +147,7 @@ public class TestUtilities {
 				}
 			}
 			dbModified();
-			MyLogger.info("PopulateLifts completed.");
+			LOGGER.info("PopulateLifts completed.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -179,9 +179,9 @@ public class TestUtilities {
 			populateUsers();
 			populateLifts();
 			modified = false;
-			MyLogger.info("PopulateDB completed.");
+			LOGGER.info("PopulateDB completed.");
 		} else {
-			MyLogger.info("DB was not modified from last populateDB().");
+			LOGGER.info("DB was not modified from last populateDB().");
 		}
 	}
 

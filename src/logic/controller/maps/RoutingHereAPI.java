@@ -8,7 +8,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import logic.controller.exception.InvalidInputException;
 import logic.controller.httpclient.MyHttpClient;
 import logic.model.Position;
 import logic.model.Route;
@@ -28,15 +27,15 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 	}
 
 	@Override
-	public Route startToStop(Position pickup, Position dropoff) throws InvalidInputException {
+	public Route startToStop(Position startPosition, Position stopPosition) {
 		List<Position> stops = new ArrayList<>();
-		stops.add(pickup);
-		stops.add(dropoff);
+		stops.add(startPosition);
+		stops.add(stopPosition);
 		return this.startToStop(stops);
 	}
 
 	@Override
-	public Route startToStop(List<Position> stops) throws InvalidInputException {
+	public Route startToStop(List<Position> stops) {
 		Integer duration = null;
 		Integer distance = null;
 
@@ -76,7 +75,6 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 			return new Route(stops, durations, distances);
 
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -99,7 +97,7 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 	}
 
 	@Override
-	public Route addInternalRoute(Route startRoute, List<Position> addStops) throws InvalidInputException {
+	public Route addInternalRoute(Route startRoute, List<Position> addStops) {
 		List<Position> startStops = startRoute.getStops();
 
 		PositionListCombiner combiner = new PositionListCombiner();

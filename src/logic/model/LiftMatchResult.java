@@ -2,7 +2,6 @@ package logic.model;
 
 import java.time.LocalDateTime;
 
-import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;
 
 public class LiftMatchResult {
@@ -11,8 +10,7 @@ public class LiftMatchResult {
 	private LocalDateTime relativeStartDateTime;
 	private LocalDateTime relativeStopDateTime;
 
-	public LiftMatchResult(Lift lift, LocalDateTime relativeStartDateTime, LocalDateTime relativeStopDateTime)
-			throws InvalidInputException {
+	public LiftMatchResult(Lift lift, LocalDateTime relativeStartDateTime, LocalDateTime relativeStopDateTime) {
 		InputChecker.checkNotNull(lift, "Lift");
 		this.lift = lift;
 		InputChecker.checkNotNull(relativeStartDateTime, "RelativeStartDateTime");

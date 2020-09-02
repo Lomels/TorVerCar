@@ -38,7 +38,7 @@ public class Lift {
 		return startDateTime;
 	}
 
-	public void setStartDateTime(LocalDateTime startDateTime) throws InvalidInputException {
+	public void setStartDateTime(LocalDateTime startDateTime) {
 		InputChecker.checkNotNull(startDateTime, "startDateTime");
 		this.startDateTime = startDateTime;
 	}
@@ -60,7 +60,7 @@ public class Lift {
 		return driver;
 	}
 
-	public void setDriver(StudentCar driver) throws InvalidInputException {
+	public void setDriver(StudentCar driver) {
 		InputChecker.checkNotNull(driver, "Driver");
 		this.driver = driver;
 	}
@@ -80,7 +80,7 @@ public class Lift {
 		return route;
 	}
 
-	public void setRoute(Route route) throws InvalidInputException {
+	public void setRoute(Route route) {
 		InputChecker.checkNotNull(route, "Route");
 		this.route = route;
 	}

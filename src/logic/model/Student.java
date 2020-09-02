@@ -61,8 +61,8 @@ public class Student {
 	}
 
 	
-	public void setName(String name) throws InvalidInputException {
-		InputChecker.checkGenericString(name);
+	public void setName(String name)  {
+		InputChecker.checkNotNull(name, "Name");
 		this.name = name;
 	}
 
@@ -70,8 +70,8 @@ public class Student {
 		return this.surname;
 	}
 
-	public void setSurname(String surname) throws InvalidInputException {
-		InputChecker.checkGenericString(surname);
+	public void setSurname(String surname)  {
+		InputChecker.checkNotNull(surname, "Surname");
 		this.surname = surname;
 	}
 

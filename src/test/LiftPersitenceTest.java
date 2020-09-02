@@ -13,14 +13,21 @@ import org.junit.Test;
 
 import logic.controller.LiftController;
 import logic.controller.PassengerController;
+import logic.controller.exception.ApiNotReachableError;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
 import logic.model.Lift;
+import logic.model.Position;
+import logic.model.Route;
 import logic.model.Student;
+import logic.model.StudentCar;
+import test.utilities.TestLogger;
 import test.utilities.TestUtilities;
 
 public class LiftPersitenceTest extends TestUtilities {
+
+	private static final TestLogger LOGGER = new TestLogger(LiftPersitenceTest.class.getCanonicalName());
 
 	private void setup() {
 		populateDB();
@@ -39,8 +46,6 @@ public class LiftPersitenceTest extends TestUtilities {
 
 		assertTrue(fromDB.compare(lift));
 	}
-
-//	public void createLift()
 
 	@Test
 	public void loadLiftByID() throws DatabaseException, InvalidInputException {
@@ -129,15 +134,14 @@ public class LiftPersitenceTest extends TestUtilities {
 	}
 
 	@Test
-	public void removePassenger()
-			throws InvalidInputException, DatabaseException, InvalidStateException {
+	public void removePassenger() throws InvalidInputException, DatabaseException, InvalidStateException {
 		this.setup();
 		PassengerController passengerController = new PassengerController();
 
 		Lift newLift = getDummyLift();
-		
+
 		dao.saveLift(newLift);
-		
+
 		newLift = dao.getLastInsertedLift();
 
 		Student student1 = addStudentToDB();
@@ -158,6 +162,66 @@ public class LiftPersitenceTest extends TestUtilities {
 
 		assertTrue(conditionInApp && conditionInDB);
 
+	}
+
+	@Test
+	public void createLiftCorrect()
+			throws ApiNotReachableError, InvalidInputException, DatabaseException, InvalidStateException {
+		this.setup();
+
+		LiftController liftController = new LiftController();
+		String startDateTimeString = START_DATE_TIME_EARLY;
+		Position pickUp = maps.addrToPos(ADDR_MARCO).get(0);
+		Position dropOff = maps.addrToPos(ADDR_UNI).get(0);
+		Route route = maps.startToStop(pickUp, dropOff);
+		int maxDuration = (int) (route.getTotalDuration() * 1.5);
+		String note = "Test Lift";
+		StudentCar driver = getDummyDriver();
+		Lift newLift = liftController.createLift(startDateTimeString, maxDuration, note, driver, pickUp, dropOff);
+		dbModified();
+
+		Lift fromDB = dao.getLastInsertedLift();
+
+		LOGGER.info("fromDB", fromDB);
+
+		assertTrue(newLift.compare(fromDB));
+	}
+
+	@Test
+	public void createLiftWrongMaxDuration()
+			throws ApiNotReachableError, InvalidInputException, DatabaseException, InvalidStateException {
+		this.setup();
+
+		LiftController liftController = new LiftController();
+		String startDateTimeString = START_DATE_TIME_EARLY;
+		Position pickUp = maps.addrToPos(ADDR_MARCO).get(0);
+		Position dropOff = maps.addrToPos(ADDR_UNI).get(0);
+		Route route = maps.startToStop(pickUp, dropOff);
+		int maxDuration = (int) (route.getTotalDuration() * 0.5);
+		String note = "Test Lift";
+		StudentCar driver = getDummyDriver();
+		assertThrows(InvalidStateException.class,
+				() -> liftController.createLift(startDateTimeString, maxDuration, note, driver, pickUp, dropOff));
+	}
+
+	@Test
+	public void createLiftDriverAlreadyOffered()
+			throws ApiNotReachableError, InvalidInputException, DatabaseException, InvalidStateException {
+		this.setup();
+
+		LiftController liftController = new LiftController();
+		String startDateTimeString = START_DATE_TIME_EARLY;
+		Position pickUp = maps.addrToPos(ADDR_MARCO).get(0);
+		Position dropOff = maps.addrToPos(ADDR_UNI).get(0);
+		Route route = maps.startToStop(pickUp, dropOff);
+		int maxDuration = (int) (route.getTotalDuration() * 1.5);
+		String note = "Test Lift";
+		StudentCar driver = getDummyDriver();
+
+		liftController.createLift(startDateTimeString, maxDuration, note, driver, pickUp, dropOff);
+
+		assertThrows(InvalidStateException.class,
+				() -> liftController.createLift(startDateTimeString, maxDuration, note, driver, pickUp, dropOff));
 	}
 
 //	public void listByDriver()

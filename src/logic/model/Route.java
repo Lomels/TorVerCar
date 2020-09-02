@@ -20,7 +20,7 @@ public class Route {
 	private List<Integer> distances;
 //	private Integer distance;
 
-	public Route(List<Position> stops, List<Integer> durations, List<Integer> distances) throws InvalidInputException {
+	public Route(List<Position> stops, List<Integer> durations, List<Integer> distances)  {
 		this.setStops(stops);
 		this.setDurations(durations);
 		this.setDistances(distances);
@@ -31,7 +31,7 @@ public class Route {
 		return stops;
 	}
 
-	public void setStops(List<Position> stops) throws InvalidInputException {
+	public void setStops(List<Position> stops) {
 		InputChecker.checkNotNull(stops, "Stops");
 		this.stops = stops;
 	}
@@ -79,7 +79,7 @@ public class Route {
 		return null;
 	}
 
-	public void setDurations(List<Integer> durations) throws InvalidInputException {
+	public void setDurations(List<Integer> durations) {
 		InputChecker.checkNotNull(durations, "Durations");
 		this.durations = durations;
 	}
@@ -97,7 +97,7 @@ public class Route {
 		return this.getDistances().get(this.getDistances().size() - 1);
 	}
 
-	public void setDistances(List<Integer> distances) throws InvalidInputException {
+	public void setDistances(List<Integer> distances)  {
 		InputChecker.checkNotNull(distances, "Distances");
 		this.distances = distances;
 	}

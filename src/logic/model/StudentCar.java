@@ -34,7 +34,7 @@ public class StudentCar extends Student {
 		return carInfo;
 	}
 
-	public void setCarInfo(CarInfo carInfo) throws InvalidInputException {
+	public void setCarInfo(CarInfo carInfo)  {
 		InputChecker.checkNotNull(carInfo, "CarInfo");
 		this.carInfo = carInfo;
 	}

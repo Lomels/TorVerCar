@@ -12,14 +12,13 @@ public class Position {
 	private Double score;
 	private String address;
 
-	public Position(Double lat, Double lon, Double score, String address) throws InvalidInputException {
+	public Position(Double lat, Double lon, Double score, String address) {
 		super();
 		this.setLat(lat);
 		this.setLon(lon);
 		this.score = score;
 		this.address = address;
 	}
-
 
 	public Double getLat() {
 		return lat;
@@ -37,12 +36,12 @@ public class Position {
 		return address;
 	}
 
-	public void setLat(Double lat) throws InvalidInputException {
+	public void setLat(Double lat) {
 		InputChecker.checkNotNull(lat, "Latitude");
 		this.lat = lat;
 	}
 
-	public void setLon(Double lon) throws InvalidInputException {
+	public void setLon(Double lon) {
 		InputChecker.checkNotNull(lon, "Longitude");
 		this.lon = lon;
 	}
@@ -69,7 +68,7 @@ public class Position {
 		return new Position(json.getDouble("lat"), json.getDouble("lon"), json.getDouble("score"),
 				json.getString("address"));
 	}
-	
+
 	public boolean compare(Position other) {
 		return this.lat.equals(other.lat) && this.lon.equals(other.lon);
 	}

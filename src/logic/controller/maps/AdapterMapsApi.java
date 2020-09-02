@@ -2,8 +2,6 @@ package logic.controller.maps;
 
 import java.util.List;
 
-import logic.controller.exception.ApiNotReachableException;
-import logic.controller.exception.InvalidInputException;
 import logic.model.Position;
 import logic.model.Route;
 
@@ -33,17 +31,17 @@ public class AdapterMapsApi implements MapsApi {
 	}
 
 	@Override
-	public List<Position> addrToPos(String address) throws ApiNotReachableException, InvalidInputException {
+	public List<Position> addrToPos(String address) {
 		return this.geodecode.addrToPos(address);
 	}
 
 	@Override
-	public Route startToStop(Position pickup, Position dropoff) throws InvalidInputException {
+	public Route startToStop(Position pickup, Position dropoff) {
 		return this.routing.startToStop(pickup, dropoff);
 	}
 
 	@Override
-	public Route startToStop(List<Position> stops) throws InvalidInputException {
+	public Route startToStop(List<Position> stops) {
 		return this.routing.startToStop(stops);
 	}
 
@@ -63,7 +61,7 @@ public class AdapterMapsApi implements MapsApi {
 	}
 
 	@Override
-	public Route addInternalRoute(Route startingRoute, List<Position> stops) throws InvalidInputException {
+	public Route addInternalRoute(Route startingRoute, List<Position> stops) {
 		return this.routing.addInternalRoute(startingRoute, stops);
 	}
 

@@ -160,10 +160,14 @@ public class LiftController {
 
 		try {
 			matchedLifts = futureCall.get();
-		} catch (InterruptedException | ExecutionException e) {
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		listener.onThreadEnd(matchedLifts);
 	}
 
@@ -189,8 +193,7 @@ public class LiftController {
 
 		@Override
 		public List<LiftMatchResult> call() {
-			List<LiftMatchResult> matchedLifts = this.matchLifts();
-			return matchedLifts;
+			return this.matchLifts();
 		}
 
 		public List<LiftMatchResult> matchLifts() {
@@ -215,24 +218,21 @@ public class LiftController {
 				Integer currentDuration = currentRoute.getTotalDuration();
 
 				// Add all the possible routes and order them
-				try {
-					// Compute the route passing for the positions given in stops
-					Route newRoute = this.maps.addInternalRoute(currentRoute, stops);
-					// If the newRoute has a duration less than the maxDuration, it is considered a
-					// match
-					if (newRoute.getTotalDuration() <= currentMaxDuration) {
-						possibleLift.setRoute(newRoute);
-						if (this.isBeforeStopDateTime(possibleLift)) {
-							Integer deltaDuration = newRoute.getTotalDuration() - currentDuration;
-							// id is sequential number in order of receiving by the DB
-							Integer id = index - initIndex;
-							unorderedLifts.add(new UnorderedLift(possibleLift, deltaDuration, id, MAX_LIFTS_LISTED));
-						}
+
+				// Compute the route passing for the positions given in stops
+				Route newRoute = this.maps.addInternalRoute(currentRoute, stops);
+				// If the newRoute has a duration less than the maxDuration, it is considered a
+				// match
+				if (newRoute.getTotalDuration() <= currentMaxDuration) {
+					possibleLift.setRoute(newRoute);
+					if (this.isBeforeStopDateTime(possibleLift)) {
+						Integer deltaDuration = newRoute.getTotalDuration() - currentDuration;
+						// id is sequential number in order of receiving by the DB
+						Integer id = index - initIndex;
+						unorderedLifts.add(new UnorderedLift(possibleLift, deltaDuration, id, MAX_LIFTS_LISTED));
 					}
-				} catch (InvalidInputException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
+
 			}
 
 			// Ordered list of routes by smaller variation of duration
@@ -266,12 +266,9 @@ public class LiftController {
 			LocalDateTime relativeStartDateTime = lift.getStartDateTime().plusMinutes(deltaStartDateTime);
 			LocalDateTime relativeStopDateTime = lift.getStartDateTime().plusMinutes(deltaStopDateTime);
 			LiftMatchResult result = null;
-			try {
-				result = new LiftMatchResult(lift, relativeStartDateTime, relativeStopDateTime);
-			} catch (InvalidInputException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+			result = new LiftMatchResult(lift, relativeStartDateTime, relativeStopDateTime);
+
 			this.results.add(result);
 		}
 	}

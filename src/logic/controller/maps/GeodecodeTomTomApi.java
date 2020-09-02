@@ -8,8 +8,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import logic.controller.exception.ApiNotReachableException;
-import logic.controller.exception.InvalidInputException;
+import logic.controller.exception.ApiNotReachableError;
 import logic.controller.httpclient.MyHttpClient;
 import logic.model.Position;
 
@@ -22,7 +21,7 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 	private static final String path = "/search/2/geocode";
 	private static final String ext = ".json";
 
-	// Costruttore
+	// Constructor
 	private GeodecodeTomTomApi() {
 	}
 
@@ -35,7 +34,7 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 
 	// override the interface
 	@Override
-	public List<Position> addrToPos(String address) throws InvalidInputException, ApiNotReachableException {
+	public List<Position> addrToPos(String address) {
 		List<Position> positions = new ArrayList<>();
 
 		StringBuilder builder = new StringBuilder();
@@ -67,7 +66,7 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (NullPointerException e) {
-			throw new ApiNotReachableException("TomTom API is not reachable now.");
+			throw new ApiNotReachableError("TomTom API is not reachable now.");
 		}
 		return positions;
 	}

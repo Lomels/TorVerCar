@@ -4,91 +4,62 @@ import logic.controller.exception.InvalidInputException;
 
 public class InputChecker {
 
-	private static String emailPattern = "^([a-zA-Z0-9\\.\\_\\-]+)@([a-zA-Z0-9\\.\\_\\-]+)\\.([a-zA-Z0-9\\.\\_\\-]{2,5})$";
-	private static String phonePattern = "^([\\+]*)([0-9\\ ]{10,15})$";
-	//userID must be numeric long between 1 and 10
-	private static String userIDPattern = "^([0-9]{1,10})$";
-	//password must be at least 6 char long and contain at least a symbol
-	private static String passwordPattern = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$";
-	//plate like AA123BB
-	private static String platePattern = "^([a-zA-Z]{2})(\\s*)(\\d{3})(\\s*)([a-zA-Z]{2})$";
-	//generic String must not be empty
-	private static String genericPattern = "^(?!\\s*$).+$";
-	
+	// userID must be numeric long between 1 and 10
+	// password must be at least 6 char long and contain at least a symbol
+	// plate like AA123BB
+	// generic String must not be empty
+
+	private static final String ERRORFORMAT_STRING = "Given %s: %s not match %s";
+
 	private InputChecker() {
-		//must remain empty
+		// must remain empty
 	}
 
-	public static void checkEmail(String email) throws InvalidInputException{
-		try {
-			if(!email.matches(InputChecker.emailPattern)) {
-				throw new InvalidInputException("Given email does not match " + InputChecker.emailPattern);
-			}
-		} catch (NullPointerException e) {
-			throw new InvalidInputException("Given email must not be null"); 
+	private static void checkPattern(String stringToCheck, CheckPatterns pattern) throws InvalidInputException {
+		String name = pattern.name();
+		InputChecker.checkNotNull(stringToCheck, name);
+		if (!stringToCheck.matches(pattern.getPattern())) {
+			String message = String.format(ERRORFORMAT_STRING, name, stringToCheck, pattern.getPattern());
+			throw new InvalidInputException(message);
 		}
 	}
-	
-	public static void checkPhone(String phone) throws InvalidInputException{
-		try {
-			if(!phone.matches(InputChecker.phonePattern)) {
-				throw new InvalidInputException("Given phone does not match " + InputChecker.phonePattern);
-			}
-		} catch (NullPointerException e) {
-			throw new InvalidInputException("Given phone must not be null"); 
-		}
+
+	public static void checkEmail(String email) throws InvalidInputException {
+		InputChecker.checkPattern(email, CheckPatterns.EMAIL);
 	}
-	
-	public static void checkUserID(String userID) throws InvalidInputException{
-		try {
-			if(!userID.matches(InputChecker.userIDPattern)) {
-				throw new InvalidInputException("Given userID does not match " + InputChecker.userIDPattern);
-			}
-		} catch (NullPointerException e) {
-			throw new InvalidInputException("Given userID must not be null"); 
-		}
+
+	public static void checkPhone(String phone) throws InvalidInputException {
+		InputChecker.checkPattern(phone, CheckPatterns.PHONE);
 	}
-	
-	public static void checkPassword(String password) throws InvalidInputException{
-		try {
-			if(!password.matches(InputChecker.passwordPattern)) {
-				throw new InvalidInputException("Given password does not match " + InputChecker.passwordPattern);
-			}
-		} catch (NullPointerException e) {
-			throw new InvalidInputException("Given password must not be null"); 
-		}
+
+	public static void checkUserID(String userID) throws InvalidInputException {
+		InputChecker.checkPattern(userID, CheckPatterns.USERID);
+
 	}
-	
-	public static void checkPlate(String plate) throws InvalidInputException{
-		try {
-			if(!plate.matches(InputChecker.platePattern)) {
-				throw new InvalidInputException("Given plate does not match " + InputChecker.platePattern);
-			}
-		} catch (NullPointerException e) {
-			throw new InvalidInputException("Given plate must not be null"); 
-		}
+
+	public static void checkPassword(String password) throws InvalidInputException {
+		InputChecker.checkPattern(password, CheckPatterns.PASSWORD);
 	}
-	
-	public static void checkGenericString(String generic) throws InvalidInputException{
-		try {
-			if(!generic.matches(InputChecker.genericPattern)) {
-				throw new InvalidInputException("Given generic string is empty");
-			}
-		} catch (NullPointerException e) {
-			throw new InvalidInputException("Given generic must not be null"); 
-		}
+
+	public static void checkPlate(String plate) throws InvalidInputException {
+		InputChecker.checkPattern(plate, CheckPatterns.PLATE);
 	}
-	
-	public static void checkNotNull(Object object, String name) throws InvalidInputException{
-		if(object == null)
-			throw new InvalidInputException(String.format("%s must not be null.", name));
+
+	public static void checkGenericString(String generic) throws InvalidInputException {
+		InputChecker.checkPattern(generic, CheckPatterns.GENERIC_STRING);
 	}
-	
-	public static void checkIntegerMoreThan(String name, Integer value, Integer lowerBound) throws InvalidInputException {
+
+	public static void checkNotNull(Object object, String name) {
+		if (object == null)
+			throw new NullPointerException(String.format("%s must not be null.", name));
+	}
+
+	public static void checkIntegerMoreThan(String name, Integer value, Integer lowerBound)
+			throws InvalidInputException {
 		InputChecker.checkNotNull(value, name);
 		InputChecker.checkNotNull(lowerBound, "Inserted lowerBound for " + name + ".");
-		if(value <= lowerBound)
+		if (value <= lowerBound)
 			throw new InvalidInputException(String.format("%s: %d must be more than %d.", name, value, lowerBound));
 	}
-	
+
 }

@@ -7,7 +7,7 @@ public class CarInfo {
 	private String plate;
 	private Integer seats;
 	private String model;
-	private String colour;
+	private String color;
 
 	public CarInfo(String plate, Integer seats, String model, String colour) throws InvalidInputException {
 		this.setPlate(plate);
@@ -38,24 +38,24 @@ public class CarInfo {
 		return model;
 	}
 
-	public void setModel(String model) throws InvalidInputException {
-		InputChecker.checkGenericString(model);
+	public void setModel(String model) {
+		InputChecker.checkNotNull(model, "Model");
 		this.model = model;
 
 	}
 
 	public String getColour() {
-		return colour;
+		return color;
 	}
 
-	public void setColour(String colour) throws InvalidInputException {
-		InputChecker.checkGenericString(colour);
-		this.colour = colour;
+	public void setColour(String color) {
+		InputChecker.checkNotNull(color, "Color");
+		this.color = color;
 	}
 
 	@Override
 	public String toString() {
-		return "CarInfo [plate=" + plate + ", seats=" + seats + ", model=" + model + ", colour=" + colour + "]";
+		return "CarInfo [plate=" + plate + ", seats=" + seats + ", model=" + model + ", colour=" + color + "]";
 	}
 
 }

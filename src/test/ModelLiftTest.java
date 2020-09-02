@@ -19,7 +19,7 @@ import logic.model.Student;
 import logic.model.StudentCar;
 import test.utilities.TestUtilities;
 
-public class LiftTest extends TestUtilities {
+public class ModelLiftTest extends TestUtilities {
 
 	Integer liftID;
 	LocalDateTime startDateTime;
@@ -31,7 +31,7 @@ public class LiftTest extends TestUtilities {
 
 	Lift dummyLift;
 
-	public LiftTest() throws InvalidInputException, DatabaseException {
+	public ModelLiftTest() throws InvalidInputException, DatabaseException {
 		liftID = null;
 		startDateTime = LocalDateTime.parse(START_DATE_TIME_EARLY);
 		route = Route.jsonDecode(new JSONObject(R_MARCO_UNI));

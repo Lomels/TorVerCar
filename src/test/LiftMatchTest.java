@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import logic.controller.LiftController;
 import logic.controller.LiftMatchListener;
-import logic.controller.exception.ApiNotReachableException;
+import logic.controller.exception.ApiNotReachableError;
 import logic.controller.exception.InvalidInputException;
 import logic.model.LiftMatchResult;
 import logic.model.Position;
@@ -25,7 +25,7 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 	private Route route;
 	private boolean firstLog = true;
 
-	public LiftMatchTest() throws ApiNotReachableException, InvalidInputException {
+	public LiftMatchTest() throws ApiNotReachableError, InvalidInputException {
 		List<Position> stops = new ArrayList<>();
 
 		stops.add(maps.addrToPos(ADDR_MARCO).get(0));

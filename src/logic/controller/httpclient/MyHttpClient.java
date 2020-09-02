@@ -11,6 +11,8 @@ import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 
+import logic.controller.exception.ApiNotReachableError;
+
 public class MyHttpClient {
 
 	private MyHttpClient() {
@@ -33,8 +35,7 @@ public class MyHttpClient {
 			response.close();
 			client.close();
 		} catch (ParseException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ApiNotReachableError("Could not get response from: " + requestUrl.toString() + ".");
 		}
 		return body;
 
