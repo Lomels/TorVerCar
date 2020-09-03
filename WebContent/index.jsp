@@ -20,7 +20,8 @@
 	
 </head>
 
-<body>
+<body>	<div class="bg-image home">	
+
 	
 	<!-- ***** Header Area Start ***** -->
 	<header class="header_area clearfix">
@@ -40,7 +41,6 @@
 	<!-- ***** Header Area End ***** -->
 
 	<!-- ***** Welcome Area Start ***** -->
-	<div class="bg-image">	
 	
 	<!-- Login Dialog -->	
 		<div id="loginDialog" class="modal">
@@ -123,17 +123,7 @@
 				</div>
 				
 		  </form>
-		</div>
-		
-		<%
-		if (currentUser.getName() != null) {
-	%>
-	<p class="text-center"><jsp:getProperty property="name"
-			name="currentUser" /> ${sessionScope.check}</p>
-	<%
-		}
-	%>
-		
+		</div>		
 	</div>
 	<!-- ***** Welcome Area End ***** -->
 	

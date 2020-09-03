@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet"
+href="torvercar.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
+<meta charset="UTF-8">
+<title>TorVerCar</title>
+</head>
+<header>
+<div id="navbar">
+			<a href="">Home</a> 
+			<a href="">Book</a> 
+			<a href="">Offer</a>
+			<a class="active" href="">MyCar</a> 
+			<a href="">MyLift</a> 
+			<a class="right" href="">Logout</a> 
+			<a class="right" href="">Profile <i class='fas fa-user-graduate' style='font-size:36px'></i></a>
+			
+</div>
+
+</header>
+<body>
+
+<div classe="bg-image">
+<div class="column"></div>
+
+<div class="column2" >
+
+
+<div class="card" style="width:100%; height: 100%">
+
+  <p style="color:#39393a; text-align:center; font-family:Helvetica; font-size:28px;">Car Card</p>
+  <label style="color:#5f976a;">Model:  </label>
+  <input type="text" value="i20" id="myModel" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px; border-color:#FFFFFF;"disabled>
+  
+  <label style="color:#5f976a;">Color:  </label>
+  <input type="text" value="BLACK" id="myColor" style="color:#39393a;background-color:#FFFFFF; width: 300px; height:30px; border-color:#FFFFFF;" disabled>
+  
+  
+  <label style="color:#5f976a;">Plate:  </label>
+  <input type="text" value="PDPDPD" id="myPlate" style="color:#39393a;background-color:#FFFFFF; width: 300px; height:30px;border-color:#FFFFFF;" disabled>
+  
+  <label style="color:#5f976a;">Seats available:  </label>
+  <input type="text" value="3" id="mySeats" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px;border-color:#FFFFFF;" disabled>
+ <br>
+
+<t class="button" onclick="back()" id="btnBack" style="text-align:center; width:100px; background-color:#39393a; color:#5f976a;">Back <i class='fas fa-angle-double-left'></i></t>
+<t class="button" onclick="save()"  id="btnSave" style="text-align:center; width:100px; margin:10px; background-color:#39393a; color: #5f976a;" >Save</t>
+<t class="button" onclick="edit()" style="text-align:center; width:100px; " id="btnEdit">Edit</t>
+<br>
+
+ 
+</div>
+
+
+
+
+
+
+ 
+</div>
+<div class="column"></div>
+
+
+
+
+</div>
+
+<script>
+function edit() {
+	
+  document.getElementById("btnEdit").style.backgroundColor = "#39393a";
+  document.getElementById("btnEdit").style.color = "#5f976a";
+  
+  document.getElementById("btnSave").style.backgroundColor =  "#5f976a";
+  document.getElementById("btnSave").style.color =  "#39393a";
+  
+  document.getElementById("btnBack").style.backgroundColor = "#5f976a";
+  document.getElementById("btnBack").style.color = "#39393a";
+  
+  
+  
+  document.getElementById("mySeats").style.borderColor= "#aaa";
+  document.getElementById("myPlate").style.borderColor= "#aaa";
+  document.getElementById("myColor").style.borderColor= "#aaa";
+  document.getElementById("myModel").style.borderColor= "#aaa";	
+  
+  
+  document.getElementById("mySeats").value= '';
+  document.getElementById("myPlate").value= '';
+  document.getElementById("myColor").value = '';
+  document.getElementById("myModel").value = '';
+
+  document.getElementById("mySeats").disabled= false;
+  document.getElementById("myPlate").disabled = false;
+  document.getElementById("myColor").disabled = false;
+  document.getElementById("myModel").disabled = false;
+  
+ 
+  
+  
+}
+function back(){
+	
+	  document.getElementById("btnEdit").style.backgroundColor = "#5f976a";
+	  document.getElementById("btnEdit").style.color = "#39393a";
+	  
+	  document.getElementById("btnSave").style.backgroundColor =  "#39393a"; 
+	  document.getElementById("btnSave").style.color =  "#5f976a";
+	  
+	  document.getElementById("btnBack").style.backgroundColor = "#39393a";
+	  document.getElementById("btnBack").style.color =  "#5f976a";
+	  
+	  
+	  
+	
+	 document.getElementById("mySeats").style.borderColor= "#FFFFFF";
+	  document.getElementById("myPlate").style.borderColor= "#FFFFFF";
+	  document.getElementById("myColor").style.borderColor= "#FFFFFF";
+	  document.getElementById("myModel").style.borderColor= "#FFFFFF";	
+	  
+	  
+	  document.getElementById("mySeats").value= '3';  //TODO get from database
+	  document.getElementById("myPlate").value= 'PDPDPD';
+	  document.getElementById("myColor").value = 'BLACK';
+	  document.getElementById("myModel").value = 'i20';
+
+	  document.getElementById("mySeats").disabled= true;
+	  document.getElementById("myPlate").disabled = true;
+	  document.getElementById("myColor").disabled = true;
+	  document.getElementById("myModel").disabled = true;
+	  
+	
+}
+</script>
+
+
+
+
+</body>
+</html>

@@ -20,11 +20,6 @@ import logic.utilities.MyLogger;
 
 @WebServlet("/LoginControllerServlet")
 public class LoginControllerServlet extends HttpServlet {
-
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {

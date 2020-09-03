@@ -13,7 +13,7 @@
 		<div id="navbar">
 			<a class="active" href="">Home</a> 
 			<a href="">Book</a> 
-			<a href="">Offer</a>
+			<a href="offer.jsp">Offer</a>
 			<a href="">MyCAR</a> 
 			<a href="">MyLIFT</a> 
 			<a class="right" onclick="document.getElementById('regDialog').style.display='block'">Logout</a>
@@ -23,7 +23,7 @@
 	<!-- ***** Header Area End ***** -->
 
 	<!-- ***** Welcome Area Start ***** -->
-	<div class="bg-image">	
+	<div class="bg-image home">	
 	
 	<!-- Login Dialog -->	
 		<div id="loginDialog" class="modal">
