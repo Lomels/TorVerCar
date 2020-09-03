@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+
+<jsp:useBean id="currentUser" class="logic.bean.UserBean" scope="session"></jsp:useBean>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,13 +16,16 @@
 	
 	<!-- Core Stylesheet -->
 	<link href="torvercar.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	
 </head>
 
 <body>
+	
 	<!-- ***** Header Area Start ***** -->
 	<header class="header_area clearfix">
 		<div id="navbar">
+			<a id="title" class="title">TorVerCar.</a>
 			<a class="active" href="">Home</a> 
 			<a href="">Book</a> 
 			<a href="">Offer</a>
@@ -27,6 +33,8 @@
 			<a href="">MyLIFT</a> 
 			<a class="right" onclick="document.getElementById('regDialog').style.display='block'">Sign in</a>
 			<a class="login right" onclick="document.getElementById('loginDialog').style.display='block'">Login</a> 
+			<form action="LoginControllerServlet" method="POST"><button type="submit" name="action" value="logout">Logout</button>
+			</form>
 		</div>
 	</header>
 	<!-- ***** Header Area End ***** -->
@@ -36,13 +44,24 @@
 	
 	<!-- Login Dialog -->	
 		<div id="loginDialog" class="modal">
-		  <form class="modal-content animate" action="LoginControllerServlet" method="post">
-		    <div class="container">
-		      <label class="greentext" for="uname"><b>UserID</b></label>
-		      <input id="usr" type="text" placeholder="Enter Username" name="userID" required>
 		
-		      <label class="greentext" for="psw"><b>Password</b></label>
-		      <input id="psw" type="password" placeholder="Enter Password" name="psw" required>
+		  <form class="modal-content animate" action="LoginControllerServlet" method="POST">
+		    <div class="container">
+		    
+		    <div class="row">
+		    	<div class="col-50">
+			    <h3>Login</h3>
+			    </div>
+			    <div class="col-50">
+			    <span onclick="document.getElementById('loginDialog').style.display='none'" class="close" title="Close Modal">&times;</span>
+			 	</div>
+			 </div>
+		      
+		      <label for="uname"><i class="fa fa-id-badge"></i> Student ID</label>
+		      <input type="text" placeholder="Enter Username" name="userID" required>
+		
+		      <label for="psw"><i class="fa fa-lock"></i> Password</label>
+		      <input type="text" placeholder="Enter Password" name="pwd">
 		 	  
 		 	  <button type="button" class="cancel" onclick="document.getElementById('loginDialog').style.display='none'">Cancel</button>
 		      <button type="submit" name="action" value="login">Login</button>
@@ -55,23 +74,119 @@
 	<!-- Registration Dialog -->
 		<div id="regDialog" class="modal">
 		  
-		  <form class="modal-content animate" action="/action_page.php" method="post">
+		  <form class="modal-content animate bigger" action="LoginControllerServlet" method="post">
 		
-		    <div class="container">
-		      <label class="greentext" for="uname"><b>Student ID</b></label>
-		      <input type="text" placeholder="Enter your Student ID" name="uname" required>
-		
-		      <label class="greentext" for="psw"><b>Password</b></label>
-		      <input type="password" placeholder="Enter Password" name="psw" required>
-		 	  
-		 	  <button type="button" class="cancel" onclick="document.getElementById('id01').style.display='none'">Cancel</button>
-		      <button type="submit">Sign up</button>
-		      
-		    </div>
+				<div class="row">
+				  <div class="col-75">
+				    <div class="container">
+				      <div class="row">
+			    		<span onclick="closeReg()" class="close" title="Close Modal">&times;</span>
+			 		</div>
+				        <div class="row">
+				          <div class="col-25">
+				            <h3>Registration</h3>
+				            <label for="fname"><i class="fa fa-id-badge"></i> Student ID</label>
+				              <div class="row">
+					              <div class="col-50">
+					                <input type="text" id="userID" name="userID" placeholder="0123456">
+					              </div>
+					              <div class="col-50">
+				        			<button id="btnCheck" type="submit" name="action" value="check">Check Identity</button>
+					              </div>
+				             </div>
+			
+				          <div class="row ">
+				          	<div id="pwdForm" class="col-50 hidden">
+				              <label for="adr"><i class="fa fa-lock"></i> Password</label>
+				              <input type="password" id="password" name="password" placeholder="">
+				              <label for="city"><i class="fa fa-institution"></i> Repeat Password</label>
+				              <input type="password" class="invalid" id="repeat" name="repeat" placeholder="">
+				 			</div>
+				          </div>
+				        </div>
+				          <div id="dbData" class="col-50 hidden">
+				            <h3>Your Data</h3>
+				            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+				            <input type="text" id="fname" name="fullname" placeholder="<%= currentUser.getName() %>" disabled>
+				            <label for="email"><i class="fa fa-envelope"></i> Email</label>
+				            <input type="text" id="email" name="email" placeholder="<%= currentUser.getEmail() %>" disabled>
+				            <label for="adr"><i class="fa fa-phone"></i> Phone</label>
+				            <input type="text" id="phone" name="phone" placeholder="3336669990" >
+				            
+				          </div>				          
+				          
+				        </div>
+				        <hr>
+				        <button id="btnConfirm" type="submit" name="action" value="register">Confirm Registration</button>
+				    </div>
+				  </div> 
+				</div>
+				
 		  </form>
 		</div>
+		
+		<%
+		if (currentUser.getName() != null) {
+	%>
+	<p class="text-center"><jsp:getProperty property="name"
+			name="currentUser" /> ${sessionScope.check}</p>
+	<%
+		}
+	%>
+		
 	</div>
 	<!-- ***** Welcome Area End ***** -->
+	
+	
 </body>
+
+<script>
+	var sessionCheck = ${sessionScope.check};
+	if(sessionCheck == true){
+		document.getElementById("userID").placeholder = "0"+${sessionScope.userID};
+		document.getElementById("userID").disabled = true;
+		document.getElementById("password").required = true;
+		document.getElementById("repeat").required = true;
+		document.getElementById("phone").required = true;
+		document.getElementById('regDialog').style.display='block';
+		document.getElementById("dbData").style.display = 'block';
+        document.getElementById("pwdForm").style.display = 'block';
+        document.getElementById("btnCheck").style.display = 'none';
+	}	
+	
+	var password = document.getElementById("password");
+	var confirm_password = document.getElementById("repeat");
+	var status = document.getElementById("status");
+
+	
+	function validatePassword(){
+	  if(password.value != confirm_password.value | password.value == '') {
+		confirm_password.classList.remove("valid");
+		confirm_password.classList.add("invalid");
+	    document.getElementById("btnConfirm").disabled = true;
+	} else {
+		confirm_password.classList.remove("invalid");
+		confirm_password.classList.add("valid");
+	    document.getElementById("btnConfirm").disabled = false;
+	  }
+	}
+
+	password.onchange = validatePassword;
+	confirm_password.onkeyup = validatePassword;
+	
+	
+	function show(){
+    	document.getElementById("dbData").style.display = 'block';
+        document.getElementById("pwdForm").style.display = 'block';
+        document.getElementById("btnCheck").style.display = 'none';
+    }
+	
+	function closeReg(){
+		document.getElementById('regDialog').style.display='none';
+		document.getElementById("dbData").style.display = 'none';
+        document.getElementById("pwdForm").style.display = 'none';
+        document.getElementById("btnCheck").style.display = 'block';
+	}
+</script>
 
 </html>
