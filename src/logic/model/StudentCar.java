@@ -16,7 +16,7 @@ public class StudentCar extends Student {
 	}
 
 	public void updateRating(int vote) throws InvalidInputException {
-		if ((vote != 1) || (vote != -1)) {
+		if (!(vote == 1 || vote == -1)) {
 			throw new InvalidInputException("Vote must be 1 or -1");
 		}
 		this.rating += vote;
@@ -34,7 +34,7 @@ public class StudentCar extends Student {
 		return carInfo;
 	}
 
-	public void setCarInfo(CarInfo carInfo)  {
+	public void setCarInfo(CarInfo carInfo) {
 		InputChecker.checkNotNull(carInfo, "CarInfo");
 		this.carInfo = carInfo;
 	}

@@ -9,7 +9,6 @@ import java.util.List;
 import org.junit.Test;
 
 import logic.controller.exception.ApiNotReachableError;
-import logic.controller.exception.InvalidInputException;
 import logic.model.Position;
 import logic.model.Route;
 import test.utilities.TestLogger;
@@ -25,7 +24,7 @@ public class AdapterMapsApiTest extends TestUtilities {
 	}
 
 	@Test
-	public void addrToPosTest() throws ApiNotReachableError, InvalidInputException {
+	public void addrToPosTest() throws ApiNotReachableError {
 		List<Position> results = maps.addrToPos(ADDR_GIU);
 		for (Position p : results)
 			logger.info("Position", p);
@@ -33,7 +32,7 @@ public class AdapterMapsApiTest extends TestUtilities {
 	}
 
 	@Test
-	public void startToStopTest() throws InvalidInputException, ApiNotReachableError {
+	public void startToStopTest() throws ApiNotReachableError {
 		Position start;
 		Position stop;
 		start = maps.addrToPos(ADDR_MARCO).get(0);
@@ -44,7 +43,7 @@ public class AdapterMapsApiTest extends TestUtilities {
 	}
 
 	@Test
-	public void startToStopListTest() throws InvalidInputException, ApiNotReachableError {
+	public void startToStopListTest() throws ApiNotReachableError {
 		Position start;
 		Position stop;
 		start = maps.addrToPos(ADDR_MARCO).get(0);
@@ -58,7 +57,7 @@ public class AdapterMapsApiTest extends TestUtilities {
 	}
 
 	@Test
-	public void viewFromPTest() throws ApiNotReachableError, InvalidInputException {
+	public void viewFromPTest() throws ApiNotReachableError {
 		Position p = maps.addrToPos(ADDR_UNI).get(0);
 		String result = maps.viewFromPos(p);
 		logger.info("Image URL", result);
@@ -66,7 +65,7 @@ public class AdapterMapsApiTest extends TestUtilities {
 	}
 
 	@Test
-	public void viewFromPZoomTest() throws ApiNotReachableError, InvalidInputException {
+	public void viewFromPZoomTest() throws ApiNotReachableError {
 		Position p = maps.addrToPos(ADDR_UNI).get(0);
 		int zoom = 10;
 		String result = maps.viewFromPos(p, zoom);
@@ -75,7 +74,7 @@ public class AdapterMapsApiTest extends TestUtilities {
 	}
 
 	@Test
-	public void viewRouteTest() throws ApiNotReachableError, InvalidInputException {
+	public void viewRouteTest() throws ApiNotReachableError {
 		Position start;
 		Position stop;
 		start = maps.addrToPos(ADDR_MARCO).get(0);
@@ -87,7 +86,7 @@ public class AdapterMapsApiTest extends TestUtilities {
 	}
 
 	@Test
-	public void addInternalRouteTest() throws ApiNotReachableError, InvalidInputException {
+	public void addInternalRouteTest() throws ApiNotReachableError {
 		Position start = maps.addrToPos(ADDR_MARCO).get(0);
 		Position inter1 = maps.addrToPos(ADDR_GIU).get(0);
 		Position inter2 = maps.addrToPos(ADDR_ZAGA).get(0);

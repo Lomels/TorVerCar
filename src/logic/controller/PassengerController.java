@@ -12,7 +12,7 @@ public class PassengerController {
 
 	public void addPassenger(Lift lift, Student passenger) throws InvalidStateException, DatabaseException {
 		// The operation is blocked
-		if(lift.getLiftID() == null) {
+		if (lift.getLiftID() == null) {
 			// If the lift is not saved on the DB
 			String errorMessage = "Lift has null liftID, save on DB before adding a passenger.";
 			throw new InvalidStateException(errorMessage);
@@ -47,7 +47,7 @@ public class PassengerController {
 
 	public void removePassenger(Lift lift, Student student) throws DatabaseException, InvalidStateException {
 		boolean removed = false;
-		
+
 		for (Student s : lift.getPassengers()) {
 			if (student.getUserID().contentEquals(s.getUserID())) {
 				lift.getPassengers().remove(s);

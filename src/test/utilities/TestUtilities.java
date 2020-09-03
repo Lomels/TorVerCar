@@ -70,7 +70,7 @@ public class TestUtilities {
 
 	public static final String NOTE = "Ciao Mamma";
 
-	private static int lastPassengerID = DRIVER_NUMBER + 1;
+	private static int lastPassengerID = 0;
 
 	private static boolean modified = true;
 
@@ -111,6 +111,7 @@ public class TestUtilities {
 				String userID = generateUserID(indexID);
 				Student student = new Student(userID, PASSWORD, EMAIL, NAME, SURNAME, PHONE);
 				dao.addStudent(student);
+				lastPassengerID++;
 				if (indexID < DRIVER_NUMBER) {
 					String plate = generatePlate(indexID);
 					CarInfo carInfo = new CarInfo(plate, SEATS, MODEL, COLOR);
@@ -154,7 +155,7 @@ public class TestUtilities {
 	}
 
 	private static void addPassengerToLift(Integer liftID, Integer passengerToAdd)
-			throws InvalidInputException, JSONException, DatabaseException, InvalidStateException {
+			throws InvalidInputException, DatabaseException, InvalidStateException {
 		Lift liftFromDB = dao.loadLiftByID(liftID);
 		for (int added = 0; added < passengerToAdd; added++) {
 

@@ -30,7 +30,7 @@ public class InputCheckerTest {
 
 	@Test
 	public void nullMail() {
-		assertThrows(InvalidInputException.class, () -> InputChecker.checkEmail(null));
+		assertThrows(NullPointerException.class, () -> InputChecker.checkEmail(null));
 	}
 
 	// phone checks
@@ -60,7 +60,7 @@ public class InputCheckerTest {
 
 	@Test
 	public void nullPhone() {
-		assertThrows(InvalidInputException.class, () -> InputChecker.checkPhone(null));
+		assertThrows(NullPointerException.class, () -> InputChecker.checkPhone(null));
 	}
 
 	// userID checks
@@ -84,7 +84,7 @@ public class InputCheckerTest {
 
 	@Test
 	public void nullUserID() {
-		assertThrows(InvalidInputException.class, () -> InputChecker.checkUserID(null));
+		assertThrows(NullPointerException.class, () -> InputChecker.checkUserID(null));
 	}
 
 	// Password checks
@@ -108,7 +108,7 @@ public class InputCheckerTest {
 
 	@Test
 	public void nullPassword() {
-		assertThrows(InvalidInputException.class, () -> InputChecker.checkPassword(null));
+		assertThrows(NullPointerException.class, () -> InputChecker.checkPassword(null));
 
 	}
 
@@ -133,7 +133,7 @@ public class InputCheckerTest {
 
 	@Test
 	public void nullPlate() {
-		assertThrows(InvalidInputException.class, () -> InputChecker.checkPlate(null));
+		assertThrows(NullPointerException.class, () -> InputChecker.checkPlate(null));
 	}
 
 	@Test
@@ -151,7 +151,7 @@ public class InputCheckerTest {
 	@Test
 	public void genericStringNull() {
 		String generic = null;
-		assertThrows(InvalidInputException.class, () -> InputChecker.checkGenericString(generic));
+		assertThrows(NullPointerException.class, () -> InputChecker.checkGenericString(generic));
 	}
 
 	@Test
@@ -163,7 +163,7 @@ public class InputCheckerTest {
 	@Test
 	public void notNullNull() {
 		Object object = null;
-		assertThrows(InvalidInputException.class, () -> InputChecker.checkNotNull(object, "Null object"));
+		assertThrows(NullPointerException.class, () -> InputChecker.checkNotNull(object, "Null object"));
 	}
 
 	@Test
