@@ -3,72 +3,73 @@
 <head>
 <link rel="stylesheet"
 href="torvercar.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
 <meta charset="UTF-8">
 <title>TorVerCar</title>
 </head>
 
 <header>
 <div id="navbar">
-			<a  href="">Home</a> 
+			<a  href=""><i class='fas fa-home' style='font-size:36px'></i></a> 
 			<a href="">Book</a> 
 			<a href="">Offer</a>
 			<a href="">MyCar</a> 
 			<a href="">MyLift</a> 
-			<a class="right" href="">Logout</a> 
-			<a class="right; active" href="">Profile</a>
+			<a class="right" href=""><i class='fas fa-door-open' style='font-size:36px'></i></a> 
+			<a class="right active" href=""> <i class='fas fa-user-graduate' style='font-size:36px'></i></a>
 			
 </div>
 
 </header>
 <body>
+<div class="bg-image profile">
+<div class="column" style="background-color:transparent;"></div>
+<div class="column" style="background-color:transparent;"></div>
+<div class="column2" style="background-color:transparent;">
 
-<div class="column"></div>
+<div class="card" style="width:60%;">
 
-<div class="column2" >
-
-
-<div class="card" style="width:100%; height: 630px">
-
-  <p style="color:#39393a; text-align:center; font-family:Helvetica; font-size:28px;">Profile Card</p>
-  <label style="color:#5f976a; font-size:24px;">Name and Surname:  </label>
-  <input type="text" value="Giulia Desideri" id="myName" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px; border-color:#FFFFFF;"disabled>
+  <h2>Profile Card</h2>
+  <label>Name and Surname:  </label>
+  <input type="text" value="Giulia Desideri" id="myName" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px; "disabled>
   
-  <label style="color:#5f976a; font-size:24px;">Matriculation number:  </label>
-  <input type="text" value="0245061" id="myID" style="color:#39393a;background-color:#FFFFFF; width: 300px; height:30px; border-color:#FFFFFF;" disabled>
+  <label>Matriculation number:  </label>
+  <input type="text" value="0245061" id="myID" style="color:#39393a;background-color:#FFFFFF; width: 300px; height:30px;" disabled>
   
   
-  <label style="color:#5f976a; font-size:24px;">Phone number:  </label>
-  <input type="text" value="3923165944" id="myPhoneNum" style="color:#39393a;background-color:#FFFFFF; width: 300px; height:30px;border-color:#FFFFFF;" disabled>
+  <label>Phone number:  </label>
+  <input type="text" value="3923165944" id="myPhoneNum" style="color:#39393a;background-color:#FFFFFF; width: 300px; height:30px;" disabled>
   
-  <label style="color:#5f976a; font-size:24px;">Email:  </label>
-  <input type="text" value="giuls.desideri@gmail.com" id="myEmail" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px;border-color:#FFFFFF;" disabled>
+  <label>Email:  </label>
+  <input type="text" value="giuls.desideri@gmail.com" id="myEmail" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px;" disabled>
  
- <label style="color:#5f976a; font-size:24px;">Password: <label  class="switch" style="margin-left:20px">
+ <label>Password: <label  class="switch" style="margin-left:20px">
   <input type="checkbox" onclick="showPass()">
   <div class="slider"></div></label> </label>
  
   
- <input type="password" value="aaaAAA123@" id="myPass" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px;border-color:#FFFFFF;" disabled>
+ <input type="password" value="aaaAAA123@" id="myPass" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px;" disabled>
 
 
  <br>
-
-<t class="button" onclick="back()" id="btnBack" style="text-align:center; width:100px; background-color:#39393a; color:#5f976a;">Back <i class='fas fa-angle-double-left'></i></t>
-<t class="button" onclick="save()"  id="btnSave" style="text-align:center; width:100px; margin:10px; background-color:#39393a; color: #5f976a;" >Save</t>
-<t class="button" onclick="edit()" style="text-align:center; width:100px; " id="btnEdit">Edit</t>
-<br>
-
- 
-</div>
-
-
-
+ <div class="col-50">	
+			<div class="row">
+				<button id="btnBack" class="disabled" onclick="back()">Back <i class='fas fa-angle-double-left'></i></button>
+				<button id="btnSave" class="disabled" onclick="save()">Save</button>
+				<button id="btnEdit" onclick="edit()">Edit</button>
+			</div>
+ </div>
 
 
 
  
 </div>
-<div class="column"></div>
+
+ </div>
+</div>
+
 
 
 
@@ -77,29 +78,16 @@ href="torvercar.css">
 
 <script>
 function edit() {
-	
-  document.getElementById("btnEdit").style.backgroundColor = "#39393a";
-  document.getElementById("btnEdit").style.color = "#5f976a";
-  
-  document.getElementById("btnSave").style.backgroundColor =  "#5f976a";
-  document.getElementById("btnSave").style.color =  "#39393a";
-  
-  document.getElementById("btnBack").style.backgroundColor = "#5f976a";
-  document.getElementById("btnBack").style.color = "#39393a";
-  
-  
-  
-  document.getElementById("myPhoneNum").style.borderColor= "#aaa";
-  document.getElementById("myEmail").style.borderColor= "#aaa";
-  document.getElementById("myPass").style.borderColor= "#aaa";
-  
-  
-  
+  document.getElementById("btnEdit").classList.add("disabled");
+	  
+  document.getElementById("btnSave").classList.remove("disabled");
+	  
+  document.getElementById("btnBack").classList.remove("disabled");
+
   document.getElementById("myPhoneNum").value= '';
   document.getElementById("myEmail").value= '';
   document.getElementById("myPass").value = '';
  
-
   document.getElementById("myPhoneNum").disabled= false;
   document.getElementById("myEmail").disabled = false;
   document.getElementById("myPass").disabled = false;
@@ -110,33 +98,20 @@ function edit() {
   
 }
 function back(){
-	
-	  document.getElementById("btnEdit").style.backgroundColor = "#5f976a";
-	  document.getElementById("btnEdit").style.color = "#39393a";
+  document.getElementById("btnEdit").classList.remove("disabled");
 	  
-	  document.getElementById("btnSave").style.backgroundColor =  "#39393a"; 
-	  document.getElementById("btnSave").style.color =  "#5f976a";
+  document.getElementById("btnSave").classList.add("disabled");
 	  
-	  document.getElementById("btnBack").style.backgroundColor = "#39393a";
-	  document.getElementById("btnBack").style.color =  "#5f976a";
-	  
-	  
-	  
-	
-	 document.getElementById("myPhoneNum").style.borderColor= "#FFFFFF";
-	  document.getElementById("myEmail").style.borderColor= "#FFFFFF";
-	  document.getElementById("myPass").style.borderColor= "#FFFFFF";
-	  
-	  
-	  
-	  document.getElementById("myPhoneNum").value= '3923165499';  //TODO get from database
-	  document.getElementById("myEmail").value= 'giuls.desideri@gmail.com';
-	  document.getElementById("myPass").value = 'aaaAAA123@';
+  document.getElementById("btnBack").classList.add("disabled");
+  
+  document.getElementById("myPhoneNum").value= '3923165499';  //TODO get from database
+  document.getElementById("myEmail").value= 'giuls.desideri@gmail.com';
+  document.getElementById("myPass").value = 'aaaAAA123@';
 	  
 
-	  document.getElementById("myPhoneNum").disabled= true;
-	  document.getElementById("myEmail").disabled = true;
-	  document.getElementById("myPass").disabled = true;
+  document.getElementById("myPhoneNum").disabled= true;
+  document.getElementById("myEmail").disabled = true;
+  document.getElementById("myPass").disabled = true;
 	  
 	  
 	

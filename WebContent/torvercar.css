@@ -5,7 +5,7 @@ body ,html{
   font-family: Helvetica, Cambria;
   height: 100%;
   widht: 100%;
-  overflow: hidden
+  overflow: hidden;
 }
 
 * {
@@ -62,13 +62,23 @@ body ,html{
   background-size: cover;
   z-index: -1;
 }
-
+.bg-image.book{
+	background-image:url(images/carpooling2.jpg);
+}
 .bg-image.offer{
 	  background-image: url(images/carpooling3.jpg);
 }
 
 .bg-image.home{
 	  background-image: url(images/background.jpg);
+}
+
+.bg-image.mycar{
+	  background-image: url(images/car1.jpg);
+}
+
+.bg-image.profile{
+	  background-image: url(images/profile1.jpg);
 }
 
 .row {
@@ -99,14 +109,12 @@ body ,html{
 .column {
   float: left;
   width: 20%;
-  padding: 10px;
   height: 100%;
 }
 
 .column2 {
   float: left;
   width: 60%;
-  padding: 10px;
   height: 100%;
 }
 
@@ -291,15 +299,16 @@ button, .button {
   background-color: #5f976a;
   color: #39393a;
   padding: 14px 20px;
-  margin: 8px 0;
+  margin: 8px 8px;
   border: none;
   cursor: pointer;
-  width: auto; /*width: 100px*/
+  width: 100px;
   border: none;
   border-radius: 3px;
   cursor: pointer;
   font-size: 17px;
 }
+
 
 button, .button:hover {
   opacity: 0.8;
@@ -313,6 +322,13 @@ button.invisible{
 /* Extra styles for the cancel button */
 button.cancel, .button.cancel {
   background-color: #f44336;
+}
+
+button.disabled, .button.disabled{
+	text-align:center; 
+	width:100px; 
+	background-color:#969696; 
+	color:#39393a;
 }
 
 /* Center the image and position the close button */

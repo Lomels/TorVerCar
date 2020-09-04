@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <jsp:useBean id="currentUser" class="logic.bean.UserBean" scope="session"></jsp:useBean>
+<jsp:useBean id="offerBean" class="logic.bean.OfferBean" scope="session"></jsp:useBean>
 
 <!DOCTYPE html>
 <html>
@@ -21,13 +25,13 @@
 
 <header>
 	<div id="navbar">
-		<a href="homepage.jsp">Home</a> 
+		<a href="homepage.jsp"><i class='fas fa-door-open' style='font-size:36px'></i></a> 
 		<a href="">Book</a> 
 		<a class="active" href="">Offer</a> 
 		<a href="">MyCar</a> 
 		<a href="">MyLift</a> 
-		<a class="right" href="">Logout</a>
-		<a class="right" href="">Profile</a>
+		<a class="right" href=""><i class='fas fa-door-open' style='font-size:36px'></i></a>
+		<a class="right" href=""><i class='fas fa-user-graduate' style='font-size:36px'></i></a>
 	</div>
 </header>
 
@@ -101,8 +105,8 @@
 			    <span onclick="document.getElementById('listDialog').style.display='none'" class="close" title="Close Modal">&times;</span>
 			 	</div>
 			 </div>
-		      <c:forEach items="${startPositions}" var="item">
-		      	<h4>${item.getAddress() }</h4>
+		      <c:forEach items="${offerBean.getStartingPosition()}" var="item">
+		      	<h4>${item.getAddress()}</h4>
 		      </c:forEach>
 		      
 		    </div>
@@ -114,6 +118,8 @@
 </body>
 
 <script>
+document.getElementById("listDialog").style.display="block";
+
 	var sessionCheck = ${sessionScope.status};
 	if(sessionCheck == "startPos"){
 		document.getElementById("listDialog").style.display="block";

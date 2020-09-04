@@ -30,14 +30,20 @@
 			<a class="active" href="">Home</a> 
 			<a href="">Book</a> 
 			<a href="">Offer</a>
-			<a href="">MyCAR</a> 
-			<a href="">MyLIFT</a> 
+			<a href="">MyCar</a> 
+			<a href="">MyLift</a> 
 			<a class="right" onclick="document.getElementById('regDialog').style.display='block'">Sign in</a>
 			<a class="login right" onclick="document.getElementById('loginDialog').style.display='block'">Login</a> 
-			<form action="LoginControllerServlet" method="POST"><button type="submit" name="action" value="logout">Logout</button>
-			</form>
+			
 		</div>
 	</header>
+	
+	<div class="column2" style="background-color:trasparent;"></div>
+	<div class="column" style="background-color:trasparent; width:40%;">
+	<div class="row" style="height:75%;"></div>
+	<h1 style="font-size:96px;">We are not Uber.</h1>
+	</div>
+	
 	<!-- ***** Header Area End ***** -->
 
 	<!-- ***** Welcome Area Start ***** -->
@@ -91,7 +97,7 @@
 					                <input type="text" id="userID" name="userID" placeholder="0123456">
 					              </div>
 					              <div class="col-50">
-				        			<button id="btnCheck" type="submit" name="action" value="check">Check Identity</button>
+				        			<button id="btnCheck" type="submit" name="action" value="check" style="width:auto;">Check Identity</button>
 					              </div>
 				             </div>
 			
@@ -117,7 +123,7 @@
 				          
 				        </div>
 				        <hr>
-				        <button id="btnConfirm" type="submit" name="action" value="register">Confirm Registration</button>
+				        <button id="btnConfirm" type="submit" name="action" value="register" style="width:auto;">Confirm Registration</button>
 				    </div>
 				  </div> 
 				</div>

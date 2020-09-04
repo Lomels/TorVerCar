@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import logic.bean.OfferBean;
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Position;
@@ -31,9 +32,11 @@ public class OfferControllerServlet extends HttpServlet{
 		
 		if("startPos".equals(action)) {
 			String address = request.getParameter("start");
+			OfferBean offerBean = new OfferBean();
 			try {
 				List<Position> positions = ServletUtility.pupulateListPosition(address);
-				session.setAttribute("startPositions", positions);
+				offerBean.setStartingPosition(positions);
+				session.setAttribute("offerBean", offerBean);
 				session.setAttribute("status", "startPos");
 				
 				MyLogger.info("status", session.getAttribute("status"));
