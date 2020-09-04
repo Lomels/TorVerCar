@@ -612,6 +612,8 @@ ul {list-style-type: none;}
   color: white !important
 }
 
+
+
 /*----------------------FXML----------------------------*/
 .button-active {
 	  -fx-background-color: #5f976a; /* Green */

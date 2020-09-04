@@ -40,6 +40,10 @@ public class LoginControllerServlet extends HttpServlet {
 			LoginController lg = new LoginController();
 			try {
 				lg.login(userBean);
+				ServletUtility.createUser(userBean, session);
+				session.setAttribute("userBean", userBean);
+				request.getRequestDispatcher("homepage.jsp").forward(request, response);
+			
 			} catch (InvalidInputException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -49,13 +53,6 @@ public class LoginControllerServlet extends HttpServlet {
 			} catch (InvalidStateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			
-			userBean = ServletUtility.populateUserBean(userBean);
-			
-			session.setAttribute("userBean", userBean);
-			try {
-				request.getRequestDispatcher("homepage.jsp").forward(request, response);
 			} catch (ServletException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

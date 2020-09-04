@@ -7,6 +7,8 @@ public class StudentCar extends Student {
 
 	private int rating;
 	private CarInfo carInfo;
+	
+	private static final Role ROLE = Role.DRIVER;
 
 	// Constructor from Student
 	public StudentCar(Student student, int rating, CarInfo carInfo) throws InvalidInputException {
