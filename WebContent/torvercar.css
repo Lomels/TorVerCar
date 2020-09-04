@@ -4,10 +4,81 @@ body ,html{
   /* font-family: Roboto, sans-serif; */
   font-family: Helvetica, Cambria;
   height: 100%;
+  widht: 100%;
+  overflow: hidden;
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+@media (max-width: 800px) {
+  .row {
+    flex-direction: column-reverse;
+  }
+  .col-25 {
+    margin-bottom: 20px;
+  }
+}
+
+/* Add media queries for smaller screens */
+@media screen and (max-width:720px) {
+  .weekdays li, .days li {width: 13.1%;}
+}
+
+@media screen and (max-width: 420px) {
+  .weekdays li, .days li {width: 12.5%;}
+  .days li .active {padding: 2px;}
+}
+
+@media screen and (max-width: 290px) {
+  .weekdays li, .days li {width: 12.2%;}
+}
+
+.background-green{
+	background-color: #5f976a;
+}
+
+
+.bg-image {
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+.bg-image.book{
+	background-image:url(images/carpooling2.jpg);
+}
+.bg-image.offer{
+	  background-image: url(images/carpooling3.jpg);
+}
+
+.bg-image.home{
+	  background-image: url(images/background.jpg);
+}
+
+.bg-image.mycar{
+	  background-image: url(images/car1.jpg);
+}
+
+.bg-image.profile{
+	  background-image: url(images/profile1.jpg);
 }
 
 .row {
@@ -16,6 +87,41 @@ body ,html{
   -ms-flex-wrap: wrap; /* IE10 */
   flex-wrap: wrap;
   margin: 0 -16px;
+}
+
+.row.fullscreen{
+	height: 100%;
+}
+
+.row.lift {
+	height: 200px;
+	background-color: #FFFFFF;
+	border-bottom-style:solid;	
+	border-color: #5f976a;
+		
+} 
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+
+.column {
+  float: left;
+  width: 20%;
+  height: 100%;
+}
+
+.column2 {
+  float: left;
+  width: 60%;
+  height: 100%;
+}
+
+.r:after{
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .col-25 {
@@ -44,8 +150,7 @@ span.price {
 
 
 .col-25,
-.col-50,
-.col-75 {
+.col-50{
   padding: 0 16px;
 }
 
@@ -60,10 +165,20 @@ label.graytext{
 label.greentext{
 	color: #5f976a;
 }
+
 .header {
   background-color: #39393a;
   padding: 30px;
   text-align: center;
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 #navbar {
@@ -136,22 +251,6 @@ background-color: #39393a;
   padding: 16px;
 }
 
-.bg-image {
-  /* The image used */
-  background-image: url(images/background.jpg);
-
- /* Add the blur effect
-  filter: blur(8px);
-  -webkit-filter: blur(8px);*/
-
-  /* Full height */
-  height: 100%;
-
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
 
 /* Full-width input fields */
 input[type=text], input[type=password] {
@@ -200,24 +299,36 @@ button, .button {
   background-color: #5f976a;
   color: #39393a;
   padding: 14px 20px;
-  margin: 8px 0;
+  margin: 8px 8px;
   border: none;
   cursor: pointer;
-  width: auto;
-  
+  width: 100px;
   border: none;
   border-radius: 3px;
   cursor: pointer;
   font-size: 17px;
 }
 
+
 button, .button:hover {
   opacity: 0.8;
+}
+
+button.invisible{
+	padding: 0 0;
+	background-color: transparent;
 }
 
 /* Extra styles for the cancel button */
 button.cancel, .button.cancel {
   background-color: #f44336;
+}
+
+button.disabled, .button.disabled{
+	text-align:center; 
+	width:100px; 
+	background-color:#969696; 
+	color:#39393a;
 }
 
 /* Center the image and position the close button */
@@ -293,27 +404,6 @@ span.psw {
   to {transform: scale(1)}
 }
 
-/* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-  span.psw {
-     display: block;
-     float: none;
-  }
-  .cancelbtn {
-     width: 100%;
-  }
-}
-
-/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
-@media (max-width: 800px) {
-  .row {
-    flex-direction: column-reverse;
-  }
-  .col-25 {
-    margin-bottom: 20px;
-  }
-}
-
 /*-------------------END LOGIN----------------------*/
 
 /*-------------------REGISTRATION-------------------*/
@@ -330,7 +420,6 @@ span.psw {
   background-color: #4CAF50;
   color: white;
   padding: 12px;
-  
   border: none;
   width: 100%;
   border-radius: 3px;
@@ -348,6 +437,173 @@ span.psw {
 
 /*------------------END REGISTRATION--------------------*/
 
+.switch {
+  position: absolute;
+  display: inline-block;
+  width: 68px;
+  height: 34px;
+}
+
+.switch input { 
+	
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #5f976a;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #39393a;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.Booked
+{
+  display: block;
+}
+
+.Booked{
+  color: #39393a;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 145%;
+  font-size: 10px;
+  font-family: Verdana, sans-serif;
+}
+
+.Offered{
+	color: #39393a;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  right: 75%;
+  font-size: 10px;
+  font-family: Verdana, sans-serif;
+}
+input:checked+ .slider .Booked
+{display: block;}
+
+input:checked + .slider .Offered
+{display: block;}
+
+
+.card {
+  box-shadow: 0 0 15px 15px rgba(0, 0, 0, 0.2);
+  padding: 5px 20px 15px 20px;
+  margin: 0 auto 0 auto;
+  height: 100%;
+  width: 70%;
+  text-align: left;
+  font-family: Verdana, sans-serif;
+  background-color: #f2f2f2;
+  opacity: 0.96;
+}
+
+.spaceH{
+	margin-right:10px;
+	float:left;
+}
+
+ul {list-style-type: none;}
+
+.month {
+  padding: 70px 25px;
+  width: 100%;
+  background: #39393a;
+  text-align: center;
+}
+
+.month ul {
+  margin: 0;
+  padding: 0;
+}
+
+.month ul li {
+  color: white;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.month .prev {
+  float: left;
+  padding-top: 10px;
+}
+
+.month .next {
+  float: right;
+  padding-top: 10px;
+}
+
+.weekdays {
+  margin: 0;
+  padding: 10px 0;
+  background-color: #5f976a;
+}
+
+.weekdays li {
+  display: inline-block;
+  width: 13.6%;
+  color: #666;
+  text-align: center;
+}
+
+.days {
+  padding: 10px 0;
+  background: #eee;
+  margin: 0;
+}
+
+.days li {
+  list-style-type: none;
+  display: inline-block;
+  width: 13.6%;
+  text-align: center;
+  margin-bottom: 5px;
+  font-size:12px;
+  color: #777;
+}
+
+.days li .active {
+  padding: 5px;
+  background: #1abc9c;
+  color: white !important
+}
+
+/*----------------------FXML----------------------------*/
 .button-active {
 	  -fx-background-color: #5f976a; /* Green */
 	  -fx-background-radius: 0.0;

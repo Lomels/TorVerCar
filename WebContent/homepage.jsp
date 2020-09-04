@@ -11,19 +11,19 @@
 <!-- ***** Header Area Start ***** -->
 	<header class="header_area clearfix">
 		<div id="navbar">
-			<a class="active" href="">Home</a> 
+			<a class="active" href=""><i class='fas fa-door-open' style='font-size:36px'></i></a> 
 			<a href="">Book</a> 
-			<a href="">Offer</a>
+			<a href="offer.jsp">Offer</a>
 			<a href="">MyCAR</a> 
 			<a href="">MyLIFT</a> 
-			<a class="right" onclick="document.getElementById('regDialog').style.display='block'">Logout</a>
-			<a class="login right" onclick="document.getElementById('loginDialog').style.display='block'">Profile</a> 
+			<a class="right" onclick="document.getElementById('regDialog').style.display='block'"><i class='fas fa-door-open' style='font-size:36px'></i></a>
+			<a class="login right" onclick="document.getElementById('loginDialog').style.display='block'"><i class='fas fa-user-graduate' style='font-size:36px'></i></a> 
 		</div>
 	</header>
 	<!-- ***** Header Area End ***** -->
 
 	<!-- ***** Welcome Area Start ***** -->
-	<div class="bg-image">	
+	<div class="bg-image home">	
 	
 	<!-- Login Dialog -->	
 		<div id="loginDialog" class="modal">

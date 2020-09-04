@@ -2,29 +2,29 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="Dependencies/activation-1.1.1.jar"/>
-	<classpathentry kind="lib" path="Dependencies/commons-cli-1.4.jar"/>
-	<classpathentry kind="lib" path="Dependencies/commons-codec-1.13.jar"/>
-	<classpathentry kind="lib" path="Dependencies/httpclient5-5.0.jar"/>
-	<classpathentry kind="lib" path="Dependencies/httpclient5-cache-5.0.jar"/>
-	<classpathentry kind="lib" path="Dependencies/httpclient5-fluent-5.0.jar"/>
-	<classpathentry kind="lib" path="Dependencies/httpclient5-testing-5.0.jar"/>
-	<classpathentry kind="lib" path="Dependencies/httpclient5-win-5.0.jar"/>
-	<classpathentry kind="lib" path="Dependencies/httpcore5-5.0.jar"/>
-	<classpathentry kind="lib" path="Dependencies/httpcore5-h2-5.0.jar"/>
-	<classpathentry kind="lib" path="Dependencies/httpcore5-reactive-5.0.jar"/>
-	<classpathentry kind="lib" path="Dependencies/httpcore5-testing-5.0.jar"/>
-	<classpathentry kind="lib" path="Dependencies/javax.mail-1.6.2.jar"/>
-	<classpathentry kind="lib" path="Dependencies/jna-5.2.0.jar"/>
-	<classpathentry kind="lib" path="Dependencies/jna-platform-5.2.0.jar"/>
-	<classpathentry kind="lib" path="Dependencies/json-20200518.jar"/>
-	<classpathentry kind="lib" path="Dependencies/mysql-connector-java-5.1.48-bin.jar"/>
-	<classpathentry kind="lib" path="Dependencies/reactive-streams-1.0.2.jar"/>
-	<classpathentry kind="lib" path="Dependencies/rxjava-2.2.8.jar"/>
-	<classpathentry kind="lib" path="Dependencies/sendgrid-java.jar"/>
-	<classpathentry kind="lib" path="Dependencies/slf4j-api-1.7.25.jar"/>
-	<classpathentry kind="lib" path="Dependencies/slf4j-simple-1.7.30.jar"/>
-	<classpathentry kind="lib" path="Dependencies/controlsfx-8.40.11.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/activation-1.1.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-cli-1.4.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-codec-1.13.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient5-5.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient5-cache-5.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient5-fluent-5.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient5-testing-5.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpclient5-win-5.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpcore5-5.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpcore5-h2-5.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpcore5-reactive-5.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/httpcore5-testing-5.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.mail-1.6.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jna-5.2.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jna-platform-5.2.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-20200518.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.1.48-bin.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/reactive-streams-1.0.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/rxjava-2.2.8.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/sendgrid-java.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/slf4j-simple-1.7.30.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/controlsfx-8.40.11.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
@@ -37,5 +37,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jstl-1.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

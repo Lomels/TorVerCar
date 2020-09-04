@@ -1,6 +1,13 @@
 package servlet;
 
+import java.util.List;
+
 import logic.bean.UserBean;
+import logic.controller.exception.ApiNotReachableException;
+import logic.controller.exception.InvalidInputException;
+import logic.controller.maps.AdapterMapsApi;
+import logic.controller.maps.MapsApi;
+import logic.model.Position;
 import logic.model.Role;
 import logic.model.UserSingleton;
 
@@ -25,5 +32,11 @@ public class ServletUtility {
 			usr.setRating(sg.getStudentCar().getRating());
 		}
 		return usr;
+	}
+	
+	public static List<Position> pupulateListPosition(String address) throws ApiNotReachableException, InvalidInputException{
+		MapsApi mapsApi = AdapterMapsApi.getInstance();
+		return mapsApi.addrToPos(address);
+		
 	}
 }
