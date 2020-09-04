@@ -6,6 +6,7 @@
 <jsp:useBean id="currentUser" class="logic.bean.UserBean" scope="session"></jsp:useBean>
 <jsp:useBean id="offerBean" class="logic.bean.OfferBean" scope="session"></jsp:useBean>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +25,13 @@
 </head>
 
 <header>
+	<% 
+		if(session.getAttribute("status") == null){
+			session.setAttribute("status", "");
+		}
+	%>
+	<c:set var="startP" scope="session" value="${offerBean.getStops()}"/>
+	
 	<div id="navbar">
 		<a href="homepage.jsp"><i class='fas fa-door-open' style='font-size:36px'></i></a> 
 		<a href="">Book</a> 
@@ -50,7 +58,14 @@
 							point:</label>
 						<div class="row">
 							<div class="col-50">
-								<input type="text" placeholder="via prima strada" id="start" name="start">
+							  	<c:choose>
+									<c:when test = "${startP.size() > 0}">
+										<input type="text" placeholder="${startP.get(0).getAddress()}" id="start" name="start" disabled required>
+									</c:when>
+									<c:otherwise>
+										<input type="text" placeholder="via prima strada" id="start" name="start">
+									</c:otherwise>
+								</c:choose>
 							</div>
 							<div class="col-25">
 								<button class="invisible" type="submit" name='action' value='startPos'><i class='fas fa-search-location fa-2x'></i></button>
@@ -60,21 +75,28 @@
 						<label><i class="fa fa-flag-checkered"></i> Destination: </label>
 						<div class="row">
 							<div class="col-50">
-								<input type="text" placeholder="via cambridge" id="destination" name="dest">
+								<c:choose>
+									<c:when test = "${startP.size() > 1}">
+										<input type="text" placeholder="${startP.get(1).getAddress()}" id="destination" name="dest" disabled required>
+									</c:when>
+									<c:otherwise>
+										<input type="text" placeholder="via cambridge" id="destination" name="dest">
+									</c:otherwise>
+								</c:choose>
 							</div>
 							<div class="col-50">
-								<button class="invisible" type="submit" name='action' value='destPos'><i class='fas fa-search-location fa-2x'></i></button>							
+								<button class="invisible" type="submit" name='action' value='desPos'><i class='fas fa-search-location fa-2x'></i></button>							
 							</div>
 						</div>
 
 						<div class="row">
 							<div class="col-50">
 								<label><i class="fa fa-calendar-alt"></i> Day: </label> 
-								<input type="text" placeholder="..." id="day" name="day">
+								<input type="date" placeholder="..." id="day" name="day" >
 							</div>
 							<div class="col-50">
 								<label><i class="fa fa-clock"></i> Depart at: </label> 
-								<input type="text" placeholder="HH:MM" id="departureTime" name="startTime">
+								<input type="time" placeholder="HH:MM" id="time" name="time" >
 							</div>
 						</div>
 						<label><i class="fa fa-stopwatch-20"></i> Max duration: </label> 
@@ -105,25 +127,32 @@
 			    <span onclick="document.getElementById('listDialog').style.display='none'" class="close" title="Close Modal">&times;</span>
 			 	</div>
 			 </div>
-		      <c:forEach items="${offerBean.getStartingPosition()}" var="item">
-		      	<h4>${item.getAddress()}</h4>
-		      </c:forEach>
-		      
+			      <c:forEach items="${offerBean.getResult()}" var="item">
+			      	<label class="container">
+	  					<input type="radio" name="index" value="${offerBean.getResult().indexOf(item)}"><span class="checkmark"></span>
+	  					${item.getAddress()}	  					
+					</label>
+			      </c:forEach>
+		     
+		      <input class="button" type="submit" name="action" value="stop">Choose</button>
 		    </div>
 		  </form>
 	</div>
 <!-- END POSITION DIALOG -->
 
+		
+
 </div>
 </body>
 
 <script>
-document.getElementById("listDialog").style.display="block";
-
-	var sessionCheck = ${sessionScope.status};
-	if(sessionCheck == "startPos"){
-		document.getElementById("listDialog").style.display="block";
+	 <% String status= offerBean.getStatus(); %>
+	var s="<%=status%>";
+	if(s  == 'startPos'){
+		document.getElementById("listDialog").style.display = 'block';
+		<% offerBean.setStatus(""); %>
 	}	
+	
 	function show(){
 		document.getElementById("listDialog").style.display = 'block';
 	}

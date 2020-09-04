@@ -11,6 +11,8 @@ public class Student {
 	protected String surname;
 	protected String email;
 	protected String phone;
+	
+	private static final Role ROLE = Role.STUDENT;
 
 	// Generated
 	public Student(String userID, String password, String email, String name, String surname, String phone)

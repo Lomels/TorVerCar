@@ -12,6 +12,7 @@ import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Position;
 import logic.model.Route;
+import logic.utilities.MyLogger;
 import test.utilities.TestLogger;
 import test.utilities.TestUtilities;
 
@@ -24,11 +25,12 @@ public class AdapterMapsApiTest extends TestUtilities {
 		logger.isLogable(isLogable);
 	}
 
-//	@Test
+	@Test
 	public void addrToPosTest() throws ApiNotReachableException, InvalidInputException {
 		List<Position> results = maps.addrToPos(ADDR_GIU);
 		for (Position p : results)
-			logger.info("Position", p);
+			MyLogger.info("Position", p);
+		
 		assertNotNull(results);
 	}
 
@@ -86,7 +88,7 @@ public class AdapterMapsApiTest extends TestUtilities {
 		assertNotNull(url);
 	}
 
-	@Test
+//	@Test
 	public void addInternalRouteTest() throws ApiNotReachableException, InvalidInputException {
 		Position start = maps.addrToPos(ADDR_MARCO).get(0);
 		Position inter1 = maps.addrToPos(ADDR_GIU).get(0);

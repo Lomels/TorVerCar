@@ -29,7 +29,7 @@
 			<a id="title" class="title">TorVerCar.</a>
 			<a class="active" href="">Home</a> 
 			<a href="">Book</a> 
-			<a href="">Offer</a>
+			<a href="offer.jsp">Offer</a>
 			<a href="">MyCar</a> 
 			<a href="">MyLift</a> 
 			<a class="right" onclick="document.getElementById('regDialog').style.display='block'">Sign in</a>
@@ -38,8 +38,10 @@
 		</div>
 	</header>
 	
-	<div class="column2" style="background-color:trasparent;"></div>
-	<div class="column" style="background-color:trasparent; width:40%;">
+	<div class="column" style="background-color:trasparent;"></div>
+	<div class="column" style="background-color:trasparent;"></div>
+	<div class="column2" style="background-color:trasparent;">
+	
 	<div class="row" style="height:75%;"></div>
 	<h1 style="font-size:96px;">We are not Uber.</h1>
 	</div>
@@ -137,9 +139,9 @@
 </body>
 
 <script>
-	var sessionCheck = ${sessionScope.check};
+	var sessionCheck = '${sessionScope.check}';
 	if(sessionCheck == true){
-		document.getElementById("userID").placeholder = "0"+${sessionScope.userID};
+		document.getElementById("userID").placeholder = ${sessionScope.currentUser.getUserID()};
 		document.getElementById("userID").disabled = true;
 		document.getElementById("password").required = true;
 		document.getElementById("repeat").required = true;

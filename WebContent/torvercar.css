@@ -63,7 +63,7 @@ body ,html{
   z-index: -1;
 }
 .bg-image.book{
-	background-image:url(images/carpooling2.jpg);
+	background-image: url(images/carpooling2.jpg);
 }
 .bg-image.offer{
 	  background-image: url(images/carpooling3.jpg);
@@ -602,6 +602,8 @@ ul {list-style-type: none;}
   background: #1abc9c;
   color: white !important
 }
+
+
 
 /*----------------------FXML----------------------------*/
 .button-active {
