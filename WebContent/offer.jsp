@@ -26,12 +26,12 @@
 <header>
 	<div id="navbar">
 		<a href="homepage.jsp"><i class='fas fa-door-open' style='font-size:36px'></i></a> 
-		<a href="">Book</a> 
+		<a href="book.jsp">Book</a> 
 		<a class="active" href="">Offer</a> 
-		<a href="">MyCar</a> 
-		<a href="">MyLift</a> 
-		<a class="right" href=""><i class='fas fa-door-open' style='font-size:36px'></i></a>
-		<a class="right" href=""><i class='fas fa-user-graduate' style='font-size:36px'></i></a>
+		<a href="myCar.jsp">MyCar</a> 
+		<a href="myLift.jsp">MyLift</a> 
+		<a class="right" href="index.jsp"><i class='fas fa-door-open' style='font-size:36px'></i></a>
+		<a class="right" href="profile.jsp"><i class='fas fa-user-graduate' style='font-size:36px'></i></a>
 	</div>
 </header>
 
@@ -70,13 +70,14 @@
 						<div class="row">
 							<div class="col-50">
 								<label><i class="fa fa-calendar-alt"></i> Day: </label> 
-								<input type="text" placeholder="..." id="day" name="day">
+								<input type="date" placeholder="..." id="day" name="day" style="width:550px; height:42px;">
 							</div>
 							<div class="col-50">
 								<label><i class="fa fa-clock"></i> Depart at: </label> 
-								<input type="text" placeholder="HH:MM" id="departureTime" name="startTime">
+								<input type="time" placeholder="HH:MM" id="departureTime" name="startTime"  style="width:550px; height:42px;">
 							</div>
 						</div>
+						<div class="row" style="height:20px;"></div>
 						<label><i class="fa fa-stopwatch-20"></i> Max duration: </label> 
 						<input type="text" placeholder="100 Minutes" id="maxTime" name="maxTime"> 
 						

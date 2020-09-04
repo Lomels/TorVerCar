@@ -12,13 +12,13 @@ href="torvercar.css">
 
 <header>
 <div id="navbar">
-			<a  href=""><i class='fas fa-home' style='font-size:36px'></i></a> 
-			<a href="">Book</a> 
-			<a href="">Offer</a>
-			<a href="">MyCar</a> 
-			<a href="">MyLift</a> 
-			<a class="right" href=""><i class='fas fa-door-open' style='font-size:36px'></i></a> 
-			<a class="right active" href=""> <i class='fas fa-user-graduate' style='font-size:36px'></i></a>
+			<a  href="homepage.jsp"><i class='fas fa-home' style='font-size:36px'></i></a> 
+			<a href="book.jsp">Book</a> 
+			<a href="offer.jsp">Offer</a>
+			<a href="myCar.jsp">MyCar</a> 
+			<a href="myLift.jsp">MyLift</a> 
+			<a class="right" href="index.jsp"><i class='fas fa-door-open' style='font-size:36px'></i></a> 
+			<a class="right active" href="profile.jsp"> <i class='fas fa-user-graduate' style='font-size:36px'></i></a>
 			
 </div>
 
@@ -32,7 +32,7 @@ href="torvercar.css">
 	<div class="center">
 		<label  class="switch">
   		<input type="checkbox">
- 	    <div class="slider">
+ 	    <div class="slider round">
  	    <span class="Booked">BOOKED</span>
  	    <span class="Offered">OFFERED</span>
  	    </div>
