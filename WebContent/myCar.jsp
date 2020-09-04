@@ -6,18 +6,18 @@ href="torvercar.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
-<meta charset="UTF-8">
+<meta charset="ISO-8859-1">
 <title>TorVerCar</title>
 </head>
 <header>
 <div id="navbar">
-			<a  href=""><i class='fas fa-home' style='font-size:36px'></i></a> 
-			<a href="">Book</a> 
-			<a href="">Offer</a>
-			<a href="">MyCar</a> 
-			<a href="">MyLift</a> 
-			<a class="right" href=""><i class='fas fa-door-open' style='font-size:36px'></i></a> 
-			<a class="right active" href=""> <i class='fas fa-user-graduate' style='font-size:36px'></i></a>
+			<a  href="homepage.jsp"><i class='fas fa-home' style='font-size:36px'></i></a> 
+			<a href="book.jsp">Book</a> 
+			<a href="offer.jsp">Offer</a>
+			<a class="active" href="myCar.jsp">MyCar</a> 
+			<a href="myLift.jsp">MyLift</a> 
+			<a class="right" href="index.jsp"><i class='fas fa-door-open' style='font-size:36px'></i></a> 
+			<a class="right" href="profile.jsp"> <i class='fas fa-user-graduate' style='font-size:36px'></i></a>
 			
 </div>
 
@@ -25,8 +25,9 @@ href="torvercar.css">
 <body>
 
 <div class="bg-image mycar">
+	<div class="row fullscreen">
 	<div class="column2" style="background-color: transparent;">
-		<div class="card" style="width:60%;">
+		<div class="card animate" style="width:60%;">
 		  <h2>Car Card</h2>
 		  <label>Model:  </label>
 		  <input type="text" value="i20" id="myModel" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px;"disabled>
@@ -53,6 +54,7 @@ href="torvercar.css">
 
  
 		</div>
+	</div>
 	</div>
 </div>
 

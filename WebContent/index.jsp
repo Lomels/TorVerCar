@@ -17,7 +17,7 @@
 	<!-- Core Stylesheet -->
 	<link href="torvercar.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	
+	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 </head>
 
 <body>	<div class="bg-image home">	
@@ -39,9 +39,10 @@
 	</header>
 	
 	<div class="column" style="background-color:trasparent;"></div>
-	<div class="column" style="background-color:trasparent;"></div>
+
+	<div class="column" style="background-color:trasparent;"></div>	
 	<div class="column2" style="background-color:trasparent;">
-	
+
 	<div class="row" style="height:75%;"></div>
 	<h1 style="font-size:96px;">We are not Uber.</h1>
 	</div>
@@ -68,8 +69,11 @@
 		      <label for="uname"><i class="fa fa-id-badge"></i> Student ID</label>
 		      <input type="text" placeholder="Enter Username" name="userID" required>
 		
-		      <label for="psw"><i class="fa fa-lock"></i> Password</label>
-		      <input type="text" placeholder="Enter Password" name="pwd">
+		      <label for="psw"><i class="fa fa-lock"></i> Password<label  class="switch" style="margin-left:20px">
+						  <input type="checkbox" onclick="showPass()">
+						  <div class="slider round"></div></label>
+			  </label>
+		      <input type="password" id="myPass" placeholder="Enter Password" name="pwd">
 		 	  
 		 	  <button type="button" class="cancel" onclick="document.getElementById('loginDialog').style.display='none'">Cancel</button>
 		      <button type="submit" name="action" value="login">Login</button>
@@ -94,15 +98,18 @@
 				          <div class="col-25">
 				            <h3>Registration</h3>
 				            <label for="fname"><i class="fa fa-id-badge"></i> Student ID</label>
-				              <div class="row">
-					              <div class="col-50">
+				              
+					              <div class="col-50" >
+					              <div class="row">
 					                <input type="text" id="userID" name="userID" placeholder="0123456">
 					              </div>
-					              <div class="col-50">
-				        			<button id="btnCheck" type="submit" name="action" value="check" style="width:auto;">Check Identity</button>
+					              <div class="col-25">
+				        			<button id="btnCheck" type="submit" name="action" value="check" style="width:300px;">Check Identity</button>
 					              </div>
-				             </div>
-			
+					              </div>
+				             
+							
+							
 				          <div class="row ">
 				          	<div id="pwdForm" class="col-50 hidden">
 				              <label for="adr"><i class="fa fa-lock"></i> Password</label>
@@ -125,7 +132,7 @@
 				          
 				        </div>
 				        <hr>
-				        <button id="btnConfirm" type="submit" name="action" value="register" style="width:auto;">Confirm Registration</button>
+				        <button id="btnConfirm" type="submit" name="action" value="register" style="width:300px; margin-left:40px;">Confirm Registration</button>
 				    </div>
 				  </div> 
 				</div>
@@ -184,6 +191,15 @@
 		document.getElementById("dbData").style.display = 'none';
         document.getElementById("pwdForm").style.display = 'none';
         document.getElementById("btnCheck").style.display = 'block';
+	}
+	
+	function showPass(){
+		 var x = document.getElementById("myPass");
+		  if (x.type === "password") {
+		    x.type = "text";
+		  } else {
+		    x.type = "password";
+		  }
 	}
 </script>
 

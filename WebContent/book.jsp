@@ -12,13 +12,13 @@
 
 <header>
 	<div id="navbar">
-		<a href=""><i class='fas fa-door-open' style='font-size:36px'></i></a> 
+		<a href="homepage.jsp"><i class='fas fa-home' style='font-size:36px'></i></a> 
 		<a class="active" href="">Book</a> 
-		<a href="">Offer</a> 
-		<a href="">MyCar</a> 
-		<a href="">MyLift</a> 
-		<a class="right" href=""><i class='fas fa-door-open' style='font-size:36px'></i></a>
-		<a class="right" href=""><i class='fas fa-user-graduate' style='font-size:36px'></i></a>
+		<a href="offer.jsp">Offer</a> 
+		<a href="myCar.jsp">MyCar</a> 
+		<a href="myLift.jsp">MyLift</a> 
+		<a class="right" href="index.jsp"><i class='fas fa-door-open' style='font-size:36px'></i></a>
+		<a class="right" href="profile.jsp"><i class='fas fa-user-graduate' style='font-size:36px'></i></a>
 	</div>
 </header>
 
@@ -53,22 +53,53 @@
 								<button class="invisible" type="submit" name='action' value='destPos'><i class='fas fa-search-location fa-2x'></i></button>							
 							</div>
 						</div>
-
+						
 						<div class="row">
 							<div class="col-50">
+								<div class="row">
+								<h2 id="hGoing" style="margin-left:15px">Going: </h2>
+								<div class="col-25">
+								<label class="switch" style="margin-top:43px; margin-right:20px;">
+						  		<input type="checkbox" id="cb" onclick="change()">
+						 	    	<div class="slider round">
+						 	    		<span class="Booked"></span>
+						 	   			<span class="Offered"></span>
+						 	   		</div>
+						 	  
+						 		</label>
+								</div>
+								</div>
+						   		
+						    </div>
+						</div>						    
+						
+						
+						<div class="row">
+							<div class="col-25">
 								<label><i class="fa fa-calendar-alt"></i> Day: </label> 
-								<input type="text" placeholder="..." id="day" name="day">
+								<input type="date" placeholder="" id="day" name="day" style="width:550px; height:42px;  ">
 							</div>
-							<div class="col-50">
-								<label><i class="fa fa-clock"></i> Depart at: </label> 
-								<input type="text" placeholder="HH:MM" id="departureTime" name="startTime">
+							
+							<div class="col-25">
+								<div class="row">
+									<i class="fa fa-clock"></i>
+										<div class="col-25">
+											<label id="lbDepart"> Depart at: </label> 
+											
+								
+										</div>	
+										<input type="time" placeholder="HH:MM" id="departureTime" name="startTime" style="width:550px; height:42px;">
+								</div>
+							
 							</div>
+							
+							
 						</div>
-						<label><i class="fa fa-stopwatch-20"></i> Max duration: </label> 
-						<input type="text" placeholder="100 Minutes" id="maxTime" name="maxTime"> 
 						
 						
-
+						
+						<br>
+						
 						<button id="btnConfirm" type="submit" name="action" value="offer" style="width:150px;">Book Lift</button>
 						
 					</div>
@@ -80,4 +111,21 @@
 </div>
 
 </body>
+
+<script>
+function change(){
+	var x = document.getElementById("hGoing");
+	var cb = document.getElementById("cb").checked;
+	if(cb == true){
+		
+		document.getElementById("lbDepart").innerHTML =  "Arrive at:" ;
+		document.getElementById("hGoing").innerHTML = "Return";
+	
+	}else{
+		document.getElementById("lbDepart").innerHTML = "Depart at:"
+		document.getElementById("hGoing").innerHTML  ="Going";
+	}
+}
+
+</script>
 </html>
