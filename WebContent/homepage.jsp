@@ -12,17 +12,24 @@
 
 <header class="header_area clearfix">
 		<div id="navbar">
+			<a id="title" class="title">TorVerCar.</a>
 			<a class="active" href=""><i class='fas fa-home' style='font-size:36px'></i></a> 
 			<a href="book.jsp">Book</a> 
 			<a href="offer.jsp">Offer</a>
 			<a href="myCar.jsp">MyCAR</a> 
 			<a href="myLift.html">MyLIFT</a> 
-			<a class="right" onclick="document.getElementById('regDialog').style.display='block'"><i class='fas fa-door-open' style='font-size:36px'></i></a>
-			<a class="right" onclick="document.getElementById('loginDialog').style.display='block'"><i class='fas fa-user-graduate' style='font-size:36px'></i></a> 
+			<a class="right" href="index.jsp"><i class='fas fa-door-open' style='font-size:36px'></i></a>
+			<a class="right" href="profile.jsp"><i class='fas fa-user-graduate' style='font-size:36px'></i></a> 
 		</div>
 	</header>
 	
 <body>
-	<div class="bg-image home"></div>
+	<div class="bg-image home">
+	<div class="column" style="background-color:trasparent;"></div>
+	<div class="column" style="background-color:trasparent;"></div>	
+	<div class="column2" style="background-color:trasparent;">
+	<div class="row" style="height:75%;"></div>
+	<h1 style="font-size:96px;">Welcome Marco!</h1>
+	</div>
 </body>
 </html>

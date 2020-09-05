@@ -33,7 +33,8 @@
 	<c:set var="startP" scope="session" value="${offerBean.getStops()}"/>
 	
 	<div id="navbar">
-		<a href="homepage.jsp"><i class='fas fa-door-open' style='font-size:36px'></i></a> 
+		<a id="title" class="title">TorVerCar.</a>
+		<a href="homepage.jsp"><i class='fas fa-home' style='font-size:36px'></i></a> 
 		<a href="book.jsp">Book</a> 
 		<a class="active" href="">Offer</a> 
 		<a href="myCar.jsp">MyCar</a> 

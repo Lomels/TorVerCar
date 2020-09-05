@@ -12,6 +12,7 @@
 
 <header>
 	<div id="navbar">
+		<a id="title" class="title">TorVerCar.</a>
 		<a href="homepage.jsp"><i class='fas fa-home' style='font-size:36px'></i></a> 
 		<a class="active" href="">Book</a> 
 		<a href="offer.jsp">Offer</a> 
@@ -59,7 +60,7 @@
 								<div class="row">
 								<h2 id="hGoing" style="margin-left:15px">Going: </h2>
 								<div class="col-25">
-								<label class="switch" style="margin-top:43px; margin-right:20px;">
+								<label class="switch" style="margin-top:47px; margin-right:20px;">
 						  		<input type="checkbox" id="cb" onclick="change()">
 						 	    	<div class="slider round">
 						 	    		<span class="Booked"></span>

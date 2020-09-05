@@ -10,26 +10,30 @@
 	<meta charset="UTF-8">
 	<meta name="description" content="">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="text/html; charset=iso-8859-2" http-equiv="Content-Type">
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	
 	<!-- Core Stylesheet -->
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link href="torvercar.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+	<style>
+.mySlides {display:none;}
+</style>
 </head>
 
-<body>	<div class="bg-image home">	
-
-	
+<body>	
 	<!-- ***** Header Area Start ***** -->
 	<header class="header_area clearfix">
 		<div id="navbar">
+			
 			<a id="title" class="title">TorVerCar.</a>
 			<a class="active" href="">Home</a> 
 			<a href="">Book</a> 
-			<a href="offer.jsp">Offer</a>
+			<a href="">Offer</a>
 			<a href="">MyCar</a> 
 			<a href="">MyLift</a> 
 			<a class="right" onclick="document.getElementById('regDialog').style.display='block'">Sign in</a>
@@ -37,15 +41,34 @@
 			
 		</div>
 	</header>
-	
-	<div class="column" style="background-color:trasparent;"></div>
+	<div class="slideshow-container">
 
-	<div class="column" style="background-color:trasparent;"></div>	
-	<div class="column2" style="background-color:trasparent;">
+<div class="mySlides fade">
+  <div class="numbertext">1 / 3</div>
+  <img src="images/carpooling1.jpg" style="width:100%">
+  <div class="text">Caption Text</div>
+</div>
 
-	<div class="row" style="height:75%;"></div>
-	<h1 style="font-size:96px;">We are not Uber.</h1>
-	</div>
+<div class="mySlides fade">
+  <div class="numbertext">2 / 3</div>
+  <img src="images/carpooling2.jpg" style="width:100%">
+  <div class="text">Caption Two</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">3 / 3</div>
+  <img src="iages/carpooling3.jpg" style="width:100%">
+  <div class="text">Caption Three</div>
+</div>
+
+</div>
+<br>
+
+<div style="text-align:center">
+  <span class="dot"></span> 
+  <span class="dot"></span> 
+  <span class="dot"></span> 
+</div>
 	
 	<!-- ***** Header Area End ***** -->
 
@@ -139,16 +162,16 @@
 				
 		  </form>
 		</div>		
-	</div>
+	
 	<!-- ***** Welcome Area End ***** -->
 	
 	
 </body>
 
 <script>
-	var sessionCheck = '${sessionScope.check}';
+	var sessionCheck = ${sessionScope.check};
 	if(sessionCheck == true){
-		document.getElementById("userID").placeholder = ${sessionScope.currentUser.getUserID()};
+		document.getElementById("userID").placeholder = "0"+${sessionScope.userID};
 		document.getElementById("userID").disabled = true;
 		document.getElementById("password").required = true;
 		document.getElementById("repeat").required = true;
@@ -162,7 +185,28 @@
 	var password = document.getElementById("password");
 	var confirm_password = document.getElementById("repeat");
 	var status = document.getElementById("status");
+	var slideIndex = 0;
+	showSlides();
+</script>	
 
+<script>
+function showSlides() {
+	  var i;
+	  var slides = document.getElementsByClassName("mySlides");
+	  var dots = document.getElementsByClassName("dot");
+	  for (i = 0; i < slides.length; i++) {
+	    slides[i].style.display = "none";  
+	  }
+	  slideIndex++;
+	  if (slideIndex > slides.length) {slideIndex = 1}    
+	  for (i = 0; i < dots.length; i++) {
+	    dots[i].className = dots[i].className.replace(" active", "");
+	  }
+	  slides[slideIndex-1].style.display = "block";  
+	  dots[slideIndex-1].className += " active";
+	  setTimeout(showSlides, 2000); // Change image every 2 seconds
+	}
+	
 	
 	function validatePassword(){
 	  if(password.value != confirm_password.value | password.value == '') {
@@ -201,6 +245,7 @@
 		    x.type = "password";
 		  }
 	}
+	
 </script>
 
 </html>

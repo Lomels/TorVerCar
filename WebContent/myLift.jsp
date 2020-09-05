@@ -12,6 +12,7 @@ href="torvercar.css">
 
 <header>
 <div id="navbar">
+			<a id="title" class="title">TorVerCar.</a>
 			<a  href="homepage.jsp"><i class='fas fa-home' style='font-size:36px'></i></a> 
 			<a href="book.jsp">Book</a> 
 			<a href="offer.jsp">Offer</a>
