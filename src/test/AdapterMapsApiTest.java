@@ -12,6 +12,7 @@ import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Position;
 import logic.model.Route;
+import logic.utilities.MyLogger;
 import test.utilities.TestLogger;
 import test.utilities.TestUtilities;
 
@@ -28,11 +29,12 @@ public class AdapterMapsApiTest extends TestUtilities {
 	public void addrToPosTest() throws ApiNotReachableException, InvalidInputException {
 		List<Position> results = maps.addrToPos(ADDR_GIU);
 		for (Position p : results)
-			logger.info("Position", p);
+			MyLogger.info("Position", p);
+		
 		assertNotNull(results);
 	}
 
-	@Test
+//	@Test
 	public void startToStopTest() throws InvalidInputException, ApiNotReachableException {
 		Position start;
 		Position stop;
@@ -43,7 +45,7 @@ public class AdapterMapsApiTest extends TestUtilities {
 		assertEquals(Route.class, result.getClass());
 	}
 
-	@Test
+//	@Test
 	public void startToStopListTest() throws InvalidInputException, ApiNotReachableException {
 		Position start;
 		Position stop;
@@ -57,7 +59,7 @@ public class AdapterMapsApiTest extends TestUtilities {
 		assertEquals(Route.class, result.getClass());
 	}
 
-	@Test
+//	@Test
 	public void viewFromPTest() throws ApiNotReachableException, InvalidInputException {
 		Position p = maps.addrToPos(ADDR_UNI).get(0);
 		String result = maps.viewFromPos(p);
@@ -65,7 +67,7 @@ public class AdapterMapsApiTest extends TestUtilities {
 		assertNotNull(result);
 	}
 
-	@Test
+//	@Test
 	public void viewFromPZoomTest() throws ApiNotReachableException, InvalidInputException {
 		Position p = maps.addrToPos(ADDR_UNI).get(0);
 		int zoom = 10;
@@ -74,7 +76,7 @@ public class AdapterMapsApiTest extends TestUtilities {
 		assertNotNull(result);
 	}
 
-	@Test
+//	@Test
 	public void viewRouteTest() throws ApiNotReachableException, InvalidInputException {
 		Position start;
 		Position stop;
@@ -86,7 +88,7 @@ public class AdapterMapsApiTest extends TestUtilities {
 		assertNotNull(url);
 	}
 
-	@Test
+//	@Test
 	public void addInternalRouteTest() throws ApiNotReachableException, InvalidInputException {
 		Position start = maps.addrToPos(ADDR_MARCO).get(0);
 		Position inter1 = maps.addrToPos(ADDR_GIU).get(0);

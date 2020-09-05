@@ -1,5 +1,6 @@
 package logic.bean;
 
+import logic.model.CarInfo;
 import logic.model.Role;
 
 public class UserBean {
@@ -10,6 +11,9 @@ public class UserBean {
 	private String surname;
 	private String email;
 	private String phone;
+	
+	private CarInfo carInfo;
+	private Integer rating;
 	private Role role;
 	
 	public String getUserID() {
@@ -57,6 +61,18 @@ public class UserBean {
 	}
 	public void setRole(Role role) {
 		this.role = role;
+	}
+	public CarInfo getCarInfo() {
+		return carInfo;
+	}
+	public void setCarInfo(CarInfo carInfo) {
+		this.carInfo = carInfo;
+	}
+	public Integer getRating() {
+		return rating;
+	}
+	public void setRating(Integer rating) {
+		this.rating = rating;
 	}
 	
 }
