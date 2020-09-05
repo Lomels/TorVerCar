@@ -3,6 +3,8 @@ package logic.bean;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.model.Lift;
+import logic.model.LiftMatchResult;
 import logic.model.Position;
 
 public class OfferBean {
@@ -10,7 +12,11 @@ public class OfferBean {
 	private List<Position> endPosition;
 	private List<Position> result;
 	private String status;
+	private String bookStatus = "going";
 	private List<Position> stops = new ArrayList<>();
+	
+	private List<LiftMatchResult> liftResult;
+	private Lift chosenLift;
 	
 	public List<Position> getStartingPosition() {
 		return startingPosition;
@@ -45,5 +51,23 @@ public class OfferBean {
 	}
 	public void setResult(List<Position> result) {
 		this.result = result;
+	}
+	public List<LiftMatchResult> getLiftResult() {
+		return liftResult;
+	}
+	public void setLiftResult(List<LiftMatchResult> liftResult) {
+		this.liftResult = liftResult;
+	}
+	public Lift getChosenLift() {
+		return chosenLift;
+	}
+	public void setChosenLift(Lift chosenLift) {
+		this.chosenLift = chosenLift;
+	}
+	public String getBookStatus() {
+		return bookStatus;
+	}
+	public void setBookStatus(String bookStatus) {
+		this.bookStatus = bookStatus;
 	}
 }

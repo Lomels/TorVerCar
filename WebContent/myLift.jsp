@@ -27,20 +27,29 @@ href="torvercar.css">
 
 
 <body>
-
+<div class="bg-image book">
+	<!-- <div class="column" style="background-color:trasparent;"></div>
+	<div class="column2" style="background-color:trasparent;">
+		<div class="center">
+			
+		</div>
+	</div>
+</div> -->
+	<div class="row fullscreen">
+		<div class="col-75">
+		<div class="card">
+			<label  class="center switch">
+	  			<input type="checkbox">
+	 	    		<div class="slider round">
+	 	    			<span class="Booked">BOOKED</span>
+	 	    			<span class="Offered">OFFERED</span>
+	 	    		</div>
+	 	    </label>
+	 	    </div>
+		</div>
+	</div>
 <div class="column" style="background-color:trasparent;"></div>
-<div class="column2" style="background-color:trasparent;">
-	<div class="center">
-		<label  class="switch">
-  		<input type="checkbox">
- 	    <div class="slider round">
- 	    <span class="Booked">BOOKED</span>
- 	    <span class="Offered">OFFERED</span>
- 	    </div>
- 	    </label>
-  </div>
 </div>
-<div class="column" style="background-color:trasparent;"></div>
 
 
 
