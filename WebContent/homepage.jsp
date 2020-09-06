@@ -16,8 +16,8 @@
 			<a class="active" href=""><i class='fas fa-home' style='font-size:36px'></i></a> 
 			<a href="book.jsp">Book</a> 
 			<a href="offer.jsp">Offer</a>
-			<a href="myCar.jsp">MyCAR</a> 
-			<a href="myLift.html">MyLIFT</a> 
+			<a href="myCar.jsp">MyCar</a> 
+			<a href="myLift.html">MyLift</a> 
 			<a class="right" href="index.jsp"><i class='fas fa-door-open' style='font-size:36px'></i></a>
 			<a class="right" href="profile.jsp"><i class='fas fa-user-graduate' style='font-size:36px'></i></a> 
 		</div>

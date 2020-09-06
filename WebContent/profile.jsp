@@ -36,24 +36,24 @@ href="torvercar.css">
 
   						  <h2>Profile Card</h2>
 						  <label>Name and Surname:  </label>
-						  <input type="text" value="Giulia Desideri" id="myName" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px; "disabled>
+						  <input type="text" value="Giulia Desideri" id="myName" style="color:#39393a;  width: 300px; height:30px; "disabled>
 						  
 						  <label>Matriculation number:  </label>
-						  <input type="text" value="0245061" id="myID" style="color:#39393a;background-color:#FFFFFF; width: 300px; height:30px;" disabled>
+						  <input type="text" value="0245061" id="myID" style="color:#39393a; width: 300px; height:30px;" disabled>
 						  
 						  
 						  <label>Phone number:  </label>
-						  <input type="text" value="3923165944" id="myPhoneNum" style="color:#39393a;background-color:#FFFFFF; width: 300px; height:30px;" disabled>
+						  <input type="text" value="3923165944" id="myPhoneNum" style="color:#39393a; width: 300px; height:30px;" disabled>
 						  
 						  <label>Email:  </label>
-						  <input type="text" value="giuls.desideri@gmail.com" id="myEmail" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px;" disabled>
+						  <input type="text" value="giuls.desideri@gmail.com" id="myEmail" style="color:#39393a;  width: 300px; height:30px;" disabled>
 						 
  						  <label>Password: <label  class="switch" style="margin-left:20px">
 						  <input type="checkbox" onclick="showPass()">
 						  <div class="slider round"></div></label> </label>
  
   
- 						  <input type="password" value="aaaAAA123@" id="myPass" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px;" disabled>
+ 						  <input type="password" value="aaaAAA123@" id="myPass" style="color:#39393a; width: 300px; height:30px;" disabled>
 
 
  <br>

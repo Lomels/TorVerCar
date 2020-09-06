@@ -30,7 +30,7 @@ href="torvercar.css">
 	<div class="column2" style="background-color: transparent;">
 		<div class="card animate" style="width:60%;">
 		  <h2>Car Card</h2>
-		  <label>Model:  </label>
+		  <label><i class='fas fa-car'></i>Model:  </label>
 		  <input type="text" value="i20" id="myModel" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px;"disabled>
 		  
 		  <label>Color:  </label>
