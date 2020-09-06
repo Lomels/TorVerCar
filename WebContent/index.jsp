@@ -32,10 +32,6 @@
 			
 			<a id="title" class="title">TorVerCar.</a>
 			<a class="active" href="">Home</a> 
-			<a href="">Book</a> 
-			<a href="">Offer</a>
-			<a href="">MyCar</a> 
-			<a href="">MyLift</a> 
 			<a class="right" onclick="document.getElementById('regDialog').style.display='block'">Sign in</a>
 			<a class="login right" onclick="document.getElementById('loginDialog').style.display='block'">Login</a> 
 			

@@ -39,7 +39,9 @@
 		<a class="active" href="">Offer</a> 
 		<a href="myCar.jsp">MyCar</a> 
 		<a href="myLift.jsp">MyLift</a> 
-		<a class="right" href="index.jsp"><i class='fas fa-door-open' style='font-size:36px'></i></a>
+		<form action="LoginControllerServlet" method="POST">
+		<a class="right" href="index.jsp" name="action" value="logout"><i class='fas fa-door-open' style='font-size:36px'></i></a>
+		</form>
 		<a class="right" href="profile.jsp"><i class='fas fa-user-graduate' style='font-size:36px'></i></a>
 	</div>
 </header>
