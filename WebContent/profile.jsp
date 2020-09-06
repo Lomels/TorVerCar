@@ -52,12 +52,12 @@ href="torvercar.css">
 						  
 						  <label>Email:  </label>
 						  <input type="text" name="email" name="surname" value="${user.getEmail() }" id="myEmail" style="width: 300px; height:30px;" disabled>
+
 						 
  						  <label>Password: <label  class="switch" style="margin-left:20px">
 						  <input type="checkbox" onclick="showPass()">
 						  <div class="slider round"></div></label> </label>
  
-  
  						  <input type="password" name="password" value="${user.getPassword() }" id="myPass" style="width: 300px; height:30px;" disabled>
 						
 							<div class="col-50">
@@ -73,6 +73,7 @@ href="torvercar.css">
  				</div>
  			</div>
 		</div>
+
  </div>
 
 <script>

@@ -26,7 +26,6 @@
 
 </header>
 <body>
-
 	<div class="bg-image mycar">
 		<div class="row fullscreen">
 			<div class="column2" style="background-color: transparent;">
@@ -53,6 +52,7 @@
 							value="${user.getCarInfo().getSeats() }" id="mySeats"
 							style=" width: 300px; height: 30px;"
 							disabled> <br>
+
 
 						<div class="col-50">
 							<button id="btnSave" type="submit" name="action" value="save"

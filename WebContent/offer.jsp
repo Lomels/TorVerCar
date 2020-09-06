@@ -66,7 +66,7 @@
 										<input type="text" placeholder="${startP.get(0).getAddress()}" id="start" name="start" disabled required>
 									</c:when>
 									<c:otherwise>
-										<input type="text" placeholder="via prima strada" id="start" name="start">
+										<input type="text" style="font:corsive;" placeholder="via prima strada" id="start" name="start">
 									</c:otherwise>
 								</c:choose>
 							</div>
@@ -91,27 +91,47 @@
 								<button class="invisible" type="submit" name='action' value='desPos'><i class='fas fa-search-location fa-2x'></i></button>							
 							</div>
 						</div>
-
+						
 						<div class="row">
 							<div class="col-50">
 								<label><i class="fa fa-calendar-alt"></i> Day: </label> 
-								<input type="date" placeholder="..." id="day" name="day" >
+								<input type="date" placeholder="..." id="day" name="day" style="width:550px; height:42px" >
 							</div>
 							<div class="col-50">
 								<label><i class="fa fa-clock"></i> Depart at: </label> 
-								<input type="time" placeholder="HH:MM" id="time" name="time" >
+								<input type="time" placeholder="HH:MM" id="time" name="time" style="width:550px; height:42px" >
 
 							</div>
 						</div>
 						<div class="row" style="height:20px;"></div>
 						<label><i class="fa fa-stopwatch-20"></i> Max duration: </label> 
+						<t style="font-size:14px">*required field</t>
 						<input type="text" placeholder="100 Minutes" id="maxTime" name="maxTime"> 
 						
 						<label><i class="fa fa-comment-dots"></i> Add notes: </label> 
 						<input type="text" placeholder=" ..." id="notes" name="notes">
-
-						<button id="btnConfirm" type="submit" name="action" value="offer">Offer Lift</button>
+						<div class="row" style="height:15px"></div>
+						<button id="btnOffer" onclick="document.getElementById('ConfirmDialog').style.display='block'"  style="width:200px; margin-left:0px;">Offer Lift</button>
+<!-- CONFIRM DIALOG -->
+	<div id="ConfirmDialog" class="modal">
+		 <div class="container">
+			<div class="row">
+		    	<div class="col-50">
+			    	<h3>Confirm:</h3>
+			    </div>
+			    <div class="col-50">
+			    	<span onclick="document.getElementById('ConfirmDialog').style.display='none'" class="close" title="Close Modal">&times;</span>
+			 	</div>
+			</div>
+			<label style="font-size:24px">Your lift is added!</label>
+			<button type="button" class="cancel" onclick="document.getElementById('ConfirmDialog').style.display='none'">Cancel</button>
+		    <button id="btnConfirm" type="submit" name="action" value="offer">Confirm</button>
+		</div>
+	</div>
+		
+<!-- END CONFIRM DIALOG -->
 						
+					
 					</div>
 				</div>
 			</form>
@@ -139,7 +159,7 @@
 					</label>
 			      </c:forEach>
 		     
-		      <input class="button" type="submit" name="action" value="stop">Choose</button>
+		      <button  type="submit" name="action" value="stop">Choose</button>
 		    </div>
 		  </form>
 	</div>
@@ -156,10 +176,19 @@
 	if(s  == 'startPos'){
 		document.getElementById("listDialog").style.display = 'block';
 		<% offerBean.setStatus(""); %>
+		
 	}	
 	
 	function show(){
 		document.getElementById("listDialog").style.display = 'block';
 	}
+	
+	
+	
+
 </script>
+
+
+
+
 </html>
