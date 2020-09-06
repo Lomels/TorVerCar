@@ -112,6 +112,7 @@ public class BookControllerServlet extends HttpServlet{
 
 			try {
 				passController.addPassenger(lift, student);
+				ServletUtility.liftRefresh(session);
 				request.getRequestDispatcher("homepage.jsp").forward(request, response);
 			} catch (ServletException | IOException e) {
 				// TODO Auto-generated catch block

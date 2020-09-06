@@ -18,7 +18,9 @@ href="torvercar.css">
 			<a href="offer.jsp">Offer</a>
 			<a href="myCar.jsp">MyCar</a> 
 			<a href="myLift.jsp">MyLift</a> 
-			<a class="right" href="index.jsp"><i class='fas fa-door-open' style='font-size:36px'></i></a> 
+			<form action="LoginControllerServlet" method="POST">
+			<a class="right" href="index.jsp" name="action" value="logout"><i class='fas fa-door-open' style='font-size:36px'></i></a>
+			</form> 
 			<a class="right active" href=""> <i class='fas fa-user-graduate' style='font-size:36px'></i></a>
 			
 </div>
@@ -31,93 +33,72 @@ href="torvercar.css">
 	<div class="column" style="background-color:transparent;"></div>
 		<div class="column" style="background-color:transparent;"></div>
 			<div class="column2" style="background-color:transparent;">
-
-				<div class="card animate" style="width:60%;">
+				<div  class="card animate" > 
+				<form action="ProfileControllerServlet" method="POST" style="width:60%;">
 
   						  <h2>Profile Card</h2>
-						  <label>Name and Surname:  </label>
-						  <input type="text" value="Giulia Desideri" id="myName" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px; "disabled>
+						  <label>Name:  </label>
+						  <input type="text" name="name" value="${user.getName() }" id="myName" style="width: 300px; height:30px;" disabled>
+						  
+						  <label>Surname:  </label>
+						  <input type="text" name="surname" value="${user.getSurname() }" id="mySurname" style="width: 300px; height:30px;" disabled>
 						  
 						  <label>Matriculation number:  </label>
-						  <input type="text" value="0245061" id="myID" style="color:#39393a;background-color:#FFFFFF; width: 300px; height:30px;" disabled>
+						  <input type="text" name="userID" value="${user.getUserID() }" id="myID" style="width: 300px; height:30px;" disabled>
 						  
 						  
 						  <label>Phone number:  </label>
-						  <input type="text" value="3923165944" id="myPhoneNum" style="color:#39393a;background-color:#FFFFFF; width: 300px; height:30px;" disabled>
+						  <input type="text" name="phone" value="${user.getPhone() }" id="myPhoneNum" style="width: 300px; height:30px;" disabled>
 						  
 						  <label>Email:  </label>
-						  <input type="text" value="giuls.desideri@gmail.com" id="myEmail" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px;" disabled>
+						  <input type="text" name="email" name="surname" value="${user.getEmail() }" id="myEmail" style="width: 300px; height:30px;" disabled>
 						 
  						  <label>Password: <label  class="switch" style="margin-left:20px">
 						  <input type="checkbox" onclick="showPass()">
 						  <div class="slider round"></div></label> </label>
  
   
- 						  <input type="password" value="aaaAAA123@" id="myPass" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px;" disabled>
-
-
- <br>
- 						<div class="col-50">	
-								<div class="row">
-									<button id="btnBack" class="disabled" onclick="back()">Back <i class='fas fa-angle-double-left'></i></button>
-									<button id="btnSave" class="disabled" onclick="save()">Save</button>
-									<button id="btnEdit" onclick="edit()">Edit</button>
-								</div>
- 						</div>
-
-
-
- 
-				</div>
-</div>
+ 						  <input type="password" name="password" value="${user.getPassword() }" id="myPass" style="width: 300px; height:30px;" disabled>
+						
+							<div class="col-50">
+									<button id="btnSave" type="submit" name="action" value="save" class="disabled">Save</button>
+	
+ 							</div>
+						</form>
+					
+ 						<div class="col-50">
+							<button id="btnBack" class="disabled" onclick="back()">Back <i class='fas fa-angle-double-left'></i></button>
+							<button id="btnEdit" onclick="edit()">Edit</button>
+						</div>
+ 				</div>
+ 			</div>
+		</div>
  </div>
-</div>
-
-
-
-
-
-
 
 <script>
+
 function edit() {
   document.getElementById("btnEdit").classList.add("disabled");
-	  
   document.getElementById("btnSave").classList.remove("disabled");
-	  
   document.getElementById("btnBack").classList.remove("disabled");
-
-  document.getElementById("myPhoneNum").value= '';
-  document.getElementById("myEmail").value= '';
-  document.getElementById("myPass").value = '';
  
   document.getElementById("myPhoneNum").disabled= false;
   document.getElementById("myEmail").disabled = false;
   document.getElementById("myPass").disabled = false;
- 
-  
- 
-  
-  
 }
+
 function back(){
-  document.getElementById("btnEdit").classList.remove("disabled");
-	  
-  document.getElementById("btnSave").classList.add("disabled");
-	  
+  document.getElementById("btnEdit").classList.remove("disabled");	  
+  document.getElementById("btnSave").classList.add("disabled");	  
   document.getElementById("btnBack").classList.add("disabled");
   
-  document.getElementById("myPhoneNum").value= '3923165499';  //TODO get from database
-  document.getElementById("myEmail").value= 'giuls.desideri@gmail.com';
-  document.getElementById("myPass").value = 'aaaAAA123@';
+  document.getElementById("myPhoneNum").value= '${user.getPhone() }';  //TODO get from database
+  document.getElementById("myEmail").value= '${user.getEmail() }';
+  document.getElementById("myPass").value = '${user.getPassword() }';
 	  
-
   document.getElementById("myPhoneNum").disabled= true;
   document.getElementById("myEmail").disabled = true;
   document.getElementById("myPass").disabled = true;
-	  
-	  
-	
 }
 
 
@@ -129,6 +110,7 @@ function showPass(){
 	    x.type = "password";
 	  }
 }
+
 </script>
 
 

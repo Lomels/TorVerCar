@@ -100,6 +100,7 @@ public class OfferControllerServlet extends HttpServlet {
 						offerBean.getStops().get(0), offerBean.getStops().get(1));
 				OfferBean newBean = new OfferBean();
 				session.setAttribute("offerBean", newBean);
+				ServletUtility.liftRefresh(session);
 				request.getRequestDispatcher("homepage.jsp").forward(request, response);
 
 			} catch (NumberFormatException | InvalidInputException | DatabaseException | InvalidStateException

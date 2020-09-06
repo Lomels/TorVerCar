@@ -27,9 +27,6 @@ public class SetCarInfoController {
 
 		// TODO: controllare l'impostazione del rating, 0 ho messo io, parte commentata
 		// era la precedente versione
-//		StudentCarBuilder builder = StudentCarBuilder.newCarBuilder(student);
-//		builder.carInfo(car);
-//		return builder.build();
 
 		StudentCar studentCar = new StudentCar(student, 0, car);
 		return studentCar;
@@ -46,7 +43,6 @@ public class SetCarInfoController {
 			break;
 		case STUDENT:
 			// TODO: controllare sempre il set del rating
-//			StudentCar sCar = StudentCarBuilder.newCarBuilder(sg.getStudent()).carInfo(carInfo).build();
 			StudentCar sCar = new StudentCar(sg.getStudent(), 0, carInfo);
 			ourDb.addCar(sCar);
 			sg.setRole(Role.DRIVER);
