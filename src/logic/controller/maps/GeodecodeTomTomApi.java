@@ -16,7 +16,7 @@ import logic.model.Position;
 
 public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 	
-	private static Logger LOGGER = Logger.getLogger(GeodecodeTomTomApi.class.getCanonicalName());
+	private static final Logger LOGGER = Logger.getLogger(GeodecodeTomTomApi.class.getCanonicalName());
 
 	// Implemented as a Singleton
 	private static GeodecodeTomTomApi instance = null;

@@ -14,6 +14,7 @@ import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 import logic.controller.email.SendEmail;
+import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
@@ -44,7 +45,7 @@ public class LiftController {
 	RoutingApi routingApi = RoutingHereAPI.getInstance();
 
 	public Lift createLift(String startDateTimeString, Integer maxDuration, String note, StudentCar driver,
-			Position pickUp, Position dropOff) throws InvalidInputException, DatabaseException, InvalidStateException {
+			Position pickUp, Position dropOff) throws InvalidInputException, DatabaseException, InvalidStateException, ApiNotReachableException {
 		LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ISO_DATE_TIME);
 		Route route = routingApi.startToStop(pickUp, dropOff);
 		if (maxDuration < route.getTotalDuration()) {
@@ -233,7 +234,7 @@ public class LiftController {
 							unorderedLifts.add(new UnorderedLift(possibleLift, deltaDuration, id, MAX_LIFTS_LISTED));
 						}
 					}
-				} catch (InvalidInputException e) {
+				} catch (InvalidInputException | ApiNotReachableException e) {
 					LOGGER.fine(e.toString());
 				}
 			}

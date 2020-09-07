@@ -38,12 +38,12 @@ public class AdapterMapsApi implements MapsApi {
 	}
 
 	@Override
-	public Route startToStop(Position pickup, Position dropoff) throws InvalidInputException {
+	public Route startToStop(Position pickup, Position dropoff) throws InvalidInputException, ApiNotReachableException {
 		return this.routing.startToStop(pickup, dropoff);
 	}
 
 	@Override
-	public Route startToStop(List<Position> stops) throws InvalidInputException {
+	public Route startToStop(List<Position> stops) throws InvalidInputException, ApiNotReachableException {
 		return this.routing.startToStop(stops);
 	}
 
@@ -63,7 +63,7 @@ public class AdapterMapsApi implements MapsApi {
 	}
 
 	@Override
-	public Route addInternalRoute(Route startingRoute, List<Position> stops) throws InvalidInputException {
+	public Route addInternalRoute(Route startingRoute, List<Position> stops) throws InvalidInputException, ApiNotReachableException {
 		return this.routing.addInternalRoute(startingRoute, stops);
 	}
 

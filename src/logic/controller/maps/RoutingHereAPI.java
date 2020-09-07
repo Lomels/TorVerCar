@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.httpclient.MyHttpClient;
 import logic.model.Position;
@@ -31,7 +32,7 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 	}
 
 	@Override
-	public Route startToStop(Position pickup, Position dropoff) throws InvalidInputException {
+	public Route startToStop(Position pickup, Position dropoff) throws InvalidInputException, ApiNotReachableException {
 		List<Position> stops = new ArrayList<>();
 		stops.add(pickup);
 		stops.add(dropoff);
@@ -39,7 +40,7 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 	}
 
 	@Override
-	public Route startToStop(List<Position> stops) throws InvalidInputException {
+	public Route startToStop(List<Position> stops) throws InvalidInputException, ApiNotReachableException {
 		Integer duration = null;
 		Integer distance = null;
 
@@ -101,7 +102,7 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 	}
 
 	@Override
-	public Route addInternalRoute(Route startRoute, List<Position> addStops) throws InvalidInputException {
+	public Route addInternalRoute(Route startRoute, List<Position> addStops) throws InvalidInputException, ApiNotReachableException {
 		List<Position> startStops = startRoute.getStops();
 
 		PositionListCombiner combiner = new PositionListCombiner();
