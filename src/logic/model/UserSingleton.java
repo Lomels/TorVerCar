@@ -99,7 +99,7 @@ public class UserSingleton {
 		this.setCode(null);
 		this.completedLift.clear();
 		this.setRole(null);
-		this.setStatus(null);
+		this.status = null;
 		this.setStudent(null);
 		this.setStudentCar(null);
 		this.notifications.clear();

@@ -32,9 +32,9 @@ import logic.view.booking.BookView;
 import logic.view.offer.OfferView;
 
 public class ProfileView extends Application implements Initializable {
-	@FXML private Text txName;
-	@FXML private Text txSurname;
-	@FXML private Text txMatNum;
+	@FXML private TextField txName;
+	@FXML private TextField txSurname;
+	@FXML private TextField txMatNum;
 	@FXML private TextField tfEmail;
 	@FXML private TextField tfPass;
 	@FXML private TextField tfPhone;
@@ -105,6 +105,7 @@ public class ProfileView extends Application implements Initializable {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
+		stage.setResizable(false);
 		stage.show();
 	}
 

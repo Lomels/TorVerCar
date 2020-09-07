@@ -54,18 +54,18 @@
 							<buttons>
 								<Button fx:id="btLogout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonController" styleClass="button-unactive">
 									<graphic>
-										<ImageView fitHeight="29.0" fitWidth="33.0">
+										<ImageView fitHeight="29.0" fitWidth="33.0" preserveRatio="true">
 											<image>
-												<Image url="@../../../../images/logout.png" />
+												<Image url="@../../../../WebContent/images/logout.png" />
 											</image>
 										</ImageView>
 									</graphic>
 								</Button>
 								<Button fx:id="btProfile" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#profileButtonController" styleClass="button-unactive">
 									<graphic>
-										<ImageView fitHeight="30.0" fitWidth="28.0">
+										<ImageView fitHeight="30.0" fitWidth="28.0" preserveRatio="true">
 											<image>
-												<Image url="@../../../../images/user.png" />
+												<Image url="@../../../../WebContent/images/user.png" />
 											</image>
 										</ImageView>
 									</graphic>

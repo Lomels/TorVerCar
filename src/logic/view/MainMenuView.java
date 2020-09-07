@@ -64,7 +64,9 @@ public class MainMenuView extends Application implements Initializable {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
-		stage.sizeToScene();
+		stage.sizeToScene();		
+		stage.setResizable(false);
+
 		stage.show();
 
 		if (!(notifications = sg.getNotifications()).isEmpty()) {

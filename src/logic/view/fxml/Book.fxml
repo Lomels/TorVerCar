@@ -54,18 +54,18 @@
 					<buttons>
 						<Button fx:id="btLogout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonController" styleClass="button-unactive">
 							<graphic>
-								<ImageView fitHeight="29.0" fitWidth="33.0">
+								<ImageView fitHeight="29.0" fitWidth="33.0" preserveRatio="true">
 									<image>
-										<Image url="@../../../../images/logout.png" />
+										<Image url="@../../../../WebContent/images/logout.png" />
 									</image>
 								</ImageView>
 							</graphic>
 						</Button>
 						<Button fx:id="btProfile" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#profileButtonController" styleClass="button-unactive">
 							<graphic>
-								<ImageView fitHeight="30.0" fitWidth="28.0">
+								<ImageView fitHeight="30.0" fitWidth="28.0" preserveRatio="true">
 									<image>
-										<Image url="@../../../../images/user.png" />
+										<Image url="@../../../../WebContent/images/user.png" />
 									</image>
 								</ImageView>
 							</graphic>
@@ -78,48 +78,63 @@
 			</children>
 		</HBox>
 		<ComboBox fx:id="btMyLift" layoutX="273.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="103.0" promptText="My Lift" style="-fx-background-color: #046104; -fx-border-color: #046104;" visible="false" />
-		<Text layoutX="22.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Starting point:" />
-		<Text layoutX="22.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destination:" />
-		<Text layoutX="20.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Depart from:" />
-		<Text layoutX="20.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrive up:" />
-		<TextField fx:id="tfStartPoint" layoutX="262.0" layoutY="147.0" promptText="Street, CAP, Place">
+		<Text fill="#39393a" layoutX="201.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Starting point:">
+         <font>
+            <Font size="17.0" />
+         </font></Text>
+		<Text fill="#39393a" layoutX="201.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destination:">
+         <font>
+            <Font size="17.0" />
+         </font></Text>
+		<Text fill="#39393a" layoutX="201.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Depart from:">
+         <font>
+            <Font size="17.0" />
+         </font></Text>
+		<Text fill="#39393a" layoutX="201.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrive up:">
+         <font>
+            <Font size="17.0" />
+         </font></Text>
+		<TextField fx:id="tfStartPoint" layoutX="323.0" layoutY="150.0" promptText="Street, CAP, Place">
 			<font>
-				<Font name="System Italic" size="12.0" />
+				<Font name="System Italic" size="15.0" />
 			</font>
 		</TextField>
-		<TextField fx:id="tfArrivalPoint" layoutX="262.0" layoutY="187.0" promptText="Street, CAP, Place">
+		<TextField fx:id="tfArrivalPoint" layoutX="323.0" layoutY="192.0" promptText="Street, CAP, Place">
 			<font>
-				<Font name="System Italic" size="12.0" />
+				<Font name="System Italic" size="15.0" />
 			</font>
 		</TextField>
-		<TextField fx:id="tfStartTime" layoutX="262.0" layoutY="282.0" promptText="eg. 09:45">
+		<TextField fx:id="tfStartTime" layoutX="323.0" layoutY="292.0" promptText="eg. 09:45">
 			<font>
-				<Font name="System Italic" size="12.0" />
+				<Font name="System Italic" size="15.0" />
 			</font>
 		</TextField>
-		<TextField fx:id="tfArrivalTime" layoutX="262.0" layoutY="317.0" promptText="eg. 09:45">
+		<TextField fx:id="tfArrivalTime" layoutX="323.0" layoutY="336.0" promptText="eg. 09:45">
 			<font>
-				<Font name="System Italic" size="12.0" />
+				<Font name="System Italic" size="15.0" />
 			</font>
 		</TextField>
-		<Button fx:id="btFind" layoutX="511.0" layoutY="352.0" mnemonicParsing="false" onAction="#findButtonController" styleClass="button-active" text="Find Lift" />
-		<Button fx:id="btCheckStart" layoutX="439.0" layoutY="147.0" mnemonicParsing="false" onAction="#startButtonController" styleClass="button-active" text="Find" />
-		<Button fx:id="btCheckEnd" layoutX="439.0" layoutY="187.0" mnemonicParsing="false" onAction="#destButtonController" styleClass="button-active" text="Find" />
-		<Text layoutX="23.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Day:" />
-		<DatePicker fx:id="dpDate" layoutX="262.0" layoutY="252.0" />
-      <HBox alignment="CENTER" layoutX="-3.0" layoutY="46.0" prefHeight="33.0" prefWidth="797.0" spacing="10.0">
-         <children>
-            <RadioButton fx:id="rbGoing" disable="true" graphicTextGap="5.0" mnemonicParsing="false" onAction="#rbGoingButtonController" nodeOrientation="RIGHT_TO_LEFT" selected="true" text="Going">
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font>
-            </RadioButton>
-            <RadioButton fx:id="rbReturn" mnemonicParsing="false" onAction="#rbReturnButtonController" text="Return">
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font>
-            </RadioButton>
-         </children>
-      </HBox>
+		<Button fx:id="btFind" layoutX="690.0" layoutY="430.0" mnemonicParsing="false" onAction="#findButtonController" text="Find Lift" />
+		<Button fx:id="btCheckStart" layoutX="534.0" layoutY="147.0" mnemonicParsing="false" onAction="#startButtonController" text="Find" />
+		<Button fx:id="btCheckEnd" layoutX="534.0" layoutY="189.0" mnemonicParsing="false" onAction="#destButtonController" text="Find" />
+		<Text fill="#39393a" layoutX="201.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Day:">
+         <font>
+            <Font size="17.0" />
+         </font></Text>
+		<DatePicker fx:id="dpDate" layoutX="323.0" layoutY="250.0" prefHeight="31.0" prefWidth="186.0" />
+		<HBox alignment="CENTER" layoutX="-3.0" layoutY="79.0" prefHeight="54.0" prefWidth="797.0" spacing="10.0">
+			<children>
+				<RadioButton fx:id="rbGoing" disable="true" graphicTextGap="5.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#rbGoingButtonController" selected="true" text="Going">
+					<font>
+						<Font name="System Italic" size="12.0" />
+					</font>
+				</RadioButton>
+				<RadioButton fx:id="rbReturn" mnemonicParsing="false" onAction="#rbReturnButtonController" text="Return">
+					<font>
+						<Font name="System Italic" size="12.0" />
+					</font>
+				</RadioButton>
+			</children>
+		</HBox>
 	</children>
 </AnchorPane>
