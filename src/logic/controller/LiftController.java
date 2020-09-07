@@ -16,6 +16,7 @@ import logic.controller.email.SendEmail;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
+import logic.controller.exception.NoLiftAvailable;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.controller.maps.RoutingApi;
@@ -119,13 +120,16 @@ public class LiftController {
 	}
 
 	public void matchLiftStartingAfter(LocalDateTime startDateTime, List<Position> stops, Integer initIndex,
-			LiftMatchListener listener) {
+			LiftMatchListener listener) throws NoLiftAvailable {
 		// Get all the lifts starting in
 		// [startDateTime - MINUTES_OF_MARGIN, startDateTime + HOURS_OF_MARGIN]
 		LocalDateTime intervalStartDateTime = startDateTime.minusMinutes(MINUTES_OF_MARGIN);
 		LocalDateTime intervalStopDateTime = startDateTime.plusHours(HOURS_OF_MARGIN);
 		List<Lift> possibleLifts = this.ourDb.listAvailableLiftStartingWithinIntervalDateTime(intervalStartDateTime,
 				intervalStopDateTime);
+		
+		if(possibleLifts.isEmpty())
+			throw new NoLiftAvailable(String.format("No lift available starting after: %s.", startDateTime));
 
 		// Launch thread for computing
 		LiftThread thread = new LiftThread(possibleLifts, stops, initIndex);
@@ -133,13 +137,16 @@ public class LiftController {
 	}
 
 	public void matchLiftStoppingBefore(LocalDateTime stopDateTime, List<Position> stops, Integer initIndex,
-			LiftMatchListener listener) {
+			LiftMatchListener listener) throws NoLiftAvailable {
 		// Get all the lifts starting in
 		// [stopDateTime - HOURS_OF_MARGIN, stopDateTime + MINUTES_OF_MARGIN]
 		LocalDateTime intervalStopDateTime = stopDateTime.plusMinutes(MINUTES_OF_MARGIN);
 		LocalDateTime intervalStartDateTime = stopDateTime.minusHours(HOURS_OF_MARGIN);
 		List<Lift> possibleLifts = this.ourDb.listAvailableLiftStartingWithinIntervalDateTime(intervalStartDateTime,
 				intervalStopDateTime);
+		
+		if(possibleLifts.isEmpty())
+			throw new NoLiftAvailable(String.format("No lift available stopping before: %s.", stopDateTime));
 
 		// Launch thread for computing
 		LiftThread thread = new LiftThread(possibleLifts, stops, initIndex);
@@ -188,12 +195,12 @@ public class LiftController {
 		}
 
 		@Override
-		public List<LiftMatchResult> call() {
+		public List<LiftMatchResult> call() throws NoLiftAvailable {
 			List<LiftMatchResult> matchedLifts = this.matchLifts();
 			return matchedLifts;
 		}
 
-		public List<LiftMatchResult> matchLifts() {
+		public List<LiftMatchResult> matchLifts() throws NoLiftAvailable {
 			Set<UnorderedLift> unorderedLifts = new TreeSet<>();
 
 			// For cycle that stops once it reaches the end of possibileLifts or after
@@ -240,7 +247,10 @@ public class LiftController {
 				Lift lift = ur.getLift();
 				this.addLiftToLiftMatch(lift);
 			}
-
+			
+			if(results.isEmpty())
+				throw new NoLiftAvailable("No compatible lifts found.");
+			
 			return results;
 		}
 
