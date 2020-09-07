@@ -67,9 +67,9 @@
 
 			<div class="card lift" id="card" style="overflow-y:auto; max-height:3000px">
 				<div class="row" style="height:80px">
-				<button style="width:80px; height:80px; margin-left:1220px;
-				 position:fixed; background-color: #f2f2f2;opacity: 0.96;" 
-  				 onclick="backToTop()"><i class="fas fa-angle-double-up" style="color:#39393a; font-size:36px"></i></button>
+				<button class="button" style="width:80px; height:80px; margin-left:1220px;
+				 position:fixed; background-color: transparent; opacity: 0.96;" 
+  				 onclick="backToTop()"><i class="fas fa-angle-double-up" style="color:#39393a; font-size:36px; background-color: transparent;"></i></button>
 				</div>
 				<div class="row" id="riga" style="height:120px;">
 				<label  class="center switch" style=" position:sticky; margin-bottom:70px;">

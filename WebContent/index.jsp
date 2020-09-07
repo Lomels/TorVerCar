@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="currentUser" class="logic.bean.UserBean" scope="session"></jsp:useBean>
 <jsp:useBean id="message" class="logic.bean.MessageBean" scope="request"></jsp:useBean>
@@ -57,9 +58,7 @@
 	
 	<div class="bg-image home">
 	
-	<%
-		if (message.getMessage() != null) {
-	%>
+	<c:if test="${not empty message.getMessage() }">
 	<script>
 	swal({
 	  title: 'Error!',
@@ -67,10 +66,7 @@
 	  type: '${message.getType()}',
 	  confirmButtonText: 'Got it!'
 	});</script>
-	<%
-		}
-	%>
-	
+	</c:if>
 	<!-- Login Dialog -->	
 		<div id="loginDialog" class="modal">
 		

@@ -6,8 +6,11 @@ import javax.servlet.http.HttpSession;
 
 import logic.bean.UserBean;
 import logic.controller.LiftController;
+import logic.controller.LoginController;
 import logic.controller.exception.ApiNotReachableException;
+import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
+import logic.controller.exception.InvalidStateException;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.Position;
@@ -18,8 +21,11 @@ import logic.model.UserSingleton;
 
 public class ServletUtility {
 
-	public static void createUser(UserBean usr, HttpSession session) throws InvalidInputException {
+	public static void login(UserBean usr, HttpSession session) throws InvalidInputException, DatabaseException, InvalidStateException {
 		LiftController liftController = new LiftController();
+		LoginController lgController = new LoginController();
+		lgController.login(usr);
+		
 		UserSingleton sg = UserSingleton.getInstance();
 		usr.setRole(sg.getRole());
 		List<String> notifications = liftController.loadNotifications(usr.getUserID());

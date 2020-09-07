@@ -100,9 +100,9 @@
 						
 						<div class="col-50">
 
-							<div class="row" style="height:50px">
-							<button id="btnSave" type="submit" name="action" value="save" style="visibility:hidden; width:150px;"
-								class="disabled">Save</button>
+							<div id="saveRow" class="row" style="height:50px; display:none;">
+							<button id="btnSave" type="submit" name="action" value="save" style="width:150px;"
+								class="button">Save</button>
 							</div>
 
 
@@ -111,13 +111,13 @@
 
 					<div class="col-50">
 
-						<div class="row" style="height:50px">
-						<button id="btnBack" class="disabled" style="visibility:hidden; width:150px;" onclick="back()">
+						<div id="backRow" class="row" style="height:50px; display:none;">
+						<button id="btnBack" class="button" style="width:150px;" onclick="back()">
 							Back <i class='fas fa-angle-double-left'></i>
 						</button>
 						</div>
-						<div class="row" style="height:50px">
-						<button id="btnEdit" style="width:150px;" onclick="edit()">Edit</button>
+						<div id="editRow" class="row" style="height:50px;">
+						<button class="button" id="btnEdit" style="width:150px;" onclick="edit()">Edit</button>
 						</div>
 
 					</div>
@@ -130,10 +130,11 @@
 </body>
 
 <script>
+	
 	function edit() {
-		document.getElementById("btnEdit").classList.add("disabled");
-		document.getElementById("btnSave").classList.remove("disabled");
-		document.getElementById("btnBack").classList.remove("disabled");
+		document.getElementById("editRow").style.display = "none";
+		document.getElementById("backRow").style.display = "block";
+		document.getElementById("saveRow").style.display = "block";
 		
 		document.getElementById("mySeats").disabled = false;
 		document.getElementById("myPlate").disabled = false;
@@ -141,10 +142,12 @@
 		document.getElementById("myModel").disabled = false;
 
 	}
+	</script>
+	<script>
 	function back() {
-		document.getElementById("btnEdit").classList.remove("disabled");
-		document.getElementById("btnSave").classList.add("disabled");
-		document.getElementById("btnBack").classList.add("disabled");
+		document.getElementById("editRow").style.display = "block";
+		document.getElementById("backRow").style.display = "none";
+		document.getElementById("saveRow").style.display = "none";
 
 		document.getElementById("mySeats").disabled = true;
 		document.getElementById("myPlate").disabled = true;

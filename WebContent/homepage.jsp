@@ -45,19 +45,6 @@
 	<%}%>
 	<!-- END CHECK -->
 	
-	<!-- NOTIFICATIONS CHECK -->
-	<c:if test="${not empty user.getNotifications() }">
-		<c:forEach items="${user.getNotifications() }" var="note">
-			<script>
-				swal({
-				  title: 'Notification!',
-				  text: '${note}',
-				  type: 'alert',
-				  confirmButtonText: 'Got it!'
-				});
-			</script>
-		</c:forEach>
-	</c:if>
 	<!-- END CHECK -->
 	<div class="column" style="background-color:trasparent;">
 	</div>

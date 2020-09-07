@@ -84,19 +84,18 @@ href="torvercar.css">
 						
 							<div class="col-50">
 
-								<div class="row" style="height:50px">
-									<button id="btnSave" type="submit" name="action" value="save" style="visibility:hidden; width:150px;" class="disabled">Save</button>
+								<div id="saveRow" class="row" style="height:50px; display:none;">
+									<button id="btnSave" class="button" type="submit" name="action" value="save" style="width:150px;">Save</button>
 								</div>	
  							</div>
 						</form>
 					
  						<div class="col-50">
-
- 							<div class="row" style="height:50px">
- 								<button id="btnBack" style="visibility:hidden; width:150px;" class="disabled" onclick="back()">Back <i class='fas fa-angle-double-left'></i></button>
+ 							<div id="backRow" class="row" style="height:50px; display:none;">
+ 								<button id="btnBack" class="button" style="width:150px;" onclick="back()">Back <i class='fas fa-angle-double-left'></i></button>
  							</div>
- 							<div class="row" style="height:50px">
- 								<button id="btnEdit" style="width:150px"onclick="edit()">Edit</button>
+ 							<div id="editRow" class="row" style="height:50px">
+ 								<button id="btnEdit" class="button" style="width:150px" onclick="edit()">Edit</button>
 							</div>
 						</div>
  				</div>
@@ -105,50 +104,40 @@ href="torvercar.css">
  </div>
 
 <script>
+	function edit() {
+		document.getElementById("editRow").style.display = "none";
+		document.getElementById("backRow").style.display = "block";
+		document.getElementById("saveRow").style.display = "block";
 
-function edit() {
-  document.getElementById("btnEdit").style.visibility = "hidden";
-  document.getElementById("btnSave").style.visibility = "visible";
-  document.getElementById("btnBack").style.visibility = "visible";
-  
-  document.getElementById("btnEdit").classList.add("disabled");
-  document.getElementById("btnSave").classList.remove("disabled");
-  document.getElementById("btnBack").classList.remove("disabled");
- 
-  document.getElementById("myPhoneNum").disabled= false;
-  document.getElementById("myEmail").disabled = false;
-  document.getElementById("myPass").disabled = false;
-}
+		document.getElementById("myPhoneNum").disabled = false;
+		document.getElementById("myEmail").disabled = false;
+		document.getElementById("myPass").disabled = false;
+	}
+</script>
 
-function back(){
-	
-  document.getElementById("btnEdit").style.visibility = "visible";
-  document.getElementById("btnSave").style.visibility = "hidden";
-  document.getElementById("btnBack").style.visibility = "hidden";
-  
-  document.getElementById("btnEdit").classList.remove("disabled");	  
-  document.getElementById("btnSave").classList.add("disabled");	  
-  document.getElementById("btnBack").classList.add("disabled");
-  
-  document.getElementById("myPhoneNum").value= '${user.getPhone() }';  //TODO get from database
-  document.getElementById("myEmail").value= '${user.getEmail() }';
-  document.getElementById("myPass").value = '${user.getPassword() }';
-	  
-  document.getElementById("myPhoneNum").disabled= true;
-  document.getElementById("myEmail").disabled = true;
-  document.getElementById("myPass").disabled = true;
-}
+<script>
+	function back() {
+		document.getElementById("editRow").style.display = "block";
+		document.getElementById("backRow").style.display = "none";
+		document.getElementById("saveRow").style.display = "none";
 
+		document.getElementById("myPhoneNum").value = '${user.getPhone() }'; //TODO get from database
+		document.getElementById("myEmail").value = '${user.getEmail() }';
+		document.getElementById("myPass").value = '${user.getPassword() }';
 
-function showPass(){
-	 var x = document.getElementById("myPass");
-	  if (x.type === "password") {
-	    x.type = "text";
-	  } else {
-	    x.type = "password";
-	  }
-}
+		document.getElementById("myPhoneNum").disabled = true;
+		document.getElementById("myEmail").disabled = true;
+		document.getElementById("myPass").disabled = true;
+	}
 
+	function showPass() {
+		var x = document.getElementById("myPass");
+		if (x.type === "password") {
+			x.type = "text";
+		} else {
+			x.type = "password";
+		}
+	}
 </script>
 
 

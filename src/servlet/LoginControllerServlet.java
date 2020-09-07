@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import logic.bean.MessageBean;
 import logic.bean.UserBean;
 import logic.controller.LoginController;
 import logic.controller.RegistrationController;
@@ -33,11 +35,8 @@ public class LoginControllerServlet extends HttpServlet {
 			UserBean userBean = new UserBean();
 			userBean.setUserID(request.getParameter("userID"));
 			userBean.setPassword(request.getParameter("pwd"));
-			
-			LoginController lg = new LoginController();
 			try {
-				lg.login(userBean);
-				ServletUtility.createUser(userBean, session);
+				ServletUtility.login(userBean, session);
 				session.setAttribute("userBean", userBean);
 				request.getRequestDispatcher("homepage.jsp").forward(request, response);
 			} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
@@ -55,8 +54,10 @@ public class LoginControllerServlet extends HttpServlet {
 			UserBean userBean;
 			try {
 				if(rgController.alreadyExist(userID)) {
-					String message = "A user with this Student ID is already registered.";
-					session.setAttribute("message", message);
+					MessageBean message = new MessageBean();
+					message.setMessage("A user with this Student ID is already registered.");
+					message.setType("warning");
+					request.setAttribute("message", message);
 					MyLogger.info("message", message);
 					request.getRequestDispatcher("index.jsp").forward(request,response);
 					return;
@@ -65,8 +66,6 @@ public class LoginControllerServlet extends HttpServlet {
 					session.setAttribute("currentUser", userBean);
 					session.setAttribute("userID", userID);
 					session.setAttribute("check", true);
-					MyLogger.info("currentUser", userBean.getName()+" "+userBean.getSurname());
-					MyLogger.info("check", session.getAttribute("check").toString());
 					request.getRequestDispatcher("index.jsp").forward(request,response);
 					return;
 				}
@@ -89,8 +88,9 @@ public class LoginControllerServlet extends HttpServlet {
 			try {
 				regController.addStudent(userBean);
 				session.setAttribute("currentUser", userBean);
+				ServletUtility.login(userBean, session);
 				request.getRequestDispatcher("homepage.jsp").forward(request,response);
-			} catch (InvalidInputException | DatabaseException e) {
+			} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
 				ExceptionHandler.handle(e, request, response, index);
 			} catch (ServletException e) {
 				e.printStackTrace();

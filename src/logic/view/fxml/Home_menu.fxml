@@ -20,7 +20,7 @@
 	<children>
 		<ImageView fitHeight="547.0" fitWidth="797.0" pickOnBounds="true" preserveRatio="true">
 			<image>
-				<Image url="@../../../../images/background.jpg" />
+				<Image url="@../../../../WebContent/images/background.jpg" />
 			</image>
 		</ImageView>
 		<Rectangle arcHeight="5.0" arcWidth="5.0" height="256.0" layoutX="4.0" layoutY="257.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="797.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -82,18 +82,18 @@
 					<buttons>
 						<Button fx:id="btLogout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonController" styleClass="button-unactive">
 							<graphic>
-								<ImageView fitHeight="29.0" fitWidth="33.0">
+								<ImageView fitHeight="29.0" fitWidth="33.0" preserveRatio="true">
 									<image>
-										<Image url="@../../../../images/logout.png" />
+										<Image url="@../../../../WebContent/images/user.png" />
 									</image>
 								</ImageView>
 							</graphic>
 						</Button>
 						<Button fx:id="btProfile" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#profileButtonController" styleClass="button-unactive">
 							<graphic>
-								<ImageView fitHeight="30.0" fitWidth="28.0">
+								<ImageView fitHeight="30.0" fitWidth="28.0" preserveRatio="true">
 									<image>
-										<Image url="@../../../../images/user.png" />
+										<Image url="@../../../../WebContent/images/logout.png" />
 									</image>
 								</ImageView>
 							</graphic>
