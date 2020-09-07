@@ -35,6 +35,8 @@ public class AddCarView extends Application {
 		Scene scene = new Scene(root);
 		stage.setTitle("Add Car Infos");
 		stage.setScene(scene);
+		stage.setResizable(false);
+
 		stage.show();
 	}
 

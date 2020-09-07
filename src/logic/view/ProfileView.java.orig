@@ -20,21 +20,59 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import logic.controller.LoginController;
 import logic.controller.ProfileController;
-import logic.controller.RatingController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.NoRoleFound;
 import logic.model.UserSingleton;
-import logic.utilities.MyLogger;
 import logic.view.booking.BookView;
 import logic.view.offer.OfferView;
 
 public class ProfileView extends Application implements Initializable {
+<<<<<<< HEAD
+	@FXML
+	private Text txName;
+	@FXML
+	private Text txSurname;
+	@FXML
+	private Text txMatNum;
+	@FXML
+	private TextField tfEmail;
+	@FXML
+	private TextField tfPass;
+	@FXML
+	private TextField tfPhone;
+	@FXML
+	private PasswordField pfHidden;
+
+	@FXML
+	private CheckBox cbShow;
+
+	@FXML
+	private Button btHome;
+	@FXML
+	private Button btBack;
+	@FXML
+	private Button btProfile;
+	@FXML
+	private Button btMyCar;
+	@FXML
+	private Button btSave;
+	@FXML
+	private Button btEdit;
+	@FXML
+	private Button btLogout;
+	@FXML
+	private Button btOffer;
+	@FXML
+	private Button btBook;
+	@FXML
+	private Button btLifts;
+	@FXML
+	private Button btDelete;
+=======
 	@FXML private TextField txName;
 	@FXML private TextField txSurname;
 	@FXML private TextField txMatNum;
@@ -56,6 +94,7 @@ public class ProfileView extends Application implements Initializable {
 	@FXML private Button btBook;
 	@FXML private Button btLifts;
 	@FXML private Button btDelete;
+>>>>>>> 6045e36df5c2f600b1c0b781c5e9915b197b1459
 
 	UserSingleton sg = UserSingleton.getInstance();
 	ProfileController controller = new ProfileController();
@@ -124,20 +163,19 @@ public class ProfileView extends Application implements Initializable {
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
-	
+
 	@FXML
 	public void liftsButtonController() throws Exception {
 		MyLiftView myLift = new MyLiftView();
 		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
-	
+
 	@FXML
 	public void bookButtonController() throws Exception {
 		BookView book = new BookView();
 		book.start((Stage) btBook.getScene().getWindow());
 	}
-	
-	
+
 	@FXML
 	public void backButtonController() throws Exception {
 		ProfileView profile = new ProfileView();
@@ -199,7 +237,6 @@ public class ProfileView extends Application implements Initializable {
 			alert.close();
 		}
 	}
-	
 
 	@FXML
 	public void editButtonController() {

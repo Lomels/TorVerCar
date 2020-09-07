@@ -84,7 +84,7 @@
 							<graphic>
 								<ImageView fitHeight="29.0" fitWidth="33.0" preserveRatio="true">
 									<image>
-										<Image url="@../../../../WebContent/images/user.png" />
+										<Image url="@../../../../WebContent/images/logout.png" />
 									</image>
 								</ImageView>
 							</graphic>
@@ -93,7 +93,7 @@
 							<graphic>
 								<ImageView fitHeight="30.0" fitWidth="28.0" preserveRatio="true">
 									<image>
-										<Image url="@../../../../WebContent/images/logout.png" />
+										<Image url="@../../../../WebContent/images/user.png" />
 									</image>
 								</ImageView>
 							</graphic>

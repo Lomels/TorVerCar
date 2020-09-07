@@ -2,26 +2,35 @@
 	  -fx-background-color: #5f976a; /* Green */
 	  -fx-background-radius: 0.0;
 	  -fx-text-fill: #39393a;	/* Gray */
-	  padding: 15.0px 32.0px;
-	  text-align: center;
-	  text-decoration: none;
-	  display: inline-block;
-	  font-size: 18.0px;
-	  margin: 4.0px 2.0px;
-	  cursor: pointer;
+	  -fx-font-size: 17px;
+	  -fx-margin: 8px 8px;
+	  -fx-border: none;
+	  -fx-cursor: pointer;
+	  -fx-width: 100px;
+}
+
+.button{
+	  -fx-background-color: #5f976a; /* Green */
+	  -fx-text-fill: #39393a;	/* Gray */
+	  -fx-font-size: 17px;
+	  -fx-margin: 8px 8px;
+	  -fx-border: none;
+	  -fx-cursor: pointer;
+	  -fx-width: 100px;
+	  -fx-border-radius: 3px;
+	  -fx-cursor: pointer;
 }
 
 .button-unactive{
 	  -fx-background-color: null;
 	  -fx-background-radius: 0.0;
 	  -fx-text-fill: #5f976a;
-	  padding: 15.0px 32.0px;
-	  text-align: center;
-	  text-decoration: none;
-	  display: inline-block;
-	  font-size: 18.0px;
-	  margin: 4.0px 2.0px;
-	  cursor: pointer;
+	  -fx-text-align: center;
+	  -fx-text-decoration: none;
+	  -fx-display: inline-block;
+	  -fx-font-size: 17.0px;
+	  -fx-margin: 4.0px 2.0px;
+	  -fx-cursor: pointer;
 }
 
 .dialog-pane {
