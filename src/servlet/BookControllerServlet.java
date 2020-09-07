@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import logic.bean.MessageBean;
 import logic.bean.OfferBean;
 import logic.controller.LiftController;
 import logic.controller.PassengerController;
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.DatabaseException;
+import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
 import logic.model.Lift;
@@ -44,9 +46,10 @@ public class BookControllerServlet extends HttpServlet{
 				offerBean.setStatus("startPos");
 				session.setAttribute("offerBean", offerBean);
 				request.getRequestDispatcher(book).forward(request, response);
-			} catch (ApiNotReachableException | InvalidInputException | ServletException | IOException e) {
-				// TODO Auto-generated catch block
+			} catch (ApiNotReachableException| ServletException | IOException e) {
 				e.printStackTrace();
+			} catch (InvalidInputException e) {
+				ExceptionHandler.handle(e, request, response, book);				
 			}
 		}
 
@@ -59,9 +62,11 @@ public class BookControllerServlet extends HttpServlet{
 				offerBean.setStatus("startPos");
 				session.setAttribute("offerBean", offerBean);
 				request.getRequestDispatcher(book).forward(request, response);
-			} catch (ApiNotReachableException | InvalidInputException | ServletException | IOException e) {
+			} catch (ApiNotReachableException| ServletException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (InvalidInputException e) {
+				ExceptionHandler.handle(e, request, response, book);				
 			}
 		}
 
@@ -77,7 +82,6 @@ public class BookControllerServlet extends HttpServlet{
 			try {
 				request.getRequestDispatcher(book).forward(request, response);
 			} catch (ServletException | IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -90,7 +94,6 @@ public class BookControllerServlet extends HttpServlet{
 			String time = request.getParameter("time");
 			String slide = offerBean.getBookStatus();
 
-			//	MyLogger.info("switch", slide);
 			String dateTimeString = date + "T" + time;
 
 			LocalDateTime parsedTime = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ISO_DATE_TIME);
@@ -113,16 +116,18 @@ public class BookControllerServlet extends HttpServlet{
 			try {
 				passController.addPassenger(lift, student);
 				ServletUtility.liftRefresh(session);
-				request.getRequestDispatcher("homepage.jsp").forward(request, response);
+				
+				MessageBean msg = new MessageBean();
+				msg.setMessage("You have succesfully booked a lift!");
+				msg.setType("success");
+				msg.setTitle("Yay!");
+				request.setAttribute("message", msg);
+				request.getRequestDispatcher("book.jsp").forward(request, response);
+				
 			} catch (ServletException | IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (InvalidStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (DatabaseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (InvalidStateException | DatabaseException e) {
+				ExceptionHandler.handle(e, request, response, book);				
 			}
 		}
 	}

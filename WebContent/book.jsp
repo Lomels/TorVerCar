@@ -3,14 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="offerBean" class="logic.bean.OfferBean" scope="session"></jsp:useBean>
-
+<jsp:useBean id="message" class="logic.bean.MessageBean" scope="request"></jsp:useBean>
     
 <!DOCTYPE html>
 <html>
 <head>
 <link href="torvercar.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+
 <meta charset="ISO-8859-1">
 <title>TorVerCar</title>
 </head>
@@ -23,27 +27,43 @@
 	%>
 	<c:set var="startP" scope="session" value="${offerBean.getStops()}"/>
 
+
 	<div id="navbar">
 		<a id="title" class="title">TorVerCar.</a>
 		<a href="homepage.jsp"><i class='fas fa-home' style='font-size:36px'></i></a> 
-		<a class="active" href="">Book</a> 
-		<a href="offer.jsp">Offer</a> 
-		<a href="myCar.jsp">MyCar</a> 
+		<a class="active" href="book.jsp">Book</a> 
+		<a href="offer.jsp">Offer</a>
+		<a href="myCar.jsp">MyCar</a>
 		<a href="myLift.jsp">MyLift</a> 
 		<form action="LoginControllerServlet" method="POST">
-		<a class="right" href="index.jsp" name="action" value="logout"><i class='fas fa-door-open' style='font-size:36px'></i></a>
+		<button class="right"><i class='fas fa-door-open' style='font-size:36px'></i></button>
 		</form>
-		<a class="right" href="profile.jsp"><i class='fas fa-user-graduate' style='font-size:36px'></i></a>
+		<a class="right" href="profile.jsp"><i class='fas fa-user-graduate' style='font-size:36px'></i></a> 
 	</div>
 </header>
 
 <body>
 
 <div  class="bg-image book">
+
+<%
+		if (message.getMessage() != null) {
+	%>
+	 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+	<script>
+	swal({
+	  title: '${message.getTitle()}',
+	  text: '${message.getMessage()}',
+	  type: '${message.getType()}',
+	  confirmButtonText: 'Close'
+	});</script>
+	<%
+		}
+	%>
 <!-- START OFFER FORM -->
 	<div class="row fullscreen">
 		<div class="col-75">
-			<form class="card animate" action="BookControllerServlet" method="POST">
+			<form class="card" action="BookControllerServlet" method="POST">
 				<h2>Book Lift</h2>
 
 				<div class="row">
@@ -62,7 +82,7 @@
 								</c:choose>							
 							</div>
 							<div class="col-25">
-								<button class="invisible" type="submit" name='action' value='startPos'><i class='fas fa-search-location fa-2x'></i></button>
+								<button class="button invisible" type="submit" name='action' value='startPos'><i class='fas fa-search-location fa-2x'></i></button>
 							</div>
 						</div>
 
@@ -79,7 +99,7 @@
 								</c:choose>	
 							</div>
 							<div class="col-50">
-								<button class="invisible" type="submit" name='action' value='destPos'><i class='fas fa-search-location fa-2x'></i></button>							
+								<button class="button invisible" type="submit" name='action' value='destPos'><i class='fas fa-search-location fa-2x'></i></button>							
 							</div>
 						</div>
 						
@@ -117,7 +137,8 @@
 							</div>
 						</div>
 						<br>
-						<button id="btnConfirm" type="submit" name="action" value="search" style="width:150px; margin-left:0px;">Book Lift</button>
+						<button id="btnConfirm" class="button" type="submit" name="action" value="search" style="width:150px; margin-left:0px;">Book Lift</button>
+
 						
 					</div>
 				</div>
@@ -145,11 +166,13 @@
 					</label>
 			      </c:forEach>
 		     
-		      <button type="submit" name="action" value="stop">Choose</button>
+		      <button type="submit" class="button" name="action" value="stop">Choose</button>
 		    </div>
 		  </form>
 	</div>
 <!-- END POSITION DIALOG -->
+
+<!-- START LIFT LIST DIALOG -->
 	<div id="liftDialog" class="modal">
 	<form class="modal-content animate" action="BookControllerServlet" method="POST">
 		    <div class="container">
@@ -162,18 +185,25 @@
 			    <span onclick="document.getElementById('liftDialog').style.display='none'" class="close" title="Close Modal">&times;</span>
 			 	</div>
 			 </div>
+			 <c:choose>
+			 	<c:when test="${not empty offerBean.getLiftResult() }">
 			      <c:forEach items="${offerBean.getLiftResult()}" var="item">
 			      	<label class="container">
 	  					<input type="radio" name="index" value="${offerBean.getLiftResult().indexOf(item)}"><span class="checkmark"></span>
 	  					${item}	  					
 					</label>
 			      </c:forEach>
-		     
-		      <input class="button" type="submit" name="action" value="book">
+			      <input class="button" type="submit" name="action" value="book">
+			    </c:when>
+			    <c:otherwise>
+			    	<h2>There are no available lifts!</h2>
+			    </c:otherwise>
+			 </c:choose>
+		     	
+		      
 		    </div>
 		  </form>
 	</div>
-<!-- START LIFT LIST DIALOG -->
 
 <!-- END LIFT LIST DIALOG -->
 </div>

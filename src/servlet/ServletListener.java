@@ -37,11 +37,7 @@ public class ServletListener implements LiftMatchListener{
 		
 		try {
 			request.getRequestDispatcher("book.jsp").forward(request, response);
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+		} catch (ServletException | IOException e) {
 			e.printStackTrace();
 		}
 		

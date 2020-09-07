@@ -16,6 +16,8 @@ public class Student {
 	
 	// used only in webapp
 	protected List<Lift> bookedLift;
+	protected List<String> notifications;
+
 
 	// Generated
 	public Student(String userID, String password, String email, String name, String surname, String phone)
@@ -107,6 +109,14 @@ public class Student {
 	public String toString() {
 		return "Student [userID=" + userID + ", password=" + password + ", name=" + name + ", surname=" + surname
 				+ ", email=" + email + ", phone=" + phone + "]";
+	}
+	
+	public List<String> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(List<String> notifications) {
+		this.notifications = notifications;
 	}
 	
 	public boolean compare(Student other) {

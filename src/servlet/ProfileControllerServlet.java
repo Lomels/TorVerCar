@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import logic.controller.ProfileController;
 import logic.controller.exception.DatabaseException;
+import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
 import logic.model.Role;
@@ -46,28 +47,27 @@ public class ProfileControllerServlet extends HttpServlet{
 
 			
 			if("student".equals(role)) {
-				sg.setRole(Role.STUDENT);
 				Student student = (Student) session.getAttribute("user");
 				userID = student.getUserID();
-				MyLogger.info("student", student);
 				try {
 					student.setEmail(email);
 					student.setPassword(password);
 					student.setPhone(phone);
 				} catch (InvalidInputException e) {
-					e.printStackTrace();
+					ExceptionHandler.handle(e, request, response, profile);		
+					return;			
 				}
 				session.setAttribute("user", student);
 			}else{
 				StudentCar studentCar = (StudentCar) session.getAttribute("user");
-				MyLogger.info("studentCar", studentCar);
 				userID = studentCar.getUserID();
 				try {
 					studentCar.setEmail(email);
 					studentCar.setPhone(phone);
 					studentCar.setPassword(password);
 				} catch (InvalidInputException e) {
-					e.printStackTrace();
+					ExceptionHandler.handle(e, request, response, profile);	
+					return;
 				}
 				session.setAttribute("user", studentCar);
 			}
@@ -75,9 +75,11 @@ public class ProfileControllerServlet extends HttpServlet{
 				ourDb.editInfoByUserID(userID, password, email, phone);
 				request.getRequestDispatcher(profile).forward(request, response);
 	
-			} catch (DatabaseException | ServletException | IOException e) {
-				// TODO Auto-generated catch block
+			} catch (ServletException | IOException e) {
 				e.printStackTrace();
+			} catch (DatabaseException e) {
+				ExceptionHandler.handle(e, request, response, profile);	
+				return;				
 			}
 			
 		}
