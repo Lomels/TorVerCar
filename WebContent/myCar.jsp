@@ -55,10 +55,14 @@
 				<div class="card animate">
 					<form action="CarControllerServlet" method="POST"
 						style="width: 60%;">
-						<h2>Car Card</h2>
+
+						<h2><i class='fas fa-address-card'></i>&nbsp;Car Card</h2>
 						<c:choose>
 						<c:when test = "${role eq 'driver'}">
 							<label>Model: </label> 
+
+						
+
 						<input type="text" name="model"
 							value="${user.getCarInfo().getModel() }" id="myModel"
 							style="width: 300px; height: 30px;" disabled> 
@@ -95,22 +99,33 @@
 					</c:choose>
 						
 						<div class="col-50">
-							<button id="btnSave" type="submit" name="action" value="save"
-								class="button disabled" disabled>Save</button>
+
+							<div class="row" style="height:50px">
+							<button id="btnSave" type="submit" name="action" value="save" style="visibility:hidden; width:150px;"
+								class="disabled">Save</button>
+							</div>
+
 
 						</div>
 					</form>
 
 					<div class="col-50">
-						<button id="btnBack" class="button disabled" onclick="back()" disabled>
+
+						<div class="row" style="height:50px">
+						<button id="btnBack" class="disabled" style="visibility:hidden; width:150px;" onclick="back()">
 							Back <i class='fas fa-angle-double-left'></i>
 						</button>
-						<button id="btnEdit" class="button" onclick="edit()">Edit</button>
+						</div>
+						<div class="row" style="height:50px">
+						<button id="btnEdit" style="width:150px;" onclick="edit()">Edit</button>
+						</div>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
 
 </body>
 

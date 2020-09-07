@@ -33,11 +33,7 @@
 	
 	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
-	
-	
-	<style>
-.mySlides {display:none;}
-</style>
+
 </head>
 
 <!-- ***** Header Area Start ***** -->
@@ -53,36 +49,8 @@
 </header>
 
 <body>	
+ <div class="bg-image TorVerCar">
 	
-<!-- <div class="slideshow-container">
-
-<div class="mySlides fade">
-  <div class="numbertext">1 / 3</div>
-  <img src="images/carpooling1.jpg" style="width:100%">
-  <div class="text">Caption Text</div>
-</div>
-
-<div class="mySlides fade">
-  <div class="numbertext">2 / 3</div>
-  <img src="images/carpooling2.jpg" style="width:100%">
-  <div class="text">Caption Two</div>
-</div>
-
-<div class="mySlides fade">
-  <div class="numbertext">3 / 3</div>
-  <img src="iages/carpooling3.jpg" style="width:100%">
-  <div class="text">Caption Three</div>
-</div>
-
-</div>
-<br>
-
-<div style="text-align:center">
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-</div>
-	 -->
 	<!-- ***** Header Area End ***** -->
 
 	<!-- ***** Welcome Area Start ***** -->
@@ -193,8 +161,10 @@
 		</div>		
 	
 	<!-- ***** Welcome Area End ***** -->
+
 	
 	</div>
+
 </body>
 
 
@@ -237,28 +207,14 @@
 	var password = document.getElementById("password");
 	var confirm_password = document.getElementById("repeat");
 	var status = document.getElementById("status");
-	var slideIndex = 0;
-	showSlides();
+	
 </script>	
 
 <script>
-function showSlides() {
-	  var i;
-	  var slides = document.getElementsByClassName("mySlides");
-	  var dots = document.getElementsByClassName("dot");
-	  for (i = 0; i < slides.length; i++) {
-	    slides[i].style.display = "none";  
-	  }
-	  slideIndex++;
-	  if (slideIndex > slides.length) {slideIndex = 1}    
-	  for (i = 0; i < dots.length; i++) {
-	    dots[i].className = dots[i].className.replace(" active", "");
-	  }
-	  slides[slideIndex-1].style.display = "block";  
-	  dots[slideIndex-1].className += " active";
-	  setTimeout(showSlides, 2000); // Change image every 2 seconds
-	}
-	
+
+
+
+
 	
 	function validatePassword(){
 	  if(password.value != confirm_password.value | password.value == '') {
@@ -297,6 +253,8 @@ function showSlides() {
 		    x.type = "password";
 		  }
 	}
+	
+
 	
 </script>
 

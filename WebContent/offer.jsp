@@ -148,6 +148,7 @@
 						<input type="text" placeholder=" ..." id="notes" name="notes">
 						<div class="row" style="height:15px"></div>
 						<button id="btnConfirm" class="button" type="submit" name="action" value="offer">Confirm</button>
+
 					</div>
 				</div>
 			</form>
