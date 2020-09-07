@@ -117,7 +117,7 @@
 							</div>
 						</div>
 						<br>
-						<button id="btnConfirm" type="submit" name="action" value="search" style="width:200px; margin-left:0px;">Book Lift</button>
+						<button id="btnConfirm" type="submit" name="action" value="search" style="width:150px; margin-left:0px;">Book Lift</button>
 						
 					</div>
 				</div>

@@ -32,7 +32,7 @@
 				<div class="card animate">
 					<form action="CarControllerServlet" method="POST"
 						style="width: 60%;">
-						<h2>Car Card</h2>
+						<h2><i class='fas fa-address-card'></i>&nbsp;Car Card</h2>
 						<label>Model: </label> 
 						<input type="text" name="model"
 							value="${user.getCarInfo().getModel() }" id="myModel"
@@ -55,17 +55,23 @@
 
 
 						<div class="col-50">
-							<button id="btnSave" type="submit" name="action" value="save"
+							<div class="row" style="height:50px">
+							<button id="btnSave" type="submit" name="action" value="save" style="visibility:hidden; width:150px;"
 								class="disabled">Save</button>
+							</div>
 
 						</div>
 					</form>
 
 					<div class="col-50">
-						<button id="btnBack" class="disabled" onclick="back()">
+						<div class="row" style="height:50px">
+						<button id="btnBack" class="disabled" style="visibility:hidden; width:150px;" onclick="back()">
 							Back <i class='fas fa-angle-double-left'></i>
 						</button>
-						<button id="btnEdit" onclick="edit()">Edit</button>
+						</div>
+						<div class="row" style="height:50px">
+						<button id="btnEdit" style="width:150px;" onclick="edit()">Edit</button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -74,6 +80,11 @@
 
 	<script>
 		function edit() {
+			
+			document.getElementById("btnEdit").style.visibility = "hidden";
+			document.getElementById("btnSave").style.visibility = "visible";
+			document.getElementById("btnBack").style.visibility = "visible";
+			
 			document.getElementById("btnEdit").classList.add("disabled");
 			document.getElementById("btnSave").classList.remove("disabled");
 			document.getElementById("btnBack").classList.remove("disabled");
@@ -85,6 +96,11 @@
 
 		}
 		function back() {
+			
+			document.getElementById("btnEdit").style.visibility = "visible";
+			document.getElementById("btnSave").style.visibility = "hidden";
+			document.getElementById("btnBack").style.visibility = "hidden";
+			
 			document.getElementById("btnEdit").classList.remove("disabled");
 			document.getElementById("btnSave").classList.add("disabled");
 			document.getElementById("btnBack").classList.add("disabled");

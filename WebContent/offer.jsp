@@ -111,7 +111,7 @@
 						<label><i class="fa fa-comment-dots"></i> Add notes: </label> 
 						<input type="text" placeholder=" ..." id="notes" name="notes">
 						<div class="row" style="height:15px"></div>
-						<button id="btnOffer" onclick="document.getElementById('ConfirmDialog').style.display='block'"  style="width:200px; margin-left:0px;">Offer Lift</button>
+						<button id="btnOffer" onclick="document.getElementById('ConfirmDialog').style.display='block'"  style="width:150px; margin-left:0px;">Offer Lift</button>
 <!-- CONFIRM DIALOG -->
 	<div id="ConfirmDialog" class="modal">
 		 <div class="container">
