@@ -183,7 +183,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	}
 
 	@FXML
-	public void findButtonController() throws Exception {
+	public void findButtonController(){
 		List<Position> stops = new ArrayList<>();
 		stops.add(liftSg.getStartPoint());
 		stops.add(liftSg.getEndPoint());
@@ -203,7 +203,11 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 			liftController.matchLiftStartingAfter(LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER), stops, 0,
 					this);
 		} else {
-			MyLogger.info("You must choose a lift option");
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Warning");
+			alert.setHeaderText("Oops!");
+			alert.setContentText("You must choose a lift option");
+			alert.showAndWait(); 
 		}
 	}
 	

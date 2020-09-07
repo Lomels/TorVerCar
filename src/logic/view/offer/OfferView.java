@@ -16,6 +16,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.controller.LiftController;
 import logic.controller.LoginController;
+import logic.controller.exception.ApiNotReachableException;
+import logic.controller.exception.DatabaseException;
+import logic.controller.exception.ExceptionHandler;
+import logic.controller.exception.InvalidInputException;
+import logic.controller.exception.InvalidStateException;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.LiftSingleton;
@@ -121,11 +126,9 @@ public class OfferView extends Application implements Initializable {
 
 	@FXML
 	public void logoutButtonController() throws IOException {
-		
 		try {
 			LoginController.logout();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		HomeView home = new HomeView();
@@ -147,9 +150,15 @@ public class OfferView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void checkEndAddressController() throws Exception {
+	public void checkEndAddressController() throws Exception{
 		lp.setAddress(2);
-		lp.setListPos(mapsApi.addrToPos(tfArrivalPoint.getText()));
+		try {
+			lp.setListPos(mapsApi.addrToPos(tfArrivalPoint.getText()));
+		}catch(ApiNotReachableException e) {
+			ExceptionHandler.handle(e);
+		}catch (InvalidInputException e) {
+			e.printStackTrace();
+		}
 		AddressListView list = new AddressListView();
 		list.start((Stage) btCheckEnd.getScene().getWindow());
 	}
@@ -163,13 +172,20 @@ public class OfferView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void confirmButtonController() throws Exception {
+	public void confirmButtonController() throws Exception{
 		String time = dpDate.getValue().toString() + "T" + tfStartTime.getText();
 		lp.setDepartureTime(time);
 		lp.setMaxDuration(tfMaxDuration.getText());
 		lp.setNotes(tfNotes.getText());
-		controller.createLift(lp.getDepartureTime(), Integer.parseInt(lp.getMaxDuration()), lp.getNotes(),
-				userSg.getStudentCar(), lp.getStartPoint(), lp.getEndPoint());
+		try {
+			controller.createLift(lp.getDepartureTime(), Integer.parseInt(lp.getMaxDuration()), lp.getNotes(),
+					userSg.getStudentCar(), lp.getStartPoint(), lp.getEndPoint());
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
+			ExceptionHandler.handle(e);
+		}
 
 		lp.clearState();
 		MainMenuView home = new MainMenuView();

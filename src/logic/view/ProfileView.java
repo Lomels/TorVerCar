@@ -60,10 +60,8 @@ public class ProfileView extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
 		tfPass.setManaged(false);
 		tfPass.setVisible(false);
-		
 		
 		tfPass.managedProperty().bind(cbShow.selectedProperty());
 		tfPass.visibleProperty().bind(cbShow.selectedProperty());
@@ -156,7 +154,6 @@ public class ProfileView extends Application implements Initializable {
 		try {
 			LoginController.logout();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		LoginView login = new LoginView();
@@ -170,7 +167,6 @@ public class ProfileView extends Application implements Initializable {
 	
 	@FXML
 	public void deleteButtonController() throws DatabaseException, IOException {
-		
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Delete profile");
 		alert.setHeaderText("Warning!");
@@ -194,9 +190,7 @@ public class ProfileView extends Application implements Initializable {
 			
 		} else if (result.get() == btNo) {
 			alert.close();
-			
 		} 
-		
 	}
 	
 

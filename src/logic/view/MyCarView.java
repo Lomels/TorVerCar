@@ -126,7 +126,6 @@ public class MyCarView extends Application implements Initializable{
 		try {
 			LoginController.logout();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		HomeView home = new HomeView();
@@ -141,12 +140,8 @@ public class MyCarView extends Application implements Initializable{
 	
 	@FXML
 	public void offerButtonController() throws Exception {
-
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
-
-		//TODO: Implementare
-
 	}
 	
 	public boolean checkCar() {

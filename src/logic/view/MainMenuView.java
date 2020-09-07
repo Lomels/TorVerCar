@@ -217,7 +217,6 @@ public class MainMenuView extends Application implements Initializable {
 		try {
 			LoginController.logout();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		HomeView home = new HomeView();

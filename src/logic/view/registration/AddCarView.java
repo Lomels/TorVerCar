@@ -26,7 +26,7 @@ public class AddCarView extends Application {
 	private Button btLifts;
 	@FXML
 	private TextField tfModel, tfColour, tfSeats, tfPlate;
-	UserBeanSingleton sg = UserBeanSingleton.getInstance();
+	private UserBeanSingleton sg = UserBeanSingleton.getInstance();
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {

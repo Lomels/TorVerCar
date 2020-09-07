@@ -91,7 +91,6 @@ public class MyLiftView extends Application implements Initializable {
 		try {
 			LoginController.logout();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		HomeView home = new HomeView();
@@ -195,17 +194,5 @@ public class MyLiftView extends Application implements Initializable {
 			}
 
 		});
-//
-//		lvLift.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-//
-//		lvLift.getSelectionModel().selectedItemProperty()
-//				.addListener((ObservableValue<? extends RowMyLift> ov, RowMyLift old_val, RowMyLift new_val) -> {
-//					RowMyLift selectedItem = lvLift.getSelectionModel().getSelectedItem();
-//					int index = lvLift.getSelectionModel().getSelectedIndex();
-//
-//					lvLift.getFocusModel().focus(index);
-//				});
-//
-//	
 	}
 }

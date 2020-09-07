@@ -7,8 +7,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import logic.bean.UserBeanSingleton;
 import logic.view.HomeView;
@@ -37,14 +39,22 @@ public class CheckIdentityView extends Application{
 	}
 	
 	@FXML
-	public void nextButtonController() throws Exception {
+	public void nextButtonController(){
 		String systemCode = sg.getCode();
 		String userCode = etCode.getText();
 		if(userCode.equals(systemCode)) {
 			AddInfoView next = new AddInfoView();
-			next.start((Stage) btNext.getScene().getWindow());
+			try {
+				next.start((Stage) btNext.getScene().getWindow());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}else {
-			throw new Exception("Inserted code does not match with security code.");
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText("Oops!");
+			alert.setContentText("Inserted code does not match with security code.");
+			alert.showAndWait(); 
 		}
 	}
 }
