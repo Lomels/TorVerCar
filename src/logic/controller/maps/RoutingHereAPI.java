@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,6 +15,8 @@ import logic.model.Position;
 import logic.model.Route;
 
 public class RoutingHereAPI extends HereApi implements RoutingApi {
+
+	private static final Logger LOGGER = Logger.getLogger(RoutingHereAPI.class.getCanonicalName());
 
 	private static RoutingHereAPI instance = null;
 	private static final String VERSION = "/v8";
@@ -76,8 +79,7 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 			return new Route(stops, durations, distances);
 
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.fine(e.toString());
 		}
 		return null;
 

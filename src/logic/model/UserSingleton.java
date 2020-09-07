@@ -2,6 +2,7 @@ package logic.model;
 
 import java.util.List;
 
+import logic.controller.exception.WrongStatus;
 import logic.utilities.Status;
 
 public class UserSingleton {
@@ -28,12 +29,12 @@ public class UserSingleton {
 	}
 
 	public String getUserID() {
-		if(role.equals(Role.STUDENT))
+		if (role.equals(Role.STUDENT))
 			return this.student.getUserID();
-		if(role.equals(Role.DRIVER))
+		if (role.equals(Role.DRIVER))
 			return this.studentCar.getUserID();
 		else
-			return null;	
+			return null;
 	}
 
 	public void setStudent(Student user) {
@@ -72,11 +73,11 @@ public class UserSingleton {
 		return status;
 	}
 
-	public void setStatus(Status status) throws Exception {
-		if (status.equals(Status.OFFER) | status.equals(Status.BOOK))
+	public void setStatus(Status status) {
+		if (status.equals(Status.OFFER) || status.equals(Status.BOOK))
 			this.status = status;
 		else
-			throw new Exception("Wrong status");
+			throw new WrongStatus();
 	}
 
 	public List<String> getNotifications() {
@@ -95,7 +96,7 @@ public class UserSingleton {
 		this.completedLift = completedLift;
 	}
 
-	public void clearState() throws Exception {
+	public void clearState() {
 		this.setCode(null);
 		this.completedLift.clear();
 		this.setRole(null);

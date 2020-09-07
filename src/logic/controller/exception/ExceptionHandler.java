@@ -2,6 +2,8 @@ package logic.controller.exception;
 
 import logic.bean.MessageBean;
 import java.io.IOException;
+import java.util.logging.Logger;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 public class ExceptionHandler {
+
+	private static final Logger LOGGER = Logger.getLogger(ExceptionHandler.class.getCanonicalName());
+
+	private ExceptionHandler() {
+		// DO nothing
+	}
 
 	public static void handle(Exception e, HttpServletRequest request, HttpServletResponse response, String location) {
 		MessageBean message = new MessageBean();
@@ -22,8 +30,7 @@ public class ExceptionHandler {
 			RequestDispatcher rd = request.getRequestDispatcher(location);
 			rd.forward(request, response);
 		} catch (ServletException | IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			LOGGER.fine(e1.toString());
 		}
 	}
 
@@ -32,7 +39,7 @@ public class ExceptionHandler {
 		alert.setTitle("Error");
 		alert.setHeaderText("Oops!");
 		alert.setContentText(e.getMessage());
-		alert.showAndWait(); 
+		alert.showAndWait();
 	}
 
 }

@@ -3,6 +3,7 @@ package logic.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import logic.controller.exception.WrongStatus;
 import logic.utilities.Status;
 
 public class LiftSingleton {
@@ -16,7 +17,7 @@ public class LiftSingleton {
 	private Integer address;
 	private String notes;
 	private String arrivalTime;
-	private String purpose = new String();
+	private String purpose;
 
 	public String getPurpose() {
 		return purpose;
@@ -38,9 +39,9 @@ public class LiftSingleton {
 			instance = new LiftSingleton();
 		return instance;
 	}
-	
-	//TODO: usare setter
-	public void clearState() throws Exception {
+
+	// TODO: usare setter
+	public void clearState() {
 		this.listPos.clear();
 		this.listLifts.clear();
 		this.setStartPoint(null);
@@ -49,7 +50,7 @@ public class LiftSingleton {
 		this.setDepartureTime(null);
 		this.setMaxDuration(null);
 		this.setNotes(null);
-		
+
 		this.setStatus(Status.START);
 		this.setSelectedLift(null);
 	}
@@ -122,9 +123,9 @@ public class LiftSingleton {
 		return status;
 	}
 
-	public void setStatus(Status status) throws Exception {
-		if(status.equals(Status.OFFER) | status.equals(Status.BOOK))			
-			throw new Exception("Wrong status");
+	public void setStatus(Status status) {
+		if (status.equals(Status.OFFER) || status.equals(Status.BOOK))
+			throw new WrongStatus();
 		else
 			this.status = status;
 	}

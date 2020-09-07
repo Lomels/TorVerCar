@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Logger;
 
 import logic.controller.email.SendEmail;
 import logic.controller.exception.DatabaseException;
@@ -28,16 +29,15 @@ import logic.model.Route;
 import logic.model.Student;
 import logic.model.StudentCar;
 import logic.model.UnorderedLift;
-import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
 public class LiftController {
 
+	private static final Logger LOGGER = Logger.getLogger(LiftController.class.getCanonicalName());
+
 	private static final Integer MINUTES_OF_MARGIN = 10;
 	private static final Integer HOURS_OF_MARGIN = 6;
 	private static final Integer MAX_LIFTS_LISTED = 100;
-
-	private static final boolean LOG_OLD = false;
 
 	private MySqlDAO ourDb = new MySqlDAO();
 
@@ -127,8 +127,8 @@ public class LiftController {
 		LocalDateTime intervalStopDateTime = startDateTime.plusHours(HOURS_OF_MARGIN);
 		List<Lift> possibleLifts = this.ourDb.listAvailableLiftStartingWithinIntervalDateTime(intervalStartDateTime,
 				intervalStopDateTime);
-		
-		if(possibleLifts.isEmpty())
+
+		if (possibleLifts.isEmpty())
 			throw new NoLiftAvailable(String.format("No lift available starting after: %s.", startDateTime));
 
 		// Launch thread for computing
@@ -144,8 +144,8 @@ public class LiftController {
 		LocalDateTime intervalStartDateTime = stopDateTime.minusHours(HOURS_OF_MARGIN);
 		List<Lift> possibleLifts = this.ourDb.listAvailableLiftStartingWithinIntervalDateTime(intervalStartDateTime,
 				intervalStopDateTime);
-		
-		if(possibleLifts.isEmpty())
+
+		if (possibleLifts.isEmpty())
 			throw new NoLiftAvailable(String.format("No lift available stopping before: %s.", stopDateTime));
 
 		// Launch thread for computing
@@ -168,9 +168,9 @@ public class LiftController {
 		try {
 			matchedLifts = futureCall.get();
 		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.severe(e.toString());
 		}
+
 		listener.onThreadEnd(matchedLifts);
 	}
 
@@ -196,8 +196,7 @@ public class LiftController {
 
 		@Override
 		public List<LiftMatchResult> call() throws NoLiftAvailable {
-			List<LiftMatchResult> matchedLifts = this.matchLifts();
-			return matchedLifts;
+			return this.matchLifts();
 		}
 
 		public List<LiftMatchResult> matchLifts() throws NoLiftAvailable {
@@ -212,9 +211,7 @@ public class LiftController {
 				// Check if the lift starts before now, which means that is old
 				// TODO: gestire nella release finale
 				if (possibleLift.getStartDateTime().isBefore(LocalDateTime.now())) {
-					if (LOG_OLD) {
-						MyLogger.info("Lift #" + possibleLift.getLiftID() + " is old.");
-					}
+					continue;
 				}
 
 				Integer currentMaxDuration = possibleLift.getMaxDuration();
@@ -237,8 +234,7 @@ public class LiftController {
 						}
 					}
 				} catch (InvalidInputException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					LOGGER.fine(e.toString());
 				}
 			}
 
@@ -247,10 +243,10 @@ public class LiftController {
 				Lift lift = ur.getLift();
 				this.addLiftToLiftMatch(lift);
 			}
-			
-			if(results.isEmpty())
+
+			if (results.isEmpty())
 				throw new NoLiftAvailable("No compatible lifts found.");
-			
+
 			return results;
 		}
 
@@ -266,6 +262,7 @@ public class LiftController {
 			// Get the duration until the last stop, then add it to stopDateTime
 			Route route = possibleLift.getRoute();
 			Integer deltaDeltaStopDateTime = route.getDurationUntilPosition(lastStop);
+
 			LocalDateTime stopDateTimeOnLastStop = possibleLift.getStartDateTime().plusMinutes(deltaDeltaStopDateTime);
 			return stopDateTimeOnLastStop.isBefore(this.stopDateTime);
 		}
@@ -273,14 +270,14 @@ public class LiftController {
 		private void addLiftToLiftMatch(Lift lift) {
 			Integer deltaStartDateTime = lift.getRoute().getDurationUntilPosition(stops.get(0));
 			Integer deltaStopDateTime = lift.getRoute().getDurationUntilPosition(stops.get(stops.size() - 1));
+
 			LocalDateTime relativeStartDateTime = lift.getStartDateTime().plusMinutes(deltaStartDateTime);
 			LocalDateTime relativeStopDateTime = lift.getStartDateTime().plusMinutes(deltaStopDateTime);
 			LiftMatchResult result = null;
 			try {
 				result = new LiftMatchResult(lift, relativeStartDateTime, relativeStopDateTime);
 			} catch (InvalidInputException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOGGER.fine(e.toString());
 			}
 			this.results.add(result);
 		}
@@ -297,11 +294,11 @@ public class LiftController {
 		return !(stopsBefore || startAfter);
 	}
 
-	public List<Lift> loadOfferedLift(String userID){
+	public List<Lift> loadOfferedLift(String userID) {
 		return ourDb.listLiftsByDriverID(userID);
 	}
-	
-	public List<Lift> loadBookedLift(String userID){
+
+	public List<Lift> loadBookedLift(String userID) {
 		return ourDb.listLiftsByPassengerID(userID);
 	}
 }

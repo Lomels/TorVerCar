@@ -35,6 +35,13 @@ public class MyHttpClient {
 		} catch (ParseException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				client.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return body;
 

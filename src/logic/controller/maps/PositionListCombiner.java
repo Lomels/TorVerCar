@@ -12,7 +12,6 @@ public class PositionListCombiner extends ListCombiner {
 		List<List<Position>> result = new ArrayList<>();
 
 		for (List<?> list : this.combine(startStops, addStops)) {
-			// TODO: handle warning
 			@SuppressWarnings("unchecked")
 			List<Position> actualList = (List<Position>) list;
 			result.add(actualList);
