@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="currentUser" class="logic.bean.UserBean" scope="session"></jsp:useBean>
+<jsp:useBean id="message" class="logic.bean.MessageBean" scope="request"></jsp:useBean>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,44 +13,60 @@
 	<meta charset="UTF-8">
 	<meta name="description" content="">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="text/html; charset=iso-8859-2" http-equiv="Content-Type">
 	<meta name="viewport"
 		content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	
 	<!-- Core Stylesheet -->
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link href="torvercar.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/flaticon.css"/>
+	<link rel="stylesheet" href="css/slicknav.min.css"/>
+	<link rel="stylesheet" href="css/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
+	<link rel="stylesheet" href="css/animate.css"/>
+	<link rel="stylesheet" href="sweetalert2.min.css">
+	<link rel="stylesheet" href="css/style.css"/>
 	
+	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+
 </head>
 
-<body>	<div class="bg-image home">	
-
-	
-	<!-- ***** Header Area Start ***** -->
-	<header class="header_area clearfix">
-		<div id="navbar">
-			<a id="title" class="title">TorVerCar.</a>
-			<a class="active" href="">Home</a> 
-			<a href="">Book</a> 
-			<a href="">Offer</a>
-			<a href="">MyCar</a> 
-			<a href="">MyLift</a> 
-			<a class="right" onclick="document.getElementById('regDialog').style.display='block'">Sign in</a>
-			<a class="login right" onclick="document.getElementById('loginDialog').style.display='block'">Login</a> 
-			
-		</div>
-	</header>
-	
-	<div class="column2" style="background-color:trasparent;"></div>
-	<div class="column" style="background-color:trasparent; width:40%;">
-	<div class="row" style="height:75%;"></div>
-	<h1 style="font-size:96px;">We are not Uber.</h1>
+<!-- ***** Header Area Start ***** -->
+<header class="header_area clearfix">
+	<div id="navbar">
+		
+		<a id="title" class="title">TorVerCar.</a>
+		<a class="active" href="">Home</a> 
+		<a class="right" onclick="document.getElementById('regDialog').style.display='block'">Sign in</a>
+		<a class="login right" onclick="document.getElementById('loginDialog').style.display='block'">Login</a> 
+		
 	</div>
+</header>
+
+<body>	
+ <div class="bg-image TorVerCar">
 	
 	<!-- ***** Header Area End ***** -->
 
 	<!-- ***** Welcome Area Start ***** -->
 	
+	<div class="bg-image home">
+	
+	<c:if test="${not empty message.getMessage() }">
+	<script>
+	swal({
+	  title: 'Error!',
+	  text: '${message.getMessage()}',
+	  type: '${message.getType()}',
+	  confirmButtonText: 'Got it!'
+	});</script>
+	</c:if>
 	<!-- Login Dialog -->	
 		<div id="loginDialog" class="modal">
 		
@@ -66,11 +85,14 @@
 		      <label for="uname"><i class="fa fa-id-badge"></i> Student ID</label>
 		      <input type="text" placeholder="Enter Username" name="userID" required>
 		
-		      <label for="psw"><i class="fa fa-lock"></i> Password</label>
-		      <input type="text" placeholder="Enter Password" name="pwd">
+		      <label for="psw"><i class="fa fa-lock"></i> Password<label  class="switch" style="margin-left:20px">
+						  <input type="checkbox" onclick="showPass()">
+						  <div class="slider round"></div></label>
+			  </label>
+		      <input type="password" id="myPass" placeholder="Enter Password" name="pwd">
 		 	  
-		 	  <button type="button" class="cancel" onclick="document.getElementById('loginDialog').style.display='none'">Cancel</button>
-		      <button type="submit" name="action" value="login">Login</button>
+		 	  <button type="button" class="button cancel" onclick="document.getElementById('loginDialog').style.display='none'">Cancel</button>
+		      <button type="submit" class="button" name="action" value="login">Login</button>
 		      
 		    </div>
 		  </form>
@@ -92,15 +114,18 @@
 				          <div class="col-25">
 				            <h3>Registration</h3>
 				            <label for="fname"><i class="fa fa-id-badge"></i> Student ID</label>
-				              <div class="row">
-					              <div class="col-50">
+				              
+					              <div class="col-50" >
+					              <div class="row">
 					                <input type="text" id="userID" name="userID" placeholder="0123456">
 					              </div>
-					              <div class="col-50">
-				        			<button id="btnCheck" type="submit" name="action" value="check" style="width:auto;">Check Identity</button>
+					              <div class="col-25">
+				        			<button id="btnCheck" class="button" type="submit" name="action" value="check" style="width:300px;">Check Identity</button>
 					              </div>
-				             </div>
-			
+					              </div>
+				             
+							
+							
 				          <div class="row ">
 				          	<div id="pwdForm" class="col-50 hidden">
 				              <label for="adr"><i class="fa fa-lock"></i> Password</label>
@@ -123,18 +148,43 @@
 				          
 				        </div>
 				        <hr>
-				        <button id="btnConfirm" type="submit" name="action" value="register" style="width:auto;">Confirm Registration</button>
+				        <button id="btnConfirm" class="button" type="submit" name="action" value="register" style="width:300px; margin-left:40px;">Confirm Registration</button>
 				    </div>
 				  </div> 
 				</div>
 				
 		  </form>
 		</div>		
-	</div>
+	
 	<!-- ***** Welcome Area End ***** -->
+
 	
-	
+	</div>
+
 </body>
+
+
+
+<!--====== Javascripts & Jquery ======-->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.slicknav.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.nicescroll.min.js"></script>
+	<script src="js/jquery.zoom.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/main.js"></script>
+
+<script>var message = ${sessionScope.message}
+	if(message != null){
+		swal({
+	  title: 'Error!',
+	  text: message,
+	  icon: 'error',
+	  confirmButtonText: 'Cool'
+	});
+	}</script>
 
 <script>
 	var sessionCheck = ${sessionScope.check};
@@ -153,6 +203,13 @@
 	var password = document.getElementById("password");
 	var confirm_password = document.getElementById("repeat");
 	var status = document.getElementById("status");
+	
+</script>	
+
+<script>
+
+
+
 
 	
 	function validatePassword(){
@@ -183,6 +240,18 @@
         document.getElementById("pwdForm").style.display = 'none';
         document.getElementById("btnCheck").style.display = 'block';
 	}
+	
+	function showPass(){
+		 var x = document.getElementById("myPass");
+		  if (x.type === "password") {
+		    x.type = "text";
+		  } else {
+		    x.type = "password";
+		  }
+	}
+	
+
+	
 </script>
 
 </html>

@@ -7,11 +7,15 @@ import logic.bean.UserBean;
 import logic.bean.UserBeanSingleton;
 import logic.controller.RegistrationController;
 import logic.controller.exception.DatabaseException;
+import logic.controller.exception.ExceptionHandler;
+import logic.controller.exception.InvalidInputException;
 import logic.view.HomeView;
 import javafx.fxml.*;
 import javafx.scene.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 
 public class RegistrationView extends Application {
@@ -32,6 +36,8 @@ public class RegistrationView extends Application {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
+		stage.setResizable(false);
+
 		stage.show();
 
 	}
@@ -39,22 +45,28 @@ public class RegistrationView extends Application {
 	// TODO criptare la password
 
 	@FXML
-	public void nextButtonController() throws DatabaseException {
-		try {
-
-			RegistrationController reg = new RegistrationController();
-			if (!reg.alreadyExist(userID.getText())) {
-				UserBean user = reg.recapInfo(userID.getText().toString());
-				usBean.setUserBean(user);
-				RecapView recap = new RecapView();
-				recap.start((Stage) btNext.getScene().getWindow());
-			} else {
-				txMessage.setText("Already registered");
+	public void nextButtonController() {
+		RegistrationController reg = new RegistrationController();
+			try {
+				if (!reg.alreadyExist(userID.getText())) {
+					UserBean user = reg.recapInfo(userID.getText().toString());
+					usBean.setUserBean(user);
+					RecapView recap = new RecapView();
+					recap.start((Stage) btNext.getScene().getWindow());
+				} else {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Warning");
+					alert.setHeaderText("Oops!");
+					alert.setContentText("A user with this Student ID is already registered.");
+					alert.showAndWait(); 
+				}
+			} catch (DatabaseException | InvalidInputException e) {
+				ExceptionHandler.handle(e);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 	}
 
 	@FXML

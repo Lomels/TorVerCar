@@ -4,48 +4,30 @@ import java.util.logging.Logger;
 
 public class MyLogger {
 
-	private Boolean logPermission;
+	private MyLogger() {
+		// Do nothing
+	}
+
+	private static final Logger LOGGER = Logger.getLogger(MyLogger.class.getCanonicalName());
 	private static final String FORMAT = "%s is: %s\n";
 
-	public MyLogger() {
-		this.logPermission = true;
-	}
-
-	public MyLogger(Boolean logPermission) {
-		this.logPermission = logPermission;
-	}
-
-	public Boolean getLogPermission() {
-		return logPermission;
-	}
-
-	public void setLogPermission(Boolean logPermission) {
-		this.logPermission = logPermission;
-	}
-
-	public void infoB(String name, Object object) {
-		if (Boolean.TRUE.equals(this.logPermission))
-			Logger.getGlobal().info(String.format(FORMAT, name, object.toString()));
-	}
-
-	public void infoB(String message) {
-		if (Boolean.TRUE.equals(this.logPermission))
-			Logger.getGlobal().info(message + "\n");
-	}
-
 	public static void info(String name, Object object) {
-		Logger.getGlobal().info(String.format(FORMAT, name, object.toString()));
+		String logMessage = String.format(FORMAT, name, object.toString());
+		LOGGER.info(logMessage);
 	}
 
 	public static void info(String message) {
-		Logger.getGlobal().info(message + "\n");
+		String logMessage = message + "\n";
+		LOGGER.info(logMessage);
 	}
 
 	public static void severe(String name, Object object) {
-		Logger.getGlobal().severe(String.format(FORMAT, name, object.toString()));
+		String logMessage = String.format(FORMAT, name, object.toString());
+		LOGGER.severe(logMessage);
 	}
 
 	public static void severe(String message) {
-		Logger.getGlobal().severe(message + "\n");
+		String logMessage = message + "\n";
+		LOGGER.severe(logMessage);
 	}
 }

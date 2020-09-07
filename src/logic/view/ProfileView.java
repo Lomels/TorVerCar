@@ -12,7 +12,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DialogPane;
@@ -26,15 +28,16 @@ import logic.controller.LoginController;
 import logic.controller.ProfileController;
 import logic.controller.RatingController;
 import logic.controller.exception.DatabaseException;
+import logic.controller.exception.NoRoleFound;
 import logic.model.UserSingleton;
 import logic.utilities.MyLogger;
 import logic.view.booking.BookView;
 import logic.view.offer.OfferView;
 
 public class ProfileView extends Application implements Initializable {
-	@FXML private Text txName;
-	@FXML private Text txSurname;
-	@FXML private Text txMatNum;
+	@FXML private TextField txName;
+	@FXML private TextField txSurname;
+	@FXML private TextField txMatNum;
 	@FXML private TextField tfEmail;
 	@FXML private TextField tfPass;
 	@FXML private TextField tfPhone;
@@ -51,6 +54,7 @@ public class ProfileView extends Application implements Initializable {
 	@FXML private Button btLogout;
 	@FXML private Button btOffer;
 	@FXML private Button btBook;
+	@FXML private Button btLifts;
 	@FXML private Button btDelete;
 
 	UserSingleton sg = UserSingleton.getInstance();
@@ -59,19 +63,17 @@ public class ProfileView extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
 		tfPass.setManaged(false);
 		tfPass.setVisible(false);
-		
-		
+
 		tfPass.managedProperty().bind(cbShow.selectedProperty());
 		tfPass.visibleProperty().bind(cbShow.selectedProperty());
-		
+
 		pfHidden.managedProperty().bind(cbShow.selectedProperty().not());
 		pfHidden.visibleProperty().bind(cbShow.selectedProperty().not());
 		pfHidden.setDisable(true);
 		tfPass.textProperty().bindBidirectional(pfHidden.textProperty());
-		
+
 		switch (sg.getRole()) {
 		case STUDENT:
 			txName.setText(sg.getStudent().getName().toString());
@@ -82,7 +84,7 @@ public class ProfileView extends Application implements Initializable {
 			tfPass.setText(sg.getStudent().getPassword().toString());
 			userID = sg.getStudent().getUserID();
 			break;
-			
+
 		case DRIVER:
 			txName.setText(sg.getStudentCar().getName().toString());
 			txSurname.setText(sg.getStudentCar().getSurname().toString());
@@ -92,6 +94,9 @@ public class ProfileView extends Application implements Initializable {
 			tfPass.setText(sg.getStudentCar().getPassword().toString());
 			userID = sg.getStudentCar().getUserID();
 			break;
+
+		default:
+			throw new NoRoleFound();
 		}
 
 		tfPhone.setDisable(true);
@@ -106,6 +111,7 @@ public class ProfileView extends Application implements Initializable {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
+		stage.setResizable(false);
 		stage.show();
 	}
 
@@ -117,6 +123,12 @@ public class ProfileView extends Application implements Initializable {
 	public void homeButtonController() throws Exception {
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
+	}
+	
+	@FXML
+	public void liftsButtonController() throws Exception {
+		MyLiftView myLift = new MyLiftView();
+		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
 	
 	@FXML
@@ -149,26 +161,24 @@ public class ProfileView extends Application implements Initializable {
 		try {
 			LoginController.logout();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		LoginView login = new LoginView();
 		login.start((Stage) btLogout.getScene().getWindow());
 	}
-	
+
 	public void offerButtonController() throws Exception {
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}
-	
+
 	@FXML
 	public void deleteButtonController() throws DatabaseException, IOException {
-		
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Delete profile");
 		alert.setHeaderText("Warning!");
 		alert.setContentText("Are you sure you want to delete your profile?");
-		
+
 		ButtonType btYes = new ButtonType("YES", ButtonData.YES);
 		ButtonType btNo = new ButtonType("NO", ButtonData.NO);
 
@@ -177,19 +187,17 @@ public class ProfileView extends Application implements Initializable {
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(getClass().getResource("fxml/TorVerCar.css").toExternalForm());
 		dialogPane.getStyleClass().add("myDialog");
-		
-		Optional<ButtonType> result = alert.showAndWait(); 
+
+		Optional<ButtonType> result = alert.showAndWait();
 
 		if (result.get() == btYes) {
 			controller.deleteProfile(sg.getUserID());
 			HomeView newHome = new HomeView();
 			newHome.start((Stage) btDelete.getScene().getWindow());
-			
+
 		} else if (result.get() == btNo) {
 			alert.close();
-			
-		} 
-		
+		}
 	}
 	
 
@@ -199,13 +207,13 @@ public class ProfileView extends Application implements Initializable {
 		tfPhone.setDisable(false);
 		tfEmail.setDisable(false);
 		tfPass.setDisable(false);
-		
+
 		tfPass.setManaged(false);
 		tfPass.setVisible(false);
-		
+
 		tfPass.managedProperty().bind(cbShow.selectedProperty());
 		tfPass.visibleProperty().bind(cbShow.selectedProperty());
-		
+
 		pfHidden.managedProperty().bind(cbShow.selectedProperty().not());
 		pfHidden.visibleProperty().bind(cbShow.selectedProperty().not());
 

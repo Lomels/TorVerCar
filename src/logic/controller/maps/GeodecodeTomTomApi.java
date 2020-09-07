@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,13 +14,17 @@ import logic.controller.httpclient.MyHttpClient;
 import logic.model.Position;
 
 public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
+	
+	private static Logger LOGGER = Logger.getLogger(GeodecodeTomTomApi.class.getCanonicalName());
 
 	// Implemented as a Singleton
 	private static GeodecodeTomTomApi instance = null;
 
 	// API
-	private static final String path = "/search/2/geocode";
-	private static final String ext = ".json";
+	private static final String FUNC = "/search";
+	private static final String VERSION = "/2";
+	private static final String API_NAME = "/geocode";
+	private static final String EXT = ".json";
 
 	// Constructor
 	private GeodecodeTomTomApi() {
@@ -40,7 +45,9 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 		StringBuilder builder = new StringBuilder();
 		builder.append(SCHEME);
 		builder.append(HOST);
-		builder.append(path);
+		builder.append(FUNC);
+		builder.append(VERSION);
+		builder.append(API_NAME);
 
 		this.addrToParameter(address, builder);
 
@@ -63,8 +70,7 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 						jsonResult.getDouble("score"), jsonAddress.getString("freeformAddress")));
 			}
 		} catch (URISyntaxException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			LOGGER.severe(e1.toString());
 		} catch (NullPointerException e) {
 			throw new ApiNotReachableError("TomTom API is not reachable now.");
 		}
@@ -72,7 +78,7 @@ public class GeodecodeTomTomApi extends TomTomApi implements GeodecodeApi {
 	}
 
 	private void addrToParameter(String address, StringBuilder builder) {
-		String urlAddress = "/" + address.trim().replaceAll("\\s", "%20") + ext;
+		String urlAddress = "/" + address.trim().replaceAll("\\s", "%20") + EXT;
 		builder.append(urlAddress);
 	}
 }

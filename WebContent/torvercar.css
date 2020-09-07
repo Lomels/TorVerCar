@@ -6,11 +6,13 @@ body ,html{
   height: 100%;
   widht: 100%;
   overflow: hidden;
+
 }
 
 * {
   box-sizing: border-box;
 }
+	
 
 /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
@@ -62,8 +64,15 @@ body ,html{
   background-size: cover;
   z-index: -1;
 }
+
+.bg-image.TorVerCar{
+	background-image: url(images/torvergata.jpg);
+	width:100%;
+	height: 1000px;
+	
+}
 .bg-image.book{
-	background-image:url(images/carpooling2.jpg);
+	background-image: url(images/carpooling2.jpg);
 }
 .bg-image.offer{
 	  background-image: url(images/carpooling3.jpg);
@@ -110,12 +119,14 @@ body ,html{
   float: left;
   width: 20%;
   height: 100%;
+  background-color: trasparent;
 }
 
 .column2 {
   float: left;
   width: 60%;
   height: 100%;
+  background-color: trasparent;
 }
 
 .r:after{
@@ -182,13 +193,12 @@ label.greentext{
 }
 
 #navbar {
-  overflow: hidden;
   background-color: #39393a;
   height: 60px;
- filter: drop-shadow(0px 3px 12px #39393a);
+  filter: drop-shadow(0px 3px 12px #39393a);
 }
 
-#navbar a {
+#navbar a{
   float: left;
   display: block;
   color: #5f976a;
@@ -204,26 +214,37 @@ label.greentext{
   
   opacity: 1;
   transition: 0.3s;
-
 }
 
-#navbar a:hover {
-  /* background-color: #ddd;
-  color: #5f976a; */
+#navbar button{
+  float: left;
+  color: #5f976a;
+  text-align: center;
+  font-size: 17px;
+  height: 60px;
+  width: auto;
+  opacity: 1;
+  transition: 0.3s;
+  background-color: transparent;
+  border: none;
+}
+
+#navbar a:hover{
   background-color: #5f976a;
   color: #39393a;
 }
+
 
 #navbar a.title{
 	font-size: 25px;
 }
 
 #navbar a.title:hover{
-background-color: #39393a;
+  background-color: #39393a;
   color: #5f976a;
 }
 
-#navbar a.active {
+#navbar a.active, #navbar button.active {
   background-color: #5f976a;
   color: #39393a;
 }
@@ -243,9 +264,9 @@ background-color: #39393a;
 }
 
 
-#navbar a.right{
+#navbar a.right, #navbar button.right{
   float: right;
-  }
+}
 
 .content {
   padding: 16px;
@@ -295,7 +316,7 @@ hr {
 /*---- LOGIN DIALOG ----*/
 
 /* Set a style for all buttons */
-button, .button {
+.button {
   background-color: #5f976a;
   color: #39393a;
   padding: 14px 20px;
@@ -303,28 +324,27 @@ button, .button {
   border: none;
   cursor: pointer;
   width: 100px;
-  border: none;
   border-radius: 3px;
   cursor: pointer;
   font-size: 17px;
 }
 
 
-button, .button:hover {
+.button:hover {
   opacity: 0.8;
 }
 
-button.invisible{
+.button.invisible{
 	padding: 0 0;
 	background-color: transparent;
 }
 
 /* Extra styles for the cancel button */
-button.cancel, .button.cancel {
+.button.cancel {
   background-color: #f44336;
 }
 
-button.disabled, .button.disabled{
+.button.disabled{
 	text-align:center; 
 	width:100px; 
 	background-color:#969696; 
@@ -445,7 +465,6 @@ span.psw {
 }
 
 .switch input { 
-	
   opacity: 0;
   width: 0;
   height: 0;
@@ -461,6 +480,14 @@ span.psw {
   background-color: #ccc;
   -webkit-transition: .4s;
   transition: .4s;
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 
 .slider:before {
@@ -530,6 +557,10 @@ input:checked + .slider .Offered
   font-family: Verdana, sans-serif;
   background-color: #f2f2f2;
   opacity: 0.96;
+}
+
+.card.lift{
+	overflow:auto;
 }
 
 .spaceH{
@@ -603,6 +634,8 @@ ul {list-style-type: none;}
   color: white !important
 }
 
+
+
 /*----------------------FXML----------------------------*/
 .button-active {
 	  -fx-background-color: #5f976a; /* Green */
@@ -658,5 +691,147 @@ ul {list-style-type: none;}
   -fx-background-radius: 0.0;
   -fx-text-fill: #39393a;
 }
+* {box-sizing: border-box;}
+body {font-family: Verdana, sans-serif;}
+.mySlides {display: none;}
+img {vertical-align: middle;}
 
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+  .text {font-size: 11px}
+}
+
+.show-booked > .offered { display:none; }
+.show-offered > .booked { display:none; }
+
+.snackbar {
+  visibility: hidden; /* Hidden by default. Visible on click */
+  min-width: 250px; /* Set a default minimum width */
+  margin-left: -125px; /* Divide value of min-width by 2 */
+  background-color: #333; /* Black background color */
+  color: #fff; /* White text color */
+  text-align: center; /* Centered text */
+  border-radius: 2px; /* Rounded borders */
+  padding: 16px; /* Padding */
+  position: fixed; /* Sit on top of the screen */
+  z-index: 1; /* Add a z-index if needed */
+  left: 50%; /* Center the snackbar */
+  bottom: 30px; /* 30px from the bottom */
+}
+
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+.snackbar.show {
+  visibility: visible; /* Show the snackbar */
+  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #5f976a; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #bbb; 
+}
+	
+.mySlides {display:none;}
 

@@ -1,5 +1,7 @@
 package logic.model;
 
+import java.util.List;
+
 import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;
 
@@ -11,6 +13,11 @@ public class Student {
 	protected String surname;
 	protected String email;
 	protected String phone;
+	
+	// used only in webapp
+	protected List<Lift> bookedLift;
+	protected List<String> notifications;
+
 
 	// Generated
 	public Student(String userID, String password, String email, String name, String surname, String phone)
@@ -74,6 +81,10 @@ public class Student {
 		InputChecker.checkNotNull(surname, "Surname");
 		this.surname = surname;
 	}
+	
+	public String getFullName() {
+		return this.name +" "+ this.surname;
+	}
 
 	public String getPhone() {
 		return this.phone;
@@ -84,10 +95,28 @@ public class Student {
 		this.phone = phone;
 	}
 
+
+	public List<Lift> getBookedLift() {
+		return bookedLift;
+	}
+
+	public void setBookedLift(List<Lift> bookedLift) {
+		this.bookedLift = bookedLift;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "Student [userID=" + userID + ", password=" + password + ", name=" + name + ", surname=" + surname
 				+ ", email=" + email + ", phone=" + phone + "]";
+	}
+	
+	public List<String> getNotifications() {
+		return notifications;
+	}
+
+	public void setNotifications(List<String> notifications) {
+		this.notifications = notifications;
 	}
 	
 	public boolean compare(Student other) {

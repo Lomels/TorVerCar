@@ -30,6 +30,7 @@ public class MyCarView extends Application implements Initializable{
 	@FXML private Button btSave;
 	@FXML private Button btBook;
 	@FXML private Button btOffer;
+	@FXML private Button btLifts;
 	
 	@FXML private TextField tfModel;
 	@FXML private TextField tfColour;
@@ -46,6 +47,8 @@ public class MyCarView extends Application implements Initializable{
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
+		stage.setResizable(false);
+
 		stage.show();
 	}
 	
@@ -115,11 +118,16 @@ public class MyCarView extends Application implements Initializable{
 	}
 	
 	@FXML
+	public void liftsButtonController() throws Exception {
+		MyLiftView myLift = new MyLiftView();
+		myLift.start((Stage) btLifts.getScene().getWindow());
+	}
+	
+	@FXML
 	public void logoutButtonController() throws Exception {
 		try {
 			LoginController.logout();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		HomeView home = new HomeView();
@@ -134,12 +142,8 @@ public class MyCarView extends Application implements Initializable{
 	
 	@FXML
 	public void offerButtonController() throws Exception {
-
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
-
-		//TODO: Implementare
-
 	}
 	
 	public boolean checkCar() {

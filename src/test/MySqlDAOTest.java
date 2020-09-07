@@ -69,7 +69,7 @@ public class MySqlDAOTest {
 		actualP = my.loadPasswordByUserID(USERID);
 		assertEquals(PASSWORD, actualP);
 	}
-	
+  
 ////	@Test
 //	public void updateRating() throws DatabaseException {
 //		MySqlDAO my = new MySqlDAO();

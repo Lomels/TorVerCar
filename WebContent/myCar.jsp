@@ -1,101 +1,159 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<jsp:useBean id="offerBean" class="logic.bean.OfferBean" scope="session"></jsp:useBean>
+<jsp:useBean id="message" class="logic.bean.MessageBean" scope="request"></jsp:useBean>
+    
+
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="torvercar.css">
 <link rel="stylesheet"
-href="torvercar.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
-<meta charset="UTF-8">
+<meta charset="ISO-8859-1">
 <title>TorVerCar</title>
 </head>
-<header>
-<div id="navbar">
-			<a  href=""><i class='fas fa-home' style='font-size:36px'></i></a> 
-			<a href="">Book</a> 
-			<a href="">Offer</a>
-			<a href="">MyCar</a> 
-			<a href="">MyLift</a> 
-			<a class="right" href=""><i class='fas fa-door-open' style='font-size:36px'></i></a> 
-			<a class="right active" href=""> <i class='fas fa-user-graduate' style='font-size:36px'></i></a>
-			
-</div>
-
+<header class="header_area clearfix">
+		<div id="navbar">
+			<a id="title" class="title">TorVerCar.</a>
+			<a href="homepage.jsp"><i class='fas fa-home' style='font-size:36px'></i></a> 
+			<a href="book.jsp">Book</a> 
+			<a href="offer.jsp">Offer</a>
+			<a class="active">MyCar</a>
+			<a href="myLift.jsp">MyLift</a> 
+			<form action="LoginControllerServlet" method="POST">
+			<button type="submit" name="action" value="logout" class="right"><i class='fas fa-door-open' style='font-size:36px'></i></button>
+			</form>
+			<a class="right" href="profile.jsp"><i class='fas fa-user-graduate' style='font-size:36px'></i></a> 
+		</div>
 </header>
 <body>
+	<div class="bg-image mycar">
+	<%
+		if (message.getMessage() != null) {
+	%>
+	 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+	<script>
+	swal({
+	  title: 'Error!',
+	  text: '${message.getMessage()}',
+	  type: '${message.getType()}',
+	  confirmButtonText: 'Got it!'
+	});</script>
+	<%
+		}
+	%>
+	
+		<div class="row fullscreen">
+			<div class="column2" style="background-color: transparent;">
+				<div class="card animate">
+					<form action="CarControllerServlet" method="POST"
+						style="width: 60%;">
 
-<div class="bg-image mycar">
-	<div class="column2" style="background-color: transparent;">
-		<div class="card" style="width:60%;">
-		  <h2>Car Card</h2>
-		  <label>Model:  </label>
-		  <input type="text" value="i20" id="myModel" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px;"disabled>
-		  
-		  <label>Color:  </label>
-		  <input type="text" value="BLACK" id="myColor" style="color:#39393a;background-color:#FFFFFF; width: 300px; height:30px;" disabled>
-		  
-		  
-		  <label>Plate:  </label>
-		  <input type="text" value="PDPDPD" id="myPlate" style="color:#39393a;background-color:#FFFFFF; width: 300px; height:30px;" disabled>
-		  
-		  <label>Seats available:  </label>
-		  <input type="text" value="3" id="mySeats" style="color:#39393a; background-color:#FFFFFF; width: 300px; height:30px;" disabled>
-		 <br>
+						<h2><i class='fas fa-address-card'></i>&nbsp;Car Card</h2>
+						<c:choose>
+						<c:when test = "${role eq 'driver'}">
+							<label>Model: </label> 
 
-		<div class="col-50">	
-			<div class="row">
-				<button id="btnBack" class="disabled" onclick="back()">Back <i class='fas fa-angle-double-left'></i></button>
-				<button id="btnSave" class="disabled" onclick="save()">Save</button>
-				<button id="btnEdit" onclick="edit()">Edit</button>
+						
+
+						<input type="text" name="model"
+							value="${user.getCarInfo().getModel() }" id="myModel"
+							style="width: 300px; height: 30px;" disabled> 
+						<label>Color: </label> 
+						<input type="text" name="color" class="label"
+							value="${user.getCarInfo().getColour() }" id="myColor"
+							style="width: 300px; height: 30px;"
+							disabled> 
+						<label>Plate: </label> 
+						<input type="text" name="plate"
+							value="${user.getCarInfo().getPlate() }" id="myPlate"
+							style="width: 300px; height: 30px;"
+							disabled> 
+						<label>Seats available: </label> 
+						<input type="text" name="seats"
+							value="${user.getCarInfo().getSeats() }" id="mySeats"
+							style=" width: 300px; height: 30px;"
+							disabled> <br>
+						</c:when>
+						<c:otherwise>
+							<label>Model: </label> 
+							<input type="text" name="model" id="myModel"
+								style="width: 300px; height: 30px;"> 
+							<label>Color: </label> 
+							<input type="text" name="color" class="label" id="myColor"
+								style="width: 300px; height: 30px;"> 
+							<label>Plate: </label> 
+							<input type="text" name="plate" id="myPlate"
+								style="width: 300px; height: 30px;"> 
+							<label>Seats available: </label> 
+							<input type="text" name="seats" id="mySeats"
+								style=" width: 300px; height: 30px;"> <br>
+						</c:otherwise>
+					</c:choose>
+						
+						<div class="col-50">
+
+							<div id="saveRow" class="row" style="height:50px; display:none;">
+							<button id="btnSave" type="submit" name="action" value="save" style="width:150px;"
+								class="button">Save</button>
+							</div>
+
+
+						</div>
+					</form>
+
+					<div class="col-50">
+
+						<div id="backRow" class="row" style="height:50px; display:none;">
+						<button id="btnBack" class="button" style="width:150px;" onclick="back()">
+							Back <i class='fas fa-angle-double-left'></i>
+						</button>
+						</div>
+						<div id="editRow" class="row" style="height:50px;">
+						<button class="button" id="btnEdit" style="width:150px;" onclick="edit()">Edit</button>
+						</div>
+
+					</div>
+				</div>
 			</div>
 		</div>
-		<br>
-
- 
-		</div>
 	</div>
-</div>
-
-<script>
-function edit() {
-  document.getElementById("btnEdit").classList.add("disabled");
-  
-  document.getElementById("btnSave").classList.remove("disabled");
-  
-  document.getElementById("btnBack").classList.remove("disabled");
-
-  document.getElementById("mySeats").value= '';
-  document.getElementById("myPlate").value= '';
-  document.getElementById("myColor").value = '';
-  document.getElementById("myModel").value = '';
-  
-  document.getElementById("mySeats").disabled= false;
-  document.getElementById("myPlate").disabled = false;
-  document.getElementById("myColor").disabled = false;
-  document.getElementById("myModel").disabled = false;
-  
-}
-function back(){
-	  document.getElementById("btnEdit").classList.remove("disabled");
-	  
-	  document.getElementById("btnSave").classList.add("disabled");
-	  
-	  document.getElementById("btnBack").classList.add("disabled");
-	  
-	  document.getElementById("mySeats").value= '3';  //TODO get from database
-	  document.getElementById("myPlate").value= 'PDPDPD';
-	  document.getElementById("myColor").value = 'BLACK';
-	  document.getElementById("myModel").value = 'i20';
-
-	  document.getElementById("mySeats").disabled= true;
-	  document.getElementById("myPlate").disabled = true;
-	  document.getElementById("myColor").disabled = true;
-	  document.getElementById("myModel").disabled = true;
-}
-</script>
-
-
 
 
 </body>
+
+<script>
+	
+	function edit() {
+		document.getElementById("editRow").style.display = "none";
+		document.getElementById("backRow").style.display = "block";
+		document.getElementById("saveRow").style.display = "block";
+		
+		document.getElementById("mySeats").disabled = false;
+		document.getElementById("myPlate").disabled = false;
+		document.getElementById("myColor").disabled = false;
+		document.getElementById("myModel").disabled = false;
+
+	}
+	</script>
+	<script>
+	function back() {
+		document.getElementById("editRow").style.display = "block";
+		document.getElementById("backRow").style.display = "none";
+		document.getElementById("saveRow").style.display = "none";
+
+		document.getElementById("mySeats").disabled = true;
+		document.getElementById("myPlate").disabled = true;
+		document.getElementById("myColor").disabled = true;
+		document.getElementById("myModel").disabled = true;
+	} 
+</script>
+
 </html>

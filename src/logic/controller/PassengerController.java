@@ -3,6 +3,7 @@ package logic.controller;
 import logic.controller.email.SendEmail;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidStateException;
+import logic.controller.exception.PassengerException;
 import logic.model.Lift;
 import logic.model.Student;
 import logic.view.mysql.MySqlDAO;
@@ -10,7 +11,7 @@ import logic.view.mysql.MySqlDAO;
 public class PassengerController {
 	private MySqlDAO dao = new MySqlDAO();
 
-	public void addPassenger(Lift lift, Student passenger) throws InvalidStateException, DatabaseException {
+	public void addPassenger(Lift lift, Student passenger) throws InvalidStateException, DatabaseException, PassengerException {
 		// The operation is blocked
 		if (lift.getLiftID() == null) {
 			// If the lift is not saved on the DB
@@ -20,11 +21,11 @@ public class PassengerController {
 		if (lift.isPassenger(passenger)) {
 			// If student is already a passenger
 			String errorMessage = "Passenger: " + passenger.getUserID() + " was already added.";
-			throw new InvalidStateException(errorMessage);
+			throw new PassengerException(errorMessage);
 		} else if (passenger.getUserID().equals(lift.getDriver().getUserID())) {
 			// If student is the driver
 			String errorMessage = "Passenger: " + passenger.getUserID() + " is the driver.";
-			throw new InvalidStateException(errorMessage);
+			throw new PassengerException(errorMessage);
 		} else if (lift.getFreeSeats() <= 0) {
 			// If lift has no free seats.
 			String errorMessage = "Lift has no more free seats";
@@ -34,7 +35,7 @@ public class PassengerController {
 				// If passenger has already a passage in the same time
 				if (this.liftInteresct(lift, passengerLift)) {
 					String errorMessage = "Passenger has already a lift booked for this time.";
-					throw new InvalidStateException(errorMessage);
+					throw new PassengerException(errorMessage);
 				}
 			}
 			// Add the passenger at the application level

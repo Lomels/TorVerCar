@@ -1,5 +1,7 @@
 package logic.model;
 
+import java.util.List;
+
 import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;
 
@@ -7,6 +9,9 @@ public class StudentCar extends Student {
 
 	private int rating;
 	private CarInfo carInfo;
+	
+	// used only in webapp
+	private List<Lift> offeredLift;
 
 	// Constructor from Student
 	public StudentCar(Student student, int rating, CarInfo carInfo) throws InvalidInputException {
@@ -42,6 +47,14 @@ public class StudentCar extends Student {
 	@Override
 	public String toString() {
 		return super.toString() + ", " + "StudentCar [rating=" + rating + ", carInfo=" + carInfo + "]";
+	}
+
+	public List<Lift> getOfferedLift() {
+		return offeredLift;
+	}
+
+	public void setOfferedLift(List<Lift> offeredLift) {
+		this.offeredLift = offeredLift;
 	}
 
 }

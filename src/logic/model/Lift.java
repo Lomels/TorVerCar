@@ -1,6 +1,7 @@
 package logic.model;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,4 +149,16 @@ public class Lift {
 		return sameLiftID && this.compare(other);
 	}
 
+	public String getStringStartTime() {
+		return this.getStartDateTime().format(DateTimeFormatter.ISO_LOCAL_TIME);
+	}
+	
+	public String getStringStopTime() {
+		return this.getStopDateTime().format(DateTimeFormatter.ISO_LOCAL_TIME);
+	}
+	
+	public String getStringDate() {
+		return this.getStartDateTime().format(DateTimeFormatter.ISO_DATE);
+	}
+	
 }

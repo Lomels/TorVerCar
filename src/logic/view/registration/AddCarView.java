@@ -15,13 +15,19 @@ import logic.bean.UserBeanSingleton;
 import logic.controller.RegistrationController;
 import logic.view.HomeView;
 import logic.view.LoginView;
+import logic.view.MyLiftView;
 
-public class AddCarView extends Application{
+public class AddCarView extends Application {
 	Stage stage;
-	@FXML private Button btHome, btNext, btBack;
-	@FXML private TextField tfModel, tfColour, tfSeats, tfPlate;
-	UserBeanSingleton sg = UserBeanSingleton.getInstance();
-	
+	@FXML
+	private Button btHome, btNext, btBack;
+
+	@FXML
+	private Button btLifts;
+	@FXML
+	private TextField tfModel, tfColour, tfSeats, tfPlate;
+	private UserBeanSingleton sg = UserBeanSingleton.getInstance();
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getResource("../fxml/Add_car_info.fxml"));
@@ -29,40 +35,47 @@ public class AddCarView extends Application{
 		Scene scene = new Scene(root);
 		stage.setTitle("Add Car Infos");
 		stage.setScene(scene);
+		stage.setResizable(false);
+
 		stage.show();
 	}
-	
 
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	@FXML
-	public void btNextController() throws Exception {		
+	public void btNextController() throws Exception {
 		CarInfoBean carInfo = new CarInfoBean();
 		carInfo.setModel(tfModel.getText());
 		carInfo.setColour(tfColour.getText());
 		carInfo.setPlate(tfPlate.getText());
 		carInfo.setSeats(Integer.parseInt(tfSeats.getText()));
-		
+
 		RegistrationController controller = new RegistrationController();
 		controller.addStudentCar(carInfo);
-		
+
 		LoginView login = new LoginView();
 		login.start((Stage) btNext.getScene().getWindow());
-		
+
 	}
-	
+
+	@FXML
+	public void liftsButtonController() throws Exception {
+		MyLiftView myLift = new MyLiftView();
+		myLift.start((Stage) btLifts.getScene().getWindow());
+	}
+
 	@FXML
 	public void btHomeController() throws IOException {
 		HomeView home = new HomeView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
-	
+
 	@FXML
-	public void btBackController() throws Exception{
+	public void btBackController() throws Exception {
 		AddInfoView addInfo = new AddInfoView();
 		addInfo.start((Stage) btBack.getScene().getWindow());
-		
+
 	}
 }

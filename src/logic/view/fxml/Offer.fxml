@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
@@ -13,28 +12,53 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="514.0" prefWidth="771.0" stylesheets="@../fxml/TorVerCar.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.offer.OfferView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+	prefHeight="514.0" prefWidth="797.0"
+	stylesheets="@../fxml/TorVerCar.css"
+	xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="logic.view.offer.OfferView">
 	<children>
-		<HBox layoutX="-9.0" layoutY="-9.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+		<HBox layoutX="-9.0" layoutY="-9.0" AnchorPane.leftAnchor="0.0"
+			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<children>
-				<ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="46.0" prefWidth="771.0" style="-fx-background-color: #39393a;">
+				<ButtonBar nodeOrientation="RIGHT_TO_LEFT"
+					prefHeight="46.0" prefWidth="771.0"
+					style="-fx-background-color: #39393a;">
 					<buttons>
-						<Button fx:id="btMyCar" mnemonicParsing="false" onAction="#myCarButtonController" styleClass="button-unactive" text="MyCAR">
+						<Button fx:id="btLifts" mnemonicParsing="false"
+							onAction="#liftsButtonController" styleClass="button-unactive"
+							text="MyLIFT" textAlignment="CENTER" textOverrun="CLIP"
+							wrapText="true">
 							<font>
 								<Font size="18.0" />
 							</font>
 						</Button>
-						<Button fx:id="btOffer" mnemonicParsing="false" onAction="#offerButtonController" prefHeight="46.0" prefWidth="83.0" styleClass="button-active" text="OFFER">
+						<Button fx:id="btMyCar" mnemonicParsing="false"
+							onAction="#myCarButtonController" styleClass="button-unactive"
+							text="MyCAR">
 							<font>
 								<Font size="18.0" />
 							</font>
 						</Button>
-						<Button fx:id="btBook" mnemonicParsing="false" onAction="#bookButtonController" styleClass="button-unactive" text="BOOK">
+						<Button fx:id="btOffer" mnemonicParsing="false"
+							onAction="#offerButtonController" prefHeight="46.0"
+							prefWidth="83.0" styleClass="button-active" text="OFFER">
 							<font>
 								<Font size="18.0" />
 							</font>
 						</Button>
-						<Button fx:id="btHome" mnemonicParsing="false" onAction="#homeButtonController" styleClass="button-unactive" text="HOME" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
+						<Button fx:id="btBook" mnemonicParsing="false"
+							onAction="#bookButtonController" styleClass="button-unactive"
+							text="BOOK">
+							<font>
+								<Font size="18.0" />
+							</font>
+						</Button>
+						<Button fx:id="btHome" mnemonicParsing="false"
+							onAction="#homeButtonController" styleClass="button-unactive"
+							text="HOME" textAlignment="CENTER" textOverrun="CLIP"
+							wrapText="true">
 							<font>
 								<Font size="18.0" />
 							</font>
@@ -44,22 +68,31 @@
 						<DropShadow radius="4.75" width="0.0" />
 					</effect>
 				</ButtonBar>
-				<ButtonBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="771.0" style="-fx-background-color: #39393a;">
+				<ButtonBar nodeOrientation="LEFT_TO_RIGHT"
+					prefHeight="46.0" prefWidth="313.0"
+					style="-fx-background-color: #39393a;">
 					<buttons>
-						<Button fx:id="btLogout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonController" prefHeight="26.0" prefWidth="43.0" styleClass="button-unactive">
+						<Button fx:id="btLogout" maxHeight="-Infinity"
+							maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+							mnemonicParsing="false" onAction="#logoutButtonController"
+							styleClass="button-unactive">
 							<graphic>
-								<ImageView fitHeight="29.0" fitWidth="33.0">
+								<ImageView fitHeight="29.0" fitWidth="33.0"
+									preserveRatio="true">
 									<image>
-										<Image url="@../../../../images/logout.png" />
+										<Image url="@../../../../WebContent/images/logout.png" />
 									</image>
 								</ImageView>
 							</graphic>
 						</Button>
-						<Button fx:id="btProfile" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#profileButtonController" prefHeight="26.0" prefWidth="46.0" styleClass="button-unactive" text="Profile">
+						<Button fx:id="btProfile" minHeight="-Infinity"
+							minWidth="-Infinity" mnemonicParsing="false"
+							onAction="#profileButtonController" styleClass="button-unactive">
 							<graphic>
-								<ImageView fitHeight="30.0" fitWidth="28.0">
+								<ImageView fitHeight="30.0" fitWidth="28.0"
+									preserveRatio="true">
 									<image>
-										<Image url="@../../../../images/user.png" />
+										<Image url="@../../../../WebContent/images/user.png" />
 									</image>
 								</ImageView>
 							</graphic>
@@ -71,37 +104,86 @@
 				</ButtonBar>
 			</children>
 		</HBox>
-		<ComboBox fx:id="btMyLift" layoutX="273.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="103.0" promptText="My Lift" style="-fx-background-color: #046104; -fx-border-color: #046104;" visible="false" />
-		<Text layoutX="23.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Starting point:" />
-		<Text layoutX="23.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destination:" />
-		<Text layoutX="23.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Depart at:" />
-		<Text layoutX="23.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max duration:" />
-		<TextField fx:id="tfStartPoint" alignment="CENTER_RIGHT" layoutX="262.0" layoutY="77.0" promptText="Street, CAP, City">
-         <font>
-            <Font name="System Italic" size="12.0" />
-         </font></TextField>
-		<TextField fx:id="tfArrivalPoint" alignment="CENTER_RIGHT" layoutX="262.0" layoutY="134.0" promptText="Street, CAP, City">
-         <font>
-            <Font name="System Italic" size="12.0" />
-         </font></TextField>
-		<TextField fx:id="tfStartTime" alignment="CENTER_RIGHT" layoutX="262.0" layoutY="195.0" promptText="(eg. 09:45)">
-         <font>
-            <Font name="System Italic" size="12.0" />
-         </font></TextField>
-		<TextField fx:id="tfMaxDuration" alignment="CENTER_RIGHT" layoutX="262.0" layoutY="262.0" promptText="(eg. 60)">
-         <font>
-            <Font name="System Italic" size="12.0" />
-         </font></TextField>
-		<Button fx:id="btCheckStart" layoutX="434.0" layoutY="76.0" mnemonicParsing="false" onAction="#checkStartAddressController" styleClass="button-active" text="Find" />
-		<Button fx:id="btCheckEnd" layoutX="434.0" layoutY="133.0" mnemonicParsing="false" onAction="#checkEndAddressController" styleClass="button-active" text="Find" />
-		<Button fx:id="btConfirm" layoutX="511.0" layoutY="360.0" mnemonicParsing="false" onAction="#confirmButtonController" styleClass="button-active" text="Confirm" />
-		<Text layoutX="23.0" layoutY="334.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add notes:" />
-		<TextField fx:id="tfNotes" alignment="TOP_RIGHT" layoutX="262.0" layoutY="316.0" prefHeight="62.0" prefWidth="171.0" promptText="(eg. It's not allowed to smoke)">
-         <font>
-            <Font name="System Italic" size="12.0" />
-         </font></TextField>
-		<Text layoutX="23.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Day:" />
-		<DatePicker fx:id="dpDate" layoutX="262.0" layoutY="229.0" />
-		<Button fx:id="btAddCar" layoutX="441.0" layoutY="360.0" mnemonicParsing="false" onAction="#addCarButtonController" styleClass="button-active" text="Add Car" />
+		<Text fill="#39393a" layoutX="202.0" layoutY="127.0"
+			strokeType="OUTSIDE" strokeWidth="0.0" text="Starting point:">
+			<font>
+				<Font size="18.0" />
+			</font>
+		</Text>
+		<Text fill="#39393a" layoutX="204.0" layoutY="184.0"
+			strokeType="OUTSIDE" strokeWidth="0.0" text="Destination:">
+			<font>
+				<Font size="18.0" />
+			</font>
+		</Text>
+		<Text fill="#39393a" layoutX="204.0" layoutY="244.0"
+			strokeType="OUTSIDE" strokeWidth="0.0" text="Depart at:">
+			<font>
+				<Font size="18.0" />
+			</font>
+		</Text>
+		<Text fill="#39393a" layoutX="204.0" layoutY="318.0"
+			strokeType="OUTSIDE" strokeWidth="0.0" text="Max duration:">
+			<font>
+				<Font size="18.0" />
+			</font>
+		</Text>
+		<TextField fx:id="tfStartPoint" alignment="CENTER_RIGHT"
+			layoutX="332.0" layoutY="104.0" promptText="Street, CAP, City">
+			<font>
+				<Font name="System Italic" size="15.0" />
+			</font>
+		</TextField>
+		<TextField fx:id="tfArrivalPoint" alignment="CENTER_RIGHT"
+			layoutX="332.0" layoutY="161.0" promptText="Street, CAP, City">
+			<font>
+				<Font name="System Italic" size="15.0" />
+			</font>
+		</TextField>
+		<TextField fx:id="tfStartTime" alignment="CENTER_RIGHT"
+			layoutX="332.0" layoutY="222.0" promptText="(eg. 09:45)">
+			<font>
+				<Font name="System Italic" size="15.0" />
+			</font>
+		</TextField>
+		<TextField fx:id="tfMaxDuration" alignment="CENTER_RIGHT"
+			layoutX="332.0" layoutY="296.0" promptText="(eg. 60)">
+			<font>
+				<Font name="System Italic" size="15.0" />
+			</font>
+		</TextField>
+		<Button fx:id="btCheckStart" layoutX="539.0" layoutY="101.0"
+			mnemonicParsing="false" onAction="#checkStartAddressController"
+			styleClass="button" text="Find" />
+		<Button fx:id="btCheckEnd" layoutX="539.0" layoutY="158.0"
+			mnemonicParsing="false" onAction="#checkEndAddressController"
+			styleClass="button" text="Find" />
+		<Button fx:id="btConfirm" layoutX="690.0" layoutY="430.0"
+			mnemonicParsing="false" onAction="#confirmButtonController"
+			styleClass="button" text="Confirm" />
+		<Text fill="#39393a" layoutX="202.0" layoutY="382.0"
+			strokeType="OUTSIDE" strokeWidth="0.0" text="Add notes:">
+			<font>
+				<Font size="18.0" />
+			</font>
+		</Text>
+		<TextField fx:id="tfNotes" alignment="TOP_RIGHT"
+			layoutX="332.0" layoutY="351.0" prefHeight="62.0" prefWidth="171.0"
+			promptText="(eg. It's not allowed to smoke)">
+			<font>
+				<Font name="System Italic" size="15.0" />
+			</font>
+		</TextField>
+		<Text fill="#39393a" layoutX="203.0" layoutY="281.0"
+			strokeType="OUTSIDE" strokeWidth="0.0" text="Day:">
+			<font>
+				<Font size="18.0" />
+			</font>
+		</Text>
+		<DatePicker fx:id="dpDate" layoutX="332.0" layoutY="262.0"
+			prefHeight="25.0" prefWidth="186.0" />
+		<Button fx:id="btAddCar" layoutX="590.0" layoutY="430.0"
+			mnemonicParsing="false" onAction="#addCarButtonController"
+			styleClass="button" text="Add Car" />
 	</children>
 </AnchorPane>

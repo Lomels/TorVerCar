@@ -24,6 +24,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
@@ -39,6 +40,7 @@ import logic.utilities.Status;
 import logic.view.HomeView;
 import logic.view.MainMenuView;
 import logic.view.MyCarView;
+import logic.view.MyLiftView;
 import logic.view.ProfileView;
 import logic.view.offer.AddressListView;
 import logic.view.offer.OfferView;
@@ -65,6 +67,8 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	@FXML
 	private Button btCheckEnd;
 	@FXML
+	private Button btLifts;
+	@FXML
 	private TextField tfStartPoint;
 	@FXML
 	private TextField tfArrivalPoint;
@@ -75,9 +79,9 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	@FXML
 	private TextField tfDay;
 	@FXML
-	private CheckBox cbGoing;
+	private RadioButton rbGoing;
 	@FXML
-	private CheckBox cbReturn;
+	private RadioButton rbReturn;
 	@FXML
 	private DatePicker dpDate;
 
@@ -99,6 +103,8 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
+		stage.setResizable(false);
+
 		stage.show();
 	}
 
@@ -113,6 +119,13 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 
+	@FXML
+	public void liftsButtonController() throws Exception {
+		liftSg.clearState();
+		MyLiftView myLift = new MyLiftView();
+		myLift.start((Stage) btLifts.getScene().getWindow());
+	}
+	
 	@FXML
 	public void bookButtonController() throws Exception {
 		liftSg.clearState();
@@ -172,19 +185,19 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	}
 
 	@FXML
-	public void findButtonController() throws Exception {
+	public void findButtonController(){
 		List<Position> stops = new ArrayList<>();
 		stops.add(liftSg.getStartPoint());
 		stops.add(liftSg.getEndPoint());
 
-		if (cbGoing.isSelected()) {
+		if (rbGoing.isSelected()) {
 			liftSg.setPurpose("cbGoing");
 			time = dpDate.getValue().toString() + tfArrivalTime.getText();
 			liftSg.setArrivalTime(time);
-			// TODO spostare in un controller
+			
 			liftController.matchLiftStoppingBefore(LocalDateTime.parse(liftSg.getArrivalTime(), FORMATTER), stops, 0,
 					this);
-		} else if (cbReturn.isSelected()) {
+		} else if (rbReturn.isSelected()) {
 			liftSg.setPurpose("cbReturn");
 			time = dpDate.getValue().toString() + tfStartTime.getText();
 			liftSg.setDepartureTime(time);
@@ -192,19 +205,62 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 			liftController.matchLiftStartingAfter(LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER), stops, 0,
 					this);
 		} else {
-			MyLogger.info("You must choose a lift option");
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Warning");
+			alert.setHeaderText("Oops!");
+			alert.setContentText("You must choose a lift option");
+			alert.showAndWait(); 
+		}
+	}
+	
+	@FXML
+	public void rbGoingButtonController() {
+		if(rbGoing.isSelected()) {
+			rbGoing.setDisable(true);
+			rbReturn.setSelected(false);
+			rbReturn.setDisable(false);
+			tfStartTime.setDisable(false);
+			tfArrivalTime.setDisable(true);
+			liftSg.setPurpose("cbGoing");
 		}
 	}
 
+	@FXML
+	public void rbReturnButtonController() {
+		if(rbReturn.isSelected()) {
+			rbReturn.setDisable(true);
+			rbGoing.setSelected(false);
+			rbGoing.setDisable(false);
+			tfArrivalTime.setDisable(false);
+			tfStartTime.setDisable(true);
+			liftSg.setPurpose("cbReturn");
+		}
+		
+	}
+		
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO sistemare spunta
-		if (liftSg.getPurpose().equals("cbGoing")) {
-			cbGoing.setSelected(true);
+		if(liftSg.getPurpose().equals(null)) {
+			rbGoing.setSelected(false);
+			rbReturn.setSelected(false);
 		}
-		if (liftSg.getPurpose().equals("cbReturn")) {
-			cbReturn.setSelected(false);
+		
+		if(liftSg.getPurpose().equals("cbGoing")) {
+			rbGoing.setDisable(true);
+			rbReturn.setSelected(false);
+			rbReturn.setDisable(false);
+			tfStartTime.setDisable(false);
+			tfArrivalTime.setDisable(true);
 		}
+		if(liftSg.getPurpose().equals("cbReturn")) {
+			rbReturn.setDisable(true);
+			rbGoing.setSelected(false);
+			rbGoing.setDisable(false);
+			tfArrivalTime.setDisable(false);
+			tfStartTime.setDisable(true);
+		}
+		
 
 		try {
 			userSg.setStatus(Status.BOOK);
@@ -213,42 +269,9 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 			e1.printStackTrace();
 		}
 
-		EventHandler<ActionEvent> eventGoing = new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				if (cbGoing.isPressed()) {
-					cbGoing.setSelected(false);
-					tfStartTime.setDisable(false);
-					tfArrivalTime.setDisable(true);
-					cbReturn.setSelected(true);
+		
 
-				} else {
-					cbReturn.setSelected(false);
-					tfArrivalTime.setDisable(false);
-					tfStartTime.setDisable(true);
-					cbGoing.setSelected(true);
-				}
-			}
-		};
-
-		EventHandler<ActionEvent> eventReturn = new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				if (cbReturn.isPressed()) {
-					cbReturn.setSelected(false);
-					tfStartTime.setDisable(true);
-					tfArrivalTime.setDisable(false);
-					cbGoing.setSelected(true);
-
-				} else {
-					cbGoing.setSelected(false);
-					tfArrivalTime.setDisable(true);
-					tfStartTime.setDisable(false);
-					cbReturn.setSelected(true);
-				}
-			}
-		};
-
-		cbGoing.setOnAction(eventGoing);
-		cbReturn.setOnAction(eventReturn);
+		
 
 		if (!liftSg.getStatus().equals(Status.START)) {
 			tfStartPoint.setText(liftSg.getStartPoint().getAddress());

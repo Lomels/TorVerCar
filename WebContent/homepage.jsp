@@ -1,66 +1,57 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
+<jsp:useBean id="message" class="logic.bean.MessageBean" scope="request"></jsp:useBean>
+    
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="ISO-8859-1">
 	<link href="torvercar.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
 	<title>Insert title here</title>
 </head>
-<body>
-<!-- ***** Header Area Start ***** -->
-	<header class="header_area clearfix">
-		<div id="navbar">
-			<a class="active" href=""><i class='fas fa-door-open' style='font-size:36px'></i></a> 
-			<a href="">Book</a> 
-			<a href="offer.jsp">Offer</a>
-			<a href="">MyCAR</a> 
-			<a href="">MyLIFT</a> 
-			<a class="right" onclick="document.getElementById('regDialog').style.display='block'"><i class='fas fa-door-open' style='font-size:36px'></i></a>
-			<a class="login right" onclick="document.getElementById('loginDialog').style.display='block'"><i class='fas fa-user-graduate' style='font-size:36px'></i></a> 
-		</div>
-	</header>
-	<!-- ***** Header Area End ***** -->
 
-	<!-- ***** Welcome Area Start ***** -->
-	<div class="bg-image home">	
-	
-	<!-- Login Dialog -->	
-		<div id="loginDialog" class="modal">
-		  <form class="modal-content animate" action="LoginControllerServlet" method="post">
-		    <div class="container">
-		      <label class="greentext" for="uname"><b>UserID</b></label>
-		      <input id="usr" type="text" placeholder="Enter Username" name="userID" required>
-		
-		      <label class="greentext" for="psw"><b>Password</b></label>
-		      <input id="psw" type="password" placeholder="Enter Password" name="psw" required>
-		 	  
-		 	  <button type="button" class="cancel" onclick="document.getElementById('loginDialog').style.display='none'">Cancel</button>
-		      <button type="submit" name="action" value="login">Login</button>
-		      
-		    </div>
-		  </form>
+<header class="header_area clearfix">
+		<div id="navbar">
+			<a id="title" class="title">TorVerCar.</a>
+			<a class="active" href=""><i class='fas fa-home' style='font-size:36px'></i></a> 
+			<a href="book.jsp">Book</a> 
+			<a href="offer.jsp">Offer</a>
+			<a href="myCar.jsp">MyCar</a>
+			<a href="myLift.jsp">MyLift</a> 
+			<form action="LoginControllerServlet" method="POST">
+			<button type="submit" name="action" value="logout" class="right"><i class='fas fa-door-open' style='font-size:36px'></i></button>
+			</form>
+			<a class="right" href="profile.jsp"><i class='fas fa-user-graduate' style='font-size:36px'></i></a> 
 		</div>
-	<!-- End Dialog -->
+</header>
 	
-	<!-- Registration Dialog -->
-		<div id="regDialog" class="modal">
-		  
-		  <form class="modal-content animate" action="/action_page.php" method="post">
-		
-		    <div class="container">
-		      <label class="greentext" for="uname"><b>Student ID</b></label>
-		      <input type="text" placeholder="Enter your Student ID" name="uname" required>
-		
-		      <label class="greentext" for="psw"><b>Password</b></label>
-		      <input type="password" placeholder="Enter Password" name="psw" required>
-		 	  
-		 	  <button type="button" class="cancel" onclick="document.getElementById('id01').style.display='none'">Cancel</button>
-		      <button type="submit">Sign up</button>
-		      
-		    </div>
-		  </form>
-		</div>
+<body>
+	<div class="bg-image home">
+	<!-- MESSAGE CHECK -->
+	<%if (message.getMessage() != null) {%>
+	<script>
+	swal({
+	  title: 'Error!',
+	  text: '${message.getMessage()}',
+	  type: '${message.getType()}',
+	  confirmButtonText: 'Got it!'
+	});</script>
+	<%}%>
+	<!-- END CHECK -->
+	
+	<!-- END CHECK -->
+	<div class="column" style="background-color:trasparent;">
+	</div>
+	<div class="column" style="background-color:trasparent;"></div>	
+	<div class="column2" style="background-color:trasparent;">
+	<div class="row" style="height:75%;"></div>
+	<h1 style="font-size:96px;">Welcome ${user.getName()}</h1>
 	</div>
 </body>
 </html>

@@ -4,15 +4,19 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import logic.controller.exception.InvalidInputException;
 import logic.controller.httpclient.MyHttpClient;
 import logic.model.Position;
 import logic.model.Route;
 
 public class RoutingHereAPI extends HereApi implements RoutingApi {
+
+	private static final Logger LOGGER = Logger.getLogger(RoutingHereAPI.class.getCanonicalName());
 
 	private static RoutingHereAPI instance = null;
 	private static final String VERSION = "/v8";
@@ -27,15 +31,15 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 	}
 
 	@Override
-	public Route startToStop(Position startPosition, Position stopPosition) {
+	public Route startToStop(Position pickup, Position dropoff) throws InvalidInputException {
 		List<Position> stops = new ArrayList<>();
-		stops.add(startPosition);
-		stops.add(stopPosition);
+		stops.add(pickup);
+		stops.add(dropoff);
 		return this.startToStop(stops);
 	}
 
 	@Override
-	public Route startToStop(List<Position> stops) {
+	public Route startToStop(List<Position> stops) throws InvalidInputException {
 		Integer duration = null;
 		Integer distance = null;
 
@@ -75,7 +79,7 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 			return new Route(stops, durations, distances);
 
 		} catch (URISyntaxException e) {
-			e.printStackTrace();
+			LOGGER.fine(e.toString());
 		}
 		return null;
 
@@ -97,7 +101,7 @@ public class RoutingHereAPI extends HereApi implements RoutingApi {
 	}
 
 	@Override
-	public Route addInternalRoute(Route startRoute, List<Position> addStops) {
+	public Route addInternalRoute(Route startRoute, List<Position> addStops) throws InvalidInputException {
 		List<Position> startStops = startRoute.getStops();
 
 		PositionListCombiner combiner = new PositionListCombiner();

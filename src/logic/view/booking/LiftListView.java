@@ -24,6 +24,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import logic.controller.LoginController;
 import logic.controller.PassengerController;
+import logic.controller.exception.DatabaseException;
+import logic.controller.exception.ExceptionHandler;
+import logic.controller.exception.InvalidStateException;
 import logic.controller.maps.ViewMapHereApi;
 import logic.model.Lift;
 import logic.model.LiftMatchResult;
@@ -34,6 +37,7 @@ import logic.utilities.MyLogger;
 import logic.view.HomeView;
 import logic.view.MainMenuView;
 import logic.view.MyCarView;
+import logic.view.MyLiftView;
 import logic.view.ProfileView;
 import logic.view.offer.OfferView;
 
@@ -54,6 +58,8 @@ public class LiftListView extends Application implements Initializable {
 	@FXML
 	private Button btConfirm;
 	@FXML
+	private Button btLifts;
+	@FXML
 	private ListView<RowLift> liftList;
 
 	private LiftSingleton lift = LiftSingleton.getInstance();
@@ -61,7 +67,7 @@ public class LiftListView extends Application implements Initializable {
 	private ViewMapHereApi map = ViewMapHereApi.getInstance();
 	private PassengerController controller = new PassengerController();
 	private Integer index;
-	
+
 	@Override
 	public void start(Stage stage) throws Exception {
 
@@ -69,6 +75,8 @@ public class LiftListView extends Application implements Initializable {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
+		stage.setResizable(false);
+
 		stage.show();
 	}
 
@@ -77,6 +85,12 @@ public class LiftListView extends Application implements Initializable {
 		lift.clearState();
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
+	}
+
+	@FXML
+	public void liftsButtonController() throws Exception {
+		MyLiftView myLift = new MyLiftView();
+		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
 
 	@FXML
@@ -119,28 +133,33 @@ public class LiftListView extends Application implements Initializable {
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}
-	
-	@FXML 
+
+	@FXML
 	public void confirmButtonController() throws Exception {
 		MyLogger.info("lift", lift.getSelectedLift());
-		if(sg.getRole().equals(Role.STUDENT))
-			controller.addPassenger(lift.getSelectedLift(), sg.getStudent());
-		else
-			controller.addPassenger(lift.getSelectedLift(), sg.getStudentCar());
-		
+		try {
+			if (sg.getRole().equals(Role.STUDENT))
+				controller.addPassenger(lift.getSelectedLift(), sg.getStudent());
+			else
+				controller.addPassenger(lift.getSelectedLift(), sg.getStudentCar());
+
+		} catch (InvalidStateException | DatabaseException e) {
+			ExceptionHandler.handle(e);
+		}
+
 		lift.clearState();
 		
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("All right!");
-		alert.setHeaderText("");
+		alert.setHeaderText("Awesome!!");
 		alert.setContentText("You have successfully booked your lift!");
-		
+
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(getClass().getResource("../fxml/TorVerCar.css").toExternalForm());
 		dialogPane.getStyleClass().add("myDialog");
-		
-		Optional<ButtonType> result = alert.showAndWait(); 
-		
+
+		Optional<ButtonType> result = alert.showAndWait();
+
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btConfirm.getScene().getWindow());
 	}
@@ -149,8 +168,7 @@ public class LiftListView extends Application implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		for (LiftMatchResult result : lift.getListLifts()) {
 			MyLogger.info("result ID", result.getLift().getLiftID());
-			liftList.getItems()
-					.add(new RowLift(result));
+			liftList.getItems().add(new RowLift(result));
 		}
 		liftList.setCellFactory(lv -> new ListCell<RowLift>() {
 			private Node graphic;
@@ -178,9 +196,7 @@ public class LiftListView extends Application implements Initializable {
 
 					setGraphic(graphic);
 				}
-
 			}
-
 		});
 
 		liftList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);

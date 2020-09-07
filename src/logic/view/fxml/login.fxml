@@ -1,41 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-	prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="logic.view.LoginView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="797.0" stylesheets="@../fxml/TorVerCar.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.LoginView">
 	<children>
-		<TextField fx:id="matricola" layoutX="225.0" layoutY="174.0"
-			promptText="matricola" />
-		<PasswordField fx:id="hiddenPwd" layoutX="225.0"
-			layoutY="211.0" promptText="password" />
-		<TextField fx:id="tfPwd" layoutX="225.0" layoutY="211.0"
-			promptText="password" />
-		<Button fx:id="btLogin" layoutX="277.0" layoutY="248.0"
-			mnemonicParsing="false" onAction="#loginButtonController"
-			text="Login" textAlignment="CENTER" />
-		<Text fx:id="text" layoutX="172.0" layoutY="121.0"
-			strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome!">
+		<HBox layoutX="-9.0" layoutY="-9.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+			<children>
+				<ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="46.0" prefWidth="771.0" style="-fx-background-color: #39393a;">
+					<effect>
+						<DropShadow radius="4.75" width="0.0" />
+					</effect>
+					<buttons>
+						<Button fx:id="btHome" mnemonicParsing="false" onAction="#homeButtonController" prefHeight="46.0" prefWidth="83.0" styleClass="button-active" text="HOME" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+					</buttons>
+				</ButtonBar>
+				<ButtonBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="313.0" style="-fx-background-color: #39393a;">
+					<effect>
+						<DropShadow radius="4.75" width="0.0" />
+					</effect>
+					<buttons>
+
+					</buttons>
+				</ButtonBar>
+			</children>
+		</HBox>
+		<TextField fx:id="matricola" layoutX="281.0" layoutY="232.0" promptText="matricola">
+         <font>
+            <Font size="15.0" />
+         </font></TextField>
+		<PasswordField fx:id="hiddenPwd" layoutX="281.0" layoutY="275.0" promptText="password">
+         <font>
+            <Font size="15.0" />
+         </font></PasswordField>
+		<TextField fx:id="tfPwd" layoutX="281.0" layoutY="275.0" promptText="password">
+         <font>
+            <Font size="15.0" />
+         </font></TextField>
+		<Button fx:id="btLogin" layoutX="341.0" layoutY="322.0" mnemonicParsing="false" onAction="#loginButtonController" styleClass="button" text="Login" textAlignment="CENTER" />
+		<Text fx:id="text" fill="#39393a" layoutX="235.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome!">
 			<font>
-				<Font size="55.0" />
+				<Font size="63.0" />
 			</font>
 		</Text>
-		<Button fx:id="btHome" layoutX="274.0" layoutY="134.0"
-			mnemonicParsing="false" onAction="#homeButtonController" text="Home"
-			textAlignment="CENTER" />
-		<Text fx:id="error" layoutX="164.0" layoutY="300.0"
-			strokeType="OUTSIDE" strokeWidth="0.0" />
+		<Text fx:id="error" layoutX="228.0" layoutY="374.0" strokeType="OUTSIDE" strokeWidth="0.0" />
 
-		<CheckBox fx:id="cbShow" layoutX="402.0" layoutY="215.0"
-			mnemonicParsing="false" text="Show Password" />
+		<CheckBox fx:id="cbShow" layoutX="486.0" layoutY="282.0" mnemonicParsing="false" text="Show Password" />
 	</children>
 </AnchorPane>

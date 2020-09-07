@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,15 +13,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import logic.bean.MessageBean;
 import logic.bean.OfferBean;
+import logic.controller.LiftController;
 import logic.controller.exception.ApiNotReachableException;
+import logic.controller.exception.DatabaseException;
+import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
+import logic.controller.exception.InvalidStateException;
 import logic.model.Position;
+import logic.model.StudentCar;
 import logic.utilities.MyLogger;
+import logic.view.mysql.MySqlDAO;
 
 @WebServlet("/OfferControllerServlet")
-public class OfferControllerServlet extends HttpServlet{
-	
+public class OfferControllerServlet extends HttpServlet {
+
 	/**
 	 * 
 	 */
@@ -29,36 +38,88 @@ public class OfferControllerServlet extends HttpServlet{
 		HttpSession session = request.getSession();
 		String action = request.getParameter("action");
 		String offer = "offer.jsp";
-		
-		if("startPos".equals(action)) {
+
+		if ("startPos".equals(action)) {
 			String address = request.getParameter("start");
 			OfferBean offerBean = new OfferBean();
 			try {
 				List<Position> positions = ServletUtility.pupulateListPosition(address);
-				offerBean.setStartingPosition(positions);
+				offerBean.setResult(positions);
+				offerBean.setStatus("startPos");
 				session.setAttribute("offerBean", offerBean);
-				session.setAttribute("status", "startPos");
-				
-				MyLogger.info("status", session.getAttribute("status"));
-				request.getRequestDispatcher("offer.jsp").forward(request, response);
-			} catch (ApiNotReachableException | InvalidInputException | ServletException | IOException e) {
+				request.getRequestDispatcher(offer).forward(request, response);
+			} catch (ApiNotReachableException| ServletException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (InvalidInputException e) {
+				ExceptionHandler.handle(e, request, response, offer);				
 			}
 		}
-		
-		if("desPos".equals(action)) {
+
+		if ("desPos".equals(action)) {
 			String address = request.getParameter("dest");
+			OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
 			try {
 				List<Position> positions = ServletUtility.pupulateListPosition(address);
-				session.setAttribute("destPositions", positions);
-				session.setAttribute("status", "desPos");
+				offerBean.setResult(positions);
+				offerBean.setStatus("startPos");
+				session.setAttribute("offerBean", offerBean);
 				request.getRequestDispatcher("offer.jsp").forward(request, response);
-			} catch (ApiNotReachableException | InvalidInputException | ServletException | IOException e) {
+			} catch (ApiNotReachableException| ServletException | IOException e) {
 				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidInputException e) {
+				ExceptionHandler.handle(e, request, response, offer);				
+			}
+		}
+
+		if ("stop".equals(action)) {
+			String index = request.getParameter("index");
+			OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
+			offerBean.addStop(offerBean.getResult().get(Integer.parseInt(index)));
+			offerBean.setStatus("");
+
+			session.setAttribute("offerBean", offerBean);
+
+			MyLogger.info("selected position", offerBean.getResult().get(Integer.parseInt(index)));
+			try {
+				request.getRequestDispatcher("offer.jsp").forward(request, response);
+			} catch (ServletException | IOException e) {
 				e.printStackTrace();
 			}
 		}
+
+		if ("offer".equals(action)) {
+			LiftController liftController = new LiftController();
+			OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
+			StudentCar driver = (StudentCar) session.getAttribute("user");
+
+			String date = request.getParameter("day");
+			String time = request.getParameter("time");
+			String note = request.getParameter("notes");
+			String maxDuration = request.getParameter("maxTime");
+
+			String startDateTimeString = date + "T" + time;
+			try {
+				liftController.createLift(startDateTimeString, Integer.parseInt(maxDuration), note, driver,
+						offerBean.getStops().get(0), offerBean.getStops().get(1));
+				OfferBean newBean = new OfferBean();
+				session.setAttribute("offerBean", newBean);
+				ServletUtility.liftRefresh(session);
+				MessageBean msg = new MessageBean();
+				msg.setMessage("You have succesfully offered a lift!");
+				msg.setType("success");
+				msg.setTitle("Yay!");
+				request.setAttribute("message", msg);
+				request.getRequestDispatcher(offer).forward(request, response);
+
+			} catch (NumberFormatException | InvalidInputException | DatabaseException | InvalidStateException e) {
+				ExceptionHandler.handle(e, request, response, offer);				
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 }

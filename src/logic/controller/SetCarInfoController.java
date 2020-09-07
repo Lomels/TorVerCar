@@ -5,7 +5,7 @@ import logic.bean.UserBean;
 import logic.bean.UserBeanSingleton;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
-import logic.controller.exception.InvalidStateException;
+import logic.controller.exception.NoRoleFound;
 import logic.model.CarInfo;
 import logic.model.Role;
 import logic.model.Student;
@@ -18,7 +18,7 @@ public class SetCarInfoController {
 	UserBeanSingleton sgBean = UserBeanSingleton.getInstance();
 	MySqlDAO ourDb = new MySqlDAO();
 
-	public StudentCar addCar(CarInfoBean carInfo) throws InvalidInputException, DatabaseException {
+	public StudentCar addCar(CarInfoBean carInfo) throws InvalidInputException {
 		CarInfo car = new CarInfo(carInfo.getPlate(), carInfo.getSeats(), carInfo.getModel(), carInfo.getColour());
 
 		UserBean userBean = sgBean.getUserBean();
@@ -27,16 +27,12 @@ public class SetCarInfoController {
 
 		// TODO: controllare l'impostazione del rating, 0 ho messo io, parte commentata
 		// era la precedente versione
-//		StudentCarBuilder builder = StudentCarBuilder.newCarBuilder(student);
-//		builder.carInfo(car);
-//		return builder.build();
 
-		StudentCar studentCar = new StudentCar(student, 0, car);
-		return studentCar;
+		return new StudentCar(student, 0, car);
 
 	}
 
-	public void editCar(CarInfoBean newCarInfo) throws InvalidInputException, DatabaseException, InvalidStateException {
+	public void editCar(CarInfoBean newCarInfo) throws InvalidInputException, DatabaseException {
 		CarInfo carInfo = new CarInfo(newCarInfo.getPlate(), newCarInfo.getSeats(), newCarInfo.getModel(),
 				newCarInfo.getColour());
 		switch (sg.getRole()) {
@@ -46,7 +42,6 @@ public class SetCarInfoController {
 			break;
 		case STUDENT:
 			// TODO: controllare sempre il set del rating
-//			StudentCar sCar = StudentCarBuilder.newCarBuilder(sg.getStudent()).carInfo(carInfo).build();
 			StudentCar sCar = new StudentCar(sg.getStudent(), 0, carInfo);
 			ourDb.addCar(sCar);
 			sg.setRole(Role.DRIVER);
@@ -54,7 +49,7 @@ public class SetCarInfoController {
 			sg.setStudentCar(sCar);
 			break;
 		default:
-			throw new InvalidStateException("Role not defined.");
+			throw new NoRoleFound();
 		}
 
 	}
