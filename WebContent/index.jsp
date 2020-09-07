@@ -2,6 +2,8 @@
     pageEncoding="ISO-8859-1"%>
 
 <jsp:useBean id="currentUser" class="logic.bean.UserBean" scope="session"></jsp:useBean>
+<jsp:useBean id="message" class="logic.bean.MessageBean" scope="request"></jsp:useBean>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,25 +21,40 @@
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link href="torvercar.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="css/flaticon.css"/>
+	<link rel="stylesheet" href="css/slicknav.min.css"/>
+	<link rel="stylesheet" href="css/jquery-ui.min.css"/>
+	<link rel="stylesheet" href="css/owl.carousel.min.css"/>
+	<link rel="stylesheet" href="css/animate.css"/>
+	<link rel="stylesheet" href="sweetalert2.min.css">
+	<link rel="stylesheet" href="css/style.css"/>
+	
 	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+	
+	
 	<style>
 .mySlides {display:none;}
 </style>
 </head>
 
+<!-- ***** Header Area Start ***** -->
+<header class="header_area clearfix">
+	<div id="navbar">
+		
+		<a id="title" class="title">TorVerCar.</a>
+		<a class="active" href="">Home</a> 
+		<a class="right" onclick="document.getElementById('regDialog').style.display='block'">Sign in</a>
+		<a class="login right" onclick="document.getElementById('loginDialog').style.display='block'">Login</a> 
+		
+	</div>
+</header>
+
 <body>	
-	<!-- ***** Header Area Start ***** -->
-	<header class="header_area clearfix">
-		<div id="navbar">
-			
-			<a id="title" class="title">TorVerCar.</a>
-			<a class="active" href="">Home</a> 
-			<a class="right" onclick="document.getElementById('regDialog').style.display='block'">Sign in</a>
-			<a class="login right" onclick="document.getElementById('loginDialog').style.display='block'">Login</a> 
-			
-		</div>
-	</header>
-	<div class="slideshow-container">
+	
+<!-- <div class="slideshow-container">
 
 <div class="mySlides fade">
   <div class="numbertext">1 / 3</div>
@@ -65,10 +82,26 @@
   <span class="dot"></span> 
   <span class="dot"></span> 
 </div>
-	
+	 -->
 	<!-- ***** Header Area End ***** -->
 
 	<!-- ***** Welcome Area Start ***** -->
+	
+	<div class="bg-image home">
+	
+	<%
+		if (message.getMessage() != null) {
+	%>
+	<script>
+	swal({
+	  title: 'Error!',
+	  text: '${message.getMessage()}',
+	  type: '${message.getType()}',
+	  confirmButtonText: 'Got it!'
+	});</script>
+	<%
+		}
+	%>
 	
 	<!-- Login Dialog -->	
 		<div id="loginDialog" class="modal">
@@ -94,8 +127,8 @@
 			  </label>
 		      <input type="password" id="myPass" placeholder="Enter Password" name="pwd">
 		 	  
-		 	  <button type="button" class="cancel" onclick="document.getElementById('loginDialog').style.display='none'">Cancel</button>
-		      <button type="submit" name="action" value="login">Login</button>
+		 	  <button type="button" class="button cancel" onclick="document.getElementById('loginDialog').style.display='none'">Cancel</button>
+		      <button type="submit" class="button" name="action" value="login">Login</button>
 		      
 		    </div>
 		  </form>
@@ -123,7 +156,7 @@
 					                <input type="text" id="userID" name="userID" placeholder="0123456">
 					              </div>
 					              <div class="col-25">
-				        			<button id="btnCheck" type="submit" name="action" value="check" style="width:300px;">Check Identity</button>
+				        			<button id="btnCheck" class="button" type="submit" name="action" value="check" style="width:300px;">Check Identity</button>
 					              </div>
 					              </div>
 				             
@@ -151,7 +184,7 @@
 				          
 				        </div>
 				        <hr>
-				        <button id="btnConfirm" type="submit" name="action" value="register" style="width:300px; margin-left:40px;">Confirm Registration</button>
+				        <button id="btnConfirm" class="button" type="submit" name="action" value="register" style="width:300px; margin-left:40px;">Confirm Registration</button>
 				    </div>
 				  </div> 
 				</div>
@@ -161,8 +194,31 @@
 	
 	<!-- ***** Welcome Area End ***** -->
 	
-	
+	</div>
 </body>
+
+
+
+<!--====== Javascripts & Jquery ======-->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.slicknav.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/jquery.nicescroll.min.js"></script>
+	<script src="js/jquery.zoom.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/main.js"></script>
+
+<script>var message = ${sessionScope.message}
+	if(message != null){
+		swal({
+	  title: 'Error!',
+	  text: message,
+	  icon: 'error',
+	  confirmButtonText: 'Cool'
+	});
+	}</script>
 
 <script>
 	var sessionCheck = ${sessionScope.check};

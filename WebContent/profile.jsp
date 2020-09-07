@@ -1,34 +1,56 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<jsp:useBean id="message" class="logic.bean.MessageBean" scope="request"></jsp:useBean>
+
 <!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet"
 href="torvercar.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 
 <meta charset="ISO-8859-1">
 <title>TorVerCar</title>
 </head>
 
-<header>
-<div id="navbar">
+<header class="header_area clearfix">
+		<div id="navbar">
 			<a id="title" class="title">TorVerCar.</a>
-			<a  href="homepage.jsp"><i class='fas fa-home' style='font-size:36px'></i></a> 
+			<a href="homepage.jsp"><i class='fas fa-home' style='font-size:36px'></i></a> 
 			<a href="book.jsp">Book</a> 
 			<a href="offer.jsp">Offer</a>
-			<a href="myCar.jsp">MyCar</a> 
+			<a href="myCar.jsp">MyCar</a>
 			<a href="myLift.jsp">MyLift</a> 
 			<form action="LoginControllerServlet" method="POST">
-			<a class="right" href="index.jsp" name="action" value="logout"><i class='fas fa-door-open' style='font-size:36px'></i></a>
-			</form> 
-			<a class="right active" href=""> <i class='fas fa-user-graduate' style='font-size:36px'></i></a>
-			
-</div>
-
+			<button type="submit" name="action" value="logout" class="right"><i class='fas fa-door-open' style='font-size:36px'></i></button>
+			</form>
+			<a class="active right" href="profile.jsp"><i class='fas fa-user-graduate' style='font-size:36px'></i></a> 
+		</div>
 </header>
+
 <body>
 <div class="bg-image profile">
+<%
+		if (message.getMessage() != null) {
+	%>
+	 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+	<script>
+	swal({
+	  title: 'Error!',
+	  text: '${message.getMessage()}',
+	  type: '${message.getType()}',
+	  confirmButtonText: 'Cool'
+	});</script>
+	<%
+		}
+	%>
 	<div class="row fullscreen">
+	
 
 	<div class="column" style="background-color:transparent;"></div>
 		<div class="column" style="background-color:transparent;"></div>
@@ -61,19 +83,18 @@ href="torvercar.css">
  						  <input type="password" name="password" value="${user.getPassword() }" id="myPass" style="width: 300px; height:30px;" disabled>
 						
 							<div class="col-50">
-									<button id="btnSave" type="submit" name="action" value="save" class="disabled">Save</button>
+									<button id="btnSave" class="button" type="submit" name="action" value="save" class="disabled">Save</button>
 	
  							</div>
 						</form>
 					
  						<div class="col-50">
-							<button id="btnBack" class="disabled" onclick="back()">Back <i class='fas fa-angle-double-left'></i></button>
-							<button id="btnEdit" onclick="edit()">Edit</button>
+							<button id="btnBack" class="button disabled" onclick="back()">Back <i class='fas fa-angle-double-left'></i></button>
+							<button id="btnEdit" class="button" onclick="edit()">Edit</button>
 						</div>
  				</div>
  			</div>
 		</div>
-
  </div>
 
 <script>

@@ -5,6 +5,7 @@
 
 <jsp:useBean id="currentUser" class="logic.bean.UserBean" scope="session"></jsp:useBean>
 <jsp:useBean id="offerBean" class="logic.bean.OfferBean" scope="session"></jsp:useBean>
+<jsp:useBean id="message" class="logic.bean.MessageBean" scope="request"></jsp:useBean>
 
 
 <!DOCTYPE html>
@@ -21,6 +22,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	
 	<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>	
+
 	<title>TorVerCar</title>
 </head>
 
@@ -32,27 +35,60 @@
 	%>
 	<c:set var="startP" scope="session" value="${offerBean.getStops()}"/>
 	
+
 	<div id="navbar">
 		<a id="title" class="title">TorVerCar.</a>
 		<a href="homepage.jsp"><i class='fas fa-home' style='font-size:36px'></i></a> 
 		<a href="book.jsp">Book</a> 
-		<a class="active" href="">Offer</a> 
-		<a href="myCar.jsp">MyCar</a> 
+		<a class="active" href="offer.jsp">Offer</a>
+		<a href="myCar.jsp">MyCar</a>
 		<a href="myLift.jsp">MyLift</a> 
 		<form action="LoginControllerServlet" method="POST">
-		<a class="right" href="index.jsp" name="action" value="logout"><i class='fas fa-door-open' style='font-size:36px'></i></a>
+		<button type="submit" name="action" value="logout" class="right"><i class='fas fa-door-open' style='font-size:36px'></i></button>
 		</form>
-		<a class="right" href="profile.jsp"><i class='fas fa-user-graduate' style='font-size:36px'></i></a>
+		<a class="right" href="profile.jsp"><i class='fas fa-user-graduate' style='font-size:36px'></i></a> 
 	</div>
 </header>
 
 
 <body>
 <div  class="bg-image offer">
+
+	<c:if test="${not empty message.getMessage()}">
+		<script>
+			swal({
+			  title: '${message.getTitle()}',
+			  text: '${message.getMessage()}',
+			  type: '${message.getType()}',
+			  confirmButtonText: 'Close'
+			});
+		</script>
+	</c:if>
+	
+	<c:if test = "${role eq 'student'}">
+		<script>
+			swal({
+				title : 'Hey!',
+				text : 'You need a car! Do you want to add it now?',
+				type : 'warning',
+				showCancelButton: true,
+				confirmButtonText : 'Yes!',
+				cancelButtonText : 'No',
+				allowOutsideClick: false
+			}).then(function(result){
+		        if(result.value){
+		        	window.location = "myCar.jsp";
+		        }else if(result.dismiss == 'cancel'){
+		        	window.location = "homepage.jsp";
+		        }
+
+		    });
+		</script>
+	</c:if>
 <!-- START OFFER FORM -->
 	<div class="row fullscreen">
 		<div class="col-75">
-			<form class="card animate" action="OfferControllerServlet" method="POST">
+			<form class="card" action="OfferControllerServlet" method="POST">
 				<h2>Offer Lift</h2>
 
 				<div class="row">
@@ -71,7 +107,7 @@
 								</c:choose>
 							</div>
 							<div class="col-25">
-								<button class="invisible" type="submit" name='action' value='startPos'><i class='fas fa-search-location fa-2x'></i></button>
+								<button class="button invisible" type="submit" name='action' value='startPos'><i class='fas fa-search-location fa-2x'></i></button>
 							</div>
 						</div>
 
@@ -88,7 +124,7 @@
 								</c:choose>
 							</div>
 							<div class="col-50">
-								<button class="invisible" type="submit" name='action' value='desPos'><i class='fas fa-search-location fa-2x'></i></button>							
+								<button class="button invisible" type="submit" name='action' value='desPos'><i class='fas fa-search-location fa-2x'></i></button>							
 							</div>
 						</div>
 						
@@ -111,27 +147,7 @@
 						<label><i class="fa fa-comment-dots"></i> Add notes: </label> 
 						<input type="text" placeholder=" ..." id="notes" name="notes">
 						<div class="row" style="height:15px"></div>
-						<button id="btnOffer" onclick="document.getElementById('ConfirmDialog').style.display='block'"  style="width:200px; margin-left:0px;">Offer Lift</button>
-<!-- CONFIRM DIALOG -->
-	<div id="ConfirmDialog" class="modal">
-		 <div class="container">
-			<div class="row">
-		    	<div class="col-50">
-			    	<h3>Confirm:</h3>
-			    </div>
-			    <div class="col-50">
-			    	<span onclick="document.getElementById('ConfirmDialog').style.display='none'" class="close" title="Close Modal">&times;</span>
-			 	</div>
-			</div>
-			<label style="font-size:24px">Your lift is added!</label>
-			<button type="button" class="cancel" onclick="document.getElementById('ConfirmDialog').style.display='none'">Cancel</button>
-		    <button id="btnConfirm" type="submit" name="action" value="offer">Confirm</button>
-		</div>
-	</div>
-		
-<!-- END CONFIRM DIALOG -->
-						
-					
+						<button id="btnConfirm" class="button" type="submit" name="action" value="offer">Confirm</button>
 					</div>
 				</div>
 			</form>
@@ -159,7 +175,7 @@
 					</label>
 			      </c:forEach>
 		     
-		      <button  type="submit" name="action" value="stop">Choose</button>
+		      <button  type="submit" class="button" name="action" value="stop">Choose</button>
 		    </div>
 		  </form>
 	</div>

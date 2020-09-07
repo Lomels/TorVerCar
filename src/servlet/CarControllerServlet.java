@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import logic.bean.CarInfoBean;
 import logic.controller.SetCarInfoController;
 import logic.controller.exception.DatabaseException;
+import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
 import logic.model.UserSingleton;
@@ -27,51 +28,56 @@ public class CarControllerServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		SetCarInfoController setCar = new SetCarInfoController();
-		MySqlDAO ourDb = new MySqlDAO();
-		CarInfoBean carInfo = new CarInfoBean();
-		UserSingleton sg = UserSingleton.getInstance();
+		String action = request.getParameter("action");
+		String myCar = "myCar.jsp";
 
-		carInfo.setModel(request.getParameter("model"));
-		carInfo.setPlate(request.getParameter("plate"));
-		carInfo.setColour(request.getParameter("color"));
-		carInfo.setSeats(Integer.parseInt(request.getParameter("seats")));
+		if ("save".equals(action)) {
+			SetCarInfoController setCar = new SetCarInfoController();
+			CarInfoBean carInfo = new CarInfoBean();
+			UserSingleton sg = UserSingleton.getInstance();
 
-		String role = (String) session.getAttribute("role");
+			carInfo.setModel(request.getParameter("model"));
+			carInfo.setPlate(request.getParameter("plate"));
+			carInfo.setColour(request.getParameter("color"));
+			carInfo.setSeats(Integer.parseInt(request.getParameter("seats")));
 
-		StudentCar studentCar = null;
-		
-		if ("student".equals(role)) {
-			Student student = (Student) session.getAttribute("user");
-			sg.setStudent(student);
-			sg.setRole(Role.STUDENT);
+			String role = (String) session.getAttribute("role");
+
+			StudentCar studentCar = null;
+
+			if ("student".equals(role)) {
+				Student student = (Student) session.getAttribute("user");
+				sg.setStudent(student);
+				sg.setRole(Role.STUDENT);
+				try {
+					setCar.editCar(carInfo);
+					studentCar = new StudentCar(student, 0, new CarInfo(carInfo.getPlate(), carInfo.getSeats(),
+							carInfo.getModel(), carInfo.getColour()));
+				} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
+					ExceptionHandler.handle(e, request, response, myCar);
+				}
+			} else {
+				studentCar = (StudentCar) session.getAttribute("user");
+				sg.setStudentCar(studentCar);
+				sg.setRole(Role.DRIVER);
+				try {
+					studentCar.setCarInfo(new CarInfo(carInfo.getPlate(), carInfo.getSeats(), carInfo.getModel(),
+							carInfo.getColour()));
+					setCar.editCar(carInfo);
+				} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
+					ExceptionHandler.handle(e, request, response, myCar);
+				}
+			}
+
 			try {
-				setCar.editCar(carInfo);
-				studentCar = new StudentCar(student, 0,
-						new CarInfo(carInfo.getPlate(), carInfo.getSeats(), carInfo.getModel(), carInfo.getColour()));
-			} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
+				session.setAttribute("role", "driver");
+				session.setAttribute("user", studentCar);
+				request.getRequestDispatcher(myCar).forward(request, response);
+			} catch (ServletException | IOException e) {
 				e.printStackTrace();
 			}
-		} else {
-			studentCar = (StudentCar) session.getAttribute("user");
-			sg.setStudentCar(studentCar);
-			sg.setRole(Role.DRIVER);
-			try {			
-				studentCar.setCarInfo(new CarInfo(carInfo.getPlate(), carInfo.getSeats(), carInfo.getModel(), carInfo.getColour()));
-				setCar.editCar(carInfo);
-			} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
-				e.printStackTrace();
-			}
-		}
-
-		try {
-			session.setAttribute("role", "driver");
-			session.setAttribute("user", studentCar);
-			request.getRequestDispatcher("myCar.jsp").forward(request, response);
-		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 	}
+
 }

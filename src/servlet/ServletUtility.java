@@ -22,10 +22,11 @@ public class ServletUtility {
 		LiftController liftController = new LiftController();
 		UserSingleton sg = UserSingleton.getInstance();
 		usr.setRole(sg.getRole());
-		
+		List<String> notifications = liftController.loadNotifications(usr.getUserID());
 		if (usr.getRole().equals(Role.STUDENT)) {
 			Student student = sg.getStudent();
 			student.setBookedLift(liftController.loadBookedLift(student.getUserID()));
+			student.setNotifications(notifications);
 			session.setAttribute("user", student);
 			session.setAttribute("role", "student");
 			return;
@@ -33,6 +34,7 @@ public class ServletUtility {
 			StudentCar studentCar = sg.getStudentCar();
 			studentCar.setBookedLift(liftController.loadBookedLift(studentCar.getUserID()));
 			studentCar.setOfferedLift(liftController.loadOfferedLift(studentCar.getUserID()));
+			studentCar.setNotifications(notifications);
 			session.setAttribute("user", studentCar);
 			session.setAttribute("role", "driver");
 			return;
