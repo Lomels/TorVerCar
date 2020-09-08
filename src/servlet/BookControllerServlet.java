@@ -21,13 +21,15 @@ import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
+import logic.controller.exception.NoLiftAvailable;
+import logic.controller.exception.PassengerException;
 import logic.model.Lift;
 import logic.model.Position;
 import logic.model.Student;
 import logic.utilities.MyLogger;
 
 @WebServlet("/BookControllerServlet")
-public class BookControllerServlet extends HttpServlet{
+public class BookControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private HttpSession session;
 
@@ -97,11 +99,14 @@ public class BookControllerServlet extends HttpServlet{
 			String dateTimeString = date + "T" + time;
 
 			LocalDateTime parsedTime = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ISO_DATE_TIME);
-
+			try {
 			if ("going".equals(slide)) {
 				liftController.matchLiftStoppingBefore(parsedTime, offerBean.getStops(), 0, listener);
 			} else {
 				liftController.matchLiftStartingAfter(parsedTime, offerBean.getStops(), 0, listener);
+			}
+			}catch(NoLiftAvailable e) {
+				ExceptionHandler.handle(e, request, response, book);
 			}
 			
 		}
@@ -126,8 +131,8 @@ public class BookControllerServlet extends HttpServlet{
 				
 			} catch (ServletException | IOException e) {
 				e.printStackTrace();
-			} catch (InvalidStateException | DatabaseException e) {
-				ExceptionHandler.handle(e, request, response, book);				
+			} catch (InvalidStateException | DatabaseException | PassengerException e) {
+				ExceptionHandler.handle(e, request, response, book);
 			}
 		}
 	}

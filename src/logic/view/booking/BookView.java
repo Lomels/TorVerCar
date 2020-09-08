@@ -46,6 +46,8 @@ import logic.view.offer.AddressListView;
 import logic.view.offer.OfferView;
 import logic.controller.LiftMatchListener;
 import logic.controller.LoginController;
+import logic.controller.exception.ExceptionHandler;
+import logic.controller.exception.NoLiftAvailable;
 
 public class BookView extends Application implements Initializable, LiftMatchListener {
 	@FXML
@@ -125,7 +127,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 		MyLiftView myLift = new MyLiftView();
 		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
-	
+
 	@FXML
 	public void bookButtonController() throws Exception {
 		liftSg.clearState();
@@ -185,37 +187,41 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	}
 
 	@FXML
-	public void findButtonController(){
+	public void findButtonController() {
 		List<Position> stops = new ArrayList<>();
 		stops.add(liftSg.getStartPoint());
 		stops.add(liftSg.getEndPoint());
+		try {
+			if (rbGoing.isSelected()) {
+				liftSg.setPurpose("cbGoing");
+				time = dpDate.getValue().toString() + tfArrivalTime.getText();
+				liftSg.setArrivalTime(time);
 
-		if (rbGoing.isSelected()) {
-			liftSg.setPurpose("cbGoing");
-			time = dpDate.getValue().toString() + tfArrivalTime.getText();
-			liftSg.setArrivalTime(time);
-			
-			liftController.matchLiftStoppingBefore(LocalDateTime.parse(liftSg.getArrivalTime(), FORMATTER), stops, 0,
-					this);
-		} else if (rbReturn.isSelected()) {
-			liftSg.setPurpose("cbReturn");
-			time = dpDate.getValue().toString() + tfStartTime.getText();
-			liftSg.setDepartureTime(time);
+				liftController.matchLiftStoppingBefore(LocalDateTime.parse(liftSg.getArrivalTime(), FORMATTER), stops,
+						0, this);
 
-			liftController.matchLiftStartingAfter(LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER), stops, 0,
-					this);
-		} else {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Warning");
-			alert.setHeaderText("Oops!");
-			alert.setContentText("You must choose a lift option");
-			alert.showAndWait(); 
+			} else if (rbReturn.isSelected()) {
+				liftSg.setPurpose("cbReturn");
+				time = dpDate.getValue().toString() + tfStartTime.getText();
+				liftSg.setDepartureTime(time);
+
+				liftController.matchLiftStartingAfter(LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER), stops,
+						0, this);
+			} else {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText("Oops!");
+				alert.setContentText("You must choose a lift option");
+				alert.showAndWait();
+			}
+		} catch (NoLiftAvailable e) {
+			ExceptionHandler.handle(e);
 		}
 	}
-	
+
 	@FXML
 	public void rbGoingButtonController() {
-		if(rbGoing.isSelected()) {
+		if (rbGoing.isSelected()) {
 			rbGoing.setDisable(true);
 			rbReturn.setSelected(false);
 			rbReturn.setDisable(false);
@@ -227,7 +233,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 
 	@FXML
 	public void rbReturnButtonController() {
-		if(rbReturn.isSelected()) {
+		if (rbReturn.isSelected()) {
 			rbReturn.setDisable(true);
 			rbGoing.setSelected(false);
 			rbGoing.setDisable(false);
@@ -235,32 +241,30 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 			tfStartTime.setDisable(true);
 			liftSg.setPurpose("cbReturn");
 		}
-		
+
 	}
-		
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		if(liftSg.getPurpose().equals(null)) {
+		if (liftSg.getPurpose().equals(null)) {
 			rbGoing.setSelected(false);
 			rbReturn.setSelected(false);
 		}
-		
-		if(liftSg.getPurpose().equals("cbGoing")) {
+
+		if (liftSg.getPurpose().equals("cbGoing")) {
 			rbGoing.setDisable(true);
 			rbReturn.setSelected(false);
 			rbReturn.setDisable(false);
 			tfStartTime.setDisable(false);
 			tfArrivalTime.setDisable(true);
 		}
-		if(liftSg.getPurpose().equals("cbReturn")) {
+		if (liftSg.getPurpose().equals("cbReturn")) {
 			rbReturn.setDisable(true);
 			rbGoing.setSelected(false);
 			rbGoing.setDisable(false);
 			tfArrivalTime.setDisable(false);
 			tfStartTime.setDisable(true);
 		}
-		
 
 		try {
 			userSg.setStatus(Status.BOOK);
@@ -268,10 +272,6 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
-		
-
-		
 
 		if (!liftSg.getStatus().equals(Status.START)) {
 			tfStartPoint.setText(liftSg.getStartPoint().getAddress());
@@ -305,14 +305,14 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 			alert.setTitle("Oh no!");
 			alert.setHeaderText(":(");
 			alert.setContentText("No lift found!");
-			
+
 			DialogPane dialogPane = alert.getDialogPane();
-			
+
 			dialogPane.getStylesheets().add(getClass().getResource("../fxml/TorVerCar.css").toExternalForm());
 			dialogPane.getStyleClass().add("myDialog");
-			
-			Optional<ButtonType> result = alert.showAndWait(); 
-			
+
+			Optional<ButtonType> result = alert.showAndWait();
+
 		}
 
 	}

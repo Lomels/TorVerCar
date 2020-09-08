@@ -48,11 +48,11 @@ public class OfferControllerServlet extends HttpServlet {
 				offerBean.setStatus("startPos");
 				session.setAttribute("offerBean", offerBean);
 				request.getRequestDispatcher(offer).forward(request, response);
-			} catch (ApiNotReachableException| ServletException | IOException e) {
+			} catch (ApiNotReachableException | ServletException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvalidInputException e) {
-				ExceptionHandler.handle(e, request, response, offer);				
+				ExceptionHandler.handle(e, request, response, offer);
 			}
 		}
 
@@ -65,11 +65,11 @@ public class OfferControllerServlet extends HttpServlet {
 				offerBean.setStatus("startPos");
 				session.setAttribute("offerBean", offerBean);
 				request.getRequestDispatcher("offer.jsp").forward(request, response);
-			} catch (ApiNotReachableException| ServletException | IOException e) {
+			} catch (ApiNotReachableException | ServletException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvalidInputException e) {
-				ExceptionHandler.handle(e, request, response, offer);				
+				ExceptionHandler.handle(e, request, response, offer);
 			}
 		}
 
@@ -113,8 +113,9 @@ public class OfferControllerServlet extends HttpServlet {
 				request.setAttribute("message", msg);
 				request.getRequestDispatcher(offer).forward(request, response);
 
-			} catch (NumberFormatException | InvalidInputException | DatabaseException | InvalidStateException e) {
-				ExceptionHandler.handle(e, request, response, offer);				
+			} catch (NumberFormatException | InvalidInputException | DatabaseException | InvalidStateException
+					| ApiNotReachableException e) {
+				ExceptionHandler.handle(e, request, response, offer);
 			} catch (ServletException | IOException e) {
 				e.printStackTrace();
 			}
