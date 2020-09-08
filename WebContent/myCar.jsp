@@ -85,16 +85,16 @@
 						<c:otherwise>
 							<label>Model: </label> 
 							<input type="text" name="model" id="myModel"
-								style="width: 300px; height: 30px;"> 
+								style="width: 300px; height: 30px;" disabled> 
 							<label>Color: </label> 
 							<input type="text" name="color" class="label" id="myColor"
-								style="width: 300px; height: 30px;"> 
+								style="width: 300px; height: 30px;" disabled> 
 							<label>Plate: </label> 
 							<input type="text" name="plate" id="myPlate"
-								style="width: 300px; height: 30px;"> 
+								style="width: 300px; height: 30px;"disabled> 
 							<label>Seats available: </label> 
 							<input type="text" name="seats" id="mySeats"
-								style=" width: 300px; height: 30px;"> <br>
+								style=" width: 300px; height: 30px;"disabled> <br>
 						</c:otherwise>
 					</c:choose>
 						

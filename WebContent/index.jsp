@@ -130,7 +130,7 @@
 				          	<div id="pwdForm" class="col-50 hidden">
 				              <label for="adr"><i class="fa fa-lock"></i> Password</label>
 				              <input type="password" id="password" name="password" placeholder="">
-				              <label for="city"><i class="fa fa-institution"></i> Repeat Password</label>
+				              <label for="city"><i class="fa fa-lock"></i> Repeat Password</label>
 				              <input type="password" class="invalid" id="repeat" name="repeat" placeholder="">
 				 			</div>
 				          </div>
@@ -138,11 +138,11 @@
 				          <div id="dbData" class="col-50 hidden">
 				            <h3>Your Data</h3>
 				            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-				            <input type="text" id="fname" name="fullname" placeholder="<%= currentUser.getName() %>" disabled>
+				            <input type="text" id="fname" name="fullname" placeholder="<%= currentUser.getName() +" " +  currentUser.getSurname() %>" disabled>
 				            <label for="email"><i class="fa fa-envelope"></i> Email</label>
 				            <input type="text" id="email" name="email" placeholder="<%= currentUser.getEmail() %>" disabled>
 				            <label for="adr"><i class="fa fa-phone"></i> Phone</label>
-				            <input type="text" id="phone" name="phone" placeholder="3336669990" >
+				            <input type="text" id="phone" name="phone" placeholder="" >
 				            
 				          </div>				          
 				          
