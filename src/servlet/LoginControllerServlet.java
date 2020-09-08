@@ -30,11 +30,9 @@ public class LoginControllerServlet extends HttpServlet {
 		if("login".equals(action)) {
 			String userID = request.getParameter("userID");
 			String pwd = request.getParameter("pwd");
-			MyLogger.info("userID", userID);
-			MyLogger.info("password", pwd);
 			UserBean userBean = new UserBean();
-			userBean.setUserID(request.getParameter("userID"));
-			userBean.setPassword(request.getParameter("pwd"));
+			userBean.setUserID(userID);
+			userBean.setPassword(pwd);
 			try {
 				ServletUtility.login(userBean, session);
 				session.setAttribute("userBean", userBean);
@@ -50,7 +48,6 @@ public class LoginControllerServlet extends HttpServlet {
 		if("check".equals(action)) {
 			RegistrationController rgController = new RegistrationController();
 			String userID = request.getParameter("userID");
-			String password = request.getParameter("password");
 			UserBean userBean;
 			try {
 				if(rgController.alreadyExist(userID)) {
@@ -59,14 +56,14 @@ public class LoginControllerServlet extends HttpServlet {
 					message.setType("warning");
 					request.setAttribute("message", message);
 					MyLogger.info("message", message);
-					request.getRequestDispatcher("index.jsp").forward(request,response);
+					request.getRequestDispatcher(index).forward(request,response);
 					return;
 				}else {
 					userBean = rgController.recapInfo(userID);
+					userBean.setUserID(userID);
 					session.setAttribute("currentUser", userBean);
-					session.setAttribute("userID", userID);
 					session.setAttribute("check", true);
-					request.getRequestDispatcher("index.jsp").forward(request,response);
+					request.getRequestDispatcher(index).forward(request,response);
 					return;
 				}
 			} catch (DatabaseException | InvalidInputException e) {

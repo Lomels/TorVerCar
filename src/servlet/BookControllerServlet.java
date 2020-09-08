@@ -65,7 +65,6 @@ public class BookControllerServlet extends HttpServlet {
 				session.setAttribute("offerBean", offerBean);
 				request.getRequestDispatcher(book).forward(request, response);
 			} catch (ApiNotReachableException| ServletException | IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InvalidInputException e) {
 				ExceptionHandler.handle(e, request, response, book);				
@@ -128,7 +127,6 @@ public class BookControllerServlet extends HttpServlet {
 				msg.setTitle("Yay!");
 				request.setAttribute("message", msg);
 				request.getRequestDispatcher("book.jsp").forward(request, response);
-				
 			} catch (ServletException | IOException e) {
 				e.printStackTrace();
 			} catch (InvalidStateException | DatabaseException | PassengerException e) {
