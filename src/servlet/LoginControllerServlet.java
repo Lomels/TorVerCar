@@ -38,9 +38,10 @@ public class LoginControllerServlet extends HttpServlet {
 			if ("check".equals(action)) {
 				RegistrationController rgController = new RegistrationController();
 				String userID = request.getParameter("userID");
-				UserBean userBean;
-
-				if (rgController.alreadyExist(userID)) {
+				UserBean userBean = new UserBean();
+				userBean.setUserID(userID);
+				
+				if (rgController.alreadyExist(userBean)) {
 					MessageBean message = new MessageBean();
 					message.setMessage("A user with this Student ID is already registered.");
 					message.setType("warning");
@@ -48,7 +49,7 @@ public class LoginControllerServlet extends HttpServlet {
 					request.getRequestDispatcher(index).forward(request, response);
 					return;
 				} else {
-					userBean = rgController.recapInfo(userID);
+					userBean = rgController.recapInfo(userBean);
 					userBean.setUserID(userID);
 					session.setAttribute(CURRENT_USER, userBean);
 					session.setAttribute("check", true);

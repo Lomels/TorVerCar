@@ -25,6 +25,7 @@ import logic.controller.PassengerController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidStateException;
+import logic.controller.exception.PassengerException;
 import logic.model.LiftMatchResult;
 import logic.model.LiftSingleton;
 import logic.model.Role;
@@ -128,15 +129,14 @@ public class LiftListView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void confirmButtonController() throws Exception {
+	public void confirmButtonController() throws Exception{
 		MyLogger.info("lift", lift.getSelectedLift());
 		try {
 			if (sg.getRole().equals(Role.STUDENT))
 				controller.addPassenger(lift.getSelectedLift(), sg.getStudent());
 			else
 				controller.addPassenger(lift.getSelectedLift(), sg.getStudentCar());
-
-		} catch (InvalidStateException | DatabaseException e) {
+		} catch (InvalidStateException | DatabaseException | PassengerException e) {
 			ExceptionHandler.handle(e);
 		}
 

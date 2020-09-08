@@ -21,6 +21,8 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import logic.bean.LiftBean;
+import logic.bean.UserBean;
 import logic.controller.LiftController;
 import logic.controller.LoginController;
 import logic.controller.RatingController;
@@ -55,7 +57,7 @@ public class MainMenuView extends Application implements Initializable {
 	private Button btLifts;
 
 	private UserSingleton sg = UserSingleton.getInstance();
-	private String userID;
+	private UserBean userBean = new UserBean();
 	private List<String> notifications;
 	private List<Lift> completedLifts;
 	private LiftController liftContr = new LiftController();
@@ -68,9 +70,8 @@ public class MainMenuView extends Application implements Initializable {
 		stage.setScene(scene);
 		stage.sizeToScene();
 		stage.setResizable(false);
-
 		stage.show();
-
+		
 		notifications = sg.getNotifications();
 		if (!notifications.isEmpty()) {
 			showNotifications(notifications.size());
@@ -123,21 +124,22 @@ public class MainMenuView extends Application implements Initializable {
 
 			Optional<ButtonType> result = alert.showAndWait();
 			RatingController ratingController = new RatingController();
+			
+			
+			LiftBean liftBean = new LiftBean();
+			liftBean.setDriver(lift.getDriver());
+			liftBean.setLiftID(lift.getLiftID());
 			try {
 				if (result.isPresent()) {
 					if (result.get() == btYes) {
-
-						ratingController.upvoteLift(sg.getUserID(), lift.getLiftID(), lift.getDriver());
+						ratingController.upvoteLift(userBean, liftBean);
 					} else if (result.get() == btNo) {
-						ratingController.downvote(sg.getUserID(), lift.getLiftID(), lift.getDriver());
-						MyLogger.info("no");
+						ratingController.downvote(userBean, liftBean);
 					}
 				}
 			} catch (InvalidInputException | DatabaseException e) {
 				ExceptionHandler.handle(e);
 			}
-			MyLogger.info("yes");
-
 			i++;
 		} while (i < size && i >= 0);
 	}
@@ -173,7 +175,7 @@ public class MainMenuView extends Application implements Initializable {
 			}
 		} while ((i < index && i >= 0));
 
-		liftContr.flushNotification(sg.getUserID());
+		liftContr.flushNotification(userBean);
 
 	}
 
@@ -183,11 +185,9 @@ public class MainMenuView extends Application implements Initializable {
 		switch (sg.getRole()) {
 		case DRIVER:
 			welcome = sg.getStudentCar().getName() + "!";
-			userID = sg.getUserID();
 			break;
 		case STUDENT:
 			welcome = sg.getStudent().getName() + "!";
-			userID = sg.getUserID();
 			break;
 		default:
 			ExceptionHandler.handle(
@@ -195,9 +195,10 @@ public class MainMenuView extends Application implements Initializable {
 			break;
 		}
 		tvName.setText(welcome);
-		sg.setNotifications(liftContr.loadNotifications(userID));
-
-		sg.setCompletedLift(liftContr.checkCompletedLift(userID));
+		userBean.setUserID(sg.getUserID());
+		
+		sg.setNotifications(liftContr.loadNotifications(userBean));
+		sg.setCompletedLift(liftContr.checkCompletedLift(userBean));
 	}
 
 	@FXML

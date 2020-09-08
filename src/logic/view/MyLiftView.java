@@ -2,6 +2,7 @@ package logic.view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -17,6 +18,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import logic.bean.UserBean;
 import logic.controller.LiftController;
 import logic.controller.LoginController;
 import logic.model.Lift;
@@ -48,8 +50,9 @@ public class MyLiftView extends Application implements Initializable {
 	private LiftController liftController = new LiftController();
 	private UserSingleton sg = UserSingleton.getInstance();
 
-	List<Lift> offered = liftController.loadOfferedLift(sg.getUserID());
-	List<Lift> booked = liftController.loadBookedLift(sg.getUserID());
+	private List<Lift> offered = new ArrayList<>();
+	private List<Lift> booked = new ArrayList<>();
+	private UserBean userBean = new UserBean();
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -128,6 +131,10 @@ public class MyLiftView extends Application implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		userBean.setUserID(sg.getUserID());
+		offered = liftController.loadOfferedLift(userBean);
+		booked = liftController.loadBookedLift(userBean);
+		
 		if (rbOffered.isSelected()) {
 			for (Lift result : offered) {
 				lvLift.getItems().add(result);

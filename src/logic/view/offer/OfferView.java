@@ -2,6 +2,7 @@ package logic.view.offer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
@@ -14,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import logic.bean.LiftBean;
 import logic.controller.LiftController;
 import logic.controller.LoginController;
 import logic.controller.exception.ApiNotReachableException;
@@ -174,13 +176,16 @@ public class OfferView extends Application implements Initializable {
 
 	@FXML
 	public void confirmButtonController() throws Exception{
+		LiftBean lift = new LiftBean();
 		String time = dpDate.getValue().toString() + "T" + tfStartTime.getText();
-		lp.setDepartureTime(time);
-		lp.setMaxDuration(tfMaxDuration.getText());
-		lp.setNotes(tfNotes.getText());
+		lift.setStartDateTime(LocalDateTime.parse(time));
+		lift.setMaxDuration(Integer.parseInt(tfMaxDuration.getText()));
+		lift.setNote(tfNotes.getText());
+		lift.setDriver(userSg.getStudentCar());
+		lift.setStartPos(lp.getStartPoint());
+		lift.setStopPos(lp.getEndPoint());
 		try {
-			controller.createLift(lp.getDepartureTime(), Integer.parseInt(lp.getMaxDuration()), lp.getNotes(),
-					userSg.getStudentCar(), lp.getStartPoint(), lp.getEndPoint());
+			controller.createLift(lift);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (InvalidInputException | DatabaseException | InvalidStateException e) {

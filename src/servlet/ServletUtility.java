@@ -24,6 +24,8 @@ import logic.model.StudentCar;
 import logic.model.UserSingleton;
 
 public class ServletUtility {
+	
+	private ServletUtility() {}
 
 	public static void login(String userID, String password, HttpServletRequest request, HttpServletResponse response){
 		LiftController liftController = new LiftController();
@@ -41,18 +43,18 @@ public class ServletUtility {
 		
 		UserSingleton sg = UserSingleton.getInstance();
 		usr.setRole(sg.getRole());
-		List<String> notifications = liftController.loadNotifications(usr.getUserID());
+		List<String> notifications = liftController.loadNotifications(usr);
 		if (usr.getRole().equals(Role.STUDENT)) {
 			Student student = sg.getStudent();
-			student.setBookedLift(liftController.loadBookedLift(student.getUserID()));
+			student.setBookedLift(liftController.loadBookedLift(usr));
 			student.setNotifications(notifications);
 			session.setAttribute("user", student);
 			session.setAttribute("role", "student");
 			
 		}else if (usr.getRole().equals(Role.DRIVER)) {
 			StudentCar studentCar = sg.getStudentCar();
-			studentCar.setBookedLift(liftController.loadBookedLift(studentCar.getUserID()));
-			studentCar.setOfferedLift(liftController.loadOfferedLift(studentCar.getUserID()));
+			studentCar.setBookedLift(liftController.loadBookedLift(usr));
+			studentCar.setOfferedLift(liftController.loadOfferedLift(usr));
 			studentCar.setNotifications(notifications);
 			session.setAttribute("user", studentCar);
 			session.setAttribute("role", "driver");
@@ -75,14 +77,17 @@ public class ServletUtility {
 	public static void liftRefresh(HttpSession session) {
 		LiftController liftController = new LiftController();
 		String role = (String) session.getAttribute("role");
+		UserBean user = new UserBean();
 		if ("student".equals(role)) {
 			Student student = (Student) session.getAttribute("user");
-			student.setBookedLift(liftController.loadBookedLift(student.getUserID()));
+			user.setUserID(student.getUserID());
+			student.setBookedLift(liftController.loadBookedLift(user));
 			session.setAttribute("user", student);
 		}else if ("driver".equals(role)) {
 			StudentCar studentCar = (StudentCar) session.getAttribute("user");
-			studentCar.setBookedLift(liftController.loadBookedLift(studentCar.getUserID()));
-			studentCar.setOfferedLift(liftController.loadOfferedLift(studentCar.getUserID()));
+			user.setUserID(studentCar.getUserID());
+			studentCar.setBookedLift(liftController.loadBookedLift(user));
+			studentCar.setOfferedLift(liftController.loadOfferedLift(user));
 			session.setAttribute("user", studentCar);
 		}
 	}

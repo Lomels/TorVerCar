@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -22,12 +21,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import logic.bean.LiftBean;
 import logic.controller.LiftController;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.LiftMatchResult;
 import logic.model.LiftSingleton;
-import logic.model.Position;
 import logic.model.UserSingleton;
 import logic.utilities.MyLogger;
 import logic.utilities.Status;
@@ -181,24 +180,27 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	@FXML
 	public void findButtonController() {
 		String time;
-		List<Position> stops = new ArrayList<>();
-		stops.add(liftSg.getStartPoint());
-		stops.add(liftSg.getEndPoint());
+		LiftBean lift = new LiftBean();
+		
+		lift.setStartPos(liftSg.getStartPoint());
+		lift.setStopPos(liftSg.getEndPoint());
+		lift.setDriver(userSg.getStudentCar());
+		lift.setStartPos(liftSg.getStartPoint());
+		lift.setStopPos(liftSg.getEndPoint());
+		
 		try {
 			if (rbGoing.isSelected()) {
 				liftSg.setPurpose(CB_GOING);
 				time = dpDate.getValue().toString() + tfStartTime.getText();
-				liftSg.setArrivalTime(time);
-				liftController.matchLiftStoppingBefore(LocalDateTime.parse(liftSg.getArrivalTime(), FORMATTER), stops,
-						0, this);
-
+				lift.setStartDateTime(LocalDateTime.parse(time, FORMATTER));
+				liftController.matchLiftStoppingBefore(lift, 0, this);
+				
 			} else if (rbReturn.isSelected()) {
 				liftSg.setPurpose(CB_RETURN);
 				time = dpDate.getValue().toString() + tfArrivalTime.getText();
-				liftSg.setDepartureTime(time);
-
-				liftController.matchLiftStartingAfter(LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER), stops,
-						0, this);
+				lift.setStartDateTime(LocalDateTime.parse(time, FORMATTER));
+				liftController.matchLiftStartingAfter(lift, 0, this);
+			
 			} else {
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle("Warning");

@@ -13,6 +13,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
+import logic.bean.LiftBean;
+import logic.bean.UserBean;
 import logic.controller.email.SendEmail;
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.DatabaseException;
@@ -44,26 +46,34 @@ public class LiftController {
 
 	RoutingApi routingApi = RoutingHereAPI.getInstance();
 
-	public Lift createLift(String startDateTimeString, Integer maxDuration, String note, StudentCar driver,
-			Position pickUp, Position dropOff) throws InvalidInputException, DatabaseException, InvalidStateException, ApiNotReachableException {
-		LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ISO_DATE_TIME);
-		Route route = routingApi.startToStop(pickUp, dropOff);
+	// String startDateTimeString, Integer maxDuration, String note, StudentCar
+	// driver,
+	// Position pickUp, Position dropOff
+
+	public Lift createLift(LiftBean liftBean)
+			throws InvalidInputException, DatabaseException, InvalidStateException, ApiNotReachableException {
+		LocalDateTime startDateTime = liftBean.getStartDateTime();
+		Route route = routingApi.startToStop(liftBean.getStartPos(), liftBean.getStopPos());
+		Integer maxDuration = liftBean.getMaxDuration();
+
 		if (maxDuration < route.getTotalDuration()) {
 			// If maxDuration is less than route Duration
 			String message = String.format("maxDuration: %d is less than route total duration: %d.", maxDuration,
 					route.getTotalDuration());
 			throw new InvalidStateException(message);
 		}
-		List<Lift> driverLifts = ourDb.listLiftsByDriverID(driver.getUserID());
+
+		List<Lift> driverLifts = ourDb.listLiftsByDriverID(liftBean.getDriver().getUserID());
+
 		// If driver already has offered a Lift in the same time
 		for (Lift lift : driverLifts) {
-			if (liftInteresct(lift, route, startDateTime)) {
+			if (liftIntersect(lift, route, startDateTime)) {
 				String message = String.format("Lift: %d collision with new one starting: %s and duration: %d.",
 						lift.getLiftID(), startDateTime, route.getTotalDuration());
 				throw new InvalidStateException(message);
 			}
 		}
-		Lift lift = new Lift(null, startDateTime, maxDuration, note, driver, null, route);
+		Lift lift = new Lift(null, startDateTime, maxDuration, liftBean.getNote(), liftBean.getDriver(), null, route);
 		ourDb.saveLift(lift);
 
 		return lift;
@@ -71,7 +81,7 @@ public class LiftController {
 
 	// A lift is concluded if is rated from all the passengers and its stopDateTime
 	// is before now
-	public boolean isConclued(Lift lift) {
+	public boolean isConcluded(Lift lift) {
 		boolean allRated = ourDb.isRatedFromAllPassengers(lift);
 		return allRated && lift.getStopDateTime().isBefore(LocalDateTime.now());
 	}
@@ -83,7 +93,7 @@ public class LiftController {
 	}
 
 	public void deleteLiftIfConcluded(Lift lift) {
-		if (this.isConclued(lift)) {
+		if (this.isConcluded(lift)) {
 			ourDb.deleteLiftByID(lift.getLiftID());
 		}
 	}
@@ -102,8 +112,8 @@ public class LiftController {
 		}
 	}
 
-	public List<Lift> checkCompletedLift(String userID) {
-		List<Lift> fullList = ourDb.listUnratedLiftsByPassengerID(userID);
+	public List<Lift> checkCompletedLift(UserBean user) {
+		List<Lift> fullList = ourDb.listUnratedLiftsByPassengerID(user.getUserID());
 		List<Lift> completed = new ArrayList<>();
 		for (Lift l : fullList) {
 			if (l.getStopDateTime().isBefore(LocalDateTime.now()))
@@ -116,38 +126,48 @@ public class LiftController {
 		return completed;
 	}
 
-	public List<String> loadNotifications(String userID) {
-		return ourDb.loadNotificationsByUserID(userID);
+	public List<String> loadNotifications(UserBean user) {
+		return ourDb.loadNotificationsByUserID(user.getUserID());
 	}
 
-	public void matchLiftStartingAfter(LocalDateTime startDateTime, List<Position> stops, Integer initIndex,
-			LiftMatchListener listener) throws NoLiftAvailable {
+	public void matchLiftStartingAfter(LiftBean liftBean, Integer initIndex, LiftMatchListener listener)
+			throws NoLiftAvailable {
 		// Get all the lifts starting in
 		// [startDateTime - MINUTES_OF_MARGIN, startDateTime + HOURS_OF_MARGIN]
-		LocalDateTime intervalStartDateTime = startDateTime.minusMinutes(MINUTES_OF_MARGIN);
-		LocalDateTime intervalStopDateTime = startDateTime.plusHours(HOURS_OF_MARGIN);
+		LocalDateTime intervalStartDateTime = liftBean.getStartDateTime().minusMinutes(MINUTES_OF_MARGIN);
+		LocalDateTime intervalStopDateTime = liftBean.getStartDateTime().plusHours(HOURS_OF_MARGIN);
 		List<Lift> possibleLifts = this.ourDb.listAvailableLiftStartingWithinIntervalDateTime(intervalStartDateTime,
 				intervalStopDateTime);
 
 		if (possibleLifts.isEmpty())
-			throw new NoLiftAvailable(String.format("No lift available starting after: %s.", startDateTime));
+			throw new NoLiftAvailable(
+					String.format("No lift available starting after: %s.", liftBean.getStartDateTime()));
+
+		List<Position> stops = new ArrayList<>();
+		stops.add(liftBean.getStartPos());
+		stops.add(liftBean.getStartPos());
 
 		// Launch thread for computing
 		LiftThread thread = new LiftThread(possibleLifts, stops, initIndex);
 		this.launchThread(thread, listener);
 	}
 
-	public void matchLiftStoppingBefore(LocalDateTime stopDateTime, List<Position> stops, Integer initIndex,
-			LiftMatchListener listener) throws NoLiftAvailable {
+	public void matchLiftStoppingBefore(LiftBean liftBean, Integer initIndex, LiftMatchListener listener)
+			throws NoLiftAvailable {
 		// Get all the lifts starting in
 		// [stopDateTime - HOURS_OF_MARGIN, stopDateTime + MINUTES_OF_MARGIN]
-		LocalDateTime intervalStopDateTime = stopDateTime.plusMinutes(MINUTES_OF_MARGIN);
-		LocalDateTime intervalStartDateTime = stopDateTime.minusHours(HOURS_OF_MARGIN);
+		LocalDateTime intervalStopDateTime = liftBean.getStartDateTime().plusMinutes(MINUTES_OF_MARGIN);
+		LocalDateTime intervalStartDateTime = liftBean.getStartDateTime().minusHours(HOURS_OF_MARGIN);
 		List<Lift> possibleLifts = this.ourDb.listAvailableLiftStartingWithinIntervalDateTime(intervalStartDateTime,
 				intervalStopDateTime);
 
 		if (possibleLifts.isEmpty())
-			throw new NoLiftAvailable(String.format("No lift available stopping before: %s.", stopDateTime));
+			throw new NoLiftAvailable(
+					String.format("No lift available stopping before: %s.", liftBean.getStartDateTime()));
+
+		List<Position> stops = new ArrayList<>();
+		stops.add(liftBean.getStartPos());
+		stops.add(liftBean.getStartPos());
 
 		// Launch thread for computing
 		LiftThread thread = new LiftThread(possibleLifts, stops, initIndex);
@@ -284,22 +304,22 @@ public class LiftController {
 		}
 	}
 
-	public void flushNotification(String userID) {
-		ourDb.removeNotificationsByUserID(userID);
+	public void flushNotification(UserBean user) {
+		ourDb.removeNotificationsByUserID(user.getUserID());
 	}
 
-	private boolean liftInteresct(Lift alreadyLift, Route newRoute, LocalDateTime newStartDateTime) {
+	private boolean liftIntersect(Lift alreadyLift, Route newRoute, LocalDateTime newStartDateTime) {
 		boolean stopsBefore = alreadyLift.getStopDateTime().isBefore(newStartDateTime);
 		boolean startAfter = alreadyLift.getStartDateTime()
 				.isAfter(newStartDateTime.plusMinutes(newRoute.getTotalDuration()));
 		return !(stopsBefore || startAfter);
 	}
 
-	public List<Lift> loadOfferedLift(String userID) {
-		return ourDb.listLiftsByDriverID(userID);
+	public List<Lift> loadOfferedLift(UserBean user) {
+		return ourDb.listLiftsByDriverID(user.getUserID());
 	}
 
-	public List<Lift> loadBookedLift(String userID) {
-		return ourDb.listLiftsByPassengerID(userID);
+	public List<Lift> loadBookedLift(UserBean user) {
+		return ourDb.listLiftsByPassengerID(user.getUserID());
 	}
 }
