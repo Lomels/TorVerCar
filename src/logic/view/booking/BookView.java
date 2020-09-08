@@ -2,17 +2,13 @@ package logic.view.booking;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,8 +16,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.RadioButton;
@@ -46,6 +40,8 @@ import logic.view.offer.AddressListView;
 import logic.view.offer.OfferView;
 import logic.controller.LiftMatchListener;
 import logic.controller.LoginController;
+import logic.controller.exception.ExceptionHandler;
+import logic.controller.exception.NoLiftAvailable;
 
 public class BookView extends Application implements Initializable, LiftMatchListener {
 	@FXML
@@ -89,13 +85,12 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	private UserSingleton userSg = UserSingleton.getInstance();
 	private MapsApi mapsApi = AdapterMapsApi.getInstance();
 	private LiftController liftController = new LiftController();
-	private String time;
-	private LiftMatchListener listener;
-
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyy-MM-ddHH:mm");
 
 	private boolean firstLog = true;
-
+	private static final String CB_GOING = "cbGoing";
+	private static final String CB_RETURN = "cbArrive";
+	
 	@Override
 	public void start(Stage stage) throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Book.fxml"));
@@ -103,6 +98,8 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
+		stage.setResizable(false);
+
 		stage.show();
 	}
 
@@ -123,7 +120,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 		MyLiftView myLift = new MyLiftView();
 		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
-	
+
 	@FXML
 	public void bookButtonController() throws Exception {
 		liftSg.clearState();
@@ -168,7 +165,6 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 		try {
 			LoginController.logout();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		HomeView home = new HomeView();
@@ -183,49 +179,53 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	}
 
 	@FXML
-	public void findButtonController(){
+	public void findButtonController() {
+		String time;
 		List<Position> stops = new ArrayList<>();
 		stops.add(liftSg.getStartPoint());
 		stops.add(liftSg.getEndPoint());
+		try {
+			if (rbGoing.isSelected()) {
+				liftSg.setPurpose(CB_GOING);
+				time = dpDate.getValue().toString() + tfStartTime.getText();
+				liftSg.setArrivalTime(time);
+				liftController.matchLiftStoppingBefore(LocalDateTime.parse(liftSg.getArrivalTime(), FORMATTER), stops,
+						0, this);
 
-		if (rbGoing.isSelected()) {
-			liftSg.setPurpose("cbGoing");
-			time = dpDate.getValue().toString() + tfArrivalTime.getText();
-			liftSg.setArrivalTime(time);
-			
-			liftController.matchLiftStoppingBefore(LocalDateTime.parse(liftSg.getArrivalTime(), FORMATTER), stops, 0,
-					this);
-		} else if (rbReturn.isSelected()) {
-			liftSg.setPurpose("cbReturn");
-			time = dpDate.getValue().toString() + tfStartTime.getText();
-			liftSg.setDepartureTime(time);
+			} else if (rbReturn.isSelected()) {
+				liftSg.setPurpose(CB_RETURN);
+				time = dpDate.getValue().toString() + tfArrivalTime.getText();
+				liftSg.setDepartureTime(time);
 
-			liftController.matchLiftStartingAfter(LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER), stops, 0,
-					this);
-		} else {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Warning");
-			alert.setHeaderText("Oops!");
-			alert.setContentText("You must choose a lift option");
-			alert.showAndWait(); 
+				liftController.matchLiftStartingAfter(LocalDateTime.parse(liftSg.getDepartureTime(), FORMATTER), stops,
+						0, this);
+			} else {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText("Oops!");
+				alert.setContentText("You must choose a lift option");
+				alert.showAndWait();
+			}
+		} catch (NoLiftAvailable e) {
+			ExceptionHandler.handle(e);
 		}
 	}
-	
+
 	@FXML
 	public void rbGoingButtonController() {
-		if(rbGoing.isSelected()) {
+		if (rbGoing.isSelected()) {
 			rbGoing.setDisable(true);
 			rbReturn.setSelected(false);
 			rbReturn.setDisable(false);
 			tfStartTime.setDisable(false);
 			tfArrivalTime.setDisable(true);
-			liftSg.setPurpose("cbGoing");
+			liftSg.setPurpose(CB_GOING);
 		}
 	}
 
 	@FXML
 	public void rbReturnButtonController() {
-		if(rbReturn.isSelected()) {
+		if (rbReturn.isSelected()) {
 			rbReturn.setDisable(true);
 			rbGoing.setSelected(false);
 			rbGoing.setDisable(false);
@@ -233,50 +233,43 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 			tfStartTime.setDisable(true);
 			liftSg.setPurpose("cbReturn");
 		}
-		
+
 	}
-		
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		if(liftSg.getPurpose().equals(null)) {
+		if (liftSg.getPurpose().equals(null)) {
 			rbGoing.setSelected(false);
 			rbReturn.setSelected(false);
 		}
-		
-		if(liftSg.getPurpose().equals("cbGoing")) {
+
+		if (liftSg.getPurpose().equals(CB_GOING)) {
 			rbGoing.setDisable(true);
 			rbReturn.setSelected(false);
 			rbReturn.setDisable(false);
 			tfStartTime.setDisable(false);
 			tfArrivalTime.setDisable(true);
 		}
-		if(liftSg.getPurpose().equals("cbReturn")) {
+		if (liftSg.getPurpose().equals(CB_RETURN)) {
 			rbReturn.setDisable(true);
 			rbGoing.setSelected(false);
 			rbGoing.setDisable(false);
 			tfArrivalTime.setDisable(false);
 			tfStartTime.setDisable(true);
 		}
-		
 
 		try {
 			userSg.setStatus(Status.BOOK);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
-		
-
-		
 
 		if (!liftSg.getStatus().equals(Status.START)) {
 			tfStartPoint.setText(liftSg.getStartPoint().getAddress());
 			tfStartPoint.setDisable(true);
 		}
 
-		if (!(liftSg.getStatus().equals(Status.STOP) | liftSg.getStatus().equals(Status.START))) {
+		if (!(liftSg.getStatus().equals(Status.STOP) || liftSg.getStatus().equals(Status.START))) {
 			tfArrivalPoint.setText(liftSg.getEndPoint().getAddress());
 			tfArrivalPoint.setDisable(true);
 		}
@@ -285,6 +278,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 
 	@Override
 	public void onThreadEnd(List<LiftMatchResult> results) {
+		MyLogger.info("results", results);
 		if (!results.isEmpty()) {
 			for (LiftMatchResult result : results) {
 				MyLogger.info("thread result", result.getLift().getLiftID());
@@ -294,7 +288,6 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 			try {
 				list.start((Stage) btFind.getScene().getWindow());
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
@@ -303,14 +296,14 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 			alert.setTitle("Oh no!");
 			alert.setHeaderText(":(");
 			alert.setContentText("No lift found!");
-			
+
 			DialogPane dialogPane = alert.getDialogPane();
-			
+
 			dialogPane.getStylesheets().add(getClass().getResource("../fxml/TorVerCar.css").toExternalForm());
 			dialogPane.getStyleClass().add("myDialog");
-			
-			Optional<ButtonType> result = alert.showAndWait(); 
-			
+
+			alert.showAndWait();
+
 		}
 
 	}
@@ -321,7 +314,6 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 			firstLog = !firstLog;
 			MyLogger.info("Thread started running.");
 		}
-		// TODO implementare schermata di wait
 	}
 
 }

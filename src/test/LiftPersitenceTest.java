@@ -16,6 +16,7 @@ import logic.controller.PassengerController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
+import logic.controller.exception.PassengerException;
 import logic.model.Lift;
 import logic.model.Student;
 import test.utilities.TestUtilities;
@@ -98,7 +99,7 @@ public class LiftPersitenceTest extends TestUtilities {
 	// TODO: test to break PassengerController.addPassenger
 
 	@Test
-	public void listPassenger() throws DatabaseException, InvalidInputException, InvalidStateException {
+	public void listPassenger() throws DatabaseException, InvalidInputException, InvalidStateException, PassengerException {
 		this.setup();
 		PassengerController passengerController = new PassengerController();
 		Lift newLift = getDummyLift();
@@ -130,7 +131,7 @@ public class LiftPersitenceTest extends TestUtilities {
 
 	@Test
 	public void removePassenger()
-			throws InvalidInputException, DatabaseException, InvalidStateException {
+			throws InvalidInputException, DatabaseException, InvalidStateException, PassengerException {
 		this.setup();
 		PassengerController passengerController = new PassengerController();
 

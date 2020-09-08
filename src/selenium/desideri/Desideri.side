@@ -1,0 +1,122 @@
+{
+  "id": "6c69dd09-a46d-4f3f-8fa4-9a0e1e46becb",
+  "version": "2.0",
+  "name": "Desideri",
+  "url": "http://localhost:8081/TorVerCar/index.jsp",
+  "tests": [{
+    "id": "980fd031-aed9-4438-9a7a-586846e734f7",
+    "name": "Untitled",
+    "commands": []
+  }, {
+    "id": "e709418e-1318-4ff6-9169-ca9b880394f9",
+    "name": "Desideri",
+    "commands": [{
+      "id": "a6a86662-26ca-47df-a7ff-1c04146f41c2",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8081/TorVerCar/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "be3c1a10-1688-4deb-b16a-58506bd1ebf5",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1056",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "fb6b611a-e85c-467a-9b2b-1ee72fd9d64c",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Sign in",
+      "targets": [
+        ["linkText=Sign in", "linkText"],
+        ["css=.right:nth-child(3)", "css:finder"],
+        ["xpath=//a[contains(text(),'Sign in')]", "xpath:link"],
+        ["xpath=//a[@onclick=\"document.getElementById('regDialog').style.display='block'\"]", "xpath:attributes"],
+        ["xpath=//div[@id='navbar']/a[3]", "xpath:idRelative"],
+        ["xpath=//a[3]", "xpath:position"],
+        ["xpath=//a[contains(.,'Sign in')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "abfd8b27-d708-4d89-9186-518f8bab922a",
+      "comment": "",
+      "command": "click",
+      "target": "id=userID",
+      "targets": [
+        ["id=userID", "id"],
+        ["css=#userID", "css:finder"],
+        ["xpath=//input[@id='userID']", "xpath:attributes"],
+        ["xpath=//div[@id='regDialog']/form/div/div/div/div[2]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6fde18d0-b774-4098-93e7-30d11c4b993e",
+      "comment": "",
+      "command": "type",
+      "target": "id=userID",
+      "targets": [
+        ["id=userID", "id"],
+        ["css=#userID", "css:finder"],
+        ["xpath=//input[@id='userID']", "xpath:attributes"],
+        ["xpath=//div[@id='regDialog']/form/div/div/div/div[2]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/input", "xpath:position"]
+      ],
+      "value": "0456789"
+    }, {
+      "id": "c96c942b-d7ce-4aa9-b7c8-28438ba57f49",
+      "comment": "",
+      "command": "click",
+      "target": "id=btnCheck",
+      "targets": [
+        ["id=btnCheck", "id"],
+        ["css=#btnCheck", "css:finder"],
+        ["xpath=//button[@id='btnCheck']", "xpath:attributes"],
+        ["xpath=//div[@id='regDialog']/form/div/div/div/div[2]/div/div/div[2]/button", "xpath:idRelative"],
+        ["xpath=//div[2]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Check Identity')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "366c77cf-8deb-4b7c-acdd-e4a1c92b1669",
+      "comment": "",
+      "command": "click",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[@id='dbData']/input[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5029405e-0202-47d8-bf29-87f43f123ccf",
+      "comment": "",
+      "command": "assertValue",
+      "target": "id=email",
+      "targets": [
+        ["id=email", "id"],
+        ["name=email", "name"],
+        ["css=#email", "css:finder"],
+        ["xpath=//input[@id='email']", "xpath:attributes"],
+        ["xpath=//div[@id='dbData']/input[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/input[2]", "xpath:position"]
+      ],
+      "value": "pupone10@roma.as"
+    }]
+  }],
+  "suites": [{
+    "id": "16b687d5-fab6-4e9f-8776-6d842a1ce35f",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["980fd031-aed9-4438-9a7a-586846e734f7"]
+  }],
+  "urls": ["http://localhost:8081/TorVerCar/index.jsp"],
+  "plugins": []
+}

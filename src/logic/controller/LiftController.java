@@ -11,11 +11,14 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Logger;
 
 import logic.controller.email.SendEmail;
+import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
+import logic.controller.exception.NoLiftAvailable;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.controller.maps.RoutingApi;
@@ -27,23 +30,22 @@ import logic.model.Route;
 import logic.model.Student;
 import logic.model.StudentCar;
 import logic.model.UnorderedLift;
-import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
 public class LiftController {
 
+	private static final Logger LOGGER = Logger.getLogger(LiftController.class.getCanonicalName());
+
 	private static final Integer MINUTES_OF_MARGIN = 10;
 	private static final Integer HOURS_OF_MARGIN = 6;
 	private static final Integer MAX_LIFTS_LISTED = 100;
-
-	private static final boolean LOG_OLD = false;
 
 	private MySqlDAO ourDb = new MySqlDAO();
 
 	RoutingApi routingApi = RoutingHereAPI.getInstance();
 
 	public Lift createLift(String startDateTimeString, Integer maxDuration, String note, StudentCar driver,
-			Position pickUp, Position dropOff) throws InvalidInputException, DatabaseException, InvalidStateException {
+			Position pickUp, Position dropOff) throws InvalidInputException, DatabaseException, InvalidStateException, ApiNotReachableException {
 		LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ISO_DATE_TIME);
 		Route route = routingApi.startToStop(pickUp, dropOff);
 		if (maxDuration < route.getTotalDuration()) {
@@ -119,7 +121,7 @@ public class LiftController {
 	}
 
 	public void matchLiftStartingAfter(LocalDateTime startDateTime, List<Position> stops, Integer initIndex,
-			LiftMatchListener listener) {
+			LiftMatchListener listener) throws NoLiftAvailable {
 		// Get all the lifts starting in
 		// [startDateTime - MINUTES_OF_MARGIN, startDateTime + HOURS_OF_MARGIN]
 		LocalDateTime intervalStartDateTime = startDateTime.minusMinutes(MINUTES_OF_MARGIN);
@@ -127,19 +129,25 @@ public class LiftController {
 		List<Lift> possibleLifts = this.ourDb.listAvailableLiftStartingWithinIntervalDateTime(intervalStartDateTime,
 				intervalStopDateTime);
 
+		if (possibleLifts.isEmpty())
+			throw new NoLiftAvailable(String.format("No lift available starting after: %s.", startDateTime));
+
 		// Launch thread for computing
 		LiftThread thread = new LiftThread(possibleLifts, stops, initIndex);
 		this.launchThread(thread, listener);
 	}
 
 	public void matchLiftStoppingBefore(LocalDateTime stopDateTime, List<Position> stops, Integer initIndex,
-			LiftMatchListener listener) {
+			LiftMatchListener listener) throws NoLiftAvailable {
 		// Get all the lifts starting in
 		// [stopDateTime - HOURS_OF_MARGIN, stopDateTime + MINUTES_OF_MARGIN]
 		LocalDateTime intervalStopDateTime = stopDateTime.plusMinutes(MINUTES_OF_MARGIN);
 		LocalDateTime intervalStartDateTime = stopDateTime.minusHours(HOURS_OF_MARGIN);
 		List<Lift> possibleLifts = this.ourDb.listAvailableLiftStartingWithinIntervalDateTime(intervalStartDateTime,
 				intervalStopDateTime);
+
+		if (possibleLifts.isEmpty())
+			throw new NoLiftAvailable(String.format("No lift available stopping before: %s.", stopDateTime));
 
 		// Launch thread for computing
 		LiftThread thread = new LiftThread(possibleLifts, stops, initIndex);
@@ -161,9 +169,9 @@ public class LiftController {
 		try {
 			matchedLifts = futureCall.get();
 		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.severe(e.toString());
 		}
+
 		listener.onThreadEnd(matchedLifts);
 	}
 
@@ -188,12 +196,11 @@ public class LiftController {
 		}
 
 		@Override
-		public List<LiftMatchResult> call() {
-			List<LiftMatchResult> matchedLifts = this.matchLifts();
-			return matchedLifts;
+		public List<LiftMatchResult> call() throws NoLiftAvailable {
+			return this.matchLifts();
 		}
 
-		public List<LiftMatchResult> matchLifts() {
+		public List<LiftMatchResult> matchLifts() throws NoLiftAvailable {
 			Set<UnorderedLift> unorderedLifts = new TreeSet<>();
 
 			// For cycle that stops once it reaches the end of possibileLifts or after
@@ -204,11 +211,9 @@ public class LiftController {
 
 				// Check if the lift starts before now, which means that is old
 				// TODO: gestire nella release finale
-				if (possibleLift.getStartDateTime().isBefore(LocalDateTime.now())) {
-					if (LOG_OLD) {
-						MyLogger.info("Lift #" + possibleLift.getLiftID() + " is old.");
-					}
-				}
+//				if (possibleLift.getStartDateTime().isBefore(LocalDateTime.now())) {
+//					continue;
+//				}
 
 				Integer currentMaxDuration = possibleLift.getMaxDuration();
 				Route currentRoute = possibleLift.getRoute();
@@ -229,9 +234,8 @@ public class LiftController {
 							unorderedLifts.add(new UnorderedLift(possibleLift, deltaDuration, id, MAX_LIFTS_LISTED));
 						}
 					}
-				} catch (InvalidInputException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (InvalidInputException | ApiNotReachableException e) {
+					LOGGER.fine(e.toString());
 				}
 			}
 
@@ -240,6 +244,9 @@ public class LiftController {
 				Lift lift = ur.getLift();
 				this.addLiftToLiftMatch(lift);
 			}
+
+			if (results.isEmpty())
+				throw new NoLiftAvailable("No compatible lifts found.");
 
 			return results;
 		}
@@ -256,6 +263,7 @@ public class LiftController {
 			// Get the duration until the last stop, then add it to stopDateTime
 			Route route = possibleLift.getRoute();
 			Integer deltaDeltaStopDateTime = route.getDurationUntilPosition(lastStop);
+
 			LocalDateTime stopDateTimeOnLastStop = possibleLift.getStartDateTime().plusMinutes(deltaDeltaStopDateTime);
 			return stopDateTimeOnLastStop.isBefore(this.stopDateTime);
 		}
@@ -263,14 +271,14 @@ public class LiftController {
 		private void addLiftToLiftMatch(Lift lift) {
 			Integer deltaStartDateTime = lift.getRoute().getDurationUntilPosition(stops.get(0));
 			Integer deltaStopDateTime = lift.getRoute().getDurationUntilPosition(stops.get(stops.size() - 1));
+
 			LocalDateTime relativeStartDateTime = lift.getStartDateTime().plusMinutes(deltaStartDateTime);
 			LocalDateTime relativeStopDateTime = lift.getStartDateTime().plusMinutes(deltaStopDateTime);
 			LiftMatchResult result = null;
 			try {
 				result = new LiftMatchResult(lift, relativeStartDateTime, relativeStopDateTime);
 			} catch (InvalidInputException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				LOGGER.fine(e.toString());
 			}
 			this.results.add(result);
 		}
@@ -287,11 +295,11 @@ public class LiftController {
 		return !(stopsBefore || startAfter);
 	}
 
-	public List<Lift> loadOfferedLift(String userID){
+	public List<Lift> loadOfferedLift(String userID) {
 		return ourDb.listLiftsByDriverID(userID);
 	}
-	
-	public List<Lift> loadBookedLift(String userID){
+
+	public List<Lift> loadBookedLift(String userID) {
 		return ourDb.listLiftsByPassengerID(userID);
 	}
 }

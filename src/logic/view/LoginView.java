@@ -46,6 +46,7 @@ public class LoginView extends Application implements Initializable {
 		Scene scene = new Scene(root);
 		stage.setTitle("Benvenuto in TorVerCar.");
 		stage.setScene(scene);
+		stage.setResizable(false);
 
 		stage.show();
 	}
@@ -71,7 +72,6 @@ public class LoginView extends Application implements Initializable {
 		} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
 			ExceptionHandler.handle(e);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

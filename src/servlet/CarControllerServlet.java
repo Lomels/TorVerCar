@@ -53,7 +53,7 @@ public class CarControllerServlet extends HttpServlet {
 					setCar.editCar(carInfo);
 					studentCar = new StudentCar(student, 0, new CarInfo(carInfo.getPlate(), carInfo.getSeats(),
 							carInfo.getModel(), carInfo.getColour()));
-				} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
+				} catch (InvalidInputException | DatabaseException e) {
 					ExceptionHandler.handle(e, request, response, myCar);
 				}
 			} else {
@@ -64,7 +64,7 @@ public class CarControllerServlet extends HttpServlet {
 					studentCar.setCarInfo(new CarInfo(carInfo.getPlate(), carInfo.getSeats(), carInfo.getModel(),
 							carInfo.getColour()));
 					setCar.editCar(carInfo);
-				} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
+				} catch (InvalidInputException | DatabaseException e) {
 					ExceptionHandler.handle(e, request, response, myCar);
 				}
 			}

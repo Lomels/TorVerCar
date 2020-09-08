@@ -36,6 +36,8 @@ public class RegistrationView extends Application {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
+		stage.setResizable(false);
+
 		stage.show();
 
 	}
@@ -47,7 +49,7 @@ public class RegistrationView extends Application {
 		RegistrationController reg = new RegistrationController();
 			try {
 				if (!reg.alreadyExist(userID.getText())) {
-					UserBean user = reg.recapInfo(userID.getText().toString());
+					UserBean user = reg.recapInfo(userID.getText());
 					usBean.setUserBean(user);
 					RecapView recap = new RecapView();
 					recap.start((Stage) btNext.getScene().getWindow());

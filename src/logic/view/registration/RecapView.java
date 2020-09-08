@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.Button;
-import javafx.scene.text.Text;
+import javafx.scene.control.TextField;
 import logic.bean.UserBean;
 import logic.bean.UserBeanSingleton;
 import logic.controller.RegistrationController;
@@ -18,10 +18,10 @@ import logic.view.HomeView;
 public class RecapView extends Application implements Initializable{
 	@FXML private Button btHome;
 	@FXML private Button btNext;
-	@FXML private Text tfName;  
-	@FXML private Text tfSurname;
-	@FXML private Text tfId;
-	@FXML private Text tfEmail;
+	@FXML private TextField tfName;  
+	@FXML private TextField tfSurname;
+	@FXML private TextField tfId;
+	@FXML private TextField tfEmail;
 	UserBeanSingleton sg = UserBeanSingleton.getInstance();
 	
 	@Override
@@ -31,6 +31,8 @@ public class RecapView extends Application implements Initializable{
 		Scene scene = new Scene(root);
 		stage.setTitle("Recap");
 		stage.setScene(scene);
+		stage.setResizable(false);
+
 		stage.show();
 	}
 

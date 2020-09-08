@@ -81,6 +81,7 @@ public class OfferView extends Application implements Initializable {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
+		stage.setResizable(false);
 
 		stage.show();
 	}
@@ -181,7 +182,6 @@ public class OfferView extends Application implements Initializable {
 			controller.createLift(lp.getDepartureTime(), Integer.parseInt(lp.getMaxDuration()), lp.getNotes(),
 					userSg.getStudentCar(), lp.getStartPoint(), lp.getEndPoint());
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
 			ExceptionHandler.handle(e);
@@ -198,7 +198,6 @@ public class OfferView extends Application implements Initializable {
 		try {
 			userSg.setStatus(Status.OFFER);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if (userSg.getRole().equals(Role.STUDENT)) {
@@ -223,7 +222,7 @@ public class OfferView extends Application implements Initializable {
 			tfStartPoint.setDisable(true);
 		}
 
-		if (lp.getStatus().equals(Status.STOP) | lp.getStatus().equals(Status.START)) {
+		if (lp.getStatus().equals(Status.STOP) || lp.getStatus().equals(Status.START)) {
 			tfArrivalPoint.setText(" ");
 		} else {
 			tfArrivalPoint.setText(lp.getEndPoint().getAddress());

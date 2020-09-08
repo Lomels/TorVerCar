@@ -51,9 +51,6 @@
 
 <body>	
  <div class="bg-image TorVerCar">
-	
-	<!-- ***** Header Area End ***** -->
-
 	<!-- ***** Welcome Area Start ***** -->
 	
 	<div class="bg-image home">
@@ -138,11 +135,11 @@
 				          <div id="dbData" class="col-50 hidden">
 				            <h3>Your Data</h3>
 				            <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-				            <input type="text" id="fname" name="fullname" placeholder="<%= currentUser.getName() +" " +  currentUser.getSurname() %>" disabled>
+				            <input type="text" id="fname" name="fullname" value="<%= currentUser.getName() %>" disabled>
 				            <label for="email"><i class="fa fa-envelope"></i> Email</label>
-				            <input type="text" id="email" name="email" placeholder="<%= currentUser.getEmail() %>" disabled>
+				            <input type="text" id="email" name="email" value="<%= currentUser.getEmail() %>" disabled>
 				            <label for="adr"><i class="fa fa-phone"></i> Phone</label>
-				            <input type="text" id="phone" name="phone" placeholder="" >
+				            <input type="text" id="phone" name="phone" >
 				            
 				          </div>				          
 				          
@@ -189,7 +186,7 @@
 <script>
 	var sessionCheck = ${sessionScope.check};
 	if(sessionCheck == true){
-		document.getElementById("userID").placeholder = "0"+${sessionScope.userID};
+		document.getElementById("userID").value = ${currentUser.getUserID()};
 		document.getElementById("userID").disabled = true;
 		document.getElementById("password").required = true;
 		document.getElementById("repeat").required = true;
@@ -207,11 +204,6 @@
 </script>	
 
 <script>
-
-
-
-
-	
 	function validatePassword(){
 	  if(password.value != confirm_password.value | password.value == '') {
 		confirm_password.classList.remove("valid");

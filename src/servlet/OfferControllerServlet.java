@@ -28,10 +28,6 @@ import logic.view.mysql.MySqlDAO;
 
 @WebServlet("/OfferControllerServlet")
 public class OfferControllerServlet extends HttpServlet {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
@@ -48,11 +44,10 @@ public class OfferControllerServlet extends HttpServlet {
 				offerBean.setStatus("startPos");
 				session.setAttribute("offerBean", offerBean);
 				request.getRequestDispatcher(offer).forward(request, response);
-			} catch (ApiNotReachableException| ServletException | IOException e) {
-				// TODO Auto-generated catch block
+			} catch (ApiNotReachableException | ServletException | IOException e) {
 				e.printStackTrace();
 			} catch (InvalidInputException e) {
-				ExceptionHandler.handle(e, request, response, offer);				
+				ExceptionHandler.handle(e, request, response, offer);
 			}
 		}
 
@@ -65,11 +60,10 @@ public class OfferControllerServlet extends HttpServlet {
 				offerBean.setStatus("startPos");
 				session.setAttribute("offerBean", offerBean);
 				request.getRequestDispatcher("offer.jsp").forward(request, response);
-			} catch (ApiNotReachableException| ServletException | IOException e) {
-				// TODO Auto-generated catch block
+			} catch (ApiNotReachableException | ServletException | IOException e) {
 				e.printStackTrace();
 			} catch (InvalidInputException e) {
-				ExceptionHandler.handle(e, request, response, offer);				
+				ExceptionHandler.handle(e, request, response, offer);
 			}
 		}
 
@@ -81,7 +75,6 @@ public class OfferControllerServlet extends HttpServlet {
 
 			session.setAttribute("offerBean", offerBean);
 
-			MyLogger.info("selected position", offerBean.getResult().get(Integer.parseInt(index)));
 			try {
 				request.getRequestDispatcher("offer.jsp").forward(request, response);
 			} catch (ServletException | IOException e) {
@@ -113,8 +106,9 @@ public class OfferControllerServlet extends HttpServlet {
 				request.setAttribute("message", msg);
 				request.getRequestDispatcher(offer).forward(request, response);
 
-			} catch (NumberFormatException | InvalidInputException | DatabaseException | InvalidStateException e) {
-				ExceptionHandler.handle(e, request, response, offer);				
+			} catch (NumberFormatException | InvalidInputException | DatabaseException | InvalidStateException
+					| ApiNotReachableException e) {
+				ExceptionHandler.handle(e, request, response, offer);
 			} catch (ServletException | IOException e) {
 				e.printStackTrace();
 			}

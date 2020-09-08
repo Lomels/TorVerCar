@@ -17,7 +17,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import logic.controller.LoginController;
+import logic.controller.exception.InvalidStateException;
 import logic.controller.maps.ViewMapHereApi;
 import logic.model.LiftSingleton;
 import logic.model.Position;
@@ -30,8 +32,6 @@ import logic.view.MyCarView;
 import logic.view.MyLiftView;
 import logic.view.ProfileView;
 import logic.view.booking.BookView;
-
-import javafx.scene.Node;
 
 public class AddressListView extends Application implements Initializable {
 
@@ -64,7 +64,7 @@ public class AddressListView extends Application implements Initializable {
 	@FXML
 	private Button btLifts;
 	@FXML
-	private ListView<RowAddress> addressList;
+	private ListView<Position> addressList;
 
 	LiftSingleton lift = LiftSingleton.getInstance();
 	UserSingleton sg = UserSingleton.getInstance();
@@ -76,6 +76,8 @@ public class AddressListView extends Application implements Initializable {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
+		stage.setResizable(false);
+
 		stage.show();
 	}
 
@@ -111,7 +113,7 @@ public class AddressListView extends Application implements Initializable {
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
 	}
-	
+
 	@FXML
 	public void liftsButtonController() throws Exception {
 		MyLiftView myLift = new MyLiftView();
@@ -140,8 +142,6 @@ public class AddressListView extends Application implements Initializable {
 	public void confirmButtonController() throws Exception {
 		MyLogger.info("Position selected", lift.getStartPoint());
 		switch (sg.getStatus()) {
-		default:
-			throw new Exception("Invalid status");
 		case OFFER:
 			OfferView offer = new OfferView();
 			offer.start((Stage) btConfirm.getScene().getWindow());
@@ -150,6 +150,8 @@ public class AddressListView extends Application implements Initializable {
 			BookView book = new BookView();
 			book.start((Stage) btConfirm.getScene().getWindow());
 			break;
+		default:
+			throw new InvalidStateException("Invalid status");
 		}
 	}
 
@@ -157,60 +159,36 @@ public class AddressListView extends Application implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		for (Position pos : lift.getListPos()) {
-			addressList.getItems().add(new RowAddress(pos.getAddress(), map.viewFromPos(pos), pos));
+			addressList.getItems().add(pos);
 		}
 
-		addressList.setCellFactory(lv -> new ListCell<RowAddress>() {
-			private Node graphic;
-			private RowAddressController controller;
-			{
-				try {
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/list_cell.fxml"));
-					graphic = loader.load();
-					controller = loader.getController();
-				} catch (IOException exc) {
-					throw new RuntimeException(exc);
-				}
-			}
-
+		addressList.setCellFactory(new Callback<ListView<Position>, ListCell<Position>>() {
 			@Override
-			protected void updateItem(RowAddress row, boolean empty) {
-				super.updateItem(row, empty);
-				if (empty) {
-					setGraphic(null);
-				} else {
-					controller.setAddress(row.getAddress());
-					controller.setMap(row.getURL());
-
-					setGraphic(graphic);
-				}
-
+			public ListCell<Position> call(ListView<Position> param) {
+				return new RowAddress();
 			}
-
 		});
 
 		addressList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
 		addressList.getSelectionModel().selectedItemProperty()
-				.addListener((ObservableValue<? extends RowAddress> ov, RowAddress old_val, RowAddress new_val) -> {
-					RowAddress selectedItem = addressList.getSelectionModel().getSelectedItem();
+				.addListener((ObservableValue<? extends Position> ov, Position oldVal, Position newVal) -> {
+					Position selectedItem = addressList.getSelectionModel().getSelectedItem();
 					int index = addressList.getSelectionModel().getSelectedIndex();
 
 					addressList.getFocusModel().focus(index);
 					if (lift.getAddress().equals(1)) {
-						lift.setStartPoint(selectedItem.getPosition());
+						lift.setStartPoint(selectedItem);
 						try {
 							lift.setStatus(Status.STOP);
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					} else {
-						lift.setEndPoint(selectedItem.getPosition());
+						lift.setEndPoint(selectedItem);
 						try {
 							lift.setStatus(Status.BOTH);
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}

@@ -1,0 +1,142 @@
+{
+  "id": "03413df4-b885-44af-a580-62168924fa15",
+  "version": "2.0",
+  "name": "TorVerCar",
+  "url": "http://localhost:8081/TorVerCar/index.jsp",
+  "tests": [{
+    "id": "ad070a67-117e-4cbb-89d6-5237ed30b38e",
+    "name": "Lo Mele",
+    "commands": [{
+      "id": "5ec59cd0-f883-4ed9-83c0-c3cfbbe7449c",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8081/TorVerCar/index.jsp",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e79d81e4-a8de-41f7-a73f-aeba9e2a7235",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1056",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "13f5f73c-f428-476a-8034-90af1f995da5",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.login", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[@onclick=\"document.getElementById('loginDialog').style.display='block'\"]", "xpath:attributes"],
+        ["xpath=//div[@id='navbar']/a[4]", "xpath:idRelative"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "dc012fd9-7884-48bc-ac44-9c2d187d39e3",
+      "comment": "",
+      "command": "click",
+      "target": "name=userID",
+      "targets": [
+        ["name=userID", "name"],
+        ["css=.container > input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='userID']", "xpath:attributes"],
+        ["xpath=//div[@id='loginDialog']/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2b267df7-f62d-48d4-8726-98f479c56a0b",
+      "comment": "",
+      "command": "type",
+      "target": "name=userID",
+      "targets": [
+        ["name=userID", "name"],
+        ["css=.container > input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='userID']", "xpath:attributes"],
+        ["xpath=//div[@id='loginDialog']/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "0241118"
+    }, {
+      "id": "98f33d10-be51-4238-b022-032aba597470",
+      "comment": "",
+      "command": "click",
+      "target": "id=myPass",
+      "targets": [
+        ["id=myPass", "id"],
+        ["name=pwd", "name"],
+        ["css=#myPass", "css:finder"],
+        ["xpath=//input[@id='myPass']", "xpath:attributes"],
+        ["xpath=//div[@id='loginDialog']/form/div/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3a0035ac-cced-488b-b7dc-93080c8b3683",
+      "comment": "",
+      "command": "type",
+      "target": "id=myPass",
+      "targets": [
+        ["id=myPass", "id"],
+        ["name=pwd", "name"],
+        ["css=#myPass", "css:finder"],
+        ["xpath=//input[@id='myPass']", "xpath:attributes"],
+        ["xpath=//div[@id='loginDialog']/form/div/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "aaaAAA123@"
+    }, {
+      "id": "5e1e2db2-472c-4dfd-a4b2-8c1e7c99e4cb",
+      "comment": "",
+      "command": "click",
+      "target": "name=action",
+      "targets": [
+        ["name=action", "name"],
+        ["css=.button:nth-child(7)", "css:finder"],
+        ["xpath=//button[@name='action']", "xpath:attributes"],
+        ["xpath=//div[@id='loginDialog']/form/div/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "afd6bcbf-3ddf-4077-98c4-f31b506a5a2f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.fa-user-graduate",
+      "targets": [
+        ["css=.fa-user-graduate", "css:finder"],
+        ["xpath=//div[@id='navbar']/a[7]/i", "xpath:idRelative"],
+        ["xpath=//a[7]/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a9213219-6e02-4802-8b5e-44d32e7d8c3a",
+      "comment": "",
+      "command": "assertValue",
+      "target": "id=myPhoneNum",
+      "targets": [
+        ["id=myPhoneNum", "id"],
+        ["name=phone", "name"],
+        ["css=#myPhoneNum", "css:finder"],
+        ["xpath=//input[@id='myPhoneNum']", "xpath:attributes"],
+        ["xpath=//input[4]", "xpath:position"]
+      ],
+      "value": "3336669990"
+    }]
+  }],
+  "suites": [{
+    "id": "b9540eb9-37a2-4488-91c7-6db2bf1f2d43",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["ad070a67-117e-4cbb-89d6-5237ed30b38e"]
+  }],
+  "urls": ["http://localhost:8081/", "http://localhost:8081/TorVerCar/index.jsp"],
+  "plugins": []
+}

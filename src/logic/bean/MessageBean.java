@@ -1,17 +1,18 @@
 package logic.bean;
 
 public class MessageBean {
-	
+
 	private String message;
 	private String type;
 	private String title;
-	
-	public MessageBean() {
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
-	
-	public void setMessage(String message)	{	this.message = message;	}
-	
-	public String getMessage() {	return this.message;	}
+
+	public String getMessage() {
+		return this.message;
+	}
 
 	public String getType() {
 		return type;

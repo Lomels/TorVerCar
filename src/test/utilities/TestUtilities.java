@@ -4,13 +4,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import logic.controller.PassengerController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
+import logic.controller.exception.PassengerException;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.CarInfo;
@@ -154,7 +154,7 @@ public class TestUtilities {
 	}
 
 	private static void addPassengerToLift(Integer liftID, Integer passengerToAdd)
-			throws InvalidInputException, JSONException, DatabaseException, InvalidStateException {
+			throws InvalidInputException, DatabaseException, InvalidStateException, PassengerException {
 		Lift liftFromDB = dao.loadLiftByID(liftID);
 		for (int added = 0; added < passengerToAdd; added++) {
 

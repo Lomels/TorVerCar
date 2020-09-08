@@ -1,6 +1,5 @@
 package logic.controller.maps;
 
-//TODO: maybe abstract
 public abstract class TomTomApi {
 
 	// using TomTomApi

@@ -12,8 +12,8 @@ public class RowAddressController {
 		tvAddress.setText(address);
 	}
 	
-	public void setMap(String URL) {
-		Image image = new Image(URL);
+	public void setMap(String url) {
+		Image image = new Image(url);
 		ivMap.setImage(image);
 		
 	}

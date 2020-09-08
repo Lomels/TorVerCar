@@ -7,7 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import logic.controller.exception.InvalidInputException;
-import logic.controller.exception.InvalidStateException;
+import logic.controller.exception.NoPositionFound;
 import logic.utilities.InputChecker;
 
 public class Route {
@@ -15,10 +15,8 @@ public class Route {
 	private List<Position> stops;
 	// in minutes
 	private List<Integer> durations;
-//	private Integer duration;
 	// in meters
 	private List<Integer> distances;
-//	private Integer distance;
 
 	public Route(List<Position> stops, List<Integer> durations, List<Integer> distances) throws InvalidInputException {
 		this.setStops(stops);
@@ -48,12 +46,12 @@ public class Route {
 		return this.stops.get(index);
 	}
 
-	public Integer getStopIndex(Position position) throws InvalidStateException {
+	public Integer getStopIndex(Position position) {
 		for (Integer i = 0; i < this.getStopsSize(); i++) {
 			if (this.getStop(i).compare(position))
 				return i;
 		}
-		throw new InvalidStateException("Position not found");
+		throw new NoPositionFound();
 	}
 
 	public Integer getStopsSize() {
@@ -66,17 +64,11 @@ public class Route {
 	}
 
 	public Integer getDurationUntilPosition(Position position) {
-		try {
-			Integer posIndex = this.getStopIndex(position);
-			if (posIndex == 0)
-				return 0;
-			else
-				return this.getDurations().get(posIndex - 1);
-		} catch (InvalidStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		Integer posIndex = this.getStopIndex(position);
+		if (posIndex == 0)
+			return 0;
+		else
+			return this.getDurations().get(posIndex - 1);
 	}
 
 	public void setDurations(List<Integer> durations) throws InvalidInputException {

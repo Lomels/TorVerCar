@@ -1,0 +1,133 @@
+{
+  "id": "2d3ccea9-0a31-4b7f-902b-638e62b55e65",
+  "version": "2.0",
+  "name": "Marseglia",
+  "url": "http://localhost:8081/TorVerCar/index.jsp",
+  "tests": [{
+    "id": "e3493b70-dc20-4d0e-ac01-d52d2ceaa557",
+    "name": "Marseglia",
+    "commands": [{
+      "id": "3522d69f-1906-491f-8bac-a4551c5aa41d",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8081/TorVerCar/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "85e6d703-9ac9-43f8-bb0f-c1d08c17dff9",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1056",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7dce26ad-1db0-45f0-a26d-7535117e96b0",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=.login", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[@onclick=\"document.getElementById('loginDialog').style.display='block'\"]", "xpath:attributes"],
+        ["xpath=//div[@id='navbar']/a[4]", "xpath:idRelative"],
+        ["xpath=//a[4]", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "90cbfea8-fa59-443b-a543-ecf9e1324b8d",
+      "comment": "",
+      "command": "type",
+      "target": "name=userID",
+      "targets": [
+        ["name=userID", "name"],
+        ["css=.container > input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='userID']", "xpath:attributes"],
+        ["xpath=//div[@id='loginDialog']/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "0252379"
+    }, {
+      "id": "e7496aa0-8ca4-421e-8f07-a11d642719c9",
+      "comment": "",
+      "command": "click",
+      "target": "id=myPass",
+      "targets": [
+        ["id=myPass", "id"],
+        ["name=pwd", "name"],
+        ["css=#myPass", "css:finder"],
+        ["xpath=//input[@id='myPass']", "xpath:attributes"],
+        ["xpath=//div[@id='loginDialog']/form/div/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "28ce1f40-7801-4689-ab7d-61193dd65dc4",
+      "comment": "",
+      "command": "type",
+      "target": "id=myPass",
+      "targets": [
+        ["id=myPass", "id"],
+        ["name=pwd", "name"],
+        ["css=#myPass", "css:finder"],
+        ["xpath=//input[@id='myPass']", "xpath:attributes"],
+        ["xpath=//div[@id='loginDialog']/form/div/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "aaaAAA123@"
+    }, {
+      "id": "1fd6cfdf-e109-4ddf-b6db-67e371a70c97",
+      "comment": "",
+      "command": "click",
+      "target": "name=action",
+      "targets": [
+        ["name=action", "name"],
+        ["css=.button:nth-child(7)", "css:finder"],
+        ["xpath=//button[@name='action']", "xpath:attributes"],
+        ["xpath=//div[@id='loginDialog']/form/div/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e48bbb4b-410f-4745-bf66-187875ed6784",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=MyCar",
+      "targets": [
+        ["linkText=MyCar", "linkText"],
+        ["css=a:nth-child(5)", "css:finder"],
+        ["xpath=//a[contains(text(),'MyCar')]", "xpath:link"],
+        ["xpath=//div[@id='navbar']/a[5]", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, 'myCar.jsp')]", "xpath:href"],
+        ["xpath=//a[5]", "xpath:position"],
+        ["xpath=//a[contains(.,'MyCar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "27286e5d-8585-4bea-9357-56dcdc975c82",
+      "comment": "",
+      "command": "assertValue",
+      "target": "id=myPlate",
+      "targets": [
+        ["id=myPlate", "id"],
+        ["name=plate", "name"],
+        ["css=#myPlate", "css:finder"],
+        ["xpath=//input[@id='myPlate']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": "DP227XC"
+    }]
+  }],
+  "suites": [{
+    "id": "97dec351-2739-44be-a22d-5cb712e9a558",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["e3493b70-dc20-4d0e-ac01-d52d2ceaa557"]
+  }],
+  "urls": ["http://localhost:8081/TorVerCar/index.jsp"],
+  "plugins": []
+}
