@@ -211,9 +211,9 @@ public class LiftController {
 
 				// Check if the lift starts before now, which means that is old
 				// TODO: gestire nella release finale
-				if (possibleLift.getStartDateTime().isBefore(LocalDateTime.now())) {
-					continue;
-				}
+//				if (possibleLift.getStartDateTime().isBefore(LocalDateTime.now())) {
+//					continue;
+//				}
 
 				Integer currentMaxDuration = possibleLift.getMaxDuration();
 				Route currentRoute = possibleLift.getRoute();

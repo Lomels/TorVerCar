@@ -107,7 +107,7 @@ public class MyQueries {
 		return stmt.executeQuery(sql);
 	}
 
-	public static ResultSet existByUserId_UniDB(Statement stmt, String userID) throws SQLException {
+	public static ResultSet existByUserIdUniDB(Statement stmt, String userID) throws SQLException {
 		String format = "SELECT userID FROM students WHERE userID = '%s';";
 		String sql = String.format(format, userID);
 

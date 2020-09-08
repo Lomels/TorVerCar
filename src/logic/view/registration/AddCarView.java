@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.bean.CarInfoBean;
-import logic.bean.UserBeanSingleton;
 import logic.controller.RegistrationController;
 import logic.view.HomeView;
 import logic.view.LoginView;
@@ -20,14 +19,17 @@ import logic.view.MyLiftView;
 public class AddCarView extends Application {
 	Stage stage;
 	@FXML
-	private Button btHome, btNext, btBack;
+	private Button btHome;
+	@FXML private Button btNext;
+	@FXML private Button btBack;
 
 	@FXML
 	private Button btLifts;
-	@FXML
-	private TextField tfModel, tfColour, tfSeats, tfPlate;
-	private UserBeanSingleton sg = UserBeanSingleton.getInstance();
-
+	@FXML private TextField tfModel;
+	@FXML private TextField tfColour;
+	@FXML private TextField tfSeats;
+	@FXML private TextField tfPlate;
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getResource("../fxml/Add_car_info.fxml"));

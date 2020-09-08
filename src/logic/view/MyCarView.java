@@ -1,5 +1,6 @@
 package logic.view;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -15,6 +16,9 @@ import javafx.stage.Stage;
 import logic.bean.CarInfoBean;
 import logic.controller.LoginController;
 import logic.controller.SetCarInfoController;
+import logic.controller.exception.DatabaseException;
+import logic.controller.exception.ExceptionHandler;
+import logic.controller.exception.InvalidInputException;
 import logic.model.Role;
 import logic.model.UserSingleton;
 import logic.view.booking.BookView;
@@ -76,7 +80,7 @@ public class MyCarView extends Application implements Initializable{
 	
 	
 	@FXML
-	public void editButtonController() throws Exception {
+	public void editButtonController(){
 		tfModel.setDisable(false);
 		tfColour.setDisable(false);
 		tfPlate.setDisable(false);
@@ -84,12 +88,16 @@ public class MyCarView extends Application implements Initializable{
 	}
 	
 	@FXML
-	public void saveButtonController() throws Exception{		
+	public void saveButtonController(){		
 		cIBean.setModel(tfModel.getText());
 		cIBean.setColour(tfColour.getText());
 		cIBean.setPlate(tfPlate.getText());
 		cIBean.setSeats(Integer.parseInt(tfSeats.getText()));
-		controller.editCar(cIBean);
+		try {
+			controller.editCar(cIBean);
+		} catch (InvalidInputException | DatabaseException e) {
+			ExceptionHandler.handle(e);
+		}
 		
 		tfModel.setDisable(true);
 		tfColour.setDisable(true);
@@ -124,7 +132,7 @@ public class MyCarView extends Application implements Initializable{
 	}
 	
 	@FXML
-	public void logoutButtonController() throws Exception {
+	public void logoutButtonController() throws IOException{
 		try {
 			LoginController.logout();
 		} catch (Exception e) {
@@ -147,9 +155,8 @@ public class MyCarView extends Application implements Initializable{
 	}
 	
 	public boolean checkCar() {
-		if(sg.getRole().equals(Role.DRIVER)) return true;
+		return sg.getRole().equals(Role.DRIVER);
 		
-		return false;
 	}
 }
 

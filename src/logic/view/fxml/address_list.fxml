@@ -11,79 +11,113 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="514.0" prefWidth="797.0" stylesheets="@../fxml/TorVerCar.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="logic.view.offer.AddressListView">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+	prefHeight="514.0" prefWidth="797.0"
+	stylesheets="@../fxml/TorVerCar.css"
+	xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="logic.view.offer.AddressListView">
 	<children>
-      <VBox prefHeight="514.0" prefWidth="797.0">
-         <children>
-            <HBox maxHeight="-Infinity" minHeight="-Infinity" prefHeight="46.0">
-               <children>
-                  <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="46.0" prefWidth="490.0" style="-fx-background-color: #39393a;">
-                     <buttons>
-                        <Button fx:id="btLifts1" mnemonicParsing="false" prefHeight="46.0" prefWidth="83.0" styleClass="button-unactive" text="MyLIFT" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btMyCar1" mnemonicParsing="false" onAction="#myCarButtonController" styleClass="button-unactive" text="MyCAR">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btOffer1" mnemonicParsing="false" onAction="#offerButtonController" styleClass="button-active" text="OFFER">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btBook1" mnemonicParsing="false" onAction="#bookButtonController" styleClass="button-unactive" text="BOOK">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btHome1" mnemonicParsing="false" onAction="#homeButtonController" styleClass="button-unactive" text="HOME" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Button>
-                     </buttons>
-                     <effect>
-                        <DropShadow radius="4.75" width="0.0" />
-                     </effect>
-                  </ButtonBar>
-                  <ButtonBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="46.0" prefWidth="313.0" style="-fx-background-color: #39393a;">
-                     <buttons>
-                        <Button fx:id="btLogout1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#logoutButtonController" styleClass="button-unactive">
-                           <graphic>
-                              <ImageView fitHeight="29.0" fitWidth="33.0" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../../WebContent/images/logout.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btProfile1" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#profileButtonController" styleClass="button-unactive">
-                           <graphic>
-                              <ImageView fitHeight="30.0" fitWidth="28.0" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../../WebContent/images/user.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </buttons>
-                     <effect>
-                        <DropShadow radius="4.75" width="0.0" />
-                     </effect>
-                  </ButtonBar>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="33.0" prefWidth="797.0" spacing="10.0" />
-            <ListView fx:id="lvLift" prefHeight="429.0" prefWidth="797.0" />
-            <AnchorPane prefHeight="89.0" prefWidth="797.0">
-               <children>
-                  <Button fx:id="btConfirm" layoutX="690.0" layoutY="5.0" mnemonicParsing="false" onAction="#confirmButtonController" text="Confirm" />
-               </children>
-            </AnchorPane>
-         </children>
-      </VBox>
+		<VBox prefHeight="514.0" prefWidth="797.0">
+			<children>
+				<HBox maxHeight="-Infinity" minHeight="-Infinity"
+					prefHeight="46.0">
+					<children>
+						<ButtonBar nodeOrientation="RIGHT_TO_LEFT"
+							prefHeight="46.0" prefWidth="490.0"
+							style="-fx-background-color: #39393a;">
+							<buttons>
+								<Button fx:id="btLifts" mnemonicParsing="false"
+									prefHeight="46.0" prefWidth="83.0" styleClass="button-unactive"
+									text="MyLIFT" textAlignment="CENTER" textOverrun="CLIP"
+									wrapText="true">
+									<font>
+										<Font size="18.0" />
+									</font>
+								</Button>
+								<Button fx:id="btMyCar" mnemonicParsing="false"
+									onAction="#myCarButtonController" styleClass="button-unactive"
+									text="MyCAR">
+									<font>
+										<Font size="18.0" />
+									</font>
+								</Button>
+								<Button fx:id="btOffer" mnemonicParsing="false"
+									onAction="#offerButtonController" styleClass="button-active"
+									text="OFFER">
+									<font>
+										<Font size="18.0" />
+									</font>
+								</Button>
+								<Button fx:id="btBook" mnemonicParsing="false"
+									onAction="#bookButtonController" styleClass="button-unactive"
+									text="BOOK">
+									<font>
+										<Font size="18.0" />
+									</font>
+								</Button>
+								<Button fx:id="btHome" mnemonicParsing="false"
+									onAction="#homeButtonController" styleClass="button-unactive"
+									text="HOME" textAlignment="CENTER" textOverrun="CLIP"
+									wrapText="true">
+									<font>
+										<Font size="18.0" />
+									</font>
+								</Button>
+							</buttons>
+							<effect>
+								<DropShadow radius="4.75" width="0.0" />
+							</effect>
+						</ButtonBar>
+						<ButtonBar nodeOrientation="LEFT_TO_RIGHT"
+							prefHeight="46.0" prefWidth="313.0"
+							style="-fx-background-color: #39393a;">
+							<buttons>
+								<Button fx:id="btLogout" maxHeight="-Infinity"
+									maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+									mnemonicParsing="false" onAction="#logoutButtonController"
+									styleClass="button-unactive">
+									<graphic>
+										<ImageView fitHeight="29.0" fitWidth="33.0"
+											preserveRatio="true">
+											<image>
+												<Image url="@../../../../WebContent/images/logout.png" />
+											</image>
+										</ImageView>
+									</graphic>
+								</Button>
+								<Button fx:id="btProfile" minHeight="-Infinity"
+									minWidth="-Infinity" mnemonicParsing="false"
+									onAction="#profileButtonController"
+									styleClass="button-unactive">
+									<graphic>
+										<ImageView fitHeight="30.0" fitWidth="28.0"
+											preserveRatio="true">
+											<image>
+												<Image url="@../../../../WebContent/images/user.png" />
+											</image>
+										</ImageView>
+									</graphic>
+								</Button>
+							</buttons>
+							<effect>
+								<DropShadow radius="4.75" width="0.0" />
+							</effect>
+						</ButtonBar>
+					</children>
+				</HBox>
+				<HBox alignment="CENTER" prefHeight="33.0" prefWidth="797.0"
+					spacing="10.0" />
+				<ListView fx:id="addressList" prefHeight="429.0"
+					prefWidth="797.0" />
+				<AnchorPane prefHeight="89.0" prefWidth="797.0">
+					<children>
+						<Button fx:id="btConfirm" layoutX="690.0" layoutY="5.0"
+							mnemonicParsing="false" onAction="#confirmButtonController"
+							text="Confirm" />
+					</children>
+				</AnchorPane>
+			</children>
+		</VBox>
 	</children>
 </AnchorPane>

@@ -20,6 +20,7 @@ public class RatingController {
 		this.deleteLiftIfConcluded(liftID);
 	}
 
+	//TODO: me sa che passare -1 è n'attimo illegale
 	public void downvote(String passengerID, Integer liftID, StudentCar driver)
 			throws InvalidInputException, DatabaseException {
 		// Update in the application level
