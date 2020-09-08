@@ -127,7 +127,7 @@
 				          	<div id="pwdForm" class="col-50 hidden">
 				              <label for="adr"><i class="fa fa-lock"></i> Password</label>
 				              <input type="password" id="password" name="password" placeholder="">
-				              <label for="city"><i class="fa fa-institution"></i> Repeat Password</label>
+				              <label for="city"><i class="fa fa-lock"></i> Repeat Password</label>
 				              <input type="password" class="invalid" id="repeat" name="repeat" placeholder="">
 				 			</div>
 				          </div>

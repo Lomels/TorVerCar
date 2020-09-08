@@ -130,9 +130,9 @@
 								<div class="row">
 									<i class="fa fa-clock"></i>
 										<div class="col-25">
-											<label id="lbDepart"> Depart at: </label> 
+											<label id="lbArrive"> Arrive at: </label> 
 										</div>	
-										<input type="time" placeholder="HH:MM" id="departureTime" name="time" style="width:550px; height:42px;">
+										<input type="time" placeholder="HH:MM" id="arrivalTime" name="time" style="width:550px; height:42px;">
 								</div>
 							</div>
 						</div>
@@ -173,9 +173,9 @@
 <!-- END POSITION DIALOG -->
 
 <!-- START LIFT LIST DIALOG -->
-	<div id="liftDialog" class="modal">
+	<div id="liftDialog" class="modal" >
 	<form class="modal-content animate" action="BookControllerServlet" method="POST">
-		    <div class="container">
+		    <div class="container" >
 		    
 		    <div class="row">
 		    	<div class="col-50">
@@ -190,7 +190,21 @@
 			      <c:forEach items="${offerBean.getLiftResult()}" var="item">
 			      	<label class="container">
 	  					<input type="radio" name="index" value="${offerBean.getLiftResult().indexOf(item)}"><span class="checkmark"></span>
-	  					${item}	  					
+	  							From: ${item.getLift().getRoute().getPickupPosition().getAddress()}
+			  					<br>
+			  					To: ${item.getLift().getRoute().getDropoffPosition().getAddress()}
+			  					<br>
+			  					When: ${item.getLift().getStringDate()}
+			  					<br>
+			  					Depart at: ${item.getLift().getStringStartTime()}	
+			  					<br>
+			  					Arrive up: ${item.getLift().getStringStopTime()}	
+	  					  		<br>
+	  					  		Notes: ${item.getLift().getNote()}
+	  					  		<br>
+	  					  		Driver: ${item.getLift().getDriver().getFullName()}
+	  					  		<br>
+	  					  		Rating: ${item.getLift().getDriver().getRating()}		
 					</label>
 			      </c:forEach>
 			      <input class="button" type="submit" name="action" value="book">
@@ -226,13 +240,13 @@ function change(){
 	var x = document.getElementById("hGoing");
 	var cb = document.getElementById("switch").checked;
 	if(cb == true){
-		document.getElementById("lbDepart").innerHTML =  "Arrive at:" ;
+		document.getElementById("lbArrive").innerHTML =  "Depart at:" ;
 		document.getElementById("hGoing").innerHTML = "Return";
-		document.getElementById("switch").value="arrive";
+		document.getElementById("switch").value="return";
 		<% offerBean.setBookStatus("arrive"); %>
 	
 	}else{
-		document.getElementById("lbDepart").innerHTML = "Depart at:"
+		document.getElementById("lbArrive").innerHTML = "Arrive at:"
 		document.getElementById("hGoing").innerHTML  ="Going";
 		document.getElementById("switch").value="going";
 		<% offerBean.setBookStatus("going"); %>
