@@ -1,7 +1,11 @@
 package servlet;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import logic.bean.UserBean;
@@ -9,8 +13,8 @@ import logic.controller.LiftController;
 import logic.controller.LoginController;
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.DatabaseException;
+import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
-import logic.controller.exception.InvalidStateException;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.Position;
@@ -21,10 +25,19 @@ import logic.model.UserSingleton;
 
 public class ServletUtility {
 
-	public static void login(UserBean usr, HttpSession session) throws InvalidInputException, DatabaseException, InvalidStateException {
+	public static void login(String userID, String password, HttpServletRequest request, HttpServletResponse response){
 		LiftController liftController = new LiftController();
 		LoginController lgController = new LoginController();
-		lgController.login(usr);
+		HttpSession session = request.getSession();
+		
+		UserBean usr = new UserBean();
+		usr.setUserID(userID);
+		usr.setPassword(password);
+		try {
+			lgController.login(usr);
+		} catch (InvalidInputException | DatabaseException e1) {
+			ExceptionHandler.handle(e1, request, response, "index.jsp");
+		}
 		
 		UserSingleton sg = UserSingleton.getInstance();
 		usr.setRole(sg.getRole());
@@ -35,7 +48,7 @@ public class ServletUtility {
 			student.setNotifications(notifications);
 			session.setAttribute("user", student);
 			session.setAttribute("role", "student");
-			return;
+			
 		}else if (usr.getRole().equals(Role.DRIVER)) {
 			StudentCar studentCar = sg.getStudentCar();
 			studentCar.setBookedLift(liftController.loadBookedLift(studentCar.getUserID()));
@@ -43,7 +56,12 @@ public class ServletUtility {
 			studentCar.setNotifications(notifications);
 			session.setAttribute("user", studentCar);
 			session.setAttribute("role", "driver");
-			return;
+		}
+		
+		try {
+			request.getRequestDispatcher("homepage.jsp").forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -61,13 +79,11 @@ public class ServletUtility {
 			Student student = (Student) session.getAttribute("user");
 			student.setBookedLift(liftController.loadBookedLift(student.getUserID()));
 			session.setAttribute("user", student);
-			return;
 		}else if ("driver".equals(role)) {
 			StudentCar studentCar = (StudentCar) session.getAttribute("user");
 			studentCar.setBookedLift(liftController.loadBookedLift(studentCar.getUserID()));
 			studentCar.setOfferedLift(liftController.loadOfferedLift(studentCar.getUserID()));
 			session.setAttribute("user", studentCar);
-			return;
 		}
 	}
 }

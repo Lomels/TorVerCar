@@ -6,12 +6,16 @@ import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;
 
 public class StudentCar extends Student {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int rating;
-	private CarInfo carInfo;
+	private transient CarInfo carInfo;
 	
 	// used only in webapp
-	private List<Lift> offeredLift;
+	private transient List<Lift> offeredLift;
 
 	// Constructor from Student
 	public StudentCar(Student student, int rating, CarInfo carInfo) throws InvalidInputException {

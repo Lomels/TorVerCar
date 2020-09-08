@@ -1,5 +1,7 @@
 package servlet;
+
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,97 +11,81 @@ import javax.servlet.http.HttpSession;
 
 import logic.bean.MessageBean;
 import logic.bean.UserBean;
-import logic.controller.LoginController;
 import logic.controller.RegistrationController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
-import logic.controller.exception.InvalidStateException;
-import logic.utilities.MyLogger;
 
 @WebServlet("/LoginControllerServlet")
 public class LoginControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String CURRENT_USER = "currentUser";
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String action = request.getParameter("action");
 		String index = "index.jsp";
-		
-		
-		if("login".equals(action)) {
-			String userID = request.getParameter("userID");
-			String pwd = request.getParameter("pwd");
-			UserBean userBean = new UserBean();
-			userBean.setUserID(userID);
-			userBean.setPassword(pwd);
-			try {
-				ServletUtility.login(userBean, session);
-				session.setAttribute("userBean", userBean);
-				request.getRequestDispatcher("homepage.jsp").forward(request, response);
-			} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
-				ExceptionHandler.handle(e, request, response, index);
-			} catch (ServletException e) {
-				e.printStackTrace();
+
+		try {
+			if ("login".equals(action)) {
+				String userID = request.getParameter("userID");
+				String pwd = request.getParameter("pwd");
+				ServletUtility.login(userID, pwd, request, response);
+
 			}
 
-		}
-		
-		if("check".equals(action)) {
-			RegistrationController rgController = new RegistrationController();
-			String userID = request.getParameter("userID");
-			UserBean userBean;
-			try {
-				if(rgController.alreadyExist(userID)) {
+			if ("check".equals(action)) {
+				RegistrationController rgController = new RegistrationController();
+				String userID = request.getParameter("userID");
+				UserBean userBean;
+
+				if (rgController.alreadyExist(userID)) {
 					MessageBean message = new MessageBean();
 					message.setMessage("A user with this Student ID is already registered.");
 					message.setType("warning");
 					request.setAttribute("message", message);
-					MyLogger.info("message", message);
-					request.getRequestDispatcher(index).forward(request,response);
+					request.getRequestDispatcher(index).forward(request, response);
 					return;
-				}else {
+				} else {
 					userBean = rgController.recapInfo(userID);
 					userBean.setUserID(userID);
-					session.setAttribute("currentUser", userBean);
+					session.setAttribute(CURRENT_USER, userBean);
 					session.setAttribute("check", true);
-					request.getRequestDispatcher(index).forward(request,response);
+					request.getRequestDispatcher(index).forward(request, response);
 					return;
+
 				}
-			} catch (DatabaseException | InvalidInputException e) {
-				ExceptionHandler.handle(e, request, response, index);
-			} catch (ServletException e) {
-				e.printStackTrace();
 			}
-		}
-		
-		if("register".equals(action)) {
-			RegistrationController regController = new RegistrationController();
-			UserBean userBean = (UserBean) session.getAttribute("currentUser");
-			String password = request.getParameter("password");
-			String phone = request.getParameter("phone");
-			MyLogger.info("currentUser", userBean.getName()+" "+userBean.getSurname());
-			userBean.setPassword(password);
-			userBean.setPhone(phone);
-			
-			try {
+
+			if ("register".equals(action)) {
+				RegistrationController regController = new RegistrationController();
+				UserBean userBean = (UserBean) session.getAttribute("currentUser");
+
+				String password = request.getParameter("password");
+				String phone = request.getParameter("phone");
+
+				userBean.setPassword(password);
+				userBean.setPhone(phone);
 				regController.addStudent(userBean);
-				session.setAttribute("currentUser", userBean);
-				ServletUtility.login(userBean, session);
-				request.getRequestDispatcher("homepage.jsp").forward(request,response);
-			} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
-				ExceptionHandler.handle(e, request, response, index);
-			} catch (ServletException e) {
-				e.printStackTrace();
+
+				session.setAttribute(CURRENT_USER, userBean);
+				ServletUtility.login(userBean.getUserID(), password, request, response);
+
+				request.getRequestDispatcher("homepage.jsp").forward(request, response);
+
+				return;
 			}
-			
-			return;
-		}
-		
-		if("logout".equals(action)) {
-			session.invalidate(); 
-			response.sendRedirect(".");
+
+			if ("logout".equals(action)) {
+				session.invalidate();
+				response.sendRedirect(".");
+			}
+
+		} catch (InvalidInputException | DatabaseException e) {
+			ExceptionHandler.handle(e, request, response, index);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
 		}
 	}
-
 }

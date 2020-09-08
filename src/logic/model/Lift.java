@@ -8,8 +8,7 @@ import java.util.List;
 import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;
 
-public class Lift {
-
+public class Lift{
 	private Integer liftID;
 	private LocalDateTime startDateTime;
 	private Integer maxDuration;
