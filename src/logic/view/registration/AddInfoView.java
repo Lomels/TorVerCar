@@ -15,7 +15,8 @@ import logic.bean.UserBean;
 import logic.bean.UserBeanSingleton;
 import logic.controller.LoginController;
 import logic.controller.RegistrationController;
-import logic.controller.exception.InvalidInputException;
+import logic.controller.exception.DatabaseException;
+import logic.controller.exception.ExceptionHandler;
 import logic.model.Role;
 import logic.view.HomeView;
 import logic.view.MainMenuView;
@@ -44,16 +45,20 @@ public class AddInfoView extends Application{
 	}
 	
 	@FXML
-	public void finishButtonController() throws Exception, InvalidInputException {
+	public void finishButtonController() throws Exception {
 		UserBean user = sg.getUserBean();
 		if(etPassword.getText().equals(etRepeat.getText())) {
 			user.setPassword(etPassword.getText());
 			user.setPhone(etPhone.getText());
 			user.setRole(Role.STUDENT);
 			RegistrationController controller = new RegistrationController();
-			controller.addStudent(user);
 			LoginController login = new LoginController();
-			login.login(user);
+			try {
+				controller.addStudent(user);
+				login.login(user);
+			} catch (DatabaseException e) {
+				ExceptionHandler.handle(e);
+			}
 			MainMenuView finish = new MainMenuView();
 			finish.start((Stage) btFinish.getScene().getWindow());
 		}else {

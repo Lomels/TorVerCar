@@ -2,35 +2,27 @@ package logic.view;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.SelectionMode;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import logic.controller.LiftController;
 import logic.controller.LoginController;
 import logic.model.Lift;
-import logic.model.LiftMatchResult;
 import logic.model.UserSingleton;
-import logic.utilities.MyLogger;
 import logic.view.booking.BookView;
-import logic.view.booking.RowLift;
-import logic.view.booking.RowLiftController;
 import logic.view.mylift.RowMyLift;
-import logic.view.mylift.RowMyLiftController;
 import logic.view.offer.OfferView;
 
 public class MyLiftView extends Application implements Initializable {
@@ -47,7 +39,7 @@ public class MyLiftView extends Application implements Initializable {
 	@FXML
 	private Button btBook;
 	@FXML
-	private ListView<RowMyLift> lvLift;
+	private ListView<Lift> lvLift;
 	@FXML
 	private RadioButton rbOffered;
 	@FXML
@@ -117,12 +109,7 @@ public class MyLiftView extends Application implements Initializable {
 			lvLift.getItems().clear();
 
 			for (Lift result : booked) {
-				lvLift.getItems()
-						.add(new RowMyLift(result.getRoute().getPickupPosition().getAddress(),
-								result.getRoute().getDropoffPosition().getAddress(),
-								result.getStartDateTime().format(DateTimeFormatter.ISO_DATE),
-								result.getStartDateTime().format(DateTimeFormatter.ISO_LOCAL_TIME),
-								result.getStopDateTime().format(DateTimeFormatter.ISO_LOCAL_TIME)));
+				lvLift.getItems().add(result);
 			}
 		}
 	}
@@ -134,67 +121,28 @@ public class MyLiftView extends Application implements Initializable {
 			rbBooked.setDisable(false);
 			lvLift.getItems().clear();
 			for (Lift result : offered) {
-				lvLift.getItems()
-						.add(new RowMyLift(result.getRoute().getPickupPosition().getAddress(),
-								result.getRoute().getDropoffPosition().getAddress(),
-								result.getStartDateTime().format(DateTimeFormatter.ISO_DATE),
-								result.getStartDateTime().format(DateTimeFormatter.ISO_LOCAL_TIME),
-								result.getStopDateTime().format(DateTimeFormatter.ISO_LOCAL_TIME)));
+				lvLift.getItems().add(result);
 			}
 		}
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
 		if (rbOffered.isSelected()) {
 			for (Lift result : offered) {
-				lvLift.getItems()
-						.add(new RowMyLift(result.getRoute().getPickupPosition().getAddress(),
-								result.getRoute().getDropoffPosition().getAddress(),
-								result.getStartDateTime().format(DateTimeFormatter.ISO_DATE),
-								result.getStartDateTime().format(DateTimeFormatter.ISO_LOCAL_TIME),
-								result.getStopDateTime().format(DateTimeFormatter.ISO_LOCAL_TIME)));
+				lvLift.getItems().add(result);
 			}
 		} else {
 			for (Lift result : booked) {
-				lvLift.getItems()
-						.add(new RowMyLift(result.getRoute().getPickupPosition().getAddress(),
-								result.getRoute().getDropoffPosition().getAddress(),
-								result.getStartDateTime().format(DateTimeFormatter.ISO_DATE),
-								result.getStartDateTime().format(DateTimeFormatter.ISO_LOCAL_TIME),
-								result.getStopDateTime().format(DateTimeFormatter.ISO_LOCAL_TIME)));
+				lvLift.getItems().add(result);
 			}
 		}
-		lvLift.setCellFactory(lv -> new ListCell<RowMyLift>() {
-			private Node graphic;
-			private RowMyLiftController controller;
-			{
-				try {
-					FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/mylift_row.fxml"));
-					graphic = loader.load();
-					controller = loader.getController();
-				} catch (IOException exc) {
-					throw new RuntimeException(exc);
-				}
-			}
-
+		
+		lvLift.setCellFactory(new Callback<ListView<Lift>, ListCell<Lift>>() {
 			@Override
-			protected void updateItem(RowMyLift row, boolean empty) {
-				super.updateItem(row, empty);
-				if (empty) {
-					setGraphic(null);
-				} else {
-					controller.setFrom(row.getFrom());
-					controller.setTo(row.getTo());
-					controller.setStart(row.getStart());
-					controller.setStop(row.getStop());
-					controller.setWhen(row.getWhen());
-					setGraphic(graphic);
-				}
-
+			public ListCell<Lift> call(ListView<Lift> param) {
+				return new RowMyLift();
 			}
-
 		});
 	}
 }

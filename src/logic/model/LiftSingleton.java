@@ -17,7 +17,7 @@ public class LiftSingleton {
 	private Integer address;
 	private String notes;
 	private String arrivalTime;
-	private String purpose;
+	private String purpose = "cbGoing";
 
 	public String getPurpose() {
 		return purpose;
@@ -40,7 +40,6 @@ public class LiftSingleton {
 		return instance;
 	}
 
-	// TODO: usare setter
 	public void clearState() {
 		this.listPos.clear();
 		this.listLifts.clear();
@@ -50,9 +49,9 @@ public class LiftSingleton {
 		this.setDepartureTime(null);
 		this.setMaxDuration(null);
 		this.setNotes(null);
-
 		this.setStatus(Status.START);
 		this.setSelectedLift(null);
+		this.setPurpose("cbGoing");
 	}
 
 	public List<Position> getListPos() {

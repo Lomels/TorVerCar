@@ -79,21 +79,25 @@
 		</HBox>
 		<ComboBox fx:id="btMyLift" layoutX="273.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="28.0" prefWidth="103.0" promptText="My Lift" style="-fx-background-color: #046104; -fx-border-color: #046104;" visible="false" />
 		<Text fill="#39393a" layoutX="201.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Starting point:">
-         <font>
-            <Font size="17.0" />
-         </font></Text>
+			<font>
+				<Font size="17.0" />
+			</font>
+		</Text>
 		<Text fill="#39393a" layoutX="201.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Destination:">
-         <font>
-            <Font size="17.0" />
-         </font></Text>
-		<Text fill="#39393a" layoutX="201.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Depart from:">
-         <font>
-            <Font size="17.0" />
-         </font></Text>
-		<Text fill="#39393a" layoutX="201.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrive up:">
-         <font>
-            <Font size="17.0" />
-         </font></Text>
+			<font>
+				<Font size="17.0" />
+			</font>
+		</Text>
+		<Text fill="#39393a" layoutX="198.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Depart from:">
+			<font>
+				<Font size="17.0" />
+			</font>
+		</Text>
+		<Text fill="#39393a" layoutX="197.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Arrive up:">
+			<font>
+				<Font size="17.0" />
+			</font>
+		</Text>
 		<TextField fx:id="tfStartPoint" layoutX="323.0" layoutY="150.0" promptText="Street, CAP, Place">
 			<font>
 				<Font name="System Italic" size="15.0" />
@@ -118,9 +122,10 @@
 		<Button fx:id="btCheckStart" layoutX="534.0" layoutY="147.0" mnemonicParsing="false" onAction="#startButtonController" text="Find" />
 		<Button fx:id="btCheckEnd" layoutX="534.0" layoutY="189.0" mnemonicParsing="false" onAction="#destButtonController" text="Find" />
 		<Text fill="#39393a" layoutX="201.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Day:">
-         <font>
-            <Font size="17.0" />
-         </font></Text>
+			<font>
+				<Font size="17.0" />
+			</font>
+		</Text>
 		<DatePicker fx:id="dpDate" layoutX="323.0" layoutY="250.0" prefHeight="31.0" prefWidth="186.0" />
 		<HBox alignment="CENTER" layoutX="-3.0" layoutY="79.0" prefHeight="54.0" prefWidth="797.0" spacing="10.0">
 			<children>

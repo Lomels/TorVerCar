@@ -72,7 +72,6 @@ public class LoginView extends Application implements Initializable {
 		} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
 			ExceptionHandler.handle(e);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

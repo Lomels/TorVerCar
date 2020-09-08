@@ -2,9 +2,6 @@ package logic.view;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-import org.json.JSONException;
-
 import logic.bean.CarInfoBean;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
@@ -49,7 +46,7 @@ public interface OurStudentDatabase {
 
 	public void saveLift(Lift lift) throws DatabaseException;
 
-	public Lift loadLiftByID(Integer liftID) throws DatabaseException, JSONException, InvalidInputException;
+	public Lift loadLiftByID(Integer liftID) throws DatabaseException, InvalidInputException;
 
 	public void deleteLiftByID(Integer liftID);
 
@@ -94,9 +91,9 @@ public interface OurStudentDatabase {
 	public List<Lift> listAvailableLiftStartingWithinIntervalDateTime(LocalDateTime intervalStartDateTime,
 			LocalDateTime intervalStopDateTime);
 
-	public Lift getLastInsertedLift() throws DatabaseException, JSONException, InvalidInputException;
+	public Lift getLastInsertedLift() throws DatabaseException, InvalidInputException;
 
-	public Integer getLastInsertedLiftID() throws DatabaseException, JSONException, InvalidInputException;
+	public Integer getLastInsertedLiftID() throws DatabaseException, InvalidInputException;
 
 	void removeStudentByUserID(String userID) throws DatabaseException;
   

@@ -25,7 +25,9 @@ import logic.controller.LiftController;
 import logic.controller.LoginController;
 import logic.controller.RatingController;
 import logic.controller.exception.DatabaseException;
+import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
+import logic.controller.exception.InvalidStateException;
 import logic.model.Lift;
 import logic.model.UserSingleton;
 import logic.utilities.MyLogger;
@@ -64,32 +66,33 @@ public class MainMenuView extends Application implements Initializable {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
-		stage.sizeToScene();		
+		stage.sizeToScene();
 		stage.setResizable(false);
 
 		stage.show();
 
-		if (!(notifications = sg.getNotifications()).isEmpty()) {
+		notifications = sg.getNotifications();
+		if (!notifications.isEmpty()) {
 			showNotifications(notifications.size());
 		}
 
-		if (!(completedLifts = sg.getCompletedLift()).isEmpty()) {
+		completedLifts = sg.getCompletedLift();
+		if (!completedLifts.isEmpty()) {
 			MyLogger.info("completed lifts", completedLifts);
 			showCompletedLifts(completedLifts.size());
 		}
 	}
 
-	// TODO: assolutamente mostrare a schermo queste eccezioni
-	private void showCompletedLifts(int size) throws InvalidInputException, DatabaseException {
+	private void showCompletedLifts(int size) {
 		int i = 0;
-		
-		String format = new String("Please tell us if you enjoyed the ride, click on Show Details for further infos about the Lift");
-		
+
+		String format = "Please tell us if you enjoyed the ride, click on Show Details for further infos about the Lift";
+
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Completed lift");
 		alert.setHeaderText("Did you enjoyed the ride?");
 		alert.setContentText(format);
-		
+
 		ButtonType btYes = new ButtonType("YES", ButtonData.YES);
 		ButtonType btNo = new ButtonType("NO", ButtonData.NO);
 
@@ -98,36 +101,45 @@ public class MainMenuView extends Application implements Initializable {
 		DialogPane dialogPane = alert.getDialogPane();
 		dialogPane.getStylesheets().add(getClass().getResource("fxml/TorVerCar.css").toExternalForm());
 		dialogPane.getStyleClass().add("myDialog");
-				
-		format = new String("Lift arrived to %s.\nDeparted at %s.\nOffered by %s.");
-		
+
+		format = "Lift arrived to %s.\nDeparted at %s.\nOffered by %s.";
+
 		Text textArea = new Text();
 		GridPane content = new GridPane();
-	    content.setMaxWidth(Double.MAX_VALUE);
-	    content.add(textArea, 0, 0);
+		content.setMaxWidth(Double.MAX_VALUE);
+		content.add(textArea, 0, 0);
 
-	    alert.getDialogPane().setExpandableContent(content);
-		
+		alert.getDialogPane().setExpandableContent(content);
+
 		do {
 			Lift lift = completedLifts.get(i);
 			MyLogger.info("Driver id", lift.getDriver().getUserID());
-			
-			String message = String.format(format, lift.getRoute().getDropoffPosition().getAddress(), lift.getStopDateTime().toString(),
+
+			String message = String.format(format, lift.getRoute().getDropoffPosition().getAddress(),
+					lift.getStopDateTime().toString(),
 					lift.getDriver().getName() + " " + lift.getDriver().getSurname());
 			textArea.setText(message);
 			MyLogger.info("message", message);
 
-			Optional<ButtonType> result = alert.showAndWait(); 
+			Optional<ButtonType> result = alert.showAndWait();
 			RatingController ratingController = new RatingController();
-			if (result.get() == btYes) {
-				ratingController.upvoteLift(sg.getUserID(), lift.getLiftID(), lift.getDriver());
-				MyLogger.info("yes");
-			} else if (result.get() == btNo) {
-				ratingController.downvote(sg.getUserID(), lift.getLiftID(), lift.getDriver());
-				MyLogger.info("no");
-			} 
+			try {
+				if (result.isPresent()) {
+					if (result.get() == btYes) {
+
+						ratingController.upvoteLift(sg.getUserID(), lift.getLiftID(), lift.getDriver());
+					} else if (result.get() == btNo) {
+						ratingController.downvote(sg.getUserID(), lift.getLiftID(), lift.getDriver());
+						MyLogger.info("no");
+					}
+				}
+			} catch (InvalidInputException | DatabaseException e) {
+				ExceptionHandler.handle(e);
+			}
+			MyLogger.info("yes");
+
 			i++;
-		}while(i < size && i >= 0);
+		} while (i < size && i >= 0);
 	}
 
 	public void showNotifications(int index) {
@@ -148,14 +160,16 @@ public class MainMenuView extends Application implements Initializable {
 
 		do {
 			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == btNext) {
-				i++;
-				alert.setContentText(notifications.get(i));
-			} else if (result.get() == btBack) {
-				i--;
-				alert.setContentText(notifications.get(i));
-			} else {
-				break;
+			if (result.isPresent()) {
+				if (result.get() == btNext) {
+					i++;
+					alert.setContentText(notifications.get(i));
+				} else if (result.get() == btBack) {
+					i--;
+					alert.setContentText(notifications.get(i));
+				} else {
+					break;
+				}
 			}
 		} while ((i < index && i >= 0));
 
@@ -176,7 +190,8 @@ public class MainMenuView extends Application implements Initializable {
 			userID = sg.getUserID();
 			break;
 		default:
-			//TODO: visualizza errore poiché non esiste il Role richiesto
+			ExceptionHandler.handle(
+					new InvalidStateException("Something went wrong (invalid ROLE), please restart the application."));
 			break;
 		}
 		tvName.setText(welcome);
@@ -186,16 +201,11 @@ public class MainMenuView extends Application implements Initializable {
 	}
 
 	@FXML
-	public static void main(String[] args) {
-		launch(args);
-	}
-
-	@FXML
 	public void homeButtonController() throws Exception {
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
-	
+
 	@FXML
 	public void liftsButtonController() throws Exception {
 		MyLiftView myLift = new MyLiftView();
