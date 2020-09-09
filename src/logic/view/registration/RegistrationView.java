@@ -31,14 +31,20 @@ public class RegistrationView extends Application {
 	UserBeanSingleton usBean = UserBeanSingleton.getInstance();
 
 	@Override
-	public void start(Stage stage) throws IOException {
+	public void start(Stage stage)  {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/registration.fxml"));
-		Parent root = loader.load();
+		Parent root;
+		try {
+			root = loader.load();
+		
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.setResizable(false);
 
 		stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -71,7 +77,7 @@ public class RegistrationView extends Application {
 	}
 
 	@FXML
-	public void homeButtonController() throws IOException {
+	public void homeButtonController()  {
 		HomeView home = new HomeView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}

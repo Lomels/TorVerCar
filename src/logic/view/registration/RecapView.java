@@ -25,15 +25,21 @@ public class RecapView extends Application implements Initializable{
 	UserBeanSingleton sg = UserBeanSingleton.getInstance();
 	
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void start(Stage stage)  {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Recap_database_info.fxml"));
-		Parent root = loader.load();
+		Parent root;
+		try {
+			root = loader.load();
+		
 		Scene scene = new Scene(root);
 		stage.setTitle("Recap");
 		stage.setScene(scene);
 		stage.setResizable(false);
 
 		stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -46,7 +52,7 @@ public class RecapView extends Application implements Initializable{
 	}
 
 	@FXML
-	public void btNextController() throws Exception {
+	public void btNextController()  {
 		RegistrationController controller = new RegistrationController();
 		controller.sendCode();
 		CheckIdentityView next = new CheckIdentityView();
@@ -56,7 +62,7 @@ public class RecapView extends Application implements Initializable{
 	
 	
 	@FXML
-	public void btHomeController() throws IOException {
+	public void btHomeController()  {
 		HomeView home = new HomeView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}

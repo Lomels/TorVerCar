@@ -19,8 +19,11 @@ public class HomeView extends Application {
 	
 
 	@Override
-	public void start(Stage primaryStage) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("fxml/homepage.fxml"));
+	public void start(Stage primaryStage)  {
+		Parent root;
+		try {
+			root = FXMLLoader.load(getClass().getResource("fxml/homepage.fxml"));
+		
 		Stage stage = primaryStage;
 		Scene scene = new Scene(root);
 		stage.setTitle("TorVerCar");
@@ -28,18 +31,21 @@ public class HomeView extends Application {
 		stage.setResizable(false);
 
 		stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
 		launch(args);
 	}
 
-	public void loginButtonController() throws Exception {
+	public void loginButtonController()  {
 		LoginView login = new LoginView();
 		login.start((Stage) loginButton.getScene().getWindow());
 	}
 
-	public void regButtonController() throws IOException {
+	public void regButtonController() {
 		RegistrationView register = new RegistrationView();
 		register.start((Stage) regButton.getScene().getWindow());
 	}

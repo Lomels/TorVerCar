@@ -124,13 +124,19 @@ public class ProfileView extends Application implements Initializable {
 	}
 
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void start(Stage stage) {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Profile_page.fxml"));
-		Parent root = loader.load();
+		Parent root;
+		try {
+			root = loader.load();
+		
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
@@ -138,43 +144,43 @@ public class ProfileView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void homeButtonController() throws Exception {
+	public void homeButtonController()  {
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 
 	@FXML
-	public void liftsButtonController() throws Exception {
+	public void liftsButtonController()  {
 		MyLiftView myLift = new MyLiftView();
 		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
 
 	@FXML
-	public void bookButtonController() throws Exception {
+	public void bookButtonController() {
 		BookView book = new BookView();
 		book.start((Stage) btBook.getScene().getWindow());
 	}
 
 	@FXML
-	public void backButtonController() throws Exception {
+	public void backButtonController()  {
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btBack.getScene().getWindow());
 	}
 
 	@FXML
-	public void profileButtonController() throws Exception {
+	public void profileButtonController()  {
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
 	}
 
 	@FXML
-	public void myCarButtonController() throws Exception {
+	public void myCarButtonController() {
 		MyCarView myCar = new MyCarView();
 		myCar.start((Stage) btMyCar.getScene().getWindow());
 	}
 
 	@FXML
-	public void logoutButtonController() throws Exception {
+	public void logoutButtonController()  {
 		try {
 			LoginController.logout();
 		} catch (Exception e) {
@@ -184,13 +190,13 @@ public class ProfileView extends Application implements Initializable {
 		login.start((Stage) btLogout.getScene().getWindow());
 	}
 
-	public void offerButtonController() throws Exception {
+	public void offerButtonController()  {
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}
 
 	@FXML
-	public void deleteButtonController() throws DatabaseException, IOException {
+	public void deleteButtonController() throws DatabaseException {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Delete profile");
 		alert.setHeaderText("Warning!");

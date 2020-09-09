@@ -17,6 +17,7 @@ import logic.controller.LoginController;
 import logic.controller.RegistrationController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
+import logic.controller.exception.InvalidInputException;
 import logic.model.Role;
 import logic.view.HomeView;
 import logic.view.MainMenuView;
@@ -34,18 +35,24 @@ public class AddInfoView extends Application{
 	
 	
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void start(Stage stage)  {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Add_info_registration.fxml"));
-		Parent root = loader.load();
+		Parent root;
+		try {
+			root = loader.load();
+		
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.setResizable(false);
 
-		stage.show();	
+		stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML
-	public void finishButtonController() throws Exception {
+	public void finishButtonController()   {
 		UserBean user = sg.getUserBean();
 		if(etPassword.getText().equals(etRepeat.getText())) {
 			user.setPassword(etPassword.getText());
@@ -56,7 +63,7 @@ public class AddInfoView extends Application{
 			try {
 				controller.addStudent(user);
 				login.login(user);
-			} catch (DatabaseException e) {
+			} catch (DatabaseException | InvalidInputException e) {
 				ExceptionHandler.handle(e);
 			}
 			MainMenuView finish = new MainMenuView();
@@ -66,7 +73,7 @@ public class AddInfoView extends Application{
 		}
 	}
 	
-	@FXML void carButtonController() throws Exception {
+	@FXML void carButtonController()  {
 		if(etPassword.getText().equals(etRepeat.getText())) {
 			sg.getUserBean().setPassword(etPassword.getText());
 			sg.getUserBean().setPhone(etPhone.getText());
@@ -80,7 +87,7 @@ public class AddInfoView extends Application{
 	}
 	
 	@FXML
-	public void homeButtonController() throws IOException {
+	public void homeButtonController()  {
 		HomeView home = new HomeView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}

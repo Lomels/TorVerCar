@@ -41,14 +41,20 @@ public class LoginView extends Application implements Initializable {
 	private Text error;
 
 	@Override
-	public void start(Stage stage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("fxml/login.fxml"));
+	public void start(Stage stage)  {
+		Parent root;
+		try {
+			root = FXMLLoader.load(getClass().getResource("fxml/login.fxml"));
+		
 		Scene scene = new Scene(root);
 		stage.setTitle("Benvenuto in TorVerCar.");
 		stage.setScene(scene);
 		stage.setResizable(false);
 
 		stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
@@ -56,7 +62,7 @@ public class LoginView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void homeButtonController() throws IOException {
+	public void homeButtonController()  {
 		HomeView home = new HomeView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
@@ -69,7 +75,7 @@ public class LoginView extends Application implements Initializable {
 			controller.login(bean);
 			MainMenuView main = new MainMenuView();
 			main.start((Stage) btLogin.getScene().getWindow());
-		} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
+		} catch (InvalidInputException | DatabaseException e) {
 			ExceptionHandler.handle(e);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -23,19 +23,25 @@ public class CheckIdentityView extends Application{
 	@FXML private TextField etCode;
 	
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void start(Stage stage)  {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Check_Registration.fxml"));
-		Parent root = loader.load();
+		Parent root;
+		try {
+			root = loader.load();
+		
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.setResizable(false);
 
 		stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 		
 	@FXML
-	public void homeButtonController() throws IOException {
+	public void homeButtonController()  {
 		HomeView back = new HomeView();
 		back.start((Stage) btHome.getScene().getWindow());
 	}
