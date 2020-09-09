@@ -1,18 +1,12 @@
 package logic.view;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
@@ -20,26 +14,11 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import logic.bean.UserBean;
 import logic.controller.LiftController;
-import logic.controller.LoginController;
 import logic.model.Lift;
 import logic.model.UserSingleton;
-import logic.view.booking.BookView;
 import logic.view.mylift.RowMyLift;
-import logic.view.offer.OfferView;
 
-public class MyLiftView extends Application implements Initializable {
-	@FXML
-	private Button btHome;
-	@FXML
-	private Button btMyCar;
-	@FXML
-	private Button btProfile;
-	@FXML
-	private Button btLogout;
-	@FXML
-	private Button btOffer;
-	@FXML
-	private Button btBook;
+public class MyLiftView extends ViewController implements Initializable {
 	@FXML
 	private ListView<Lift> lvLift;
 	@FXML
@@ -53,55 +32,16 @@ public class MyLiftView extends Application implements Initializable {
 	private List<Lift> offered = new ArrayList<>();
 	private List<Lift> booked = new ArrayList<>();
 	private UserBean userBean = new UserBean();
-
+	private ViewController view = new ViewController();
+	
 	@Override
-	public void start(Stage stage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/mylift_list.fxml"));
-		Parent root = loader.load();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setResizable(false);
 
-		stage.show();
+	public void start(Stage stage){
+		view.start("fxml/mylift_list.fxml", stage);
+		
 	}
-
 	public static void main(String[] args) {
 		launch(args);
-	}
-
-	public void homeButtonController() throws Exception {
-		MainMenuView home = new MainMenuView();
-		home.start((Stage) btHome.getScene().getWindow());
-	}
-
-	public void myCarButtonController() throws Exception {
-		MyCarView car = new MyCarView();
-		car.start((Stage) btMyCar.getScene().getWindow());
-	}
-
-	public void profileButtonController() throws Exception {
-		ProfileView profile = new ProfileView();
-		profile.start((Stage) btProfile.getScene().getWindow());
-	}
-
-	public void logoutButtonController() throws IOException {
-		try {
-			LoginController.logout();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		HomeView home = new HomeView();
-		home.start((Stage) btLogout.getScene().getWindow());
-	}
-
-	public void offerButtonController() throws Exception {
-		OfferView offer = new OfferView();
-		offer.start((Stage) btOffer.getScene().getWindow());
-	}
-
-	public void bookButtonController() throws Exception {
-		BookView book = new BookView();
-		book.start((Stage) btBook.getScene().getWindow());
 	}
 
 	public void rbBookedController() {

@@ -1,40 +1,25 @@
 package logic.view;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.bean.CarInfoBean;
-import logic.controller.LoginController;
 import logic.controller.SetCarInfoController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Role;
 import logic.model.UserSingleton;
-import logic.view.booking.BookView;
-import logic.view.offer.OfferView;
 
-public class MyCarView extends Application implements Initializable{
+public class MyCarView extends ViewController implements Initializable{
 	@FXML private Button btBack;
 	@FXML private Button btEdit;
-	@FXML private Button btHome;
-	@FXML private Button btProfile;
-	@FXML private Button btLogout;
-	@FXML private Button btMyCar;
 	@FXML private Button btSave;
-	@FXML private Button btBook;
-	@FXML private Button btOffer;
-	@FXML private Button btLifts;
 	
 	@FXML private TextField tfModel;
 	@FXML private TextField tfColour;
@@ -44,16 +29,13 @@ public class MyCarView extends Application implements Initializable{
 	UserSingleton sg = UserSingleton.getInstance();
 	CarInfoBean cIBean = new CarInfoBean();
 	SetCarInfoController controller = new SetCarInfoController();
+	private ViewController view = new ViewController();
 	
 	@Override
-	public void start(Stage stage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/My_car_page.fxml"));
-		Parent root = loader.load();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setResizable(false);
 
-		stage.show();
+	public void start(Stage stage){
+		view.start("fxml/My_car_page.fxml", stage);
+		
 	}
 	
 	@Override
@@ -107,52 +89,6 @@ public class MyCarView extends Application implements Initializable{
 
 	}
 
-	@FXML
-	public void homeButtonController() throws Exception {
-		MainMenuView home = new MainMenuView();
-		home.start((Stage) btHome.getScene().getWindow());
-	}
-	
-	@FXML
-	public void profileButtonController() throws Exception {
-		ProfileView profile = new ProfileView();
-		profile.start((Stage) btProfile.getScene().getWindow());
-	}
-	
-	@FXML
-	public void myCarButtonController() throws Exception {
-		MyCarView myCar = new MyCarView();
-		myCar.start((Stage) btMyCar.getScene().getWindow());
-	}
-	
-	@FXML
-	public void liftsButtonController() throws Exception {
-		MyLiftView myLift = new MyLiftView();
-		myLift.start((Stage) btLifts.getScene().getWindow());
-	}
-	
-	@FXML
-	public void logoutButtonController() throws IOException{
-		try {
-			LoginController.logout();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		HomeView home = new HomeView();
-		home.start((Stage) btLogout.getScene().getWindow());
-	}
-	
-	@FXML
-	public void bookButtonController() throws Exception {
-		BookView book = new BookView();
-		book.start((Stage) btBook.getScene().getWindow());
-	}
-	
-	@FXML
-	public void offerButtonController() throws Exception {
-		OfferView offer = new OfferView();
-		offer.start((Stage) btOffer.getScene().getWindow());
-	}
 	
 	public boolean checkCar() {
 		return sg.getRole().equals(Role.DRIVER);

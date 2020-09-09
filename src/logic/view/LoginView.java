@@ -1,6 +1,5 @@
 package logic.view;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -11,11 +10,8 @@ import logic.controller.LoginController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
-import logic.controller.exception.InvalidStateException;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
@@ -39,16 +35,13 @@ public class LoginView extends Application implements Initializable {
 	private Text text;
 	@FXML
 	private Text error;
-
+	
+	private ViewController view = new ViewController();
+	
 	@Override
-	public void start(Stage stage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("fxml/login.fxml"));
-		Scene scene = new Scene(root);
-		stage.setTitle("Benvenuto in TorVerCar.");
-		stage.setScene(scene);
-		stage.setResizable(false);
 
-		stage.show();
+	public void start(Stage stage){
+		view.start("fxml/login.fxml", stage);
 	}
 
 	public static void main(String[] args) {
@@ -56,7 +49,7 @@ public class LoginView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void homeButtonController() throws IOException {
+	public void homeButtonController()  {
 		HomeView home = new HomeView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
@@ -69,7 +62,7 @@ public class LoginView extends Application implements Initializable {
 			controller.login(bean);
 			MainMenuView main = new MainMenuView();
 			main.start((Stage) btLogin.getScene().getWindow());
-		} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
+		} catch (InvalidInputException | DatabaseException e) {
 			ExceptionHandler.handle(e);
 		} catch (Exception e) {
 			e.printStackTrace();

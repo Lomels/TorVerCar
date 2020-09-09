@@ -25,9 +25,6 @@ public class SetCarInfoController {
 		Student student = new Student(userBean.getUserID(), userBean.getPassword(), userBean.getEmail(),
 				userBean.getName(), userBean.getSurname(), userBean.getPhone());
 
-		// TODO: controllare l'impostazione del rating, 0 ho messo io, parte commentata
-		// era la precedente versione
-
 		return new StudentCar(student, 0, car);
 
 	}
@@ -41,7 +38,6 @@ public class SetCarInfoController {
 			ourDb.editCarInfoByUserID(sg.getStudentCar().getUserID(), newCarInfo);
 			break;
 		case STUDENT:
-			// TODO: controllare sempre il set del rating
 			StudentCar sCar = new StudentCar(sg.getStudent(), 0, carInfo);
 			ourDb.addCar(sCar);
 			sg.setRole(Role.DRIVER);

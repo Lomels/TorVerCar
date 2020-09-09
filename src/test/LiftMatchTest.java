@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import logic.bean.LiftBean;
 import logic.controller.LiftController;
 import logic.controller.LiftMatchListener;
 import logic.controller.exception.ApiNotReachableException;
@@ -46,8 +47,11 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 
 		LiftController liftController = new LiftController();
 		LocalDateTime startDateTime = LocalDateTime.parse("2020-08-15T19:45");
-
-		assertDoesNotThrow(() -> liftController.matchLiftStartingAfter(startDateTime, this.route.getStops(), 0, this));
+		LiftBean liftBean = new LiftBean();
+		liftBean.setStartDateTime(startDateTime);
+		liftBean.setStartPos(this.route.getStops().get(0));
+		liftBean.setStartPos(this.route.getStops().get(1));
+		assertDoesNotThrow(() -> liftController.matchLiftStartingAfter(liftBean, 0, this));
 	}
 
 	@Test
@@ -55,9 +59,12 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 		this.setup();
 		LiftController liftController = new LiftController();
 		LocalDateTime startDateTime = LocalDateTime.parse("2021-08-15T19:45");
-
+		LiftBean liftBean = new LiftBean();
+		liftBean.setStartDateTime(startDateTime);
+		liftBean.setStartPos(this.route.getStops().get(0));
+		liftBean.setStartPos(this.route.getStops().get(1));
 		assertThrows(TestRuntimeException.class,
-				() -> liftController.matchLiftStartingAfter(startDateTime, this.route.getStops(), 0, this));
+				() -> liftController.matchLiftStartingAfter(liftBean, 0, this));
 	}
 
 	@Test
@@ -66,8 +73,11 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 
 		LiftController liftController = new LiftController();
 		LocalDateTime stopDateTime = LocalDateTime.parse("2020-08-15T19:45");
-
-		assertDoesNotThrow(() -> liftController.matchLiftStoppingBefore(stopDateTime, this.route.getStops(), 0, this));
+		LiftBean liftBean = new LiftBean();
+		liftBean.setStartDateTime(stopDateTime);
+		liftBean.setStartPos(this.route.getStops().get(0));
+		liftBean.setStartPos(this.route.getStops().get(1));
+		assertDoesNotThrow(() -> liftController.matchLiftStoppingBefore(liftBean, 0, this));
 	}
 
 	@Test
@@ -76,9 +86,12 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 
 		LiftController liftController = new LiftController();
 		LocalDateTime stopDateTime = LocalDateTime.parse("2021-08-15T19:45");
-
+		LiftBean liftBean = new LiftBean();
+		liftBean.setStartDateTime(stopDateTime);
+		liftBean.setStartPos(this.route.getStops().get(0));
+		liftBean.setStartPos(this.route.getStops().get(1));
 		assertThrows(TestRuntimeException.class,
-				() -> liftController.matchLiftStoppingBefore(stopDateTime, this.route.getStops(), 0, this));
+				() -> liftController.matchLiftStoppingBefore(liftBean, 0, this));
 	}
 
 	@Override

@@ -14,13 +14,11 @@ import logic.controller.SetCarInfoController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
-import logic.controller.exception.InvalidStateException;
 import logic.model.UserSingleton;
 import logic.model.CarInfo;
 import logic.model.Role;
 import logic.model.Student;
 import logic.model.StudentCar;
-import logic.view.mysql.MySqlDAO;
 
 @WebServlet("/CarControllerServlet")
 public class CarControllerServlet extends HttpServlet {

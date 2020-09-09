@@ -19,7 +19,6 @@ class UniDAOTest extends TestUtilities{
 //	@Test
 	void loadExistingInfos() throws Exception {
 		UniDAO uni = new UniDAO();
-		UserBean iByDao = uni.getByUserID(USERID);
 		UserBean iToCompare = new UserBean();
 		iToCompare.setUserID(USERID);
 		iToCompare.setName(NAME);

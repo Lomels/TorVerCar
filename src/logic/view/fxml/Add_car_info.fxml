@@ -58,13 +58,6 @@
 				<Font size="17.0" />
 			</font>
 		</Text>
-		<TextArea layoutX="54.0" layoutY="79.0" prefHeight="217.0"
-			prefWidth="479.0"
-			text="&#10;MODEL:&#10;&#10;&#10;COLOUR:&#10;&#10;&#10;PLATE:&#10;&#10;&#10;SEATS AVAILABLE:&#10;&#10;&#10;&#10;&#10;">
-			<font>
-				<Font size="11.0" />
-			</font>
-		</TextArea>
 		<TextField fx:id="tfModel" layoutX="286.0" layoutY="183.0"
 			prefHeight="26.0" prefWidth="303.0" />
 		<TextField fx:id="tfColour" layoutX="286.0" layoutY="222.0"

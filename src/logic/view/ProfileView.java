@@ -1,16 +1,11 @@
 package logic.view;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -22,7 +17,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.bean.UserBean;
-import logic.controller.LoginController;
 import logic.controller.ProfileController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
@@ -30,10 +24,8 @@ import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
 import logic.controller.exception.NoRoleFound;
 import logic.model.UserSingleton;
-import logic.view.booking.BookView;
-import logic.view.offer.OfferView;
 
-public class ProfileView extends Application implements Initializable {
+public class ProfileView extends ViewController implements Initializable {
 	@FXML
 	private TextField txName;
 	@FXML
@@ -53,31 +45,21 @@ public class ProfileView extends Application implements Initializable {
 	private CheckBox cbShow;
 
 	@FXML
-	private Button btHome;
-	@FXML
 	private Button btBack;
-	@FXML
-	private Button btProfile;
-	@FXML
-	private Button btMyCar;
+	
 	@FXML
 	private Button btSave;
 	@FXML
 	private Button btEdit;
-	@FXML
-	private Button btLogout;
-	@FXML
-	private Button btOffer;
-	@FXML
-	private Button btBook;
-	@FXML
-	private Button btLifts;
 	@FXML
 	private Button btDelete;
 
 	UserSingleton sg = UserSingleton.getInstance();
 	ProfileController controller = new ProfileController();
 	String userID;
+
+	private ViewController view = new ViewController();
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -124,13 +106,10 @@ public class ProfileView extends Application implements Initializable {
 	}
 
 	@Override
-	public void start(Stage stage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Profile_page.fxml"));
-		Parent root = loader.load();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setResizable(false);
-		stage.show();
+
+	public void start(Stage stage){
+		view.start("fxml/Profile_page.fxml", stage);
+		
 	}
 
 	public static void main(String[] args) {
@@ -138,59 +117,13 @@ public class ProfileView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void homeButtonController() throws Exception {
-		MainMenuView home = new MainMenuView();
-		home.start((Stage) btHome.getScene().getWindow());
-	}
-
-	@FXML
-	public void liftsButtonController() throws Exception {
-		MyLiftView myLift = new MyLiftView();
-		myLift.start((Stage) btLifts.getScene().getWindow());
-	}
-
-	@FXML
-	public void bookButtonController() throws Exception {
-		BookView book = new BookView();
-		book.start((Stage) btBook.getScene().getWindow());
-	}
-
-	@FXML
-	public void backButtonController() throws Exception {
+	public void backButtonController()  {
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btBack.getScene().getWindow());
 	}
 
 	@FXML
-	public void profileButtonController() throws Exception {
-		ProfileView profile = new ProfileView();
-		profile.start((Stage) btProfile.getScene().getWindow());
-	}
-
-	@FXML
-	public void myCarButtonController() throws Exception {
-		MyCarView myCar = new MyCarView();
-		myCar.start((Stage) btMyCar.getScene().getWindow());
-	}
-
-	@FXML
-	public void logoutButtonController() throws Exception {
-		try {
-			LoginController.logout();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		LoginView login = new LoginView();
-		login.start((Stage) btLogout.getScene().getWindow());
-	}
-
-	public void offerButtonController() throws Exception {
-		OfferView offer = new OfferView();
-		offer.start((Stage) btOffer.getScene().getWindow());
-	}
-
-	@FXML
-	public void deleteButtonController() throws DatabaseException, IOException {
+	public void deleteButtonController() throws DatabaseException {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Delete profile");
 		alert.setHeaderText("Warning!");

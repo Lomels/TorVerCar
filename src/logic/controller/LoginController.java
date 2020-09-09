@@ -17,7 +17,6 @@ public class LoginController {
 		if (checkBean(bean)) {
 			if (!ourDb.wasBannedByUserID(bean.getUserID())) {
 				sg.setRole(ourDb.loadRoleByUserID(bean.getUserID()));
-				// TODO: implementare controllo sessione attiva
 				switch (sg.getRole()) {
 				case STUDENT:
 					Student s = ourDb.loadStudentByUserID(bean.getUserID());
