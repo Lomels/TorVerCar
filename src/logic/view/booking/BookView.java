@@ -10,15 +10,21 @@ import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import logic.bean.LiftBean;
 import logic.controller.LiftController;
+import logic.controller.LiftMatchListener;
+import logic.controller.LoginController;
+import logic.controller.exception.ApiNotReachableException;
+import logic.controller.exception.ExceptionHandler;
+import logic.controller.exception.InvalidInputException;
+import logic.controller.exception.NoLiftAvailable;
 import logic.controller.maps.AdapterMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.LiftMatchResult;
@@ -34,12 +40,6 @@ import logic.view.ProfileView;
 import logic.view.ViewController;
 import logic.view.offer.AddressListView;
 import logic.view.offer.OfferView;
-import logic.controller.LiftMatchListener;
-import logic.controller.LoginController;
-import logic.controller.exception.ApiNotReachableException;
-import logic.controller.exception.ExceptionHandler;
-import logic.controller.exception.InvalidInputException;
-import logic.controller.exception.NoLiftAvailable;
 
 public class BookView extends Application implements Initializable, LiftMatchListener {
 	@FXML

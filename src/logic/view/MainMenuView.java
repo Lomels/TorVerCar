@@ -32,37 +32,21 @@ import logic.utilities.MyLogger;
 import logic.view.booking.BookView;
 import logic.view.offer.OfferView;
 
-public class MainMenuView extends Application implements Initializable {
+public class MainMenuView extends ViewController implements Initializable {
 	@FXML
 	private Text tvWelcome;
 	@FXML
 	private Text tvName;
-	@FXML
-	private Button btHome;
-	@FXML
-	private Button btMyCar;
-	@FXML
-	private Button btProfile;
-	@FXML
-	private Button btLogout;
-	@FXML
-	private Button btOffer;
-	@FXML
-	private Button btBook;
-	@FXML
-	private Button btLifts;
 
 	private UserSingleton sg = UserSingleton.getInstance();
 	private UserBean userBean = new UserBean();
 	private List<String> notifications;
 	private List<Lift> completedLifts;
 	private LiftController liftContr = new LiftController();
-	private ViewController view = new ViewController();
 		
 	@Override
-
 	public void start(Stage stage){
-		view.start("fxml/Home_menu.fxml", stage);		
+		super.start("fxml/Home_menu.fxml", stage);		
 		notifications = sg.getNotifications();
 		if (!notifications.isEmpty()) {
 			showNotifications(notifications.size());
@@ -192,52 +176,5 @@ public class MainMenuView extends Application implements Initializable {
 		sg.setCompletedLift(liftContr.checkCompletedLift(userBean));
 	}
 
-	@FXML
-	public void homeButtonController()  {
-		MainMenuView home = new MainMenuView();
-		home.start((Stage) btHome.getScene().getWindow());
-	}
 
-	@FXML
-	public void liftsButtonController()  {
-		MyLiftView myLift = new MyLiftView();
-		myLift.start((Stage) btLifts.getScene().getWindow());
-	}
-
-	@FXML
-	public void myCarButtonController()  {
-		MyCarView car = new MyCarView();
-		car.start((Stage) btMyCar.getScene().getWindow());
-	}
-
-	@FXML
-	public void profileButtonController(){
-		ProfileView profile = new ProfileView();
-		profile.start((Stage) btProfile.getScene().getWindow());
-	}
-
-	@FXML
-	public void logoutButtonController()  {
-		
-			try {
-				LoginController.logout();
-			} catch (InvalidStateException e) {
-				ExceptionHandler.handle(e);;
-			}
-		
-		HomeView home = new HomeView();
-		home.start((Stage) btLogout.getScene().getWindow());
-	}
-
-	@FXML
-	public void offerButtonController()  {
-		OfferView offer = new OfferView();
-		offer.start((Stage) btOffer.getScene().getWindow());
-	}
-
-	@FXML
-	public void bookButtonController()  {
-		BookView book = new BookView();
-		book.start((Stage) btBook.getScene().getWindow());
-	}
 }
