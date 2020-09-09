@@ -5,7 +5,6 @@ import logic.bean.UserBean;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Lift;
-import logic.model.StudentCar;
 import logic.view.mysql.MySqlDAO;
 
 public class RatingController {
@@ -22,7 +21,6 @@ public class RatingController {
 		this.deleteLiftIfConcluded(lift.getLiftID());
 	}
 
-	//TODO: me sa che passare -1 è n'attimo illegale
 	public void downvote(UserBean user, LiftBean lift)
 			throws InvalidInputException, DatabaseException {
 		// Update in the application level
