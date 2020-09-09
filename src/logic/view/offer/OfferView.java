@@ -116,9 +116,7 @@ public class OfferView extends ViewController implements Initializable {
 			controller.createLift(lift);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-		} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
-			ExceptionHandler.handle(e);
-		} catch (ApiNotReachableException e) {
+		} catch (InvalidInputException | DatabaseException | InvalidStateException | ApiNotReachableException e) {
 			ExceptionHandler.handle(e);
 		}
 

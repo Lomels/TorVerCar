@@ -30,13 +30,11 @@ public class TestSelenium {
 		driver.findElement(By.xpath("//*[@id=\"navbar\"]/a[4]")).click();
 		
 		//UserID
-		WebElement loginfield = driver.findElement(By.xpath("//*[@id=\"loginDialog\"]/form/div/input[1]"));
-		wait.until(ExpectedConditions.visibilityOf(loginfield));  
-		loginfield.sendKeys(USER_ID);
-		
-		//Password
-		WebElement pswfield = driver.findElement(By.xpath("//*[@id=\"myPass\"]"));
-		pswfield.sendKeys("aaaAAA123@");
+		WebElement userid = driver.findElement(By.xpath("//*[@id=\"loginDialog\"]/form/div/input[1]"));
+		wait.until(ExpectedConditions.visibilityOf(userid));  
+		userid.sendKeys(USER_ID);
+		//password
+		driver.findElement(By.xpath("//*[@id=\"myPass\"]")).sendKeys("aaaAAA123@");
 				
 		//Login
 		driver.findElement(By.xpath("//*[@id=\"loginDialog\"]/form/div/button[2]")).click();

@@ -30,7 +30,7 @@ public class ViewController extends Application {
 	protected Button btBook;
 	@FXML
 	protected Button btLifts;
-	
+
 	public void start(String path, Stage stage) {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
 
@@ -46,10 +46,10 @@ public class ViewController extends Application {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
+		/* Never used */
 	}
 	
 	@FXML
@@ -82,7 +82,7 @@ public class ViewController extends Application {
 			try {
 				LoginController.logout();
 			} catch (InvalidStateException e) {
-				ExceptionHandler.handle(e);;
+				ExceptionHandler.handle(e);
 			}
 		
 		HomeView home = new HomeView();
