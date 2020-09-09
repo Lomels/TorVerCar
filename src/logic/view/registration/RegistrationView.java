@@ -1,6 +1,5 @@
 package logic.view.registration;
 
-import java.io.IOException;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import logic.bean.UserBean;
@@ -12,7 +11,6 @@ import logic.controller.exception.InvalidInputException;
 import logic.view.HomeView;
 import logic.view.ViewController;
 import javafx.fxml.*;
-import javafx.scene.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;

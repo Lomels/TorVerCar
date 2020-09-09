@@ -1,13 +1,11 @@
 package logic.view.registration;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.fxml.*;
-import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import logic.bean.UserBean;
