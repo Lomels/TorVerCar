@@ -16,18 +16,12 @@ public class HomeView extends Application {
 	private Button loginButton;
 	@FXML
 	private Button regButton;
-	
+	private ViewController view = new ViewController();
+
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("fxml/homepage.fxml"));
-		Stage stage = primaryStage;
-		Scene scene = new Scene(root);
-		stage.setTitle("TorVerCar");
-		stage.setScene(scene);
-		stage.setResizable(false);
-
-		stage.show();
+		view.start("fxml/homepage.fxml", primaryStage);
 	}
 
 	public static void main(String[] args) {

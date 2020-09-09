@@ -31,6 +31,7 @@ import logic.view.MainMenuView;
 import logic.view.MyCarView;
 import logic.view.MyLiftView;
 import logic.view.ProfileView;
+import logic.view.ViewController;
 import logic.view.booking.BookView;
 
 public class AddressListView extends Application implements Initializable {
@@ -66,19 +67,15 @@ public class AddressListView extends Application implements Initializable {
 	@FXML
 	private ListView<Position> addressList;
 
-	LiftSingleton lift = LiftSingleton.getInstance();
-	UserSingleton sg = UserSingleton.getInstance();
-	ViewMapHereApi map = ViewMapHereApi.getInstance();
+	private LiftSingleton lift = LiftSingleton.getInstance();
+	private UserSingleton sg = UserSingleton.getInstance();
+	private ViewMapHereApi map = ViewMapHereApi.getInstance();
+	private ViewController viewController = new ViewController();
+
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/address_list.fxml"));
-		Parent root = loader.load();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setResizable(false);
-
-		stage.show();
+		viewController.start("fxml/address_list.fxml", stage);
 	}
 
 	public static void main(String[] args) {
