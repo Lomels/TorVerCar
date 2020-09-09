@@ -41,6 +41,7 @@ import logic.controller.LiftMatchListener;
 import logic.controller.LoginController;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.NoLiftAvailable;
+import logic.controller.exception.PassengerException;
 
 public class BookView extends Application implements Initializable, LiftMatchListener {
 	@FXML
@@ -107,10 +108,14 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	}
 
 	@FXML
-	public void homeButtonController() throws Exception {
+	public void homeButtonController(){
 		liftSg.clearState();
 		MainMenuView home = new MainMenuView();
-		home.start((Stage) btHome.getScene().getWindow());
+		try {
+			home.start((Stage) btHome.getScene().getWindow());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML

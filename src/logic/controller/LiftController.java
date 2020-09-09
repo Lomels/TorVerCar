@@ -188,8 +188,11 @@ public class LiftController {
 
 		try {
 			matchedLifts = futureCall.get();
-		} catch (InterruptedException | ExecutionException e) {
+		} catch (InterruptedException e) {
 			LOGGER.severe(e.toString());
+			Thread.currentThread().interrupt();
+		} catch (ExecutionException e) {
+			LOGGER.severe(e.toString());		
 		}
 
 		listener.onThreadEnd(matchedLifts);

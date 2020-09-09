@@ -21,7 +21,6 @@ public class LiftBean {
 	private Position startPos;
 	private Position stopPos;
 	
-	public LiftBean() {}
 	
 	public Integer getLiftID() {
 		return liftID;
