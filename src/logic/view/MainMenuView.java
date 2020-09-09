@@ -61,16 +61,11 @@ public class MainMenuView extends Application implements Initializable {
 	private List<String> notifications;
 	private List<Lift> completedLifts;
 	private LiftController liftContr = new LiftController();
-
+	private ViewController view = new ViewController();
+		
 	@Override
 	public void start(Stage stage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Home_menu.fxml"));
-		Parent root = loader.load();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.sizeToScene();
-		stage.setResizable(false);
-		stage.show();
+		view.start("fxml/Home_menu.fxml", stage);
 		
 		notifications = sg.getNotifications();
 		if (!notifications.isEmpty()) {
