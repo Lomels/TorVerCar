@@ -3,34 +3,23 @@ package logic.view;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.bean.CarInfoBean;
-import logic.controller.LoginController;
 import logic.controller.SetCarInfoController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Role;
 import logic.model.UserSingleton;
-import logic.view.booking.BookView;
-import logic.view.offer.OfferView;
 
-public class MyCarView extends Application implements Initializable{
+public class MyCarView extends ViewController implements Initializable{
 	@FXML private Button btBack;
 	@FXML private Button btEdit;
-	@FXML private Button btHome;
-	@FXML private Button btProfile;
-	@FXML private Button btLogout;
-	@FXML private Button btMyCar;
 	@FXML private Button btSave;
-	@FXML private Button btBook;
-	@FXML private Button btOffer;
-	@FXML private Button btLifts;
 	
 	@FXML private TextField tfModel;
 	@FXML private TextField tfColour;
@@ -100,52 +89,6 @@ public class MyCarView extends Application implements Initializable{
 
 	}
 
-	@FXML
-	public void homeButtonController() {
-		MainMenuView home = new MainMenuView();
-		home.start((Stage) btHome.getScene().getWindow());
-	}
-	
-	@FXML
-	public void profileButtonController()  {
-		ProfileView profile = new ProfileView();
-		profile.start((Stage) btProfile.getScene().getWindow());
-	}
-	
-	@FXML
-	public void myCarButtonController()  {
-		MyCarView myCar = new MyCarView();
-		myCar.start((Stage) btMyCar.getScene().getWindow());
-	}
-	
-	@FXML
-	public void liftsButtonController()  {
-		MyLiftView myLift = new MyLiftView();
-		myLift.start((Stage) btLifts.getScene().getWindow());
-	}
-	
-	@FXML
-	public void logoutButtonController() {
-		try {
-			LoginController.logout();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		HomeView home = new HomeView();
-		home.start((Stage) btLogout.getScene().getWindow());
-	}
-	
-	@FXML
-	public void bookButtonController()  {
-		BookView book = new BookView();
-		book.start((Stage) btBook.getScene().getWindow());
-	}
-	
-	@FXML
-	public void offerButtonController()  {
-		OfferView offer = new OfferView();
-		offer.start((Stage) btOffer.getScene().getWindow());
-	}
 	
 	public boolean checkCar() {
 		return sg.getRole().equals(Role.DRIVER);
