@@ -5,8 +5,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 
+import logic.model.Role;
 import logic.model.Student;
 import logic.model.StudentCar;
+import logic.utilities.MyLogger;
 
 public class MyQueries {
 
@@ -62,7 +64,7 @@ public class MyQueries {
 		stmt.executeUpdate(sql);
 
 	}
-	
+
 	public static void removeStudent(Statement stmt, String userID) throws SQLException {
 		String format = "DELETE FROM Users WHERE userID = '%s';";
 		String sql = String.format(format, userID);

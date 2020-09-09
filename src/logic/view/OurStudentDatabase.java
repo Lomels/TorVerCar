@@ -13,13 +13,13 @@ import logic.model.StudentCar;
 public interface OurStudentDatabase {
 
 	// return if student(with or without car) already exist in our database
-	public boolean existByUserID(String userID) throws DatabaseException, InvalidInputException;
+	public boolean existByUserID(String userID) throws DatabaseException;
 
 	// return if student(with or without car) was previously banned
-	public boolean wasBannedByUserID(String userID) throws DatabaseException, InvalidInputException;
+	public boolean wasBannedByUserID(String userID) throws DatabaseException;
 
 	// add a student to our database
-	public void addStudent(Student student) throws DatabaseException, InvalidInputException;
+	public void addStudent(Student student) throws DatabaseException;
 
 	// load a student from our database
 	public Student loadStudentByUserID(String userID) throws InvalidInputException, DatabaseException;
@@ -34,7 +34,7 @@ public interface OurStudentDatabase {
 	public void addStudentCar(StudentCar studentCar) throws DatabaseException, InvalidInputException;
 
 	// load a student with car from our database
-	public StudentCar loadStudentCarByUserID(String userID) throws DatabaseException;
+	public StudentCar loadStudentCarByUserID(String userID) throws DatabaseException, InvalidInputException;
 
 	public void editCarInfoByUserID(String userID, CarInfoBean carInfo) throws DatabaseException;
 
@@ -48,48 +48,36 @@ public interface OurStudentDatabase {
 
 	public Lift loadLiftByID(Integer liftID) throws DatabaseException, InvalidInputException;
 
-	public void deleteLiftByID(Integer liftID);
+	public void deleteLiftByID(Integer liftID) throws DatabaseException;
 
-	public List<Lift> listLiftStartingAfterDateTime(LocalDateTime startDateTime);
+	public List<Lift> listLiftsByDriverID(String driverID) throws DatabaseException, InvalidInputException;
 
-	public List<Lift> listLiftStoppingBeforeDateTime(LocalDateTime stopDateTime);
-
-	public List<Lift> listLiftsByDriverID(String driverID);
-
-	public List<Lift> listLiftsByPassengerID(String passengerID);
-
-	public String getDriverIDByLiftID(Integer liftID);
+	public List<Lift> listLiftsByPassengerID(String passengerID) throws DatabaseException, InvalidInputException;
 
 	// Passenger queries
 
-	public void addPassengerByLiftIDAndUserID(Integer liftID, String passengerID);
+	public void addPassengerByLiftIDAndUserID(Integer liftID, String passengerID) throws DatabaseException;
 
 	public List<Student> listPassengersByLiftID(Integer liftID) throws DatabaseException, InvalidInputException;
 
-	public void removePassengerByLiftIDAndUserID(Integer liftID, String passengerID);
+	public void removePassengerByLiftIDAndUserID(Integer liftID, String passengerID) throws DatabaseException;
 
-	public List<Lift> listAvailableLiftStartingAfterDateTime(LocalDateTime startDateTime);
-
-	public List<Lift> listAvailableLiftStartingBeforeDateTime(LocalDateTime startDateTime);
-
-	public List<Lift> listAvailableLiftStoppingBeforeDateTime(LocalDateTime stopDateTime);
-
-	public void addNotificationByUserID(String userID, String message);
+	public void addNotificationByUserID(String userID, String message) throws DatabaseException;
 
 	public void removeCarByUserID(String userID) throws DatabaseException;
 
-	public List<String> loadNotificationsByUserID(String userID);
+	public List<String> loadNotificationsByUserID(String userID) throws DatabaseException;
 
-	public void removeNotificationsByUserID(String userID);
+	public void removeNotificationsByUserID(String userID) throws DatabaseException;
 
-	public void upvoteRating(String userID, Integer liftID, String driverID);
+	public void upvoteRating(String userID, Integer liftID, String driverID) throws DatabaseException;
 
-	public void downvoteRating(String userID, Integer liftID, String driverID);
+	public void downvoteRating(String userID, Integer liftID, String driverID) throws DatabaseException;
 
-	public List<Lift> listUnratedLiftsByPassengerID(String passengerID);
+	public List<Lift> listUnratedLiftsByPassengerID(String passengerID) throws DatabaseException, InvalidInputException;
 
 	public List<Lift> listAvailableLiftStartingWithinIntervalDateTime(LocalDateTime intervalStartDateTime,
-			LocalDateTime intervalStopDateTime);
+			LocalDateTime intervalStopDateTime) throws DatabaseException, InvalidInputException;
 
 	public Lift getLastInsertedLift() throws DatabaseException, InvalidInputException;
 
@@ -97,7 +85,7 @@ public interface OurStudentDatabase {
 
 	void removeStudentByUserID(String userID) throws DatabaseException;
   
-	boolean isRatedFromAllPassengers(Lift lift);
+	boolean isRatedFromAllPassengers(Lift lift) throws DatabaseException;
 
 	Lift getEarliestPassengerLift(Student passenger) throws DatabaseException, InvalidInputException;
 

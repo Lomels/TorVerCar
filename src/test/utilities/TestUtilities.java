@@ -97,7 +97,7 @@ public class TestUtilities {
 		return String.format(PLATE_FORMAT, builder.toString());
 	}
 
-	public static void emptyDB() {
+	public static void emptyDB() throws DatabaseException {
 		dao.emptyDB();
 		dbModified();
 		MyLogger.info("DB emptied!");
@@ -173,7 +173,7 @@ public class TestUtilities {
 		modified = true;
 	}
 
-	public static void populateDB() {
+	public static void populateDB() throws DatabaseException {
 		if (modified) {
 			emptyDB();
 			populateUsers();
@@ -185,10 +185,10 @@ public class TestUtilities {
 		}
 	}
 
-	public static StudentCar getDummyDriver() throws DatabaseException {
+	public static StudentCar getDummyDriver() throws DatabaseException, InvalidInputException {
 		return dao.loadStudentCarByUserID(generateUserID(1));
 	}
-	
+
 	public static Student getDummyStudent() throws DatabaseException, InvalidInputException {
 		return dao.loadStudentByUserID(generateUserID(DRIVER_NUMBER + 1));
 	}
@@ -204,7 +204,7 @@ public class TestUtilities {
 		return new Lift(liftID, startDateTime, maxDuration, NOTE, driver, passengers, route);
 	}
 
-	public static Student addStudentToDB() throws InvalidInputException {
+	public static Student addStudentToDB() throws InvalidInputException, DatabaseException {
 		Student student = new Student(generateUserID(lastPassengerID++), PASSWORD, EMAIL, NAME, SURNAME, PHONE);
 		dao.addStudent(student);
 		dbModified();
