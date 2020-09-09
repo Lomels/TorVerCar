@@ -3,7 +3,6 @@ package logic.view.booking;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +15,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import logic.controller.LoginController;
 import logic.controller.PassengerController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
@@ -27,32 +25,15 @@ import logic.model.LiftSingleton;
 import logic.model.Role;
 import logic.model.UserSingleton;
 import logic.utilities.MyLogger;
-import logic.view.HomeView;
 import logic.view.MainMenuView;
-import logic.view.MyCarView;
-import logic.view.MyLiftView;
-import logic.view.ProfileView;
 import logic.view.ViewController;
-import logic.view.offer.OfferView;
 
-public class LiftListView extends Application implements Initializable {
+public class LiftListView extends ViewController implements Initializable {
 
-	@FXML
-	private Button btHome;
-	@FXML
-	private Button btBook;
-	@FXML
-	private Button btMyCar;
-	@FXML
-	private Button btProfile;
-	@FXML
-	private Button btLogout;
-	@FXML
-	private Button btOffer;
+	
 	@FXML
 	private Button btConfirm;
-	@FXML
-	private Button btLifts;
+	
 	@FXML
 	private ListView<LiftMatchResult> liftList;
 
@@ -65,59 +46,6 @@ public class LiftListView extends Application implements Initializable {
 	@Override
 	public void start(Stage stage) {
 		viewController.start("fxml/lift_list.fxml", stage);
-	}
-
-	@FXML
-	public void homeButtonController() {
-		lift.clearState();
-		MainMenuView home = new MainMenuView();
-		home.start((Stage) btHome.getScene().getWindow());
-	}
-
-	@FXML
-	public void liftsButtonController()  {
-		MyLiftView myLift = new MyLiftView();
-		myLift.start((Stage) btLifts.getScene().getWindow());
-	}
-
-	@FXML
-	public void bookButtonController()  {
-		lift.clearState();
-		BookView book = new BookView();
-		book.start((Stage) btBook.getScene().getWindow());
-	}
-
-	@FXML
-	public void myCarButtonController()  {
-		lift.clearState();
-		MyCarView car = new MyCarView();
-		car.start((Stage) btMyCar.getScene().getWindow());
-
-	}
-
-	@FXML
-	public void profileButtonController()  {
-		lift.clearState();
-		ProfileView profile = new ProfileView();
-		profile.start((Stage) btProfile.getScene().getWindow());
-	}
-
-	@FXML
-	public void logoutButtonController()  {
-		try {
-			LoginController.logout();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		HomeView home = new HomeView();
-		home.start((Stage) btLogout.getScene().getWindow());
-	}
-
-	@FXML
-	public void offerButtonController()  {
-		lift.clearState();
-		OfferView offer = new OfferView();
-		offer.start((Stage) btOffer.getScene().getWindow());
 	}
 
 	@FXML

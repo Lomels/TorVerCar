@@ -4,7 +4,6 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -13,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.bean.LiftBean;
 import logic.controller.LiftController;
-import logic.controller.LoginController;
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
@@ -24,28 +22,13 @@ import logic.controller.maps.MapsApi;
 import logic.model.LiftSingleton;
 import logic.model.UserSingleton;
 import logic.utilities.Status;
-import logic.view.HomeView;
 import logic.view.MainMenuView;
 import logic.view.MyCarView;
-import logic.view.MyLiftView;
-import logic.view.ProfileView;
 import logic.view.ViewController;
-import logic.view.booking.BookView;
 import logic.model.Role;
 
-public class OfferView extends Application implements Initializable {
-	@FXML
-	private Button btHome;
-	@FXML
-	private Button btBook;
-	@FXML
-	private Button btMyCar;
-	@FXML
-	private Button btProfile;
-	@FXML
-	private Button btLogout;
-	@FXML
-	private Button btOffer;
+public class OfferView extends ViewController implements Initializable {
+	
 	@FXML
 	private TextField tfStartPoint;
 	@FXML
@@ -66,8 +49,7 @@ public class OfferView extends Application implements Initializable {
 	private Button btConfirm;
 	@FXML
 	private Button btAddCar;
-	@FXML
-	private Button btLifts;
+	
 
 	private MapsApi mapsApi = AdapterMapsApi.getInstance();
 	private LiftSingleton lp = LiftSingleton.getInstance();
@@ -85,58 +67,7 @@ public class OfferView extends Application implements Initializable {
 		launch(args);
 	}
 
-	@FXML
-	public void homeButtonController() {
-		lp.clearState();
-		MainMenuView home = new MainMenuView();
-		home.start((Stage) btHome.getScene().getWindow());
-	}
-
-	@FXML
-	public void bookButtonController()  {
-		lp.clearState();
-		BookView book = new BookView();
-		book.start((Stage) btBook.getScene().getWindow());
-	}
-
-	@FXML
-	public void myCarButtonController() {
-		lp.clearState();
-		MyCarView car = new MyCarView();
-		car.start((Stage) btMyCar.getScene().getWindow());
-
-	}
-
-	@FXML
-	public void profileButtonController()  {
-		lp.clearState();
-		ProfileView profile = new ProfileView();
-		profile.start((Stage) btProfile.getScene().getWindow());
-	}
 	
-	@FXML
-	public void liftsButtonController() {
-		MyLiftView myLift = new MyLiftView();
-		myLift.start((Stage) btLifts.getScene().getWindow());
-	}
-
-	@FXML
-	public void logoutButtonController() {
-		try {
-			LoginController.logout();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		HomeView home = new HomeView();
-		home.start((Stage) btLogout.getScene().getWindow());
-	}
-
-	@FXML
-	public void offerButtonController(){
-		OfferView offer = new OfferView();
-		offer.start((Stage) btOffer.getScene().getWindow());
-	}
-
 	@FXML
 	public void checkStartAddressController()  {
 		lp.setAddress(1);

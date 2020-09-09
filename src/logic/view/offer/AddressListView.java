@@ -3,7 +3,6 @@ package logic.view.offer;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.application.Application;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,36 +13,18 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import logic.controller.LoginController;
 import logic.controller.exception.InvalidStateException;
-import logic.controller.maps.ViewMapHereApi;
 import logic.model.LiftSingleton;
 import logic.model.Position;
 import logic.model.UserSingleton;
 import logic.utilities.MyLogger;
 import logic.utilities.Status;
-import logic.view.HomeView;
-import logic.view.MainMenuView;
-import logic.view.MyCarView;
-import logic.view.MyLiftView;
-import logic.view.ProfileView;
 import logic.view.ViewController;
 import logic.view.booking.BookView;
 
-public class AddressListView extends Application implements Initializable {
+public class AddressListView extends ViewController implements Initializable {
 
-	@FXML
-	private Button btHome;
-	@FXML
-	private Button btBook;
-	@FXML
-	private Button btMyCar;
-	@FXML
-	private Button btProfile;
-	@FXML
-	private Button btLogout;
-	@FXML
-	private Button btOffer;
+	
 	@FXML
 	private TextField tfStartPoint;
 	@FXML
@@ -58,14 +39,12 @@ public class AddressListView extends Application implements Initializable {
 	private Button btCheckEnd;
 	@FXML
 	private Button btConfirm;
-	@FXML
-	private Button btLifts;
+	
 	@FXML
 	private ListView<Position> addressList;
 
 	private LiftSingleton lift = LiftSingleton.getInstance();
 	private UserSingleton sg = UserSingleton.getInstance();
-	private ViewMapHereApi map = ViewMapHereApi.getInstance();
 	private ViewController viewController = new ViewController();
 
 
@@ -78,58 +57,8 @@ public class AddressListView extends Application implements Initializable {
 		launch(args);
 	}
 
-	@FXML
-	public void homeButtonController()  {
-		lift.clearState();
-		MainMenuView home = new MainMenuView();
-		home.start((Stage) btHome.getScene().getWindow());
-	}
+	
 
-	@FXML
-	public void bookButtonController(){
-		lift.clearState();
-		BookView book = new BookView();
-		book.start((Stage) btBook.getScene().getWindow());
-	}
-
-	@FXML
-	public void myCarButtonController()  {
-		lift.clearState();
-		MyCarView car = new MyCarView();
-		car.start((Stage) btMyCar.getScene().getWindow());
-
-	}
-
-	@FXML
-	public void profileButtonController()  {
-		lift.clearState();
-		ProfileView profile = new ProfileView();
-		profile.start((Stage) btProfile.getScene().getWindow());
-	}
-
-	@FXML
-	public void liftsButtonController()  {
-		MyLiftView myLift = new MyLiftView();
-		myLift.start((Stage) btLifts.getScene().getWindow());
-	}
-
-	@FXML
-	public void logoutButtonController()  {
-		try {
-			LoginController.logout();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		HomeView home = new HomeView();
-		home.start((Stage) btLogout.getScene().getWindow());
-	}
-
-	@FXML
-	public void offerButtonController()  {
-		lift.clearState();
-		OfferView offer = new OfferView();
-		offer.start((Stage) btOffer.getScene().getWindow());
-	}
 
 	@FXML
 	public void confirmButtonController() throws InvalidStateException  {

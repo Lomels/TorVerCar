@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -20,7 +19,6 @@ import javafx.stage.Stage;
 import logic.bean.LiftBean;
 import logic.controller.LiftController;
 import logic.controller.LiftMatchListener;
-import logic.controller.LoginController;
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
@@ -32,36 +30,19 @@ import logic.model.LiftSingleton;
 import logic.model.UserSingleton;
 import logic.utilities.MyLogger;
 import logic.utilities.Status;
-import logic.view.HomeView;
-import logic.view.MainMenuView;
-import logic.view.MyCarView;
-import logic.view.MyLiftView;
-import logic.view.ProfileView;
 import logic.view.ViewController;
 import logic.view.offer.AddressListView;
-import logic.view.offer.OfferView;
 
-public class BookView extends Application implements Initializable, LiftMatchListener {
-	@FXML
-	private Button btHome;
-	@FXML
-	private Button btBook;
-	@FXML
-	private Button btMyCar;
-	@FXML
-	private Button btProfile;
-	@FXML
-	private Button btLogout;
+public class BookView extends ViewController implements Initializable, LiftMatchListener {
+	
 	@FXML
 	private Button btFind;
-	@FXML
-	private Button btOffer;
+	
 	@FXML
 	private Button btCheckStart;
 	@FXML
 	private Button btCheckEnd;
-	@FXML
-	private Button btLifts;
+	
 	@FXML
 	private TextField tfStartPoint;
 	@FXML
@@ -99,39 +80,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 		launch(args);
 	}
 
-	@FXML
-	public void homeButtonController() {
-		liftSg.clearState();
-		MainMenuView home = new MainMenuView();
-		try {
-			home.start((Stage) btHome.getScene().getWindow());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@FXML
-	public void liftsButtonController()  {
-		liftSg.clearState();
-		MyLiftView myLift = new MyLiftView();
-		myLift.start((Stage) btLifts.getScene().getWindow());
-	}
-
-	@FXML
-	public void bookButtonController() {
-		liftSg.clearState();
-		BookView book = new BookView();
-		book.start((Stage) btBook.getScene().getWindow());
-	}
-
-	@FXML
-	public void myCarButtonController() {
-		liftSg.clearState();
-		MyCarView car = new MyCarView();
-		car.start((Stage) btMyCar.getScene().getWindow());
-
-	}
-
+	
 	@FXML
 	public void startButtonController()  {
 		liftSg.setAddress(1);
@@ -157,30 +106,11 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 		list.start((Stage) btCheckEnd.getScene().getWindow());
 	}
 
-	@FXML
-	public void profileButtonController()  {
-		liftSg.clearState();
-		ProfileView profile = new ProfileView();
-		profile.start((Stage) btProfile.getScene().getWindow());
-	}
+	
 
-	@FXML
-	public void logoutButtonController()  {
-		try {
-			LoginController.logout();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		HomeView home = new HomeView();
-		home.start((Stage) btLogout.getScene().getWindow());
-	}
+	
 
-	@FXML
-	public void offerButtonController()  {
-		liftSg.clearState();
-		OfferView offer = new OfferView();
-		offer.start((Stage) btOffer.getScene().getWindow());
-	}
+	
 
 	@FXML
 	public void findButtonController() {

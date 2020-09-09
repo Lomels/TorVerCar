@@ -5,12 +5,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
@@ -20,7 +18,6 @@ import javafx.stage.Stage;
 import logic.bean.LiftBean;
 import logic.bean.UserBean;
 import logic.controller.LiftController;
-import logic.controller.LoginController;
 import logic.controller.RatingController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
@@ -29,8 +26,6 @@ import logic.controller.exception.InvalidStateException;
 import logic.model.Lift;
 import logic.model.UserSingleton;
 import logic.utilities.MyLogger;
-import logic.view.booking.BookView;
-import logic.view.offer.OfferView;
 
 public class MainMenuView extends ViewController implements Initializable {
 	@FXML
