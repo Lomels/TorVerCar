@@ -9,12 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import logic.controller.ProfileController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
-import logic.controller.exception.InvalidStateException;
-import logic.model.Role;
 import logic.model.Student;
 import logic.model.StudentCar;
 import logic.model.UserSingleton;

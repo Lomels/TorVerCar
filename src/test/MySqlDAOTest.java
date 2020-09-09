@@ -5,13 +5,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import org.junit.Test;
-
-import logic.controller.RatingController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
-import logic.model.StudentCar;
-import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
 public class MySqlDAOTest {
