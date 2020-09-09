@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import logic.controller.exception.DatabaseException;
+import logic.controller.exception.InvalidInputException;
 import logic.model.StudentCar;
 import logic.view.mysql.MySqlDAO;
 
@@ -18,7 +19,7 @@ class TestSelenium {
 	private static final String USER_ID = "0252379";
 
 	@Test
-	void test() throws DatabaseException {
+	void test() throws DatabaseException, InvalidInputException {
 		System.setProperty("webdriver.chrome.driver", "Driver/chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		driver.get("http://localhost:8081/TorVerCar/index.jsp");

@@ -79,24 +79,24 @@ public class LiftController {
 
 	// A lift is concluded if is rated from all the passengers and its stopDateTime
 	// is before now
-	public boolean isConcluded(Lift lift) {
+	public boolean isConcluded(Lift lift) throws DatabaseException {
 		boolean allRated = ourDb.isRatedFromAllPassengers(lift);
 		return allRated && lift.getStopDateTime().isBefore(LocalDateTime.now());
 	}
 
-	public void deleteLift(Lift lift) {
+	public void deleteLift(Lift lift) throws DatabaseException {
 		if (!lift.getPassengers().isEmpty())
 			notifyPassengers(lift);
 		ourDb.deleteLiftByID(lift.getLiftID());
 	}
 
-	public void deleteLiftIfConcluded(Lift lift) {
+	public void deleteLiftIfConcluded(Lift lift) throws DatabaseException {
 		if (this.isConcluded(lift)) {
 			ourDb.deleteLiftByID(lift.getLiftID());
 		}
 	}
 
-	public void notifyPassengers(Lift lift) {
+	public void notifyPassengers(Lift lift) throws DatabaseException {
 		String subject = "You lift has been deleted!";
 		String format = "The lift you booked for: %s, departing at: %s, has been deleted by the driver.";
 		String message = String.format(format, lift.getRoute().getDropoffPosition().getAddress(),
@@ -110,7 +110,7 @@ public class LiftController {
 		}
 	}
 
-	public List<Lift> checkCompletedLift(UserBean user) {
+	public List<Lift> checkCompletedLift(UserBean user) throws DatabaseException, InvalidInputException {
 		List<Lift> fullList = ourDb.listUnratedLiftsByPassengerID(user.getUserID());
 		List<Lift> completed = new ArrayList<>();
 		for (Lift l : fullList) {
@@ -124,12 +124,12 @@ public class LiftController {
 		return completed;
 	}
 
-	public List<String> loadNotifications(UserBean user) {
+	public List<String> loadNotifications(UserBean user) throws DatabaseException {
 		return ourDb.loadNotificationsByUserID(user.getUserID());
 	}
 
 	public void matchLiftStartingAfter(LiftBean liftBean, Integer initIndex, LiftMatchListener listener)
-			throws NoLiftAvailable {
+			throws NoLiftAvailable, DatabaseException, InvalidInputException {
 		// Get all the lifts starting in
 		// [startDateTime - MINUTES_OF_MARGIN, startDateTime + HOURS_OF_MARGIN]
 		LocalDateTime intervalStartDateTime = liftBean.getStartDateTime().minusMinutes(MINUTES_OF_MARGIN);
@@ -151,7 +151,7 @@ public class LiftController {
 	}
 
 	public void matchLiftStoppingBefore(LiftBean liftBean, Integer initIndex, LiftMatchListener listener)
-			throws NoLiftAvailable {
+			throws NoLiftAvailable, DatabaseException, InvalidInputException {
 		// Get all the lifts starting in
 		// [stopDateTime - HOURS_OF_MARGIN, stopDateTime + MINUTES_OF_MARGIN]
 		LocalDateTime intervalStopDateTime = liftBean.getStartDateTime().plusMinutes(MINUTES_OF_MARGIN);
@@ -305,7 +305,7 @@ public class LiftController {
 		}
 	}
 
-	public void flushNotification(UserBean user) {
+	public void flushNotification(UserBean user) throws DatabaseException {
 		ourDb.removeNotificationsByUserID(user.getUserID());
 	}
 
@@ -316,11 +316,11 @@ public class LiftController {
 		return !(stopsBefore || startAfter);
 	}
 
-	public List<Lift> loadOfferedLift(UserBean user) {
+	public List<Lift> loadOfferedLift(UserBean user) throws DatabaseException, InvalidInputException {
 		return ourDb.listLiftsByDriverID(user.getUserID());
 	}
 
-	public List<Lift> loadBookedLift(UserBean user) {
+	public List<Lift> loadBookedLift(UserBean user) throws DatabaseException, InvalidInputException {
 		return ourDb.listLiftsByPassengerID(user.getUserID());
 	}
 }

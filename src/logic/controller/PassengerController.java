@@ -2,6 +2,7 @@ package logic.controller;
 
 import logic.controller.email.SendEmail;
 import logic.controller.exception.DatabaseException;
+import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
 import logic.controller.exception.PassengerException;
 import logic.model.Lift;
@@ -11,7 +12,7 @@ import logic.view.mysql.MySqlDAO;
 public class PassengerController {
 	private MySqlDAO dao = new MySqlDAO();
 
-	public void addPassenger(Lift lift, Student passenger) throws InvalidStateException, DatabaseException, PassengerException {
+	public void addPassenger(Lift lift, Student passenger) throws InvalidStateException, DatabaseException, PassengerException, InvalidInputException {
 		// The operation is blocked
 		if(lift.getLiftID() == null) {
 			// If the lift is not saved on the DB
