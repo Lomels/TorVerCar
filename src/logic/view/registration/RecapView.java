@@ -14,6 +14,7 @@ import logic.bean.UserBean;
 import logic.bean.UserBeanSingleton;
 import logic.controller.RegistrationController;
 import logic.view.HomeView;
+import logic.view.ViewController;
 
 public class RecapView extends Application implements Initializable{
 	@FXML private Button btHome;
@@ -24,22 +25,12 @@ public class RecapView extends Application implements Initializable{
 	@FXML private TextField tfEmail;
 	UserBeanSingleton sg = UserBeanSingleton.getInstance();
 	
+	private ViewController view = new ViewController();
+	
 	@Override
-	public void start(Stage stage)  {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Recap_database_info.fxml"));
-		Parent root;
-		try {
-			root = loader.load();
-		
-		Scene scene = new Scene(root);
-		stage.setTitle("Recap");
-		stage.setScene(scene);
-		stage.setResizable(false);
+	public void start(Stage primaryStage){
+		view.start("fxml/Recap_database_info.fxml", primaryStage);
 
-		stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override

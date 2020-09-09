@@ -36,6 +36,7 @@ import logic.view.MainMenuView;
 import logic.view.MyCarView;
 import logic.view.MyLiftView;
 import logic.view.ProfileView;
+import logic.view.ViewController;
 import logic.view.offer.OfferView;
 
 public class LiftListView extends Application implements Initializable {
@@ -62,23 +63,12 @@ public class LiftListView extends Application implements Initializable {
 	private LiftSingleton lift = LiftSingleton.getInstance();
 	private UserSingleton sg = UserSingleton.getInstance();
 	private PassengerController controller = new PassengerController();
+	private ViewController viewController = new ViewController();
+
 
 	@Override
-	public void start(Stage stage)  {
-
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/lift_list.fxml"));
-		Parent root;
-		try {
-			root = loader.load();
-	
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setResizable(false);
-
-		stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void start(Stage stage) throws Exception {
+		viewController.start("fxml/lift_list.fxml", stage);
 	}
 
 	@FXML

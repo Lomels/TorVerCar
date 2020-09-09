@@ -44,22 +44,13 @@ public class MyCarView extends Application implements Initializable{
 	UserSingleton sg = UserSingleton.getInstance();
 	CarInfoBean cIBean = new CarInfoBean();
 	SetCarInfoController controller = new SetCarInfoController();
+	private ViewController view = new ViewController();
 	
 	@Override
-	public void start(Stage stage)  {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/My_car_page.fxml"));
-		Parent root;
-		try {
-			root = loader.load();
-		
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setResizable(false);
 
-		stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void start(Stage stage) throws Exception {
+		view.start("fxml/My_car_page.fxml", stage);
+		
 	}
 	
 	@Override

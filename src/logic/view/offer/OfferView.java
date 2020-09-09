@@ -33,6 +33,7 @@ import logic.view.MainMenuView;
 import logic.view.MyCarView;
 import logic.view.MyLiftView;
 import logic.view.ProfileView;
+import logic.view.ViewController;
 import logic.view.booking.BookView;
 import logic.model.Role;
 
@@ -76,22 +77,12 @@ public class OfferView extends Application implements Initializable {
 	private LiftSingleton lp = LiftSingleton.getInstance();
 	private UserSingleton userSg = UserSingleton.getInstance();
 	private LiftController controller = new LiftController();
+	private ViewController viewController = new ViewController();
+
 
 	@Override
-	public void start(Stage stage)  {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Offer.fxml"));
-		Parent root;
-		try {
-			root = loader.load();
-		
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setResizable(false);
-
-		stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void start(Stage stage){
+		viewController.start("fxml/Offer.fxml", stage);
 	}
 
 	public static void main(String[] args) {

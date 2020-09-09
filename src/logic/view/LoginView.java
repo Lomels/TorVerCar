@@ -38,22 +38,13 @@ public class LoginView extends Application implements Initializable {
 	private Text text;
 	@FXML
 	private Text error;
-
+	
+	private ViewController view = new ViewController();
+	
 	@Override
-	public void start(Stage stage)  {
-		Parent root;
-		try {
-			root = FXMLLoader.load(getClass().getResource("fxml/login.fxml"));
-		
-		Scene scene = new Scene(root);
-		stage.setTitle("Benvenuto in TorVerCar.");
-		stage.setScene(scene);
-		stage.setResizable(false);
 
-		stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void start(Stage stage) throws IOException {
+		view.start("fxml/login.fxml", stage);
 	}
 
 	public static void main(String[] args) {

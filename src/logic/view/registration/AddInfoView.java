@@ -21,6 +21,7 @@ import logic.controller.exception.InvalidInputException;
 import logic.model.Role;
 import logic.view.HomeView;
 import logic.view.MainMenuView;
+import logic.view.ViewController;
 
 public class AddInfoView extends Application{
 	@FXML private Button btHome;
@@ -32,23 +33,11 @@ public class AddInfoView extends Application{
 	@FXML private Text tfError;
 	
 	UserBeanSingleton sg = UserBeanSingleton.getInstance();
-	
+	private ViewController view = new ViewController();
 	
 	@Override
-	public void start(Stage stage)  {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Add_info_registration.fxml"));
-		Parent root;
-		try {
-			root = loader.load();
-		
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setResizable(false);
-
-		stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void start(Stage primaryStage){
+		view.start("fxml/Add_info_registration.fxml", primaryStage);
 	}
 	
 	@FXML

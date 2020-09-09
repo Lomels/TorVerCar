@@ -79,6 +79,9 @@ public class ProfileView extends Application implements Initializable {
 	ProfileController controller = new ProfileController();
 	String userID;
 
+	private ViewController view = new ViewController();
+	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		tfPass.setManaged(false);
@@ -124,19 +127,10 @@ public class ProfileView extends Application implements Initializable {
 	}
 
 	@Override
-	public void start(Stage stage) {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/Profile_page.fxml"));
-		Parent root;
-		try {
-			root = loader.load();
+
+	public void start(Stage stage){
+		view.start("fxml/Profile_page.fxml", stage);
 		
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setResizable(false);
-		stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public static void main(String[] args) {
