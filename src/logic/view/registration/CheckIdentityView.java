@@ -14,6 +14,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import logic.bean.UserBeanSingleton;
 import logic.view.HomeView;
+import logic.view.ViewController;
 
 public class CheckIdentityView extends Application{
 
@@ -22,15 +23,11 @@ public class CheckIdentityView extends Application{
 	@FXML private Button btHome;
 	@FXML private TextField etCode;
 	
+	private ViewController view = new ViewController();
+	
 	@Override
-	public void start(Stage stage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Check_Registration.fxml"));
-		Parent root = loader.load();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setResizable(false);
-
-		stage.show();
+	public void start(Stage primaryStage){
+		view.start("fxml/Check_Registration.fxml", primaryStage);
 	}
 
 		

@@ -15,6 +15,7 @@ import logic.controller.RegistrationController;
 import logic.view.HomeView;
 import logic.view.LoginView;
 import logic.view.MyLiftView;
+import logic.view.ViewController;
 
 public class AddCarView extends Application {
 	Stage stage;
@@ -29,17 +30,11 @@ public class AddCarView extends Application {
 	@FXML private TextField tfColour;
 	@FXML private TextField tfSeats;
 	@FXML private TextField tfPlate;
+	private ViewController view = new ViewController();
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		Parent root = FXMLLoader.load(getClass().getResource("../fxml/Add_car_info.fxml"));
-		this.stage = primaryStage;
-		Scene scene = new Scene(root);
-		stage.setTitle("Add Car Infos");
-		stage.setScene(scene);
-		stage.setResizable(false);
-
-		stage.show();
+		view.start("fxml/Add_car_info.fxml", primaryStage);
 	}
 
 	public static void main(String[] args) {

@@ -35,6 +35,7 @@ import logic.view.MainMenuView;
 import logic.view.MyCarView;
 import logic.view.MyLiftView;
 import logic.view.ProfileView;
+import logic.view.ViewController;
 import logic.view.offer.AddressListView;
 import logic.view.offer.OfferView;
 import logic.controller.LiftMatchListener;
@@ -83,6 +84,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 
 	private LiftSingleton liftSg = LiftSingleton.getInstance();
 	private UserSingleton userSg = UserSingleton.getInstance();
+	private ViewController viewController = new ViewController();
 	private MapsApi mapsApi = AdapterMapsApi.getInstance();
 	private LiftController liftController = new LiftController();
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyy-MM-ddHH:mm");
@@ -93,14 +95,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	
 	@Override
 	public void start(Stage stage) throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Book.fxml"));
-
-		Parent root = loader.load();
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setResizable(false);
-
-		stage.show();
+		viewController.start("fxml/Book.fxml", stage);
 	}
 
 	public static void main(String[] args) {
