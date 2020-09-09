@@ -10,6 +10,7 @@ import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
 import logic.view.HomeView;
+import logic.view.ViewController;
 import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.Alert;
@@ -29,23 +30,11 @@ public class RegistrationView extends Application {
 	private Text txMessage;
 
 	UserBeanSingleton usBean = UserBeanSingleton.getInstance();
-
+	private ViewController view = new ViewController();
+	
 	@Override
-	public void start(Stage stage)  {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/registration.fxml"));
-		Parent root;
-		try {
-			root = loader.load();
-		
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setResizable(false);
-
-		stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+	public void start(Stage stage) throws IOException {
+		view.start("fxml/registration.fxml", stage);
 	}
 
 

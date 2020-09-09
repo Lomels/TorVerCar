@@ -53,24 +53,14 @@ public class MyLiftView extends Application implements Initializable {
 	private List<Lift> offered = new ArrayList<>();
 	private List<Lift> booked = new ArrayList<>();
 	private UserBean userBean = new UserBean();
-
+	private ViewController view = new ViewController();
+	
 	@Override
-	public void start(Stage stage)  {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/mylift_list.fxml"));
-		Parent root;
-		try {
-			root = loader.load();
+
+	public void start(Stage stage){
+		view.start("fxml/mylift_list.fxml", stage);
 		
-		Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.setResizable(false);
-
-		stage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
-
 	public static void main(String[] args) {
 		launch(args);
 	}
