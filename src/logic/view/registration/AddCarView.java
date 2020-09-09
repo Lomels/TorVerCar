@@ -12,6 +12,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.bean.CarInfoBean;
 import logic.controller.RegistrationController;
+import logic.controller.exception.DatabaseException;
+import logic.controller.exception.ExceptionHandler;
+import logic.controller.exception.InvalidInputException;
 import logic.view.HomeView;
 import logic.view.LoginView;
 import logic.view.MyLiftView;
@@ -42,7 +45,7 @@ public class AddCarView extends Application {
 	}
 
 	@FXML
-	public void btNextController() throws Exception {
+	public void btNextController()  {
 		CarInfoBean carInfo = new CarInfoBean();
 		carInfo.setModel(tfModel.getText());
 		carInfo.setColour(tfColour.getText());
@@ -50,7 +53,11 @@ public class AddCarView extends Application {
 		carInfo.setSeats(Integer.parseInt(tfSeats.getText()));
 
 		RegistrationController controller = new RegistrationController();
-		controller.addStudentCar(carInfo);
+		try {
+			controller.addStudentCar(carInfo);
+		} catch (InvalidInputException | DatabaseException e) {
+			ExceptionHandler.handle(e);
+		}
 
 		LoginView login = new LoginView();
 		login.start((Stage) btNext.getScene().getWindow());
@@ -58,19 +65,19 @@ public class AddCarView extends Application {
 	}
 
 	@FXML
-	public void liftsButtonController() throws Exception {
+	public void liftsButtonController() {
 		MyLiftView myLift = new MyLiftView();
 		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
 
 	@FXML
-	public void btHomeController() throws IOException {
+	public void btHomeController()  {
 		HomeView home = new HomeView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 
 	@FXML
-	public void btBackController() throws Exception {
+	public void btBackController()  {
 		AddInfoView addInfo = new AddInfoView();
 		addInfo.start((Stage) btBack.getScene().getWindow());
 

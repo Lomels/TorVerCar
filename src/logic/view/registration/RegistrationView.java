@@ -66,7 +66,7 @@ public class RegistrationView extends Application {
 	}
 
 	@FXML
-	public void homeButtonController() throws IOException {
+	public void homeButtonController()  {
 		HomeView home = new HomeView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}

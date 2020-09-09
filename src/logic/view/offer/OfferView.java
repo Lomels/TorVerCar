@@ -90,21 +90,21 @@ public class OfferView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void homeButtonController() throws Exception {
+	public void homeButtonController() {
 		lp.clearState();
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 
 	@FXML
-	public void bookButtonController() throws Exception {
+	public void bookButtonController()  {
 		lp.clearState();
 		BookView book = new BookView();
 		book.start((Stage) btBook.getScene().getWindow());
 	}
 
 	@FXML
-	public void myCarButtonController() throws Exception {
+	public void myCarButtonController() {
 		lp.clearState();
 		MyCarView car = new MyCarView();
 		car.start((Stage) btMyCar.getScene().getWindow());
@@ -112,20 +112,20 @@ public class OfferView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void profileButtonController() throws Exception {
+	public void profileButtonController()  {
 		lp.clearState();
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
 	}
 	
 	@FXML
-	public void liftsButtonController() throws Exception {
+	public void liftsButtonController() {
 		MyLiftView myLift = new MyLiftView();
 		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
 
 	@FXML
-	public void logoutButtonController() throws IOException {
+	public void logoutButtonController() {
 		try {
 			LoginController.logout();
 		} catch (Exception e) {
@@ -136,21 +136,25 @@ public class OfferView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void offerButtonController() throws Exception {
+	public void offerButtonController(){
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}
 
 	@FXML
-	public void checkStartAddressController() throws Exception {
+	public void checkStartAddressController()  {
 		lp.setAddress(1);
-		lp.setListPos(mapsApi.addrToPos(tfStartPoint.getText()));
+		try {
+			lp.setListPos(mapsApi.addrToPos(tfStartPoint.getText()));
+		} catch (ApiNotReachableException | InvalidInputException e) {
+			ExceptionHandler.handle(e);
+		}
 		AddressListView list = new AddressListView();
 		list.start((Stage) btCheckStart.getScene().getWindow());
 	}
 
 	@FXML
-	public void checkEndAddressController() throws Exception{
+	public void checkEndAddressController() {
 		lp.setAddress(2);
 		try {
 			lp.setListPos(mapsApi.addrToPos(tfArrivalPoint.getText()));
@@ -164,7 +168,7 @@ public class OfferView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void addCarButtonController() throws Exception {
+	public void addCarButtonController()  {
 		lp.clearState();
 		MyCarView car = new MyCarView();
 		car.start((Stage) btAddCar.getScene().getWindow());
@@ -172,7 +176,7 @@ public class OfferView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void confirmButtonController() throws Exception{
+	public void confirmButtonController() {
 		LiftBean lift = new LiftBean();
 		String time = dpDate.getValue().toString() + "T" + tfStartTime.getText();
 		lift.setStartDateTime(LocalDateTime.parse(time));
@@ -186,6 +190,8 @@ public class OfferView extends Application implements Initializable {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
+			ExceptionHandler.handle(e);
+		} catch (ApiNotReachableException e) {
 			ExceptionHandler.handle(e);
 		}
 

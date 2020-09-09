@@ -56,6 +56,7 @@ public class MyLiftView extends Application implements Initializable {
 	private ViewController view = new ViewController();
 	
 	@Override
+
 	public void start(Stage stage){
 		view.start("fxml/mylift_list.fxml", stage);
 		
@@ -64,22 +65,22 @@ public class MyLiftView extends Application implements Initializable {
 		launch(args);
 	}
 
-	public void homeButtonController() throws Exception {
+	public void homeButtonController()  {
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 
-	public void myCarButtonController() throws Exception {
+	public void myCarButtonController()  {
 		MyCarView car = new MyCarView();
 		car.start((Stage) btMyCar.getScene().getWindow());
 	}
 
-	public void profileButtonController() throws Exception {
+	public void profileButtonController()  {
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
 	}
 
-	public void logoutButtonController() throws IOException {
+	public void logoutButtonController()  {
 		try {
 			LoginController.logout();
 		} catch (Exception e) {
@@ -89,12 +90,12 @@ public class MyLiftView extends Application implements Initializable {
 		home.start((Stage) btLogout.getScene().getWindow());
 	}
 
-	public void offerButtonController() throws Exception {
+	public void offerButtonController()  {
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}
 
-	public void bookButtonController() throws Exception {
+	public void bookButtonController()  {
 		BookView book = new BookView();
 		book.start((Stage) btBook.getScene().getWindow());
 	}

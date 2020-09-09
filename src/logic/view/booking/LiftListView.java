@@ -72,27 +72,27 @@ public class LiftListView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void homeButtonController() throws Exception {
+	public void homeButtonController() {
 		lift.clearState();
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 
 	@FXML
-	public void liftsButtonController() throws Exception {
+	public void liftsButtonController()  {
 		MyLiftView myLift = new MyLiftView();
 		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
 
 	@FXML
-	public void bookButtonController() throws Exception {
+	public void bookButtonController()  {
 		lift.clearState();
 		BookView book = new BookView();
 		book.start((Stage) btBook.getScene().getWindow());
 	}
 
 	@FXML
-	public void myCarButtonController() throws Exception {
+	public void myCarButtonController()  {
 		lift.clearState();
 		MyCarView car = new MyCarView();
 		car.start((Stage) btMyCar.getScene().getWindow());
@@ -100,14 +100,14 @@ public class LiftListView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void profileButtonController() throws Exception {
+	public void profileButtonController()  {
 		lift.clearState();
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
 	}
 
 	@FXML
-	public void logoutButtonController() throws IOException {
+	public void logoutButtonController()  {
 		try {
 			LoginController.logout();
 		} catch (Exception e) {
@@ -118,14 +118,14 @@ public class LiftListView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void offerButtonController() throws Exception {
+	public void offerButtonController()  {
 		lift.clearState();
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}
 
 	@FXML
-	public void confirmButtonController() throws Exception{
+	public void confirmButtonController() {
 		MyLogger.info("lift", lift.getSelectedLift());
 		try {
 			if (sg.getRole().equals(Role.STUDENT))

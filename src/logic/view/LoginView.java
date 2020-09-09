@@ -43,6 +43,7 @@ public class LoginView extends Application implements Initializable {
 	private ViewController view = new ViewController();
 	
 	@Override
+
 	public void start(Stage stage) throws IOException {
 		view.start("fxml/login.fxml", stage);
 	}
@@ -52,7 +53,7 @@ public class LoginView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void homeButtonController() throws IOException {
+	public void homeButtonController()  {
 		HomeView home = new HomeView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
@@ -65,7 +66,7 @@ public class LoginView extends Application implements Initializable {
 			controller.login(bean);
 			MainMenuView main = new MainMenuView();
 			main.start((Stage) btLogin.getScene().getWindow());
-		} catch (InvalidInputException | DatabaseException | InvalidStateException e) {
+		} catch (InvalidInputException | DatabaseException e) {
 			ExceptionHandler.handle(e);
 		} catch (Exception e) {
 			e.printStackTrace();

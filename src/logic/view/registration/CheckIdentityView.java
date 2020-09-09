@@ -32,7 +32,7 @@ public class CheckIdentityView extends Application{
 
 		
 	@FXML
-	public void homeButtonController() throws IOException {
+	public void homeButtonController()  {
 		HomeView back = new HomeView();
 		back.start((Stage) btHome.getScene().getWindow());
 	}

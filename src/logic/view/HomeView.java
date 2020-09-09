@@ -19,7 +19,7 @@ public class HomeView extends Application {
 	private ViewController view = new ViewController();
 
 
-	@Override
+	
 	public void start(Stage primaryStage) throws IOException {
 		view.start("fxml/homepage.fxml", primaryStage);
 	}
@@ -28,12 +28,12 @@ public class HomeView extends Application {
 		launch(args);
 	}
 
-	public void loginButtonController() throws Exception {
+	public void loginButtonController()  {
 		LoginView login = new LoginView();
 		login.start((Stage) loginButton.getScene().getWindow());
 	}
 
-	public void regButtonController() throws IOException {
+	public void regButtonController() {
 		RegistrationView register = new RegistrationView();
 		register.start((Stage) regButton.getScene().getWindow());
 	}

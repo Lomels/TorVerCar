@@ -30,6 +30,7 @@ public class RecapView extends Application implements Initializable{
 	@Override
 	public void start(Stage primaryStage){
 		view.start("fxml/Recap_database_info.fxml", primaryStage);
+
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class RecapView extends Application implements Initializable{
 	}
 
 	@FXML
-	public void btNextController() throws Exception {
+	public void btNextController()  {
 		RegistrationController controller = new RegistrationController();
 		controller.sendCode();
 		CheckIdentityView next = new CheckIdentityView();
@@ -52,7 +53,7 @@ public class RecapView extends Application implements Initializable{
 	
 	
 	@FXML
-	public void btHomeController() throws IOException {
+	public void btHomeController()  {
 		HomeView home = new HomeView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}

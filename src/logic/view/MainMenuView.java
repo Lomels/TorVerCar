@@ -64,9 +64,9 @@ public class MainMenuView extends Application implements Initializable {
 	private ViewController view = new ViewController();
 		
 	@Override
+
 	public void start(Stage stage) throws Exception {
-		view.start("fxml/Home_menu.fxml", stage);
-		
+		view.start("fxml/Home_menu.fxml", stage);		
 		notifications = sg.getNotifications();
 		if (!notifications.isEmpty()) {
 			showNotifications(notifications.size());
@@ -197,48 +197,50 @@ public class MainMenuView extends Application implements Initializable {
 	}
 
 	@FXML
-	public void homeButtonController() throws Exception {
+	public void homeButtonController()  {
 		MainMenuView home = new MainMenuView();
 		home.start((Stage) btHome.getScene().getWindow());
 	}
 
 	@FXML
-	public void liftsButtonController() throws Exception {
+	public void liftsButtonController()  {
 		MyLiftView myLift = new MyLiftView();
 		myLift.start((Stage) btLifts.getScene().getWindow());
 	}
 
 	@FXML
-	public void myCarButtonController() throws Exception {
+	public void myCarButtonController()  {
 		MyCarView car = new MyCarView();
 		car.start((Stage) btMyCar.getScene().getWindow());
 	}
 
 	@FXML
-	public void profileButtonController() throws Exception {
+	public void profileButtonController(){
 		ProfileView profile = new ProfileView();
 		profile.start((Stage) btProfile.getScene().getWindow());
 	}
 
 	@FXML
-	public void logoutButtonController() throws IOException {
-		try {
-			LoginController.logout();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void logoutButtonController()  {
+		
+			try {
+				LoginController.logout();
+			} catch (InvalidStateException e) {
+				ExceptionHandler.handle(e);;
+			}
+		
 		HomeView home = new HomeView();
 		home.start((Stage) btLogout.getScene().getWindow());
 	}
 
 	@FXML
-	public void offerButtonController() throws Exception {
+	public void offerButtonController()  {
 		OfferView offer = new OfferView();
 		offer.start((Stage) btOffer.getScene().getWindow());
 	}
 
 	@FXML
-	public void bookButtonController() throws Exception {
+	public void bookButtonController()  {
 		BookView book = new BookView();
 		book.start((Stage) btBook.getScene().getWindow());
 	}
