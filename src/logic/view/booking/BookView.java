@@ -96,7 +96,7 @@ public class BookView extends Application implements Initializable, LiftMatchLis
 	private static final String CB_RETURN = "cbArrive";
 
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void start(Stage stage){
 		viewController.start("fxml/Book.fxml", stage);
 	}
 

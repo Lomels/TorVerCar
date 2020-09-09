@@ -48,7 +48,7 @@ public class MyCarView extends Application implements Initializable{
 	
 	@Override
 
-	public void start(Stage stage) throws Exception {
+	public void start(Stage stage){
 		view.start("fxml/My_car_page.fxml", stage);
 		
 	}

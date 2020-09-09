@@ -36,7 +36,7 @@ public class AddCarView extends Application {
 	private ViewController view = new ViewController();
 	
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public void start(Stage primaryStage){
 		view.start("fxml/Add_car_info.fxml", primaryStage);
 	}
 

@@ -44,7 +44,7 @@ public class LoginView extends Application implements Initializable {
 	
 	@Override
 
-	public void start(Stage stage) throws IOException {
+	public void start(Stage stage){
 		view.start("fxml/login.fxml", stage);
 	}
 

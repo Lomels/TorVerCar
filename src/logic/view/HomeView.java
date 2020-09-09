@@ -18,9 +18,7 @@ public class HomeView extends Application {
 	private Button regButton;
 	private ViewController view = new ViewController();
 
-
-	
-	public void start(Stage primaryStage) throws IOException {
+	public void start(Stage primaryStage){
 		view.start("fxml/homepage.fxml", primaryStage);
 	}
 

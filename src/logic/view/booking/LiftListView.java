@@ -67,7 +67,7 @@ public class LiftListView extends Application implements Initializable {
 
 
 	@Override
-	public void start(Stage stage) throws Exception {
+	public void start(Stage stage) {
 		viewController.start("fxml/lift_list.fxml", stage);
 	}
 

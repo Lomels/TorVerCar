@@ -33,7 +33,7 @@ public class RegistrationView extends Application {
 	private ViewController view = new ViewController();
 	
 	@Override
-	public void start(Stage stage) throws IOException {
+	public void start(Stage stage){
 		view.start("fxml/registration.fxml", stage);
 	}
 
