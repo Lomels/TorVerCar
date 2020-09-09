@@ -26,8 +26,8 @@ public class RegistrationController {
 		this.ourDb = new MySqlDAO();
 	}
 
-	public boolean alreadyExist(String userID) throws DatabaseException, InvalidInputException {
-		return ourDb.existByUserID(userID);
+	public boolean alreadyExist(UserBean user) throws DatabaseException, InvalidInputException {
+		return ourDb.existByUserID(user.getUserID());
 	}
 
 	public void addStudent(UserBean user) throws InvalidInputException, DatabaseException {
@@ -42,8 +42,8 @@ public class RegistrationController {
 		ourDb.addStudentCar(studentCar);
 	}
 
-	public UserBean recapInfo(String userID) throws DatabaseException, InvalidInputException  {
-		return uniDb.getByUserID(userID);
+	public UserBean recapInfo(UserBean user) throws DatabaseException, InvalidInputException  {
+		return uniDb.getByUserID(user.getUserID());
 	}
 
 	public void sendCode() {

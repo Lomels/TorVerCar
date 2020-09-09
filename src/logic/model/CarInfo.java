@@ -3,7 +3,8 @@ package logic.model;
 import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;
 
-public class CarInfo {
+public class CarInfo{
+	
 	private String plate;
 	private Integer seats;
 	private String model;

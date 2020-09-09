@@ -12,8 +12,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import logic.bean.UserBean;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
-import logic.model.Student;
-import logic.view.mysql.MySqlDAO;
 import logic.view.mysql.UniDAO;
 
 public class TestSelenium {

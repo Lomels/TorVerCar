@@ -1,5 +1,7 @@
 package logic.controller;
 
+import logic.bean.LiftBean;
+import logic.bean.UserBean;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Lift;
@@ -10,25 +12,25 @@ public class RatingController {
 
 	private static final MySqlDAO ourDb = new MySqlDAO();
 
-	public void upvoteLift(String passengerID, Integer liftID, StudentCar driver)
+	public void upvoteLift(UserBean user, LiftBean lift)
 			throws InvalidInputException, DatabaseException {
 		// Update in the application level
-		driver.updateRating(1);
+		lift.getDriver().updateRating(1);
 		// Update in the DB level
-		ourDb.upvoteRating(passengerID, liftID, driver.getUserID());
+		ourDb.upvoteRating(user.getUserID(), lift.getLiftID(), lift.getDriver().getUserID());
 		// Delete lift if concluded
-		this.deleteLiftIfConcluded(liftID);
+		this.deleteLiftIfConcluded(lift.getLiftID());
 	}
 
 	//TODO: me sa che passare -1 è n'attimo illegale
-	public void downvote(String passengerID, Integer liftID, StudentCar driver)
+	public void downvote(UserBean user, LiftBean lift)
 			throws InvalidInputException, DatabaseException {
 		// Update in the application level
-		driver.updateRating(-1);
+		lift.getDriver().updateRating(-1);
 		// Update in the DB level
-		ourDb.downvoteRating(passengerID, liftID, driver.getUserID());
+		ourDb.downvoteRating(user.getUserID(), lift.getLiftID(), lift.getDriver().getUserID());
 		// Delete lift if concluded
-		this.deleteLiftIfConcluded(liftID);
+		this.deleteLiftIfConcluded(lift.getLiftID());
 	}
 
 	private void deleteLiftIfConcluded(Integer liftID) throws DatabaseException, InvalidInputException {

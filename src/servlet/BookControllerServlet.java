@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import logic.bean.LiftBean;
 import logic.bean.MessageBean;
 import logic.bean.OfferBean;
 import logic.controller.LiftController;
@@ -31,107 +32,97 @@ import logic.utilities.MyLogger;
 @WebServlet("/BookControllerServlet")
 public class BookControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private HttpSession session;
+	
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-		session = request.getSession();
+		HttpSession session = request.getSession();
 		String action = request.getParameter("action");
 		String book = "book.jsp";
 
-		if ("startPos".equals(action)) {
-			String address = request.getParameter("start");
-			OfferBean offerBean = new OfferBean();
-			try {
+		try {
+			if ("startPos".equals(action)) {
+				String address = request.getParameter("start");
+				OfferBean offerBean = new OfferBean();
+
 				List<Position> positions = ServletUtility.pupulateListPosition(address);
 				offerBean.setResult(positions);
 				offerBean.setStatus("startPos");
 				session.setAttribute("offerBean", offerBean);
 				request.getRequestDispatcher(book).forward(request, response);
-			} catch (ApiNotReachableException| ServletException | IOException e) {
-				e.printStackTrace();
-			} catch (InvalidInputException e) {
-				ExceptionHandler.handle(e, request, response, book);				
-			}
-		}
 
-		if ("destPos".equals(action)) {
-			String address = request.getParameter("dest");
-			OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
-			try {
+			}
+
+			if ("destPos".equals(action)) {
+				String address = request.getParameter("dest");
+				OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
+
 				List<Position> positions = ServletUtility.pupulateListPosition(address);
 				offerBean.setResult(positions);
 				offerBean.setStatus("startPos");
 				session.setAttribute("offerBean", offerBean);
 				request.getRequestDispatcher(book).forward(request, response);
-			} catch (ApiNotReachableException| ServletException | IOException e) {
-				e.printStackTrace();
-			} catch (InvalidInputException e) {
-				ExceptionHandler.handle(e, request, response, book);				
 			}
-		}
 
-		if ("stop".equals(action)) {
-			String index = request.getParameter("index");
-			OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
-			offerBean.addStop(offerBean.getResult().get(Integer.parseInt(index)));
-			offerBean.setStatus("");
+			if ("stop".equals(action)) {
+				String index = request.getParameter("index");
+				OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
+				offerBean.addStop(offerBean.getResult().get(Integer.parseInt(index)));
+				offerBean.setStatus("");
 
-			session.setAttribute("offerBean", offerBean);
+				session.setAttribute("offerBean", offerBean);
 
-			MyLogger.info("selected position", offerBean.getResult().get(Integer.parseInt(index)));
-			try {
+				MyLogger.info("selected position", offerBean.getResult().get(Integer.parseInt(index)));
+
 				request.getRequestDispatcher(book).forward(request, response);
-			} catch (ServletException | IOException e) {
-				e.printStackTrace();
 			}
-		}
 
-		if ("search".equals(action)) {
-			LiftController liftController = new LiftController();
-			OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
-			ServletListener listener = new ServletListener(session, request, response, offerBean);
-			String date = request.getParameter("day");
-			String time = request.getParameter("time");
-			String slide = offerBean.getBookStatus();
+			if ("search".equals(action)) {
+				LiftController liftController = new LiftController();
+				OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
+				ServletListener listener = new ServletListener(session, request, response, offerBean);
+				String date = request.getParameter("day");
+				String time = request.getParameter("time");
+				String slide = offerBean.getBookStatus();
 
-			String dateTimeString = date + "T" + time;
+				String dateTimeString = date + "T" + time;
 
-			LocalDateTime parsedTime = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ISO_DATE_TIME);
-			try {
-			if ("going".equals(slide)) {
-				liftController.matchLiftStoppingBefore(parsedTime, offerBean.getStops(), 0, listener);
-			} else {
-				liftController.matchLiftStartingAfter(parsedTime, offerBean.getStops(), 0, listener);
+				LocalDateTime parsedTime = LocalDateTime.parse(dateTimeString, DateTimeFormatter.ISO_DATE_TIME);
+				LiftBean lift = new LiftBean();
+				lift.setStartDateTime(parsedTime);
+				lift.setStartPos(offerBean.getStops().get(0));
+				lift.setStopPos(offerBean.getStops().get(1));
+
+				if ("going".equals(slide)) {
+					liftController.matchLiftStoppingBefore(lift, 0, listener);
+				} else {
+					liftController.matchLiftStartingAfter(lift, 0, listener);
+				}
+
 			}
-			}catch(NoLiftAvailable e) {
-				ExceptionHandler.handle(e, request, response, book);
-			}
-			
-		}
-		
-		if ("book".equals(action)) {
-			PassengerController passController = new PassengerController();
-			Integer index = Integer.parseInt(request.getParameter("index"));
-			OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
-			Student student = (Student) session.getAttribute("user");
-			Lift lift = offerBean.getLiftResult().get(index).getLift();
 
-			try {
+			if ("book".equals(action)) {
+				PassengerController passController = new PassengerController();
+				Integer index = Integer.parseInt(request.getParameter("index"));
+				OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
+				Student student = (Student) session.getAttribute("user");
+				Lift lift = offerBean.getLiftResult().get(index).getLift();
+
 				passController.addPassenger(lift, student);
 				ServletUtility.liftRefresh(session);
-				
+
 				MessageBean msg = new MessageBean();
 				msg.setMessage("You have succesfully booked a lift!");
 				msg.setType("success");
 				msg.setTitle("Yay!");
 				request.setAttribute("message", msg);
 				request.getRequestDispatcher("book.jsp").forward(request, response);
-			} catch (ServletException | IOException e) {
-				e.printStackTrace();
-			} catch (InvalidStateException | DatabaseException | PassengerException e) {
-				ExceptionHandler.handle(e, request, response, book);
+
 			}
+		} catch (ServletException | IOException | ApiNotReachableException e) {
+			e.printStackTrace();
+		} catch (InvalidStateException | DatabaseException | PassengerException | NoLiftAvailable | InvalidInputException e) {
+			ExceptionHandler.handle(e, request, response, book);
 		}
 	}
 }

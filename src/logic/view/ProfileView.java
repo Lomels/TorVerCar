@@ -21,6 +21,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import logic.bean.UserBean;
 import logic.controller.LoginController;
 import logic.controller.ProfileController;
 import logic.controller.exception.DatabaseException;
@@ -206,9 +207,11 @@ public class ProfileView extends Application implements Initializable {
 
 		Optional<ButtonType> result = alert.showAndWait();
 
+		UserBean usr = new UserBean();
+		usr.setUserID(sg.getUserID());
 		if (result.isPresent()) {
 			if (result.get() == btYes) {
-				controller.deleteProfile(sg.getUserID());
+				controller.deleteProfile(usr);
 				HomeView newHome = new HomeView();
 				newHome.start((Stage) btDelete.getScene().getWindow());
 
@@ -239,13 +242,18 @@ public class ProfileView extends Application implements Initializable {
 
 	@FXML
 	public void saveButtonController() {
+		UserBean usr = new UserBean();
+		usr.setEmail(tfEmail.getText());
+		usr.setPhone(tfPhone.getText());
+		usr.setPassword(tfPass.getText());
+		usr.setUserID(sg.getUserID());
 		try {
 			switch (sg.getRole()) {
 			case STUDENT:
-				controller.edit(sg.getStudent().getUserID(), tfEmail.getText(), tfPhone.getText(), tfPass.getText());
+				controller.edit(usr);
 				break;
 			case DRIVER:
-				controller.edit(sg.getStudentCar().getUserID(), tfEmail.getText(), tfPhone.getText(), tfPass.getText());
+				controller.edit(usr);
 				break;
 			default:
 				tfPhone.setDisable(true);

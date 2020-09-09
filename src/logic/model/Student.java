@@ -1,12 +1,14 @@
 package logic.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;
 
-public class Student {
-
+public class Student implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	protected String userID;
 	protected String password;
 	protected String name;
@@ -15,8 +17,8 @@ public class Student {
 	protected String phone;
 	
 	// used only in webapp
-	protected List<Lift> bookedLift;
-	protected List<String> notifications;
+	protected transient List<Lift>  bookedLift;
+	protected transient List<String> notifications;
 
 
 	// Generated

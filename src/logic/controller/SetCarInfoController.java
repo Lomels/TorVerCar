@@ -54,9 +54,10 @@ public class SetCarInfoController {
 
 	}
 
-	public void removeCar(StudentCar studentCar) throws DatabaseException, InvalidInputException {
-		ourDb.removeCarByUserID(studentCar.getUserID());
-		sg.setStudent(new Student(studentCar));
+	public void removeCar(UserBean user) throws DatabaseException, InvalidInputException {
+		ourDb.removeCarByUserID(user.getUserID());
+		
+		sg.setStudent(new Student(ourDb.loadStudentCarByUserID(user.getUserID())));
 		sg.setRole(Role.STUDENT);
 		sg.setStudentCar(null);
 	}

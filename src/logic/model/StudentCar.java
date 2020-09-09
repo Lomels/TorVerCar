@@ -6,12 +6,16 @@ import logic.controller.exception.InvalidInputException;
 import logic.utilities.InputChecker;
 
 public class StudentCar extends Student {
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private int rating;
-	private CarInfo carInfo;
+	private transient CarInfo carInfo;
 	
 	// used only in webapp
-	private List<Lift> offeredLift;
+	private transient List<Lift> offeredLift;
 
 	// Constructor from Student
 	public StudentCar(Student student, int rating, CarInfo carInfo) throws InvalidInputException {
@@ -21,8 +25,8 @@ public class StudentCar extends Student {
 	}
 
 	public void updateRating(int vote) throws InvalidInputException {
-		if ((vote != 1) || (vote != -1)) {
-			throw new InvalidInputException("Vote must be 1 or -1");
+		if ((vote != 1) && (vote != -1)) {
+			throw new InvalidInputException("There was an error during rating.");
 		}
 		this.rating += vote;
 	}

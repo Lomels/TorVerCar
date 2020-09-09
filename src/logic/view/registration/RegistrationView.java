@@ -42,14 +42,15 @@ public class RegistrationView extends Application {
 
 	}
 
-	// TODO criptare la password
 
 	@FXML
 	public void nextButtonController() {
 		RegistrationController reg = new RegistrationController();
+		UserBean startUser = new UserBean();
+		startUser.setUserID(userID.getText());
 			try {
-				if (!reg.alreadyExist(userID.getText())) {
-					UserBean user = reg.recapInfo(userID.getText());
+				if (!reg.alreadyExist(startUser)) {
+					UserBean user = reg.recapInfo(startUser);
 					usBean.setUserBean(user);
 					RecapView recap = new RecapView();
 					recap.start((Stage) btNext.getScene().getWindow());
