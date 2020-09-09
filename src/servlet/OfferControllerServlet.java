@@ -2,8 +2,6 @@ package servlet;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -24,8 +22,6 @@ import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
 import logic.model.Position;
 import logic.model.StudentCar;
-import logic.utilities.MyLogger;
-import logic.view.mysql.MySqlDAO;
 
 @WebServlet("/OfferControllerServlet")
 public class OfferControllerServlet extends HttpServlet {

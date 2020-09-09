@@ -1,7 +1,6 @@
 package logic.controller;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +29,6 @@ import logic.model.LiftMatchResult;
 import logic.model.Position;
 import logic.model.Route;
 import logic.model.Student;
-import logic.model.StudentCar;
 import logic.model.UnorderedLift;
 import logic.view.mysql.MySqlDAO;
 

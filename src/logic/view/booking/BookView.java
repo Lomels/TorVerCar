@@ -43,7 +43,6 @@ import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.NoLiftAvailable;
-import logic.controller.exception.PassengerException;
 
 public class BookView extends Application implements Initializable, LiftMatchListener {
 	@FXML
