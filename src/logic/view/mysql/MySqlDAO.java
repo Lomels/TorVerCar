@@ -46,15 +46,9 @@ public class MySqlDAO implements OurStudentDatabase {
 	private Statement stmt;
 	private Connection conn;
 
-	private static final String DRIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 	public MySqlDAO() {
 		this.stmt = null;
 		this.conn = null;
-		try {
-			Class.forName(DRIVER_CLASS_NAME);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private void logException(Exception e) {
@@ -63,6 +57,7 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	private void connect() throws SQLException {
 
+		DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 		this.conn = DriverManager.getConnection(URL, USER, PASS);
 		this.stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
