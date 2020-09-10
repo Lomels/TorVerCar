@@ -73,7 +73,7 @@ public class MySqlDAOTest {
 //	@Test
 	public void updateRating() throws DatabaseException, InvalidInputException {
 		MySqlDAO my = new MySqlDAO();
-		StudentCar test = my.loadStudentCarByUserID("0000000");
+		StudentCar test = my.loadStudentCarByUserID(USERID);
 		MyLogger.info("Before test rating", test.getRating());
 		
 		RatingController rate = new RatingController();
@@ -84,13 +84,13 @@ public class MySqlDAOTest {
 		user.setUserID("0000001");
 		
 		rate.upvoteLift(user, lift);
-		test = my.loadStudentCarByUserID("0000000");
+		test = my.loadStudentCarByUserID(USERID);
 		MyLogger.info("After upvote test", test.getRating());
 		
 		lift.setLiftID(2);
 		user.setUserID("00000010");
 		rate.downvote(user, lift);
-		test = my.loadStudentCarByUserID("0000000");
+		test = my.loadStudentCarByUserID(USERID);
 		MyLogger.info("After downvote test", test.getRating());
 
 	}

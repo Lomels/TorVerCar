@@ -18,11 +18,7 @@ import test.utilities.TestUtilities;
 public class AdapterMapsApiTest extends TestUtilities {
 
 	private static TestLogger logger = new TestLogger(AdapterMapsApiTest.class.getCanonicalName());
-	private static boolean isLogable = false;
 
-	public AdapterMapsApiTest() {
-		logger.isLogable(isLogable);
-	}
 
 	@Test
 	public void addrToPosTest() throws ApiNotReachableException, InvalidInputException {
