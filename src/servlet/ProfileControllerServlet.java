@@ -14,7 +14,6 @@ import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Student;
 import logic.model.StudentCar;
-import logic.model.UserSingleton;
 import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
@@ -24,7 +23,6 @@ public class ProfileControllerServlet extends HttpServlet{
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		UserSingleton sg = UserSingleton.getInstance();
 		MySqlDAO ourDb = new MySqlDAO();
 		String action = request.getParameter("action");
 		String profile = "profile.jsp";

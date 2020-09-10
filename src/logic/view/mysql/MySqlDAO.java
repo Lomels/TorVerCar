@@ -221,12 +221,14 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	private boolean first(String queryMethod, Object argument) throws DatabaseException {
+		boolean result;
 		try {
-			this.executeQuery(queryMethod, argument);
-		} catch (NoResultFound e) {
-			return false;
+			ResultSet resultSet = this.executeQuery(queryMethod, argument);
+			result = resultSet.first();
+		} catch (NoResultFound | SQLException e) {
+			result = false;
 		}
-		return true;
+		return result;
 	}
 
 	private void executeUpdate(String queryMethod, Object[] arguments) throws DatabaseException {
