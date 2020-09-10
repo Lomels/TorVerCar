@@ -44,7 +44,7 @@ public class LiftTest extends TestUtilities {
 	}
 
 	@Test
-	public void LiftCompareTrue() throws InvalidInputException {
+	public void liftCompareTrue() throws InvalidInputException {
 		Lift lift1 = new Lift(liftID, startDateTime, maxDuration, actualNote, driver, passengers, route);
 		Lift lift2 = new Lift(1, startDateTime, maxDuration, actualNote, driver, passengers, route);
 
@@ -52,7 +52,7 @@ public class LiftTest extends TestUtilities {
 	}
 
 	@Test
-	public void LiftCompareFalse() throws InvalidInputException {
+	public void liftCompareFalse() throws InvalidInputException {
 		Lift lift1 = new Lift(liftID, startDateTime, maxDuration, actualNote, driver, passengers, route);
 		Lift lift2 = new Lift(1, startDateTime, maxDuration, actualNote, driver, null, route);
 
@@ -60,7 +60,7 @@ public class LiftTest extends TestUtilities {
 	}
 
 	@Test
-	public void LiftCompareDifferentPassengers() throws InvalidInputException, DatabaseException {
+	public void liftCompareDifferentPassengers() throws InvalidInputException, DatabaseException {
 		Lift lift1 = new Lift(liftID, startDateTime, maxDuration, actualNote, driver, passengers, route);
 		List<Student> passengers2 = new ArrayList<>(passengers);
 		passengers2.remove(1);
