@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -207,7 +208,7 @@ public class MySqlDAO implements OurStudentDatabase {
 			resultSet = (ResultSet) method.invoke(MyQueries.class, actualObjects);
 			if (!resultSet.first()) {
 				throw new NoResultFound(
-						String.format("No result found for: %s with: %s.", queryMethod, objects.toString()));
+						String.format("No result found for: %s with: %s.", queryMethod, Arrays.toString(objects)));
 			}
 			return resultSet;
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
@@ -222,10 +223,10 @@ public class MySqlDAO implements OurStudentDatabase {
 	private boolean first(String queryMethod, Object argument) throws DatabaseException {
 		try {
 			this.executeQuery(queryMethod, argument);
-			return true;
 		} catch (NoResultFound e) {
 			return false;
 		}
+		return true;
 	}
 
 	private void executeUpdate(String queryMethod, Object[] arguments) throws DatabaseException {
@@ -348,16 +349,13 @@ public class MySqlDAO implements OurStudentDatabase {
 
 		if (lift.getLiftID() == null) {
 			// this is the insert
-			Object[] objects = { lift.getStartDateTime(), lift.getStopDateTime(), lift.getMaxDuration(), lift.getNote(),
-					driver.getUserID(), lift.getRoute().jsonEncode().toString(), lift.getFreeSeats() };
+			Object[] objects = { lift, driver };
 			this.executeUpdate("saveLiftWithoutID", objects);
 		} else {
 			// first delete and then reinsert
 			this.executeUpdate("deleteLiftByID", lift.getLiftID());
 
-			Object[] objects = { lift.getLiftID(), lift.getStartDateTime(), lift.getStopDateTime(),
-					lift.getMaxDuration(), lift.getNote(), driver.getUserID(), lift.getRoute().jsonEncode().toString(),
-					lift.getFreeSeats() };
+			Object[] objects = { lift, driver };
 			this.executeUpdate("saveLiftWithID", objects);
 
 			for (Student passenger : lift.getPassengers()) {

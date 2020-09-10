@@ -5,10 +5,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 
-import logic.model.Role;
+import logic.model.Lift;
 import logic.model.Student;
 import logic.model.StudentCar;
-import logic.utilities.MyLogger;
 
 public class MyQueries {
 
@@ -136,22 +135,22 @@ public class MyQueries {
 		stmt.executeUpdate(sql);
 	}
 
-	public static void saveLiftWithoutID(Statement stmt, LocalDateTime startDateTime, LocalDateTime stopDateTime,
-			Integer maxDuration, String note, String driverID, String route, Integer freeSeats) throws SQLException {
+	public static void saveLiftWithoutID(Statement stmt, Lift lift, StudentCar driver) throws SQLException {
+		String route = lift.getRoute().jsonEncode().toString();
 		String format = "INSERT INTO Lifts (startDateTime, stopDateTime, maxDuration, note, driverID, route, freeSeats) VALUES "
 				+ "('%s', '%s', %d, '%s', '%s', '%s', %d);";
-		String sql = String.format(format, startDateTime, stopDateTime, maxDuration, note, driverID, route, freeSeats);
+		String sql = String.format(format, lift.getStartDateTime(), lift.getStopDateTime(), lift.getMaxDuration(),
+				lift.getNote(), driver.getUserID(), route, lift.getFreeSeats());
 
 		stmt.executeUpdate(sql);
 	}
 
-	public static void saveLiftWithID(Statement stmt, Integer liftID, LocalDateTime startDateTime,
-			LocalDateTime stopDateTime, Integer maxDuration, String note, String driverID, String route,
-			Integer freeSeats) throws SQLException {
+	public static void saveLiftWithID(Statement stmt, Lift lift, StudentCar driver) throws SQLException {
+		String route = lift.getRoute().jsonEncode().toString();
 		String format = "INSERT INTO Lifts (liftID, startDateTime, stopDateTime, maxDuration, note, driverID, route, freeSeats) VALUES "
 				+ "(%d, '%s', '%s', %d, '%s', '%s', '%s', %d);";
-		String sql = String.format(format, liftID, startDateTime, stopDateTime, maxDuration, note, driverID, route,
-				freeSeats);
+		String sql = String.format(format, lift.getLiftID(), lift.getStartDateTime(), lift.getStopDateTime(),
+				lift.getMaxDuration(), lift.getNote(), driver.getUserID(), route, lift.getFreeSeats());
 
 		stmt.executeUpdate(sql);
 	}
