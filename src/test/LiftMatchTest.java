@@ -67,19 +67,6 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 	}
 
 	@Test
-	public void matchLiftStopBefore() {
-		this.setup();
-
-		LiftController liftController = new LiftController();
-		LocalDateTime stopDateTime = LocalDateTime.parse("2020-08-15T19:45");
-		LiftBean liftBean = new LiftBean();
-		liftBean.setStartDateTime(stopDateTime);
-		liftBean.setStartPos(this.route.getStops().get(0));
-		liftBean.setStartPos(this.route.getStops().get(1));
-		assertDoesNotThrow(() -> liftController.matchLiftStoppingBefore(liftBean, 0, this));
-	}
-
-	@Test
 	public void matchLiftStopBeforeNotExisting() {
 		this.setup();
 
@@ -94,7 +81,7 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 
 	@Override
 	public void onThreadEnd(List<LiftMatchResult> results) {
-		if (results.isEmpty())
+		if (results == null || results.isEmpty())
 			throw new TestRuntimeException();
 	}
 
