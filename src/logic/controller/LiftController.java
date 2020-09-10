@@ -183,7 +183,7 @@ public class LiftController {
 			LOGGER.severe(e.toString());
 			Thread.currentThread().interrupt();
 		} catch (ExecutionException e) {
-			e.printStackTrace();
+			LOGGER.log(Level.SEVERE, "Exception found", e.toString());
 			listener.onThreadEnd(new ArrayList<>());
 		}
 
@@ -244,7 +244,7 @@ public class LiftController {
 						}
 					}
 				} catch (InvalidInputException | ApiNotReachableException e) {
-					LOGGER.log(Level.SEVERE, "Exception", e);
+					LOGGER.log(Level.SEVERE, "Exception", e.toString());
 				}
 			}
 
