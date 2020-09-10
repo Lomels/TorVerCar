@@ -183,7 +183,7 @@ public class LiftController {
 			LOGGER.severe(e.toString());
 			Thread.currentThread().interrupt();
 		} catch (ExecutionException e) {
-			LOGGER.log(Level.SEVERE, "Exception found", e);
+			e.printStackTrace();
 			listener.onThreadEnd(new ArrayList<>());
 		}
 
