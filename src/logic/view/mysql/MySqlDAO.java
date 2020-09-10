@@ -286,8 +286,15 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	@Override
 	public void addStudentCar(StudentCar studentCar) throws DatabaseException {
-//		Object[] objects = { studentCar, Role.DRIVER.name() };
-		this.executeUpdate("addStudentCar", studentCar);
+		Student student;
+		try {
+			student = new Student(studentCar);
+			Object[] objects = { student, Role.DRIVER.name() };
+			this.executeUpdate("addStudent", objects);
+			this.executeUpdate("addStudentCar", studentCar);
+		} catch (InvalidInputException e) {
+			this.logException(e);
+		}
 	}
 
 	@Override
