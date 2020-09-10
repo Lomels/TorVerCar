@@ -13,11 +13,12 @@ import logic.controller.maps.CompleteMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.Position;
 import logic.model.Route;
+import logic.utilities.MyLogger;
 
 public class MarsegliaTestCase2 {
 
-	private static final Double DURATION_MARGIN_MULTIPLIER = 0.15;
-	private static final Double DISTANCE_MARGIN_MULTIPLIER = 0.15;
+	private static final Double DURATION_MARGIN_MULTIPLIER = 0.40;
+	private static final Double DISTANCE_MARGIN_MULTIPLIER = 0.33;
 
 	@Test
 	public void startToStopTest() throws ApiNotReachableException, InvalidInputException {
@@ -34,6 +35,8 @@ public class MarsegliaTestCase2 {
 		stops.add(posStart);
 		stops.add(posStop);
 		Route route = mapsApi.startToStop(stops);
+		
+		MyLogger.info("Route", route);
 		
 		Integer deltaDistance = Math.abs(expectedDistance - route.getTotalDistance());
 		Integer deltaDuration = Math.abs(expectedDuration - route.getTotalDuration());
