@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import logic.bean.LiftBean;
@@ -138,11 +139,12 @@ public class LiftController {
 		if (possibleLifts.isEmpty())
 			throw new NoLiftAvailable(
 					String.format("No lift available starting after: %s.", liftBean.getStartDateTime()));
-
+		
 		List<Position> stops = new ArrayList<>();
 		stops.add(liftBean.getStartPos());
 		stops.add(liftBean.getStopPos());
 
+		
 		// Launch thread for computing
 		LiftThread thread = new LiftThread(possibleLifts, stops, initIndex);
 		this.launchThread(thread, listener);
@@ -188,7 +190,8 @@ public class LiftController {
 			LOGGER.severe(e.toString());
 			Thread.currentThread().interrupt();
 		} catch (ExecutionException e) {
-			LOGGER.severe(e.toString());
+			LOGGER.log(Level.SEVERE, "Exception found", e);
+			listener.onThreadEnd(new ArrayList<>());
 		}
 
 		listener.onThreadEnd(matchedLifts);
@@ -248,7 +251,7 @@ public class LiftController {
 						}
 					}
 				} catch (InvalidInputException | ApiNotReachableException e) {
-					LOGGER.fine(e.toString());
+					LOGGER.log(Level.SEVERE, "Exception", e);
 				}
 			}
 
