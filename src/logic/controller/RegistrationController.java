@@ -10,6 +10,7 @@ import logic.model.Student;
 import logic.model.StudentCar;
 import logic.model.UserSingleton;
 import logic.utilities.CodeGenerator;
+import logic.utilities.MyLogger;
 import logic.view.DatabaseBoundary;
 import logic.view.OurStudentDatabase;
 import logic.view.mysql.MySqlDAO;
@@ -17,7 +18,7 @@ import logic.view.mysql.UniDAO;
 
 public class RegistrationController {
 	private DatabaseBoundary uniDb;
-	private OurStudentDatabase ourDb;
+	private MySqlDAO ourDb = new MySqlDAO();
 	UserSingleton sg = UserSingleton.getInstance();
 	UserBeanSingleton beanSg = UserBeanSingleton.getInstance();
 
@@ -39,7 +40,7 @@ public class RegistrationController {
 		addStudent(user);
 		SetCarInfoController controller = new SetCarInfoController();
 		StudentCar studentCar = controller.addCar(carInfo, user);
-		
+		MyLogger.info("sCar", studentCar.toString());
 		ourDb.addCar(studentCar);
 	}
 

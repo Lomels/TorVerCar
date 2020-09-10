@@ -14,6 +14,7 @@ import logic.controller.exception.InvalidInputException;
 import logic.model.CarInfo;
 import logic.model.Student;
 import logic.model.StudentCar;
+import logic.utilities.MyLogger;
 import test.utilities.TestUtilities;
 
 /* MARCO LO MELE */
@@ -93,9 +94,13 @@ class RegistrationTest extends TestUtilities {
 		Student student = new Student(userBean.getUserID(), userBean.getPassword(), userBean.getEmail(),
 				userBean.getName(), userBean.getSurname(), userBean.getPhone());
 		StudentCar studentCar = new StudentCar(student, 0, carInfo);
-		dao.addStudentCar(studentCar);
-//		registration.addStudentCar(carInfoBean, userBean);
+//		dao.addStudentCar(studentCar);
+		dao.addCar(studentCar);
+		registration.addStudentCar(carInfoBean, userBean);
 		StudentCar daoStudCar = dao.loadStudentCarByUserID(ID_MARCO);
+		
+		MyLogger.info("dao", daoStudCar.toString());
+		MyLogger.info("inserted:", studentCar.toString());
 		
 		assertTrue(studentCar.compare(daoStudCar));
 	}
