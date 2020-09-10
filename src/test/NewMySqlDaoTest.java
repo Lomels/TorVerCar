@@ -19,6 +19,12 @@ public class NewMySqlDaoTest extends TestUtilities {
 
 	private static final OurStudentDatabase dao = new MySqlDAO();
 	private static final TestLogger LOGGER = new TestLogger(NewMySqlDaoTest.class.getCanonicalName());
+	private static final String USERID = "0252379";
+	private static final String EMAIL = "g.marseglia@lll.it";
+	private static final String PASSWORD = "aaaAAA123@";
+	private static final String NAME = "Giuseppe";
+	private static final String SURNAME = "MARSA";
+	private static final String PHONE = "1234567890";
 
 //	@Test
 	public void existByUserID() throws DatabaseException {
@@ -30,19 +36,17 @@ public class NewMySqlDaoTest extends TestUtilities {
 //	@Test
 	public void addStudent() throws InvalidInputException, DatabaseException {
 		emptyDB();
-		String userID = "0252379";
-		Student student = new Student(userID, "aaaAAA123@", "g.marseglia@lll.it", "Giuseppe", "MARSA", "1234567890");
+		Student student = new Student(USERID, PASSWORD, EMAIL, NAME, SURNAME, PHONE);
 		dao.addStudent(student);
-		assertTrue(dao.existByUserID(userID));
+		assertTrue(dao.existByUserID(USERID));
 	}
 
 //	@Test
 	public void loadStudent() throws InvalidInputException, DatabaseException {
 		emptyDB();
-		String userID = "0252379";
-		Student student = new Student(userID, "aaaAAA123@", "g.marseglia@lll.it", "Giuseppe", "MARSA", "1234567890");
+		Student student = new Student(USERID, PASSWORD, EMAIL, NAME, SURNAME, PHONE);
 		dao.addStudent(student);
-		Student fromDBStudent = dao.loadStudentByUserID(userID);
+		Student fromDBStudent = dao.loadStudentByUserID(USERID);
 		assertTrue(student.compare(fromDBStudent));
 	}
 
@@ -58,13 +62,12 @@ public class NewMySqlDaoTest extends TestUtilities {
 //	@Test
 	public void addCar() throws InvalidInputException, DatabaseException {
 		emptyDB();
-		String userID = "0252379";
-		Student student = new Student(userID, "aaaAAA123@", "g.marseglia@lll.it", "Giuseppe", "MARSA", "1234567890");
+		Student student = new Student(USERID, PASSWORD, EMAIL, NAME, SURNAME, PHONE);
 		CarInfo carInfo = new CarInfo("BB123BB", 4, "model", "color");
 		StudentCar driver = new StudentCar(student, 0, carInfo);
 		dao.addStudent(student);
 		dao.addCar(driver);
-		StudentCar driverFromDB = dao.loadStudentCarByUserID(userID);
+		StudentCar driverFromDB = dao.loadStudentCarByUserID(USERID);
 		LOGGER.info("driverFromDB", driverFromDB);
 		assertTrue(driver.compare(driverFromDB));
 	}
@@ -72,12 +75,11 @@ public class NewMySqlDaoTest extends TestUtilities {
 	@Test
 	public void addStudentCar() throws InvalidInputException, DatabaseException {
 		emptyDB();
-		String userID = "0252379";
-		Student student = new Student(userID, "aaaAAA123@", "g.marseglia@lll.it", "Giuseppe", "MARSA", "1234567890");
+		Student student = new Student(USERID, PASSWORD, EMAIL, NAME, SURNAME, PHONE);
 		CarInfo carInfo = new CarInfo("BB123BB", 4, "model", "color");
 		StudentCar driver = new StudentCar(student, 0, carInfo);
 		dao.addStudentCar(driver);
-		StudentCar driverFromDB = dao.loadStudentCarByUserID(userID);
+		StudentCar driverFromDB = dao.loadStudentCarByUserID(USERID);
 		LOGGER.info("driverFromDB", driverFromDB);
 		assertTrue(driver.compare(driverFromDB));
 	}

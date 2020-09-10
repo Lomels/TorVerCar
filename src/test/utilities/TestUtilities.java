@@ -33,10 +33,6 @@ public class TestUtilities {
 	public static final Integer DRIVER_NUMBER = 5;
 	public static final Integer PASSENGER_NUMBER = 5;
 	
-	// Our userID
-	public static final String ID_MARCO = "0241118";
-	public static final String ID_GIULIA = "0245061";
-	public static final String ID_BEPPE = "0252379";
 
 	// Student Attributes
 	public static final String USER_ID = "000000";

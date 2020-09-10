@@ -21,7 +21,7 @@ import test.utilities.TestUtilities;
 
 /* GIULIA DESIDERI */
 
-class OfferTest extends TestUtilities {
+class DesideriTestCase1 extends TestUtilities {
 
 	private String beanToString(LiftBean lift) {
 		return "Driver: " + lift.getDriver().toString() + ", From: " + lift.getStartPos() + ", To: " + lift.getStopPos()

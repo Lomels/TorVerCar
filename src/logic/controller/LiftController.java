@@ -10,7 +10,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import logic.bean.LiftBean;
@@ -44,10 +43,6 @@ public class LiftController {
 	private MySqlDAO ourDb = new MySqlDAO();
 
 	RoutingApi routingApi = RoutingHereAPI.getInstance();
-
-	// String startDateTimeString, Integer maxDuration, String note, StudentCar
-	// driver,
-	// Position pickUp, Position dropOff
 
 	public void createLift(LiftBean liftBean)
 			throws InvalidInputException, DatabaseException, InvalidStateException, ApiNotReachableException {
@@ -117,9 +112,6 @@ public class LiftController {
 				completed.add(l);
 		}
 
-		// TODO: aggiornare lift nel DB per non farli ricomparire nella lista una volta
-		// dato il rating
-
 		return completed;
 	}
 
@@ -143,6 +135,7 @@ public class LiftController {
 		List<Position> stops = new ArrayList<>();
 		stops.add(liftBean.getStartPos());
 		stops.add(liftBean.getStopPos());
+
 		
 		// Launch thread for computing
 		LiftThread thread = new LiftThread(possibleLifts, stops, initIndex);
@@ -189,7 +182,7 @@ public class LiftController {
 			LOGGER.severe(e.toString());
 			Thread.currentThread().interrupt();
 		} catch (ExecutionException e) {
-			LOGGER.log(Level.SEVERE, "Exception found", e);
+			e.printStackTrace();
 			listener.onThreadEnd(new ArrayList<>());
 		}
 
@@ -250,7 +243,7 @@ public class LiftController {
 						}
 					}
 				} catch (InvalidInputException | ApiNotReachableException e) {
-					LOGGER.log(Level.SEVERE, "Exception", e);
+					e.printStackTrace();
 				}
 			}
 

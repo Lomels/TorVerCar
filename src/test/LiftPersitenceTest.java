@@ -1,11 +1,9 @@
 package test;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,18 +81,6 @@ public class LiftPersitenceTest extends TestUtilities {
 		assertEquals(finalMaxDuration, secondLift.getMaxDuration());
 	}
 
-	@Test
-	public void addPassenger() throws InvalidInputException, DatabaseException {
-		this.setup();
-		LocalDateTime startDateTime = LocalDateTime.parse(START_DATE_TIME_EARLY);
-		Lift availableLift = dao
-				.listAvailableLiftStartingWithinIntervalDateTime(startDateTime, startDateTime.plusYears(1)).get(0);
-		Student newStudent = addStudentToDB();
-
-		PassengerController passengerController = new PassengerController();
-
-		assertDoesNotThrow(() -> passengerController.addPassenger(availableLift, newStudent));
-	}
 
 	@Test
 	public void listPassenger()

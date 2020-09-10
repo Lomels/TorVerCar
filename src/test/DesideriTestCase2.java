@@ -2,7 +2,7 @@ package test;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import logic.bean.CarInfoBean;
 import logic.bean.UserBean;
@@ -11,45 +11,42 @@ import logic.controller.SetCarInfoController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Role;
-import logic.utilities.MyLogger;
-import test.utilities.TestUtilities;
+import logic.model.UserSingleton;
+import logic.view.mysql.MySqlDAO;
 
-/* MARCO LO MELE */
+/* GIULIA DESIDERI */
 
-public class SetCarInfoTest extends TestUtilities{
+class DesideriTestCase2 {
 	private SetCarInfoController carController = new SetCarInfoController();
 	private RegistrationController registration = new RegistrationController();
 	private UserBean userBean = new UserBean();
 	private CarInfoBean carInfo = new CarInfoBean();
-	
-	
-	@Test
-	public void editCarTest() {
-		
-	}
+	private MySqlDAO dao = new MySqlDAO();
+	private UserSingleton sg = UserSingleton.getInstance();
+
 	
 	@Test
 	public void removeCarTest() throws DatabaseException, InvalidInputException {
-		String userID = "0567891";
+		String userID = "0245061";
 		userBean.setUserID(userID);
 		dao.removeStudentByUserID(userBean.getUserID());
 
 		userBean = registration.recapInfo(userBean);
-		userBean.setPassword(PASSWORD);
-		userBean.setPhone(PHONE);
+		userBean.setPassword("aaaAAA123@");
+		userBean.setPhone("3334445556");
 
-		carInfo.setModel(MODEL);
-		carInfo.setColour(COLOR);
-		carInfo.setPlate("FA769KN");
-		carInfo.setSeats(SEATS);
-		
+		carInfo.setModel("Alfa Romeo Giulia");
+		carInfo.setColour("Rossa");
+		carInfo.setPlate("FL398CD");
+		carInfo.setSeats(4);
+
 		registration.addStudentCar(carInfo, userBean);
-		MyLogger.info("Old user role", dao.loadRoleByUserID(userID));
-
-		carController.removeCar(userBean);
 		
-		MyLogger.info("New user role", dao.loadRoleByUserID(userID));
+		sg.setStudentCar(dao.loadStudentCarByUserID(userID));
+		sg.setRole(Role.DRIVER);
+		carController.removeCar(userBean);
+
 		assertEquals(Role.STUDENT, dao.loadRoleByUserID(userID));
 	}
-	
+
 }
