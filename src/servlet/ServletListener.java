@@ -45,6 +45,7 @@ public class ServletListener implements LiftMatchListener{
 
 	@Override
 	public void onThreadRunning() {
+		/* NEVER USED */
 	}
 
 }

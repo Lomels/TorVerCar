@@ -21,6 +21,7 @@ import logic.view.mysql.MySqlDAO;
 public class ProfileControllerServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		MySqlDAO ourDb = new MySqlDAO();
@@ -74,7 +75,6 @@ public class ProfileControllerServlet extends HttpServlet{
 				e.printStackTrace();
 			} catch (DatabaseException e) {
 				ExceptionHandler.handle(e, request, response, profile);	
-				return;				
 			}
 			
 		}

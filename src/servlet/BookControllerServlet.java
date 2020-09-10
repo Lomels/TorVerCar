@@ -32,6 +32,8 @@ import logic.utilities.MyLogger;
 @WebServlet("/BookControllerServlet")
 public class BookControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String STARTPOS = "startPos";
+	private static final String OFFERBEAN = "offerBean";
 	
 
 	@Override
@@ -41,36 +43,36 @@ public class BookControllerServlet extends HttpServlet {
 		String book = "book.jsp";
 
 		try {
-			if ("startPos".equals(action)) {
+			if (STARTPOS.equals(action)) {
 				String address = request.getParameter("start");
 				OfferBean offerBean = new OfferBean();
 
 				List<Position> positions = ServletUtility.pupulateListPosition(address);
 				offerBean.setResult(positions);
-				offerBean.setStatus("startPos");
-				session.setAttribute("offerBean", offerBean);
+				offerBean.setStatus(STARTPOS);
+				session.setAttribute(OFFERBEAN, offerBean);
 				request.getRequestDispatcher(book).forward(request, response);
 
 			}
 
 			if ("destPos".equals(action)) {
 				String address = request.getParameter("dest");
-				OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
+				OfferBean offerBean = (OfferBean) session.getAttribute(OFFERBEAN);
 
 				List<Position> positions = ServletUtility.pupulateListPosition(address);
 				offerBean.setResult(positions);
-				offerBean.setStatus("startPos");
-				session.setAttribute("offerBean", offerBean);
+				offerBean.setStatus(STARTPOS);
+				session.setAttribute(OFFERBEAN, offerBean);
 				request.getRequestDispatcher(book).forward(request, response);
 			}
 
 			if ("stop".equals(action)) {
 				String index = request.getParameter("index");
-				OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
+				OfferBean offerBean = (OfferBean) session.getAttribute(OFFERBEAN);
 				offerBean.addStop(offerBean.getResult().get(Integer.parseInt(index)));
 				offerBean.setStatus("");
 
-				session.setAttribute("offerBean", offerBean);
+				session.setAttribute(OFFERBEAN, offerBean);
 
 				MyLogger.info("selected position", offerBean.getResult().get(Integer.parseInt(index)));
 
@@ -79,7 +81,7 @@ public class BookControllerServlet extends HttpServlet {
 
 			if ("search".equals(action)) {
 				LiftController liftController = new LiftController();
-				OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
+				OfferBean offerBean = (OfferBean) session.getAttribute(OFFERBEAN);
 				ServletListener listener = new ServletListener(session, request, response, offerBean);
 				String date = request.getParameter("day");
 				String time = request.getParameter("time");
@@ -104,7 +106,7 @@ public class BookControllerServlet extends HttpServlet {
 			if ("book".equals(action)) {
 				PassengerController passController = new PassengerController();
 				Integer index = Integer.parseInt(request.getParameter("index"));
-				OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
+				OfferBean offerBean = (OfferBean) session.getAttribute(OFFERBEAN);
 				Student student = (Student) session.getAttribute("user");
 				Lift lift = offerBean.getLiftResult().get(index).getLift();
 

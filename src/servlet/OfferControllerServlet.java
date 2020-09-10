@@ -26,54 +26,57 @@ import logic.model.StudentCar;
 @WebServlet("/OfferControllerServlet")
 public class OfferControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final String OFFER = "offer.jsp";
+	private static final String STARTPOS = "startPos";
+	private static final String OFFERBEAN = "offerBean";
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String action = request.getParameter("action");
-		String offer = "offer.jsp";
+		
 
 		try {
-			if ("startPos".equals(action)) {
+			if (STARTPOS.equals(action)) {
 
 				String address = request.getParameter("start");
 				OfferBean offerBean = new OfferBean();
 
 				List<Position> positions = ServletUtility.pupulateListPosition(address);
 				offerBean.setResult(positions);
-				offerBean.setStatus("startPos");
-				session.setAttribute("offerBean", offerBean);
-				request.getRequestDispatcher(offer).forward(request, response);
+				offerBean.setStatus(STARTPOS);
+				session.setAttribute(OFFERBEAN, offerBean);
+				request.getRequestDispatcher(OFFER).forward(request, response);
 
 			}
 
 			if ("desPos".equals(action)) {
 				String address = request.getParameter("dest");
-				OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
+				OfferBean offerBean = (OfferBean) session.getAttribute(OFFERBEAN);
 
 				List<Position> positions = ServletUtility.pupulateListPosition(address);
 				offerBean.setResult(positions);
-				offerBean.setStatus("startPos");
-				session.setAttribute("offerBean", offerBean);
-				request.getRequestDispatcher("offer.jsp").forward(request, response);
+				offerBean.setStatus(STARTPOS);
+				session.setAttribute(OFFERBEAN, offerBean);
+				request.getRequestDispatcher(OFFER).forward(request, response);
 
 			}
 
 			if ("stop".equals(action)) {
 				String index = request.getParameter("index");
-				OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
+				OfferBean offerBean = (OfferBean) session.getAttribute(OFFERBEAN);
 				offerBean.addStop(offerBean.getResult().get(Integer.parseInt(index)));
 				offerBean.setStatus("");
 
-				session.setAttribute("offerBean", offerBean);
+				session.setAttribute(OFFERBEAN, offerBean);
 
-				request.getRequestDispatcher("offer.jsp").forward(request, response);
+				request.getRequestDispatcher(OFFER).forward(request, response);
 
 			}
 
 			if ("offer".equals(action)) {
 				LiftController liftController = new LiftController();
-				OfferBean offerBean = (OfferBean) session.getAttribute("offerBean");
+				OfferBean offerBean = (OfferBean) session.getAttribute(OFFERBEAN);
 				StudentCar driver = (StudentCar) session.getAttribute("user");
 
 				String date = request.getParameter("day");
@@ -93,19 +96,19 @@ public class OfferControllerServlet extends HttpServlet {
 
 				liftController.createLift(lift);
 				OfferBean newBean = new OfferBean();
-				session.setAttribute("offerBean", newBean);
+				session.setAttribute(OFFERBEAN, newBean);
 				ServletUtility.liftRefresh(session);
 				MessageBean msg = new MessageBean();
 				msg.setMessage("You have succesfully offered a lift!");
 				msg.setType("success");
 				msg.setTitle("Yay!");
 				request.setAttribute("message", msg);
-				request.getRequestDispatcher(offer).forward(request, response);
+				request.getRequestDispatcher(OFFER).forward(request, response);
 
 			}
 		} catch (NumberFormatException | InvalidInputException | DatabaseException | InvalidStateException
 				| ApiNotReachableException e) {
-			ExceptionHandler.handle(e, request, response, offer);
+			ExceptionHandler.handle(e, request, response, OFFER);
 		} catch (ServletException | IOException e) {
 			e.printStackTrace();
 		}

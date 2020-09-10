@@ -97,8 +97,6 @@ public class LiftPersitenceTest extends TestUtilities {
 		assertDoesNotThrow(() -> passengerController.addPassenger(availableLift, newStudent));
 	}
 
-	// TODO: test to break PassengerController.addPassenger
-
 	@Test
 	public void listPassenger()
 			throws DatabaseException, InvalidInputException, InvalidStateException, PassengerException {
@@ -163,7 +161,4 @@ public class LiftPersitenceTest extends TestUtilities {
 
 	}
 
-//	public void listByDriver()
-
-//	public void listByPassenger() {
 }

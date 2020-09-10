@@ -61,7 +61,7 @@ public class LoginControllerServlet extends HttpServlet {
 
 			if ("register".equals(action)) {
 				RegistrationController regController = new RegistrationController();
-				UserBean userBean = (UserBean) session.getAttribute("currentUser");
+				UserBean userBean = (UserBean) session.getAttribute(CURRENT_USER);
 
 				String password = request.getParameter("password");
 				String phone = request.getParameter("phone");

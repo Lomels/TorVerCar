@@ -5,8 +5,13 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import logic.bean.LiftBean;
+import logic.bean.UserBean;
+import logic.controller.RatingController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
+import logic.model.StudentCar;
+import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
 public class MySqlDAOTest {
@@ -17,31 +22,31 @@ public class MySqlDAOTest {
 	private static final String NOT_EX_USERID = "1000";
 
 //	@Test
-	public void existingUser() throws DatabaseException, InvalidInputException {
+	public void existingUser() throws DatabaseException {
 		MySqlDAO my = new MySqlDAO();
 		assertTrue(my.existByUserID(USERID));
 	}
 
 //	@Test
-	public void notExistingUser() throws DatabaseException, InvalidInputException {
+	public void notExistingUser() throws DatabaseException {
 		MySqlDAO my = new MySqlDAO();
 		assertFalse(my.existByUserID(NOT_EX_USERID));
 	}
 
 //	@Test
-	public void banned() throws InvalidInputException, DatabaseException {
+	public void banned() throws DatabaseException {
 		MySqlDAO my = new MySqlDAO();
 		assertTrue(my.wasBannedByUserID(BANNED));
 	}
 
 //	@Test
-	public void notBanned() throws InvalidInputException, DatabaseException {
+	public void notBanned() throws DatabaseException {
 		MySqlDAO my = new MySqlDAO();
 		assertFalse(my.wasBannedByUserID(USERID));
 	}
 
 //	@Test
-	public void notExistingBanned() throws InvalidInputException, DatabaseException {
+	public void notExistingBanned() throws DatabaseException {
 		MySqlDAO my = new MySqlDAO();
 		assertFalse(my.wasBannedByUserID(NOT_EX_USERID));
 	}
@@ -53,32 +58,41 @@ public class MySqlDAOTest {
 	}
 
 //	@Test
-	public void editInfo() throws Exception {
+	public void editInfo() {
 		// TODO: implementare
 	}
 
 //	@Test
-	public void existingPassword() throws InvalidInputException, DatabaseException {
+	public void existingPassword() throws DatabaseException {
 		MySqlDAO my = new MySqlDAO();
 		String actualP;
 		actualP = my.loadPasswordByUserID(USERID);
 		assertEquals(PASSWORD, actualP);
 	}
   
-////	@Test
-//	public void updateRating() throws DatabaseException {
-//		MySqlDAO my = new MySqlDAO();
-//		StudentCar test = my.loadStudentCarByUserID("0000000");
-//		MyLogger.info("Before test rating", test.getRating());
-//		
-//		RatingController.upvote("0000001", 1, "0000000");
-//		test = my.loadStudentCarByUserID("0000000");
-//		MyLogger.info("After upvote test", test.getRating());
-//		
-//		RatingController.downvote("00000010", 2, "0000000");
-//		test = my.loadStudentCarByUserID("0000000");
-//		MyLogger.info("After downvote test", test.getRating());
-//
-//	}
+//	@Test
+	public void updateRating() throws DatabaseException, InvalidInputException {
+		MySqlDAO my = new MySqlDAO();
+		StudentCar test = my.loadStudentCarByUserID("0000000");
+		MyLogger.info("Before test rating", test.getRating());
+		
+		RatingController rate = new RatingController();
+		LiftBean lift = new LiftBean();
+		UserBean user = new UserBean();
+		
+		lift.setLiftID(1);
+		user.setUserID("0000001");
+		
+		rate.upvoteLift(user, lift);
+		test = my.loadStudentCarByUserID("0000000");
+		MyLogger.info("After upvote test", test.getRating());
+		
+		lift.setLiftID(2);
+		user.setUserID("00000010");
+		rate.downvote(user, lift);
+		test = my.loadStudentCarByUserID("0000000");
+		MyLogger.info("After downvote test", test.getRating());
+
+	}
 
 }
