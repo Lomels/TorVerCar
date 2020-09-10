@@ -41,7 +41,6 @@ public class LiftPersitenceTest extends TestUtilities {
 		assertTrue(lift.compare(fromDB));
 	}
 
-//	public void createLift()
 
 	@Test
 	public void loadLiftByID() throws DatabaseException, InvalidInputException {

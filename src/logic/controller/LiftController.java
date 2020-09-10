@@ -48,7 +48,7 @@ public class LiftController {
 	// driver,
 	// Position pickUp, Position dropOff
 
-	public Lift createLift(LiftBean liftBean)
+	public void createLift(LiftBean liftBean)
 			throws InvalidInputException, DatabaseException, InvalidStateException, ApiNotReachableException {
 		LocalDateTime startDateTime = liftBean.getStartDateTime();
 		Route route = routingApi.startToStop(liftBean.getStartPos(), liftBean.getStopPos());
@@ -73,8 +73,6 @@ public class LiftController {
 		}
 		Lift lift = new Lift(null, startDateTime, maxDuration, liftBean.getNote(), liftBean.getDriver(), null, route);
 		ourDb.saveLift(lift);
-
-		return lift;
 	}
 
 	// A lift is concluded if is rated from all the passengers and its stopDateTime

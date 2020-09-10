@@ -18,10 +18,9 @@ public class SetCarInfoController {
 	UserBeanSingleton sgBean = UserBeanSingleton.getInstance();
 	MySqlDAO ourDb = new MySqlDAO();
 
-	public StudentCar addCar(CarInfoBean carInfo) throws InvalidInputException {
+	public StudentCar addCar(CarInfoBean carInfo, UserBean userBean) throws InvalidInputException {
 		CarInfo car = new CarInfo(carInfo.getPlate(), carInfo.getSeats(), carInfo.getModel(), carInfo.getColour());
 
-		UserBean userBean = sgBean.getUserBean();
 		Student student = new Student(userBean.getUserID(), userBean.getPassword(), userBean.getEmail(),
 				userBean.getName(), userBean.getSurname(), userBean.getPhone());
 

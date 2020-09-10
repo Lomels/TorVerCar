@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.bean.CarInfoBean;
+import logic.bean.UserBeanSingleton;
+import logic.bean.UserBeanSingleton;
 import logic.controller.RegistrationController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
@@ -29,6 +31,7 @@ public class AddCarView extends Application {
 	@FXML private TextField tfSeats;
 	@FXML private TextField tfPlate;
 	private ViewController view = new ViewController();
+	private UserBeanSingleton sg = UserBeanSingleton.getInstance();
 	
 	@Override
 	public void start(Stage primaryStage){
@@ -49,7 +52,7 @@ public class AddCarView extends Application {
 
 		RegistrationController controller = new RegistrationController();
 		try {
-			controller.addStudentCar(carInfo);
+			controller.addStudentCar(carInfo, sg.getUserBean());
 		} catch (InvalidInputException | DatabaseException e) {
 			ExceptionHandler.handle(e);
 		}

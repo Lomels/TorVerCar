@@ -56,7 +56,7 @@ public class MySqlDAOTest {
 		MySqlDAO my = new MySqlDAO();
 		assertThrows(DatabaseException.class, () -> my.loadStudentByUserID(NOT_EX_USERID));
 	}
-
+	
 //	@Test
 	public void editInfo() {
 		// TODO: implementare

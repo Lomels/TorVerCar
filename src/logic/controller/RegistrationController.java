@@ -35,11 +35,12 @@ public class RegistrationController {
 		ourDb.addStudent(student);
 	}
 
-	public void addStudentCar(CarInfoBean carInfo) throws InvalidInputException, DatabaseException {
+	public void addStudentCar(CarInfoBean carInfo, UserBean user) throws InvalidInputException, DatabaseException {
+		addStudent(user);
 		SetCarInfoController controller = new SetCarInfoController();
-		StudentCar studentCar = controller.addCar(carInfo);
-
-		ourDb.addStudentCar(studentCar);
+		StudentCar studentCar = controller.addCar(carInfo, user);
+		
+		ourDb.addCar(studentCar);
 	}
 
 	public UserBean recapInfo(UserBean user) throws DatabaseException, InvalidInputException  {
