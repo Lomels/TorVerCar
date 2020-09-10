@@ -51,8 +51,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	private void logException(Exception e) {
-		String message = e.getStackTrace().toString();
-		LOGGER.severe(message);
+		LOGGER.log(Level.SEVERE, "Exception found", e);
 	}
 
 	private void connect() throws SQLException {
@@ -80,6 +79,17 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	}
 
+	private void closeAndDisconnect(ResultSet rs, boolean close) {
+		if (close) {
+			try {
+				rs.close();
+				this.disconnect();
+			} catch (SQLException e) {
+				// Do nothing
+			}
+		}
+	}
+
 	private Lift liftFromResult(ResultSet rs, boolean close) throws DatabaseException, InvalidInputException {
 		try {
 			// liftID
@@ -103,13 +113,7 @@ public class MySqlDAO implements OurStudentDatabase {
 			LOGGER.severe(e.toString());
 			throw new DatabaseException(COLUMN_NOT_FOUND_MESSAGE);
 		} finally {
-			if (close)
-				try {
-					rs.close();
-					this.disconnect();
-				} catch (SQLException e) {
-					// Do nothing
-				}
+			this.closeAndDisconnect(rs, close);
 		}
 
 	}
@@ -128,13 +132,7 @@ public class MySqlDAO implements OurStudentDatabase {
 			LOGGER.severe(e.toString());
 			throw new DatabaseException(COLUMN_NOT_FOUND_MESSAGE);
 		} finally {
-			if (close)
-				try {
-					rs.close();
-					this.disconnect();
-				} catch (SQLException e) {
-					// Do nothing
-				}
+			this.closeAndDisconnect(rs, close);
 		}
 		return student;
 	}
@@ -165,13 +163,7 @@ public class MySqlDAO implements OurStudentDatabase {
 			LOGGER.severe(e.toString());
 			throw new DatabaseException(COLUMN_NOT_FOUND_MESSAGE);
 		} finally {
-			if (close)
-				try {
-					rs.close();
-					this.disconnect();
-				} catch (SQLException e) {
-					// Do nothing
-				}
+			this.closeAndDisconnect(rs, close);
 		}
 
 		return studentCar;
@@ -186,13 +178,7 @@ public class MySqlDAO implements OurStudentDatabase {
 		} catch (SQLException e) {
 			throw new DatabaseException(NEXT_FAILED_MESSAGE);
 		} finally {
-			if (close)
-				try {
-					rs.close();
-					this.disconnect();
-				} catch (SQLException e) {
-					// Do nothing
-				}
+			this.closeAndDisconnect(rs, close);
 		}
 		return result;
 	}
@@ -230,16 +216,16 @@ public class MySqlDAO implements OurStudentDatabase {
 			throw new DatabaseException(CANNOT_CONTACT_MESSAGE);
 		} catch (SQLException e) {
 			throw new DatabaseException(CANNOT_CONTACT_MESSAGE);
-		} 
+		}
 	}
 
 	private boolean first(String queryMethod, Object argument) throws DatabaseException {
 		try {
 			this.executeQuery(queryMethod, argument);
+			return true;
 		} catch (NoResultFound e) {
 			return false;
 		}
-		return true;
 	}
 
 	private void executeUpdate(String queryMethod, Object[] arguments) throws DatabaseException {
