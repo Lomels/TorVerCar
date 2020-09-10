@@ -18,6 +18,7 @@ import javafx.util.Callback;
 import logic.controller.PassengerController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
+import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
 import logic.controller.exception.PassengerException;
 import logic.model.LiftMatchResult;
@@ -56,7 +57,7 @@ public class LiftListView extends ViewController implements Initializable {
 				controller.addPassenger(lift.getSelectedLift(), sg.getStudent());
 			else
 				controller.addPassenger(lift.getSelectedLift(), sg.getStudentCar());
-		} catch (InvalidStateException | DatabaseException | PassengerException e) {
+		} catch (InvalidStateException | DatabaseException | PassengerException | InvalidInputException e) {
 			ExceptionHandler.handle(e);
 		}
 

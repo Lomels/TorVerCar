@@ -24,14 +24,15 @@ import logic.model.StudentCar;
 import logic.model.UserSingleton;
 
 public class ServletUtility {
-	
-	private ServletUtility() {}
 
-	public static void login(String userID, String password, HttpServletRequest request, HttpServletResponse response){
+	private ServletUtility() {
+	}
+
+	public static void login(String userID, String password, HttpServletRequest request, HttpServletResponse response) throws DatabaseException, InvalidInputException {
 		LiftController liftController = new LiftController();
 		LoginController lgController = new LoginController();
 		HttpSession session = request.getSession();
-		
+
 		UserBean usr = new UserBean();
 		usr.setUserID(userID);
 		usr.setPassword(password);
@@ -40,27 +41,27 @@ public class ServletUtility {
 		} catch (InvalidInputException | DatabaseException e1) {
 			ExceptionHandler.handle(e1, request, response, "index.jsp");
 		}
-		
+
 		UserSingleton sg = UserSingleton.getInstance();
 		usr.setRole(sg.getRole());
-		List<String> notifications = liftController.loadNotifications(usr);
-		if (usr.getRole().equals(Role.STUDENT)) {
-			Student student = sg.getStudent();
-			student.setBookedLift(liftController.loadBookedLift(usr));
-			student.setNotifications(notifications);
-			session.setAttribute("user", student);
-			session.setAttribute("role", "student");
-			
-		}else if (usr.getRole().equals(Role.DRIVER)) {
-			StudentCar studentCar = sg.getStudentCar();
-			studentCar.setBookedLift(liftController.loadBookedLift(usr));
-			studentCar.setOfferedLift(liftController.loadOfferedLift(usr));
-			studentCar.setNotifications(notifications);
-			session.setAttribute("user", studentCar);
-			session.setAttribute("role", "driver");
-		}
-		
 		try {
+			List<String> notifications = liftController.loadNotifications(usr);
+			if (usr.getRole().equals(Role.STUDENT)) {
+				Student student = sg.getStudent();
+				student.setBookedLift(liftController.loadBookedLift(usr));
+				student.setNotifications(notifications);
+				session.setAttribute("user", student);
+				session.setAttribute("role", "student");
+
+			} else if (usr.getRole().equals(Role.DRIVER)) {
+				StudentCar studentCar = sg.getStudentCar();
+				studentCar.setBookedLift(liftController.loadBookedLift(usr));
+				studentCar.setOfferedLift(liftController.loadOfferedLift(usr));
+				studentCar.setNotifications(notifications);
+				session.setAttribute("user", studentCar);
+				session.setAttribute("role", "driver");
+			}
+
 			request.getRequestDispatcher("homepage.jsp").forward(request, response);
 		} catch (ServletException | IOException e) {
 			e.printStackTrace();
@@ -73,8 +74,8 @@ public class ServletUtility {
 		return mapsApi.addrToPos(address);
 
 	}
-	
-	public static void liftRefresh(HttpSession session) {
+
+	public static void liftRefresh(HttpSession session) throws DatabaseException, InvalidInputException {
 		LiftController liftController = new LiftController();
 		String role = (String) session.getAttribute("role");
 		UserBean user = new UserBean();
@@ -83,7 +84,7 @@ public class ServletUtility {
 			user.setUserID(student.getUserID());
 			student.setBookedLift(liftController.loadBookedLift(user));
 			session.setAttribute("user", student);
-		}else if ("driver".equals(role)) {
+		} else if ("driver".equals(role)) {
 			StudentCar studentCar = (StudentCar) session.getAttribute("user");
 			user.setUserID(studentCar.getUserID());
 			studentCar.setBookedLift(liftController.loadBookedLift(user));

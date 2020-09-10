@@ -20,6 +20,7 @@ import logic.bean.LiftBean;
 import logic.controller.LiftController;
 import logic.controller.LiftMatchListener;
 import logic.controller.exception.ApiNotReachableException;
+import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.NoLiftAvailable;
@@ -143,7 +144,7 @@ public class BookView extends ViewController implements Initializable, LiftMatch
 				alert.setContentText("You must choose a lift option");
 				alert.showAndWait();
 			}
-		} catch (NoLiftAvailable e) {
+		} catch (NoLiftAvailable | InvalidInputException | DatabaseException e) {
 			ExceptionHandler.handle(e);
 		}
 	}

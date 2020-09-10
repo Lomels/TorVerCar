@@ -44,7 +44,11 @@ public class MainMenuView extends ViewController implements Initializable {
 		super.start("fxml/Home_menu.fxml", stage);		
 		notifications = sg.getNotifications();
 		if (!notifications.isEmpty()) {
-			showNotifications(notifications.size());
+			try {
+				showNotifications(notifications.size());
+			} catch (DatabaseException e) {
+				ExceptionHandler.handle(e);
+			}
 		}
 
 		completedLifts = sg.getCompletedLift();
@@ -114,7 +118,7 @@ public class MainMenuView extends ViewController implements Initializable {
 		} while (i < size && i >= 0);
 	}
 
-	public void showNotifications(int index) {
+	public void showNotifications(int index) throws DatabaseException {
 		int i = 0;
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Notification");
@@ -167,8 +171,12 @@ public class MainMenuView extends ViewController implements Initializable {
 		tvName.setText(welcome);
 		userBean.setUserID(sg.getUserID());
 		
-		sg.setNotifications(liftContr.loadNotifications(userBean));
-		sg.setCompletedLift(liftContr.checkCompletedLift(userBean));
+		try {
+			sg.setNotifications(liftContr.loadNotifications(userBean));
+			sg.setCompletedLift(liftContr.checkCompletedLift(userBean));
+		} catch (DatabaseException | InvalidInputException e) {
+			ExceptionHandler.handle(e);
+		}
 	}
 
 

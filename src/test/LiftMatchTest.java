@@ -13,7 +13,9 @@ import logic.bean.LiftBean;
 import logic.controller.LiftController;
 import logic.controller.LiftMatchListener;
 import logic.controller.exception.ApiNotReachableException;
+import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
+import logic.controller.exception.NoLiftAvailable;
 import logic.model.LiftMatchResult;
 import logic.model.Position;
 import logic.model.Route;
@@ -33,7 +35,6 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 		stops.add(maps.addrToPos(ADDR_UNI).get(0));
 
 		this.route = maps.startToStop(stops);
-		MyLogger.info("Route of the passenger: " + this.route.toStringLong());
 	}
 
 	private void setup() {
@@ -42,7 +43,7 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 	}
 
 	@Test
-	public void matchLiftStartAfter() {
+	public void matchLiftStartAfter() throws DatabaseException {
 		this.setup();
 
 		LiftController liftController = new LiftController();
@@ -55,7 +56,7 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 	}
 
 	@Test
-	public void matchLiftStartAfterNotExisting() {
+	public void matchLiftStartAfterNotExisting() throws DatabaseException {
 		this.setup();
 		LiftController liftController = new LiftController();
 		LocalDateTime startDateTime = LocalDateTime.parse("2021-08-15T19:45");
@@ -63,12 +64,11 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 		liftBean.setStartDateTime(startDateTime);
 		liftBean.setStartPos(this.route.getStops().get(0));
 		liftBean.setStartPos(this.route.getStops().get(1));
-		assertThrows(TestRuntimeException.class,
-				() -> liftController.matchLiftStartingAfter(liftBean, 0, this));
+		assertThrows(NoLiftAvailable.class, () -> liftController.matchLiftStartingAfter(liftBean, 0, this));
 	}
 
 	@Test
-	public void matchLiftStopBefore() {
+	public void matchLiftStopBefore() throws DatabaseException {
 		this.setup();
 
 		LiftController liftController = new LiftController();
@@ -81,7 +81,7 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 	}
 
 	@Test
-	public void matchLiftStopBeforeNotExisting() {
+	public void matchLiftStopBeforeNotExisting() throws DatabaseException {
 		this.setup();
 
 		LiftController liftController = new LiftController();
@@ -90,8 +90,7 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 		liftBean.setStartDateTime(stopDateTime);
 		liftBean.setStartPos(this.route.getStops().get(0));
 		liftBean.setStartPos(this.route.getStops().get(1));
-		assertThrows(TestRuntimeException.class,
-				() -> liftController.matchLiftStoppingBefore(liftBean, 0, this));
+		assertThrows(NoLiftAvailable.class, () -> liftController.matchLiftStoppingBefore(liftBean, 0, this));
 	}
 
 	@Override

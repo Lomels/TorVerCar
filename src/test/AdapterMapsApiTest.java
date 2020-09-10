@@ -12,7 +12,6 @@ import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.InvalidInputException;
 import logic.model.Position;
 import logic.model.Route;
-import logic.utilities.MyLogger;
 import test.utilities.TestLogger;
 import test.utilities.TestUtilities;
 
@@ -28,9 +27,7 @@ public class AdapterMapsApiTest extends TestUtilities {
 	@Test
 	public void addrToPosTest() throws ApiNotReachableException, InvalidInputException {
 		List<Position> results = maps.addrToPos(ADDR_GIU);
-		for (Position p : results)
-			MyLogger.info("Position", p);
-		
+
 		assertNotNull(results);
 	}
 

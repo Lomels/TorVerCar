@@ -3,6 +3,8 @@ package test.utilities;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.json.JSONObject;
 
@@ -18,17 +20,18 @@ import logic.model.Lift;
 import logic.model.Route;
 import logic.model.Student;
 import logic.model.StudentCar;
-import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
 public class TestUtilities {
+
+	private static final Logger LOGGER = Logger.getLogger(TestUtilities.class.getCanonicalName());
 
 	protected static final MySqlDAO dao = new MySqlDAO();
 	protected static final MapsApi maps = AdapterMapsApi.getInstance();
 	private static final PassengerController PASSENGER_CONTROLLER = new PassengerController();
 
 	public static final Integer DRIVER_NUMBER = 5;
-	public static final Integer PASSENGER_NUMBER = 30;
+	public static final Integer PASSENGER_NUMBER = 5;
 
 	// Student Attributes
 	public static final String USER_ID = "000000";
@@ -70,7 +73,7 @@ public class TestUtilities {
 
 	public static final String NOTE = "Ciao Mamma";
 
-	private static int lastPassengerID = DRIVER_NUMBER + 1;
+	private static int lastPassengerID = 0;
 
 	private static boolean modified = true;
 
@@ -98,59 +101,56 @@ public class TestUtilities {
 	}
 
 	public static void emptyDB() throws DatabaseException {
+		lastPassengerID = 0;
 		dao.emptyDB();
 		dbModified();
-		MyLogger.info("DB emptied!");
+		LOGGER.log(Level.FINE, "emptyDB() completed.");
 	}
 
-	public static void populateUsers() {
+	public static void populateUsers() throws InvalidInputException, DatabaseException {
 		Integer indexID = 0;
-		try {
-			// Add Student and StudentCar
-			for (; indexID < PASSENGER_NUMBER + DRIVER_NUMBER; indexID++) {
-				String userID = generateUserID(indexID);
-				Student student = new Student(userID, PASSWORD, EMAIL, NAME, SURNAME, PHONE);
-				dao.addStudent(student);
-				if (indexID < DRIVER_NUMBER) {
-					String plate = generatePlate(indexID);
-					CarInfo carInfo = new CarInfo(plate, SEATS, MODEL, COLOR);
-					StudentCar studentCar = new StudentCar(student, RATING, carInfo);
-					dao.addCar(studentCar);
-				}
+
+		// Add Student and StudentCar
+		for (; indexID < PASSENGER_NUMBER + DRIVER_NUMBER; indexID++) {
+			String userID = generateUserID(indexID);
+			Student student = new Student(userID, PASSWORD, EMAIL, NAME, SURNAME, PHONE);
+			dao.addStudent(student);
+			lastPassengerID++;
+			if (indexID < DRIVER_NUMBER) {
+				String plate = generatePlate(indexID);
+				CarInfo carInfo = new CarInfo(plate, SEATS, MODEL, COLOR);
+				StudentCar studentCar = new StudentCar(student, RATING, carInfo);
+				dao.addCar(studentCar);
 			}
-			dbModified();
-			MyLogger.info("PopulateUsers completed.");
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+		dbModified();
+		LOGGER.log(Level.FINE, "populateUser() completed.");
 	}
 
-	public static void populateLifts() {
-		try {
-			StudentCar driver = dao.loadStudentCarByUserID(generateUserID(0));
-			// Add Lifts
-			Integer liftID = 1;
-			for (String routeJson : ROUTES) {
-				for (String startDateTimeString : START_DATE_TIMES) {
-					for (Double durationMultiplier : MAX_DURATIONS_MULTI) {
-						for (Integer passengerToAdd : PASSENGERS_NUM) {
-							Route route = Route.jsonDecode(new JSONObject(routeJson));
-							Integer maxDuration = (int) (route.getTotalDuration() * durationMultiplier);
-							LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString);
-							List<Student> passengers = new ArrayList<>();
-							Lift lift = new Lift(null, startDateTime, maxDuration, NOTE, driver, passengers, route);
-							dao.saveLift(lift);
+	public static void populateLifts()
+			throws DatabaseException, InvalidInputException, InvalidStateException, PassengerException {
 
-							addPassengerToLift(liftID++, passengerToAdd);
-						}
+		StudentCar driver = dao.loadStudentCarByUserID(generateUserID(0));
+		// Add Lifts
+		Integer liftID = 1;
+		for (String routeJson : ROUTES) {
+			for (String startDateTimeString : START_DATE_TIMES) {
+				for (Double durationMultiplier : MAX_DURATIONS_MULTI) {
+					for (Integer passengerToAdd : PASSENGERS_NUM) {
+						Route route = Route.jsonDecode(new JSONObject(routeJson));
+						Integer maxDuration = (int) (route.getTotalDuration() * durationMultiplier);
+						LocalDateTime startDateTime = LocalDateTime.parse(startDateTimeString);
+						List<Student> passengers = new ArrayList<>();
+						Lift lift = new Lift(null, startDateTime, maxDuration, NOTE, driver, passengers, route);
+						dao.saveLift(lift);
+
+						addPassengerToLift(liftID++, passengerToAdd);
 					}
 				}
 			}
-			dbModified();
-			MyLogger.info("PopulateLifts completed.");
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
+		dbModified();
+		LOGGER.log(Level.FINE, "populateLifts() completed.");
 	}
 
 	private static void addPassengerToLift(Integer liftID, Integer passengerToAdd)
@@ -158,12 +158,7 @@ public class TestUtilities {
 		Lift liftFromDB = dao.loadLiftByID(liftID);
 		for (int added = 0; added < passengerToAdd; added++) {
 
-			Student passenger;
-			try {
-				passenger = dao.loadStudentByUserID(generateUserID(lastPassengerID++));
-			} catch (DatabaseException e) {
-				passenger = addStudentToDB();
-			}
+			Student passenger = addStudentToDB();
 
 			PASSENGER_CONTROLLER.addPassenger(liftFromDB, passenger);
 		}
@@ -173,15 +168,19 @@ public class TestUtilities {
 		modified = true;
 	}
 
-	public static void populateDB() throws DatabaseException {
-		if (modified) {
-			emptyDB();
-			populateUsers();
-			populateLifts();
-			modified = false;
-			MyLogger.info("PopulateDB completed.");
-		} else {
-			MyLogger.info("DB was not modified from last populateDB().");
+	public static void populateDB() {
+		try {
+			if (modified) {
+				emptyDB();
+				populateUsers();
+				populateLifts();
+				modified = false;
+				LOGGER.log(Level.FINE, "populateDB() completed.");
+			} else {
+				LOGGER.log(Level.FINE, "DB was not modified from last populateDB().");
+			}
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, "TestUtilities not working", e);
 		}
 	}
 
@@ -205,7 +204,7 @@ public class TestUtilities {
 	}
 
 	public static Student addStudentToDB() throws InvalidInputException, DatabaseException {
-		Student student = new Student(generateUserID(lastPassengerID++), PASSWORD, EMAIL, NAME, SURNAME, PHONE);
+		Student student = new Student(generateUserID(++lastPassengerID), PASSWORD, EMAIL, NAME, SURNAME, PHONE);
 		dao.addStudent(student);
 		dbModified();
 		return student;

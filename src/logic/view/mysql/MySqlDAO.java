@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.json.JSONObject;
@@ -50,7 +51,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	}
 
 	private void logException(Exception e) {
-		String message = e.toString();
+		String message = e.getStackTrace().toString();
 		LOGGER.severe(message);
 	}
 
@@ -79,7 +80,7 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	}
 
-	private Lift liftFromResult(ResultSet rs) throws DatabaseException, InvalidInputException {
+	private Lift liftFromResult(ResultSet rs, boolean close) throws DatabaseException, InvalidInputException {
 		try {
 			// liftID
 			Integer liftIDFromDB = rs.getInt("liftID");
@@ -101,11 +102,19 @@ public class MySqlDAO implements OurStudentDatabase {
 		} catch (SQLException e) {
 			LOGGER.severe(e.toString());
 			throw new DatabaseException(COLUMN_NOT_FOUND_MESSAGE);
+		} finally {
+			if (close)
+				try {
+					rs.close();
+					this.disconnect();
+				} catch (SQLException e) {
+					// Do nothing
+				}
 		}
 
 	}
 
-	private Student studentFromResult(ResultSet rs) throws InvalidInputException, DatabaseException {
+	private Student studentFromResult(ResultSet rs, boolean close) throws InvalidInputException, DatabaseException {
 		Student student = null;
 		try {
 			String userID = rs.getString("userID");
@@ -118,11 +127,20 @@ public class MySqlDAO implements OurStudentDatabase {
 		} catch (SQLException e) {
 			LOGGER.severe(e.toString());
 			throw new DatabaseException(COLUMN_NOT_FOUND_MESSAGE);
+		} finally {
+			if (close)
+				try {
+					rs.close();
+					this.disconnect();
+				} catch (SQLException e) {
+					// Do nothing
+				}
 		}
 		return student;
 	}
 
-	private StudentCar studentCarFromResult(ResultSet rs) throws InvalidInputException, DatabaseException {
+	private StudentCar studentCarFromResult(ResultSet rs, boolean close)
+			throws InvalidInputException, DatabaseException {
 		StudentCar studentCar = null;
 		try {
 			String userID = rs.getString("userID");
@@ -146,19 +164,35 @@ public class MySqlDAO implements OurStudentDatabase {
 		} catch (SQLException e) {
 			LOGGER.severe(e.toString());
 			throw new DatabaseException(COLUMN_NOT_FOUND_MESSAGE);
+		} finally {
+			if (close)
+				try {
+					rs.close();
+					this.disconnect();
+				} catch (SQLException e) {
+					// Do nothing
+				}
 		}
 
 		return studentCar;
 	}
 
-	private List<Lift> listLiftFromResult(ResultSet rs) throws DatabaseException, InvalidInputException {
+	private List<Lift> listLiftFromResult(ResultSet rs, boolean close) throws DatabaseException, InvalidInputException {
 		List<Lift> result = new ArrayList<>();
 		try {
 			do {
-				result.add(this.liftFromResult(rs));
+				result.add(this.liftFromResult(rs, false));
 			} while (rs.next());
 		} catch (SQLException e) {
 			throw new DatabaseException(NEXT_FAILED_MESSAGE);
+		} finally {
+			if (close)
+				try {
+					rs.close();
+					this.disconnect();
+				} catch (SQLException e) {
+					// Do nothing
+				}
 		}
 		return result;
 	}
@@ -196,7 +230,7 @@ public class MySqlDAO implements OurStudentDatabase {
 			throw new DatabaseException(CANNOT_CONTACT_MESSAGE);
 		} catch (SQLException e) {
 			throw new DatabaseException(CANNOT_CONTACT_MESSAGE);
-		}
+		} 
 	}
 
 	private boolean first(String queryMethod, Object argument) throws DatabaseException {
@@ -224,9 +258,10 @@ public class MySqlDAO implements OurStudentDatabase {
 
 			Method method = MyQueries.class.getMethod(queryMethod, actualClasses);
 			method.invoke(MyQueries.class, actualObjects);
+
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
 				| SecurityException e) {
-			LOGGER.severe(e.toString());
+			LOGGER.log(Level.SEVERE, "Exception thrown", e);
 		} catch (SQLException e) {
 			throw new DatabaseException(CANNOT_CONTACT_MESSAGE);
 		} finally {
@@ -269,13 +304,13 @@ public class MySqlDAO implements OurStudentDatabase {
 	@Override
 	public Student loadStudentByUserID(String userID) throws DatabaseException, InvalidInputException {
 		ResultSet rs = this.executeQuery("loadStudentByUserID", userID);
-		return this.studentFromResult(rs);
+		return this.studentFromResult(rs, true);
 	}
 
 	@Override
 	public StudentCar loadStudentCarByUserID(String userID) throws DatabaseException, InvalidInputException {
 		ResultSet resultSet = this.executeQuery("loadStudentCarByUserID", userID);
-		return this.studentCarFromResult(resultSet);
+		return this.studentCarFromResult(resultSet, true);
 	}
 
 	@Override
@@ -348,7 +383,7 @@ public class MySqlDAO implements OurStudentDatabase {
 
 	@Override
 	public Lift loadLiftByID(Integer liftID) throws DatabaseException, InvalidInputException {
-		return this.liftFromResult(this.executeQuery("loadLiftByLiftID", liftID));
+		return this.liftFromResult(this.executeQuery("loadLiftByLiftID", liftID), true);
 	}
 
 	@Override
@@ -362,12 +397,12 @@ public class MySqlDAO implements OurStudentDatabase {
 		try {
 			Object[] objects = { intervalStartDateTime, intervalStopDateTime };
 			ResultSet rs = this.executeQuery("listFreeLiftStartingWithinIntervalDateTime", objects);
-			return this.listLiftFromResult(rs);
+			return this.listLiftFromResult(rs, true);
 		} catch (NoResultFound e) {
 			String message = String.format("No lift found starting after: %s and stopping before: %s.",
 					intervalStartDateTime, intervalStopDateTime);
 			LOGGER.info(message);
-			return null;
+			return new ArrayList<>();
 		}
 	}
 
@@ -383,7 +418,7 @@ public class MySqlDAO implements OurStudentDatabase {
 		try {
 			ResultSet resultSet = this.executeQuery("listPassengersByLiftID", liftID);
 			do {
-				result.add(this.studentFromResult(resultSet));
+				result.add(this.studentFromResult(resultSet, false));
 			} while (resultSet.next());
 		} catch (SQLException e) {
 			throw new DatabaseException(NEXT_FAILED_MESSAGE);
@@ -403,7 +438,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	public List<Lift> listLiftsByDriverID(String driverID) throws DatabaseException, InvalidInputException {
 		try {
 			ResultSet resultSet = this.executeQuery("listLiftsByDriverID", driverID);
-			return this.listLiftFromResult(resultSet);
+			return this.listLiftFromResult(resultSet, true);
 		} catch (NoResultFound e) {
 			return new ArrayList<>();
 		}
@@ -413,7 +448,7 @@ public class MySqlDAO implements OurStudentDatabase {
 	public List<Lift> listLiftsByPassengerID(String passengerID) throws DatabaseException, InvalidInputException {
 		try {
 			ResultSet resultSet = this.executeQuery("listLiftsByPassengerID", passengerID);
-			return this.listLiftFromResult(resultSet);
+			return this.listLiftFromResult(resultSet, true);
 		} catch (NoResultFound e) {
 			return new ArrayList<>();
 		}
@@ -424,7 +459,7 @@ public class MySqlDAO implements OurStudentDatabase {
 			throws DatabaseException, InvalidInputException {
 		try {
 			ResultSet resultSet = this.executeQuery("listUnratedLiftsByPassengerID", passengerID);
-			return this.listLiftFromResult(resultSet);
+			return this.listLiftFromResult(resultSet, true);
 		} catch (NoResultFound e) {
 			return new ArrayList<>();
 		}
@@ -495,7 +530,7 @@ public class MySqlDAO implements OurStudentDatabase {
 			ResultSet rs = MyQueries.getLastInsertedLift(stmt);
 			if (!rs.first())
 				throw new NoResultFound("No lift found.");
-			return this.liftFromResult(rs);
+			return this.liftFromResult(rs, true);
 		} catch (SQLException e) {
 			throw new DatabaseException(CANNOT_CONTACT_MESSAGE);
 		} finally {
@@ -516,13 +551,13 @@ public class MySqlDAO implements OurStudentDatabase {
 	@Override
 	public Lift getEarliestPassengerLift(Student passenger) throws DatabaseException, InvalidInputException {
 		ResultSet resultSet = this.executeQuery("getEarliestPassengerLift", passenger.getUserID());
-		return this.liftFromResult(resultSet);
+		return this.liftFromResult(resultSet, true);
 	}
 
 	@Override
 	public Lift getEarliestDriverLift(StudentCar driver) throws DatabaseException, InvalidInputException {
 		ResultSet resultSet = this.executeQuery("getEarliestDriverLift", driver.getUserID());
-		return this.liftFromResult(resultSet);
+		return this.liftFromResult(resultSet, true);
 	}
 
 }

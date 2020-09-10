@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import logic.bean.UserBean;
 import logic.controller.LiftController;
+import logic.controller.exception.DatabaseException;
+import logic.controller.exception.ExceptionHandler;
+import logic.controller.exception.InvalidInputException;
 import logic.model.Lift;
 import logic.model.UserSingleton;
 import logic.view.mylift.RowMyLift;
@@ -33,13 +36,14 @@ public class MyLiftView extends ViewController implements Initializable {
 	private List<Lift> booked = new ArrayList<>();
 	private UserBean userBean = new UserBean();
 	private ViewController view = new ViewController();
-	
+
 	@Override
 
-	public void start(Stage stage){
+	public void start(Stage stage) {
 		view.start("fxml/mylift_list.fxml", stage);
-		
+
 	}
+
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -72,9 +76,13 @@ public class MyLiftView extends ViewController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		userBean.setUserID(sg.getUserID());
-		offered = liftController.loadOfferedLift(userBean);
-		booked = liftController.loadBookedLift(userBean);
-		
+		try {
+			offered = liftController.loadOfferedLift(userBean);
+			booked = liftController.loadBookedLift(userBean);
+		} catch (DatabaseException | InvalidInputException e) {
+			ExceptionHandler.handle(e);
+		}
+
 		if (rbOffered.isSelected()) {
 			for (Lift result : offered) {
 				lvLift.getItems().add(result);
@@ -84,7 +92,7 @@ public class MyLiftView extends ViewController implements Initializable {
 				lvLift.getItems().add(result);
 			}
 		}
-		
+
 		lvLift.setCellFactory(new Callback<ListView<Lift>, ListCell<Lift>>() {
 			@Override
 			public ListCell<Lift> call(ListView<Lift> param) {
