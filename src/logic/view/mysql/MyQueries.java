@@ -57,6 +57,10 @@ public class MyQueries {
 		String sql = String.format(format, studentCar.getUserID());
 		stmt.executeUpdate(sql);
 
+		format = "UPDATE Students SET rating=%d WHERE userID='%s';";
+		sql = String.format(format, studentCar.getRating(), studentCar.getUserID());
+		stmt.executeUpdate(sql);
+
 		format = "INSERT INTO Cars( model, plate, seats, color, userID) VALUES ('%s', '%s', '%s', '%s', '%s');";
 		sql = String.format(format, studentCar.getCarInfo().getModel(), studentCar.getCarInfo().getPlate(),
 				studentCar.getCarInfo().getSeats(), studentCar.getCarInfo().getColour(), studentCar.getUserID());

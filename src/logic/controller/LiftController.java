@@ -21,7 +21,7 @@ import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
 import logic.controller.exception.NoLiftAvailable;
-import logic.controller.maps.AdapterMapsApi;
+import logic.controller.maps.CompleteMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.controller.maps.RoutingApi;
 import logic.controller.maps.RoutingHereAPI;
@@ -204,7 +204,7 @@ public class LiftController {
 		private LocalDateTime stopDateTime;
 		private List<LiftMatchResult> results = new ArrayList<>();
 
-		MapsApi maps = AdapterMapsApi.getInstance();
+		MapsApi maps = CompleteMapsApi.getInstance();
 
 		public LiftThread(List<Lift> possibleLifts, List<Position> stops, Integer initIndex) {
 			this.possibleLifts = possibleLifts;

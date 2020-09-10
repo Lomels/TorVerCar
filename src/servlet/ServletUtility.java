@@ -15,7 +15,7 @@ import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
-import logic.controller.maps.AdapterMapsApi;
+import logic.controller.maps.CompleteMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.Position;
 import logic.model.Role;
@@ -70,7 +70,7 @@ public class ServletUtility {
 
 	public static List<Position> pupulateListPosition(String address)
 			throws ApiNotReachableException, InvalidInputException {
-		MapsApi mapsApi = AdapterMapsApi.getInstance();
+		MapsApi mapsApi = CompleteMapsApi.getInstance();
 		return mapsApi.addrToPos(address);
 
 	}

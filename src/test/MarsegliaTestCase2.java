@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.InvalidInputException;
-import logic.controller.maps.AdapterMapsApi;
+import logic.controller.maps.CompleteMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.Position;
 import logic.model.Route;
@@ -21,7 +21,7 @@ public class MarsegliaTestCase2 {
 
 	@Test
 	public void startToStopTest() throws ApiNotReachableException, InvalidInputException {
-		MapsApi mapsApi = AdapterMapsApi.getInstance();
+		MapsApi mapsApi = CompleteMapsApi.getInstance();
 		String addressStart = "Via Prenestina Nuova 51, Palestrina";
 		String addressStop = "Via del Politecnico 1, Roma";
 		Integer expectedDuration = 30;

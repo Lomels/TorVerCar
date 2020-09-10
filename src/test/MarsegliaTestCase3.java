@@ -14,7 +14,7 @@ import logic.controller.exception.ApiNotReachableException;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.NoLiftAvailable;
-import logic.controller.maps.AdapterMapsApi;
+import logic.controller.maps.CompleteMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.CarInfo;
 import logic.model.Lift;
@@ -32,7 +32,7 @@ public class MarsegliaTestCase3 implements LiftMatchListener {
 	@Test
 	public void liftMatchTest()
 			throws DatabaseException, InvalidInputException, ApiNotReachableException, NoLiftAvailable {
-		MapsApi mapsApi = AdapterMapsApi.getInstance();
+		MapsApi mapsApi = CompleteMapsApi.getInstance();
 		MySqlDAO ourDB = new MySqlDAO();
 		ourDB.emptyDB();
 

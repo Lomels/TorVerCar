@@ -24,7 +24,7 @@ import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.NoLiftAvailable;
-import logic.controller.maps.AdapterMapsApi;
+import logic.controller.maps.CompleteMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.LiftMatchResult;
 import logic.model.LiftSingleton;
@@ -64,7 +64,7 @@ public class BookView extends ViewController implements Initializable, LiftMatch
 	private LiftSingleton liftSg = LiftSingleton.getInstance();
 	private UserSingleton userSg = UserSingleton.getInstance();
 	private ViewController viewController = new ViewController();
-	private MapsApi mapsApi = AdapterMapsApi.getInstance();
+	private MapsApi mapsApi = CompleteMapsApi.getInstance();
 	private LiftController liftController = new LiftController();
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyy-MM-ddHH:mm");
 

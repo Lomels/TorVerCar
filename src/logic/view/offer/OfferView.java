@@ -17,7 +17,7 @@ import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
-import logic.controller.maps.AdapterMapsApi;
+import logic.controller.maps.CompleteMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.LiftSingleton;
 import logic.model.UserSingleton;
@@ -51,7 +51,7 @@ public class OfferView extends ViewController implements Initializable {
 	private Button btAddCar;
 	
 
-	private MapsApi mapsApi = AdapterMapsApi.getInstance();
+	private MapsApi mapsApi = CompleteMapsApi.getInstance();
 	private LiftSingleton lp = LiftSingleton.getInstance();
 	private UserSingleton userSg = UserSingleton.getInstance();
 	private LiftController controller = new LiftController();

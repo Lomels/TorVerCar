@@ -13,7 +13,7 @@ import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.InvalidStateException;
 import logic.controller.exception.PassengerException;
-import logic.controller.maps.AdapterMapsApi;
+import logic.controller.maps.CompleteMapsApi;
 import logic.controller.maps.MapsApi;
 import logic.model.CarInfo;
 import logic.model.Lift;
@@ -27,7 +27,7 @@ public class TestUtilities {
 	private static final Logger LOGGER = Logger.getLogger(TestUtilities.class.getCanonicalName());
 
 	protected static final MySqlDAO dao = new MySqlDAO();
-	protected static final MapsApi maps = AdapterMapsApi.getInstance();
+	protected static final MapsApi maps = CompleteMapsApi.getInstance();
 	private static final PassengerController PASSENGER_CONTROLLER = new PassengerController();
 
 	public static final Integer DRIVER_NUMBER = 5;
@@ -96,7 +96,7 @@ public class TestUtilities {
 		return builder.toString();
 	}
 
-	private static String generatePlate(Integer index) {
+	public static String generatePlate(Integer index) {
 		String numbers = index.toString();
 		StringBuilder builder = new StringBuilder(numbers);
 		while (builder.toString().length() < 3) {

@@ -11,24 +11,24 @@ import logic.model.Route;
  * 	This adapter implements the complete service MapsApi
  * 	and redirects to the method of the implementation of the single service
  */
-public class AdapterMapsApi implements MapsApi {
+public class CompleteMapsApi implements MapsApi {
 
-	private static AdapterMapsApi instance = null;
+	private static CompleteMapsApi instance = null;
 	private GeodecodeApi geodecode;
 	private RoutingApi routing;
 	private ViewMapApi viewmap;
 	private ViewRouteApi viewroute;
 
-	private AdapterMapsApi() {
+	private CompleteMapsApi() {
 		this.geodecode = GeodecodeTomTomApi.getInstance();
 		this.routing = RoutingHereAPI.getInstance();
 		this.viewmap = ViewMapHereApi.getInstance();
 		this.viewroute = ViewRouteHereApi.getInstance();
 	}
 
-	public static AdapterMapsApi getInstance() {
-		if (AdapterMapsApi.instance == null)
-			return new AdapterMapsApi();
+	public static CompleteMapsApi getInstance() {
+		if (CompleteMapsApi.instance == null)
+			return new CompleteMapsApi();
 		return instance;
 	}
 

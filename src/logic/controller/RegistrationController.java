@@ -12,7 +12,6 @@ import logic.model.UserSingleton;
 import logic.utilities.CodeGenerator;
 import logic.utilities.MyLogger;
 import logic.view.DatabaseBoundary;
-import logic.view.OurStudentDatabase;
 import logic.view.mysql.MySqlDAO;
 import logic.view.mysql.UniDAO;
 
@@ -27,7 +26,7 @@ public class RegistrationController {
 		this.ourDb = new MySqlDAO();
 	}
 
-	public boolean alreadyExist(UserBean user) throws DatabaseException, InvalidInputException {
+	public boolean alreadyExist(UserBean user) throws DatabaseException {
 		return ourDb.existByUserID(user.getUserID());
 	}
 
