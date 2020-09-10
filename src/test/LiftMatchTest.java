@@ -13,7 +13,6 @@ import logic.bean.LiftBean;
 import logic.controller.LiftController;
 import logic.controller.LiftMatchListener;
 import logic.controller.exception.ApiNotReachableException;
-import logic.controller.exception.DatabaseException;
 import logic.controller.exception.InvalidInputException;
 import logic.controller.exception.NoLiftAvailable;
 import logic.model.LiftMatchResult;
@@ -43,7 +42,7 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 	}
 
 	@Test
-	public void matchLiftStartAfter() throws DatabaseException {
+	public void matchLiftStartAfter() {
 		this.setup();
 
 		LiftController liftController = new LiftController();
@@ -56,7 +55,7 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 	}
 
 	@Test
-	public void matchLiftStartAfterNotExisting() throws DatabaseException {
+	public void matchLiftStartAfterNotExisting() {
 		this.setup();
 		LiftController liftController = new LiftController();
 		LocalDateTime startDateTime = LocalDateTime.parse("2021-08-15T19:45");
@@ -68,7 +67,7 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 	}
 
 	@Test
-	public void matchLiftStopBefore() throws DatabaseException {
+	public void matchLiftStopBefore() {
 		this.setup();
 
 		LiftController liftController = new LiftController();
@@ -81,7 +80,7 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 	}
 
 	@Test
-	public void matchLiftStopBeforeNotExisting() throws DatabaseException {
+	public void matchLiftStopBeforeNotExisting() {
 		this.setup();
 
 		LiftController liftController = new LiftController();
@@ -95,15 +94,8 @@ public class LiftMatchTest extends TestUtilities implements LiftMatchListener {
 
 	@Override
 	public void onThreadEnd(List<LiftMatchResult> results) {
-		if (results.isEmpty()) {
-			String message = "No available lifts";
-			MyLogger.info(message);
-			throw new TestRuntimeException(message);
-		} else {
-			for (LiftMatchResult result : results) {
-				MyLogger.info("Result", result);
-			}
-		}
+		if (results.isEmpty())
+			throw new TestRuntimeException();
 	}
 
 	@Override
