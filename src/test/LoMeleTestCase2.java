@@ -13,7 +13,6 @@ import logic.controller.exception.InvalidInputException;
 import logic.model.CarInfo;
 import logic.model.Role;
 import logic.model.UserSingleton;
-import logic.utilities.MyLogger;
 import logic.view.mysql.MySqlDAO;
 
 /* MARCO LO MELE */
@@ -27,7 +26,6 @@ public class LoMeleTestCase2 {
 	private UserSingleton sg = UserSingleton.getInstance();
 
 	private static final String USERID1 = "0567891";
-	private static final String USERID2 = "0678912";
 	public static final String PASSWORD = "aaaAAA123@";
 	public static final String PHONE = "3334445556";
 

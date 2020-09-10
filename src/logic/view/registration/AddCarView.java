@@ -7,7 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import logic.bean.CarInfoBean;
 import logic.bean.UserBeanSingleton;
-import logic.bean.UserBeanSingleton;
 import logic.controller.RegistrationController;
 import logic.controller.exception.DatabaseException;
 import logic.controller.exception.ExceptionHandler;

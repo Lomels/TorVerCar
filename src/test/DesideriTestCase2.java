@@ -1,7 +1,6 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +27,8 @@ class DesideriTestCase2 {
 	
 	@Test
 	public void removeCarTest() throws DatabaseException, InvalidInputException {
-		userBean.setUserID("0245061");
+		String userID = "0245061";
+		userBean.setUserID(userID);
 		dao.removeStudentByUserID(userBean.getUserID());
 
 		userBean = registration.recapInfo(userBean);
@@ -42,11 +42,11 @@ class DesideriTestCase2 {
 
 		registration.addStudentCar(carInfo, userBean);
 		
-		sg.setStudentCar(dao.loadStudentCarByUserID("0245061"));
+		sg.setStudentCar(dao.loadStudentCarByUserID(userID));
 		sg.setRole(Role.DRIVER);
 		carController.removeCar(userBean);
 
-		assertEquals(Role.STUDENT, dao.loadRoleByUserID("0245061"));
+		assertEquals(Role.STUDENT, dao.loadRoleByUserID(userID));
 	}
 
 }

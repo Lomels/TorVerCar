@@ -15,7 +15,6 @@ import logic.model.CarInfo;
 import logic.model.Student;
 import logic.model.StudentCar;
 import logic.view.mysql.MySqlDAO;
-import test.utilities.TestUtilities;
 
 /* MARCO LO MELE */
 

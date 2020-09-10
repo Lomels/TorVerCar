@@ -45,10 +45,6 @@ public class LiftController {
 
 	RoutingApi routingApi = RoutingHereAPI.getInstance();
 
-	// String startDateTimeString, Integer maxDuration, String note, StudentCar
-	// driver,
-	// Position pickUp, Position dropOff
-
 	public void createLift(LiftBean liftBean)
 			throws InvalidInputException, DatabaseException, InvalidStateException, ApiNotReachableException {
 		LocalDateTime startDateTime = liftBean.getStartDateTime();
@@ -116,9 +112,6 @@ public class LiftController {
 			if (l.getStopDateTime().isBefore(LocalDateTime.now()))
 				completed.add(l);
 		}
-
-		// TODO: aggiornare lift nel DB per non farli ricomparire nella lista una volta
-		// dato il rating
 
 		return completed;
 	}
