@@ -83,18 +83,6 @@ public class LiftPersitenceTest extends TestUtilities {
 		assertEquals(finalMaxDuration, secondLift.getMaxDuration());
 	}
 
-	@Test
-	public void addPassenger() throws InvalidInputException, DatabaseException {
-		this.setup();
-		LocalDateTime startDateTime = LocalDateTime.parse(START_DATE_TIME_EARLY);
-		Lift availableLift = dao
-				.listAvailableLiftStartingWithinIntervalDateTime(startDateTime, startDateTime.plusYears(1)).get(0);
-		Student newStudent = addStudentToDB();
-
-		PassengerController passengerController = new PassengerController();
-
-		assertDoesNotThrow(() -> passengerController.addPassenger(availableLift, newStudent));
-	}
 
 	@Test
 	public void listPassenger()

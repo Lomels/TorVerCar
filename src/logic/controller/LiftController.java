@@ -141,7 +141,7 @@ public class LiftController {
 
 		List<Position> stops = new ArrayList<>();
 		stops.add(liftBean.getStartPos());
-		stops.add(liftBean.getStartPos());
+		stops.add(liftBean.getStopPos());
 
 		// Launch thread for computing
 		LiftThread thread = new LiftThread(possibleLifts, stops, initIndex);
@@ -163,7 +163,7 @@ public class LiftController {
 
 		List<Position> stops = new ArrayList<>();
 		stops.add(liftBean.getStartPos());
-		stops.add(liftBean.getStartPos());
+		stops.add(liftBean.getStopPos());
 
 		// Launch thread for computing
 		LiftThread thread = new LiftThread(possibleLifts, stops, initIndex);

@@ -14,14 +14,27 @@ import logic.controller.exception.InvalidInputException;
 import logic.model.CarInfo;
 import logic.model.Student;
 import logic.model.StudentCar;
+import logic.view.mysql.MySqlDAO;
 import test.utilities.TestUtilities;
 
 /* MARCO LO MELE */
 
-class RegistrationTest extends TestUtilities {
+class LoMeleTestCase1{
 	private RegistrationController registration = new RegistrationController();
 	private UserBean userBean = new UserBean();
+	private MySqlDAO dao = new MySqlDAO();
 
+	private static final String USERID1 = "0567891";
+	private static final String USERID2 = "0241118";
+	public static final String PASSWORD = "aaaAAA123@";
+	public static final String PHONE = "3334445556";
+
+	public static final String PLATE = "FA769KN";
+	public static final Integer SEATS = 4;
+	public static final String MODEL = "Fiat Macchina";
+	public static final String COLOR = "Arcobaleno";
+	
+	
 	private String beanToString(UserBean user) {
 		return "UserID: " + user.getUserID() + ", Name: " + user.getName() + ", Surname: " + user.getSurname()
 				+ ", Email: " + user.getEmail();
@@ -29,7 +42,7 @@ class RegistrationTest extends TestUtilities {
 
 	@Test
 	void alreadyExistTest() throws DatabaseException, InvalidInputException {
-		userBean.setUserID(ID_MARCO);
+		userBean.setUserID(USERID1);
 
 		assertTrue(registration.alreadyExist(userBean));
 	}
@@ -43,7 +56,7 @@ class RegistrationTest extends TestUtilities {
 
 	@Test
 	public void loadInfo() throws DatabaseException, InvalidInputException {
-		userBean.setUserID(ID_MARCO);
+		userBean.setUserID(USERID2);
 		userBean.setEmail("marco.lomele@gmail.com");
 		userBean.setName("Marco");
 		userBean.setSurname("Lo Mele");
@@ -53,7 +66,7 @@ class RegistrationTest extends TestUtilities {
 
 	@Test
 	public void addStudent() throws DatabaseException, InvalidInputException {
-		userBean.setUserID("0567891");
+		userBean.setUserID(USERID1);
 		dao.removeStudentByUserID(userBean.getUserID());
 
 		userBean = registration.recapInfo(userBean);
@@ -71,7 +84,7 @@ class RegistrationTest extends TestUtilities {
 
 	@Test
 	public void addStudentCar() throws InvalidInputException, DatabaseException {
-		dao.removeStudentByUserID(ID_MARCO);
+		dao.removeStudentByUserID(USERID2);
 
 		CarInfoBean carInfo = new CarInfoBean();
 		carInfo.setModel(MODEL);
@@ -79,7 +92,7 @@ class RegistrationTest extends TestUtilities {
 		carInfo.setPlate("TV777CR");
 		carInfo.setSeats(SEATS);
 
-		userBean.setUserID(ID_MARCO);
+		userBean.setUserID(USERID2);
 		userBean.setPassword(PASSWORD);
 		userBean.setPhone(PHONE);
 		userBean.setEmail("marco.lomele@gmail.com");
@@ -95,7 +108,7 @@ class RegistrationTest extends TestUtilities {
 		
 		registration.addStudentCar(carInfo, userBean);
 		
-		StudentCar daoStudent = dao.loadStudentCarByUserID(ID_MARCO);
+		StudentCar daoStudent = dao.loadStudentCarByUserID(USERID2);
 		
 		assertTrue(studentCar.compare(daoStudent));
 	}
