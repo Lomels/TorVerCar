@@ -14,7 +14,6 @@ import logic.controller.exception.InvalidInputException;
 import logic.model.CarInfo;
 import logic.model.Student;
 import logic.model.StudentCar;
-import logic.utilities.MyLogger;
 import test.utilities.TestUtilities;
 
 /* MARCO LO MELE */
@@ -54,20 +53,19 @@ class RegistrationTest extends TestUtilities {
 
 	@Test
 	public void addStudent() throws DatabaseException, InvalidInputException {
-		dao.removeStudentByUserID(ID_MARCO);
+		userBean.setUserID("0567891");
+		dao.removeStudentByUserID(userBean.getUserID());
 
-		userBean.setUserID(ID_MARCO);
+		userBean = registration.recapInfo(userBean);
 		userBean.setPassword(PASSWORD);
 		userBean.setPhone(PHONE);
-		userBean.setEmail("marco.lomele@gmail.com");
-		userBean.setName("Marco");
-		userBean.setSurname("Lo Mele");
-		registration.addStudent(userBean);
 
+		registration.addStudent(userBean);
+		
 		Student student = new Student(userBean.getUserID(), userBean.getPassword(), userBean.getEmail(),
 				userBean.getName(), userBean.getSurname(), userBean.getPhone());
 
-		Student daoStudent = dao.loadStudentByUserID(ID_MARCO);
+		Student daoStudent = dao.loadStudentByUserID(userBean.getUserID());
 		assertTrue(student.compare(daoStudent));
 	}
 
@@ -75,11 +73,11 @@ class RegistrationTest extends TestUtilities {
 	public void addStudentCar() throws InvalidInputException, DatabaseException {
 		dao.removeStudentByUserID(ID_MARCO);
 
-		CarInfoBean carInfoBean = new CarInfoBean();
-		carInfoBean.setModel(MODEL);
-		carInfoBean.setColour(COLOR);
-		carInfoBean.setPlate("TV777CR");
-		carInfoBean.setSeats(SEATS);
+		CarInfoBean carInfo = new CarInfoBean();
+		carInfo.setModel(MODEL);
+		carInfo.setColour(COLOR);
+		carInfo.setPlate("TV777CR");
+		carInfo.setSeats(SEATS);
 
 		userBean.setUserID(ID_MARCO);
 		userBean.setPassword(PASSWORD);
@@ -88,21 +86,18 @@ class RegistrationTest extends TestUtilities {
 		userBean.setName("Marco");
 		userBean.setSurname("Lo Mele");
 
-		CarInfo carInfo = new CarInfo(carInfoBean.getPlate(), carInfoBean.getSeats(), carInfoBean.getModel(),
-				carInfoBean.getColour());
+		CarInfo car = new CarInfo(carInfo.getPlate(), carInfo.getSeats(), carInfo.getModel(), carInfo.getColour());
 
 		Student student = new Student(userBean.getUserID(), userBean.getPassword(), userBean.getEmail(),
 				userBean.getName(), userBean.getSurname(), userBean.getPhone());
-		StudentCar studentCar = new StudentCar(student, 0, carInfo);
-//		dao.addStudentCar(studentCar);
-		dao.addCar(studentCar);
-		registration.addStudentCar(carInfoBean, userBean);
-		StudentCar daoStudCar = dao.loadStudentCarByUserID(ID_MARCO);
+
+		StudentCar studentCar = new StudentCar(student, 0, car);
 		
-		MyLogger.info("dao", daoStudCar.toString());
-		MyLogger.info("inserted:", studentCar.toString());
+		registration.addStudentCar(carInfo, userBean);
 		
-		assertTrue(studentCar.compare(daoStudCar));
+		StudentCar daoStudent = dao.loadStudentCarByUserID(ID_MARCO);
+		
+		assertTrue(studentCar.compare(daoStudent));
 	}
 
 }
